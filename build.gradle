@@ -15,39 +15,54 @@ plugins {
 }
 
 node {
-    println 'initialize node here'
-    // Version of node to use.
-   // version = '10.14.1'
-    // Version of npm to use.
-    //npmVersion = '6.4.1'
     download = true
     // Set the work directory for unpacking node
-    workDir = file("${project.projectDir}/nodejs")
-	println workDir
-    // Set the work directory for NPM
-    npmWorkDir = file("${project.projectDir}/npm")
+    npmWorkDir = file("npm")
+    workDir = file("nodejs")
 }
 
 task appNpmInstall(type: NpmTask) {
-    println 'Installs all dependencies from package.json'
-    workingDir = file("${project.projectDir}/react-web")
+    workingDir = file("react-web")
     args = ["install"]
 }
 
 task appNpmBuild(type: NpmTask) {
     dependsOn appNpmInstall
-    println 'Builds production version of the webapp'
-    workingDir = file("${project.projectDir}/react-web")
+    workingDir = file("react-web")
     args = ["run", "build"]
 }
 
-task copyWebApp(type: Copy) {
+task appNpmStart(type: NpmTask) {
+	println ':appNpmStart'
+    dependsOn appNpmBuild
+    workingDir = file("react-web")
+    args = ["start"]
+}
+
+task appCopyReactWeb(type: Copy) {
+	println ':appCopyReactWeb'
 	dependsOn appNpmBuild
-	println 'copy files from web to spring src folder'
     from 'react-web/build'
     into 'src/main/resources/static/.'
 }
 
+task appCopyStatic(type: Copy) {
+	println ':appCopyStatic'
+    from 'src/main/resources/ftl/static/.'
+    into 'src/main/resources/static/.'
+}
+
+task appDeleteBuild(type: Delete) {
+	println ':appDeleteBuild'
+    delete 'build'
+    //delete 'src/main/resources/static/'
+   	delete fileTree('src/main/resources/static/')
+    delete 'react-web/build'
+    delete 'react-web/node_modules'
+    delete fileTree('react-web') {
+        include 'package-lock.json'
+    }
+}
 
 
 group = 'com.example'
@@ -56,6 +71,17 @@ version = '0.0.1-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
+apply plugin: "com.moowork.node"
+
+sourceSets {
+    main {
+        resources {
+            exclude '**/react-web/*'
+          	exclude '**/nodejs/*'
+          	exclude '**/build/*'
+        }
+    }
+}
 
 jar {
     baseName = 'sb-demo-appln'
