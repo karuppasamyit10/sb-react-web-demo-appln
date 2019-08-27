@@ -1,0 +1,38 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+
+.search-showcase{
+    .ss-cards{
+        
+        p{
+            margin-bottom: 10px;
+        }
+        .ss-img-wrap{
+            overflow: hidden;
+            @include relative;
+        
+        .ss-img{
+            height: 250px;
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-size: cover;
+            @include relative;
+            @include transition(all .5s ease);
+            &:hover{
+                @include transform(scale(1.2))
+            }
+
+        }
+        .ss-title{
+            @include absolute;
+            bottom: 0px;
+            left: 0px;
+            padding: 10px;
+            span{
+                display: block;
+                font-size: 16px;
+            }
+        }
+    }
+    }
+}

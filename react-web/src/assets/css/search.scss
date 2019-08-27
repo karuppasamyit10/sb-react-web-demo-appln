@@ -1,0 +1,58 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+
+.search-header{
+   
+    .shrow{
+        padding-bottom: 5px;
+        border-bottom: 2px solid $primary;
+    }
+    
+   
+}
+
+.search-results{
+
+    .srgrid{
+        border: 1px solid #ccc;
+        margin-bottom: 30px;
+        .srgrid-img{
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top center;
+            @include relative;
+            .ratings{
+                color: $white;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                background: rgba(0,0,0,0.5);
+                font-size: 12px;
+                text-align: center;
+                line-height: center;
+                @include absolute;
+                bottom: 0px;
+                right: 0px;
+            }
+        }
+        .srgridcontent{
+            padding: 7px 10px;
+            .summersale{
+                background: lighten($color: $blue, $amount: 10);
+                padding: 0px 3px 3px;
+                border-radius: 10px;
+                text-align: center;
+                font-size: 12px;
+            }
+            .oldprice{
+                text-decoration: line-through;
+            }
+        }
+        &:hover,&:focus{
+            box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.5);
+            border: 1px solid $black;
+        }
+    }
+
+
+}

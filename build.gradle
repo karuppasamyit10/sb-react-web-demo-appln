@@ -1,0 +1,145 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+    id "com.moowork.node" version "1.3.1"
+}
+
+node {
+    println 'initialize node here'
+    // Version of node to use.
+   // version = '10.14.1'
+    // Version of npm to use.
+    //npmVersion = '6.4.1'
+    download = true
+    // Set the work directory for unpacking node
+    workDir = file("${project.projectDir}/nodejs")
+	println workDir
+    // Set the work directory for NPM
+    npmWorkDir = file("${project.projectDir}/npm")
+}
+
+task appNpmInstall(type: NpmTask) {
+    println 'Installs all dependencies from package.json'
+    workingDir = file("${project.projectDir}/react-web")
+    args = ["install"]
+}
+
+task appNpmBuild(type: NpmTask) {
+    dependsOn appNpmInstall
+    println 'Builds production version of the webapp'
+    workingDir = file("${project.projectDir}/react-web")
+    args = ["run", "build"]
+}
+
+task copyWebApp(type: Copy) {
+	dependsOn appNpmBuild
+	println 'copy files from web to spring src folder'
+    from 'react-web/build'
+    into 'src/main/resources/static/.'
+}
+
+
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'sb-demo-appln'
+    version =  '0.0.1'
+}
+
+sourceSets {
+    main {
+        resources {
+          	exclude '**/build/*'
+        }
+    }
+}
+
+repositories {
+	jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	//providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('org.springframework.boot:spring-boot-starter')
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+		
+	//used for Spring REST-API
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	
+	//used for Spring JPA like Hibernate(ORM) 
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	//used for mysql db connector
+	runtime('mysql:mysql-connector-java:5.1.6')
+	//compile('org.postgresql:postgresql')
+	//used for db creation master data
+	//runtime('org.liquibase:liquibase-core:3.4.2')
+	
+	//user for Spring Security
+	compile('org.springframework.boot:spring-boot-starter-security')
+	//OAuth2+JWT integrated
+	compile 'org.springframework.security.oauth:spring-security-oauth2:2.0.7.RELEASE'
+	compile 'org.springframework.security:spring-security-jwt'
+	
+	//  api key creation with hash algm 
+	//	https://mvnrepository.com/artifact/org.apache.shiro/shiro-crypto-hash
+	compile group: 'org.apache.shiro', name: 'shiro-crypto-hash', version: '1.4.0'
+	// https://mvnrepository.com/artifact/com.fasterxml.uuid/java-uuid-generator
+	compile group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '3.1.3'
+	
+	//common
+	// https://mvnrepository.com/artifact/commons-io/commons-io
+	compile group: 'commons-io', name: 'commons-io', version: '2.5'	
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
+	compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '1.5.4.RELEASE'
+	
+	//socket IO
+	compile('com.corundumstudio.socketio:netty-socketio:1.7.12')
+	
+	//swagger
+	compile('io.springfox:springfox-swagger2:2.4.0')
+	compile('io.springfox:springfox-swagger-ui:2.4.0')
+	
+	//mail
+	compile("org.springframework.boot:spring-boot-starter-mail")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+    compile 'javax.mail:mail:1.4.1'
+    
+    // https://mvnrepository.com/artifact/org.freemarker/freemarker
+	compile group: 'org.freemarker', name: 'freemarker', version: '2.3.23'
+	
+	// zuul router 
+	//compile('org.springframework.cloud:spring-cloud-starter-zuul:1.0.6.RELEASE')
+	
+	// amazon s3 bucket api
+	// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
+	//compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.313'
+
+	// https://mvnrepository.com/artifact/com.stripe/stripe-java
+	//compile group: 'com.stripe', name: 'stripe-java', version: '3.5.0'
+
+}

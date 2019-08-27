@@ -1,0 +1,81 @@
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+spring:
+  application:
+    name: sb-demo-appln
+#  resources:
+#    static-locations:
+#      - file:/home/concertcare/auto-harasow/sb-demo-appln/react-web-app/web-src/build/
+  datasource:
+    username: root
+    password: root
+#    testWhileIdle: true
+    test-while-idle: true
+    test-on-borrow: true
+    validation-query: SELECT 1
+      
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect 
+    database: mysql
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate:
+        default_schema: ccare
+      hibernate.id.new_generator_mappings: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+#     hibernate.jdbc.time_zone: IST
+    generate-ddl: true
+  data:
+   jpa:
+     repositories:
+       enabled: true
+  mail:
+    host: localhost
+    port: 587
+    username: karuppu 
+    password: demo
+    properties: 
+      mail.smtp.auth : true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.ssl.enable: true 
+  http:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  
+#  mvc:
+#    view:
+#      prefix: /
+#      suffix: .html
+  freemarker:
+    check-template-location: false   
+server:
+  port: 8080
+  contextPath: /
+  error:
+    whitelabel:
+      enabled: true
+  ssl:
+    key-store: 
+    enabled: false
+    key-store-password: 
+  max-http-header-size: 26843
+
+common:
+  config:
+    host-base-url: http://localhost/
+    from-mail: support@example.com
+    https-socket-io: false
+    socket-io-port: 7070
+    key-store-file-name: 
+    key-store-password:

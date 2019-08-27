@@ -1,0 +1,170 @@
+body {
+  background: #fff;
+  padding-top: 89px;
+}
+
+.hideForAnim {
+  opacity: 0;
+}
+
+.container {
+  width: 1200px;
+  max-width: 1200px;
+}
+
+@media screen and (max-width: 1199px) {
+  .container {
+    width: 970px;
+    max-width: 970px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.head1 {
+  font-size: 2rem;
+}
+
+.head2 {
+  font-size: 1.5rem;
+}
+
+.head3 {
+  font-size: 1.25rem;
+}
+
+.para1 {
+  font-size: 16px;
+}
+
+.para2 {
+  font-size: 14px;
+}
+
+.white {
+  color: #fff;
+}
+
+.black {
+  color: #000;
+}
+
+.green {
+  color: #2ab94f;
+}
+
+.red {
+  color: #D10023;
+}
+
+.blue {
+  color: #00a0dd;
+}
+
+sup {
+  font-size: 50%;
+}
+
+a, button, input, textarea, select, option {
+  outline: 0px;
+}
+
+a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
+  outline: 0px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #2ab94f;
+  border-color: #2ab94f;
+}
+
+.btn-primary:focus, .btn-primary:hover {
+  background-color: #25a446;
+  border-color: #25a446;
+  outline: 0px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+  background-color: #25a446;
+  border-color: #25a446;
+  outline: 0px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #00a0dd;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px 2px #0a0a0a;
+}
+
+.spacerTop {
+  padding-top: 30px;
+}
+
+.spacerBottom {
+  padding-bottom: 30px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.medium {
+  font-weight: 500;
+}
+
+.selectdd {
+  position: relative;
+  padding: 10px 0px;
+}
+
+.selectdd .caret {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  margin: auto 5px auto auto;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  line-height: 20px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.selectdd select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 38px;
+  border: 0px;
+  border: 1px solid #aaa;
+  padding: 0px 6px;
+}
+/*# sourceMappingURL=global.css.map */

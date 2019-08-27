@@ -1,0 +1,25 @@
+.footer {
+  background: #051022;
+  padding: 20px 0px;
+}
+
+.footer .footer-left .flogo {
+  color: #fff;
+}
+
+.footer .flinks li {
+  display: block;
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 10px;
+}
+
+.footer .flinks li a {
+  display: block;
+  color: #aaa;
+}
+
+.footer .flinks li a:hover {
+  color: #fff;
+}
+/*# sourceMappingURL=footer.css.map */

@@ -1,0 +1,28 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+
+.footer{
+    background: $primary;
+    padding: 20px 0px;
+    .footer-left{
+        .flogo{
+            color: $white;
+        }
+        
+    }
+    .flinks{
+        li{
+            display: block;
+            color: $white;
+            font-size: 14px;
+            padding: 6px 10px;
+            a{
+                display: block;
+                color: $light-grey;
+                &:hover{
+                    color: $white;
+                }                
+            }
+        }
+    }
+}
