@@ -15,6 +15,7 @@ import { PATH } from '../utils/Constants';
 import Background1 from "../assets/img/search/ssangyong.jpg";
 import Background2 from "../assets/img/search/hyundai.jpg";
 import Background3 from "../assets/img/search/kia2.jpg";
+import Cookies from 'js-cookie';
 
 class Upload extends Component {
   constructor(props) {
@@ -28,7 +29,10 @@ class Upload extends Component {
     prop: PropTypes
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    let cookieData = Cookies.read();
+    console.log(cookieData);
+  }
 
   handleSearch = () =>{
     this.props.history.push(PATH.SEARCH)

@@ -27,15 +27,28 @@ import dashboard from "./components/dashboard";
 import registration from "./components/common/registration";
 import Notification from './components/common/Notification'
 import search from './components/search';
+import { cookiePresent } from './utils/AthuService';
+import PropTypes from 'prop-types';
+
+const CustomRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    cookiePresent() && <Component {...props} />
+  )}
+  />
+);
+
+CustomRoute.propTypes = {
+  component: PropTypes.any,
+};
 
 ReactDOM.render(
   <Provider store={stores}>
     <Router>
       <React.Fragment>
-        <Route exact path="/" component={login} />
-        <Route exact path="/registration" component={registration} />
-        <Route exact path="/dashboard" component={dashboard} />
-        <Route exact path="/dashboard/search" component={search} />
+        <CustomRoute exact path="/" component={login} />
+        <CustomRoute exact path="/registration" component={registration} />
+        <CustomRoute exact path="/dashboard" component={dashboard} />
+        <CustomRoute exact path="/dashboard/search" component={search} />
         {/* Notification  Message*/}
         <Notification />
       </React.Fragment>

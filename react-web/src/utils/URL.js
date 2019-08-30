@@ -15,6 +15,7 @@ module.exports = {
   FORGET : 'forgetPassword',
   LOGOUT: 'api/user/logout',
   REGISTRATION: 'api/public/user/registration',
+  COOKIE : 'api/public/update-cookie',
   CHANGEPASSWORD: 'changePassword',
   UPDATEPASSWORD: 'updatePassword',
   PROFILE : 'api/user/profile',

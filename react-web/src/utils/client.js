@@ -11,73 +11,73 @@ export const axiosCommon = axios.create({
   baseURL: URL.BASE_URL
 });
 
-axiosCommonInstance.interceptors.request.use(
-  function(config) {
-    let originalRequest = config;
-    let userSession = store.get("userSession");
-    if (Client.isTokenExpired()) {
-      console.log("access token expired , refersh token called");
-      let data = {
-        refresh_token: userSession.refresh_token,
-        grant_type: "refresh_token"
-      };
-      return Client.refresh_token(URL.OATHU, data)
-        .then(response => {
-          store.set("userSession", response);
-          if (response && response.refresh_token && response.expires_in) {
-            store.set("expiryTime", Client.tokenExpires(response.expires_in));
-          }
-          originalRequest["Authorization"] = "Bearer " + response.access_token;
-          return originalRequest;
-        })
-        .catch(err => {
-          window.location.replace("/");
-        });
-    }
-    return config;
-  },
-  function(err) {
-    return Promise.reject(err);
-  }
-);
+// axiosCommonInstance.interceptors.request.use(
+//   function(config) {
+//     let originalRequest = config;
+//     let userSession = store.get("userSession");
+//     if (Client.isTokenExpired()) {
+//       console.log("access token expired , refersh token called");
+//       let data = {
+//         refresh_token: userSession.refresh_token,
+//         grant_type: "refresh_token"
+//       };
+//       return Client.refresh_token(URL.OATHU, data)
+//         .then(response => {
+//           store.set("userSession", response);
+//           if (response && response.refresh_token && response.expires_in) {
+//             store.set("expiryTime", Client.tokenExpires(response.expires_in));
+//           }
+//           originalRequest["Authorization"] = "Bearer " + response.access_token;
+//           return originalRequest;
+//         })
+//         .catch(err => {
+//           window.location.replace("/");
+//         });
+//     }
+//     return config;
+//   },
+//   function(err) {
+//     return Promise.reject(err);
+//   }
+// );
 
-axiosCommonInstance.interceptors.response.use(
-  response => {
-    return response;
-  },
-  function(error) {
-    if (error.response.status === 401) {
-      myLog("Access token expired && calling refresh token ...");
-      let userSession = store.get("userSession");
-      let data = {
-        refresh_token: userSession.refresh_token,
-        grant_type: "refresh_token"
-      };
-      return Client.refresh_token(URL.OATHU, data)
-        .then(token_response => {
-          store.set("userSession", token_response);
-          if (
-            token_response &&
-            token_response.refresh_token &&
-            token_response.expires_in
-          ) {
-            store.set(
-              "expiryTime",
-              Client.tokenExpires(token_response.expires_in)
-            );
-          }
-          error.config.headers["Authorization"] =
-            token_response.token_type + " " + token_response.access_token;
-          return Promise.resolve(axiosCommonInstance(error.config));
-        })
-        .catch(err => {
-          myLog("Refresh Token Error", err);
-          window.location.replace("/");
-        });
-    }
-    return Promise.reject(error.response);
-  }
-);
+// axiosCommonInstance.interceptors.response.use(
+//   response => {
+//     return response;
+//   },
+//   function(error) {
+//     if (error.response.status === 401) {
+//       myLog("Access token expired && calling refresh token ...");
+//       let userSession = store.get("userSession");
+//       let data = {
+//         refresh_token: userSession.refresh_token,
+//         grant_type: "refresh_token"
+//       };
+//       return Client.refresh_token(URL.OATHU, data)
+//         .then(token_response => {
+//           store.set("userSession", token_response);
+//           if (
+//             token_response &&
+//             token_response.refresh_token &&
+//             token_response.expires_in
+//           ) {
+//             store.set(
+//               "expiryTime",
+//               Client.tokenExpires(token_response.expires_in)
+//             );
+//           }
+//           error.config.headers["Authorization"] =
+//             token_response.token_type + " " + token_response.access_token;
+//           return Promise.resolve(axiosCommonInstance(error.config));
+//         })
+//         .catch(err => {
+//           myLog("Refresh Token Error", err);
+//           window.location.replace("/");
+//         });
+//     }
+//     return Promise.reject(error.response);
+//   }
+// );
 
 export default class Client {
   static httpHeader(isAccessToken) {

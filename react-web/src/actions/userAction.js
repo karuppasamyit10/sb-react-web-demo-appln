@@ -74,6 +74,18 @@ export function logout(callback) {
   };
 }
 
+export function registerCookie(callback) {
+  Client.get(URL.COOKIE, null, true)
+    .then(response => {
+      console.log(response);
+      myLog("====register cookie response===::::", response);
+      callback(response);
+    })
+    .catch(error => {
+      myLog("====register cookie response===????", error);
+    });
+}
+
 export function userRegistration(object, callback) {
   return function(dispatch) {
     Client.post(URL.REGISTRATION, object, true)
