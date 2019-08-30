@@ -30,7 +30,7 @@ class Upload extends Component {
   };
 
   componentDidMount() {
-    let cookieData = Cookies.read();
+    let cookieData = Cookies.get();
     console.log(cookieData);
   }
 
