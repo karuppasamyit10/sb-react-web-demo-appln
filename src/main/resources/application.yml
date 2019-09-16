@@ -9,36 +9,18 @@ spring:
 #    static-locations:
 #      - file:/home/concertcare/auto-harasow/sb-demo-appln/react-web-app/web-src/build/
   datasource:
-    url: jdbc:mysql://localhost:3306/sb-demo-appln-db?createDatabaseIfNotExist=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull  
+    url: jdbc:mysql://localdocker:3306/sb-demo-appln-db?createDatabaseIfNotExist=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull  
     username: root
     password: root
-#    testWhileIdle: true
     test-while-idle: true
     test-on-borrow: true
     validation-query: SELECT 1
       
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect 
-    database: mysql
-    open-in-view: false
     show-sql: true
     hibernate:
       ddl-auto: update
-      naming:
-        strategy: org.hibernate.cfg.EJB3NamingStrategy
-    properties:
-      hibernate:
-        default_schema: ccare
-      hibernate.id.new_generator_mappings: true
-      hibernate.cache.use_second_level_cache: false
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
-#     hibernate.jdbc.time_zone: IST
-    generate-ddl: true
-  data:
-   jpa:
-     repositories:
-       enabled: true
+      
   mail:
     host: localhost
     port: 587
