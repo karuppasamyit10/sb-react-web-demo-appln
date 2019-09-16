@@ -19,4 +19,5 @@ module.exports = {
   CHANGEPASSWORD: 'changePassword',
   UPDATEPASSWORD: 'updatePassword',
   PROFILE : 'api/user/profile',
+  ADVANCED_SEARCH : 'api/advanced_search'
 }; 

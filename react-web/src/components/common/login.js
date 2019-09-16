@@ -86,7 +86,7 @@ class login extends Component {
       if (!result) {
         this.props.showNotification("username or password wrong", "error");
       } else {
-        this.props.history.push("/dashboard");
+        this.props.history.push(PATH.DASHBOARD);
       }
     });
   };
@@ -146,13 +146,44 @@ class login extends Component {
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">ID</label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        type="email"
+                        ref={this.userNameRef}
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        name="userName"
+                        value={this.state.userName}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["userName"]
+                          ? this.state.error["userName"]
+                          : ""}
+                      </p>
                     </div>
                   </div>
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">Password</label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        type="password"
+                        class="form-control"
+                        ref={this.passwordRef}
+                        id="exampleInputPassword1"
+                        name="password"
+                        value={this.state.password}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["password"]
+                          ? this.state.error["password"]
+                          : ""}
+                      </p>
                     </div>
                   </div>
                   <div class="form-group row no-gutters align-items-center">
@@ -185,12 +216,28 @@ class login extends Component {
                     </div>
                   </div>
                   <div class="form-group text-center mt-5 plain">
-                    <button type="button" class="btn btn-primary btn-lg mr-2">
-                      Sign In
+                    <button
+                      type="button"
+                      onClick={() => this.submit()}
+                      class="btn btn-primary btn-lg mr-2"
+                      disabled={this.state.isdisable ? "disabled" : null}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center"
+                        }}
+                      >
+                        {this.state.isdisable ? <Spinner color="#FFF" /> : null}
+                        Sign In
+                      </div>
                     </button>
+                    <Link to={PATH.REGISTRATION}>
                     <button type="button" class="btn btn-secondary btn-lg">
                       Sign Up
                     </button>
+                    </Link>
                   </div>
                 </div>
               </form>

@@ -11,7 +11,9 @@ import React, { Component } from "react";
 import logo from "../../assets/img/logo.png";
 import store from "store";
 import { connect } from 'react-redux'
+import {PATH} from '../../utils/Constants'
 import { logout } from '../../actions/userAction';
+import {Link} from 'react-router-dom';
 
 class Header extends Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class Header extends Component {
 
   componentDidMount() {
     let token = store.get("userSession");
+    console.log(token);
     this.setState({ token: token });
   }
 
@@ -34,7 +37,7 @@ class Header extends Component {
   };
 
   handleSignIn = () => {
-    this.props.prop.history.push("/");
+    this.props.prop.history.push(PATH.SIGIN);
   };
 
   render() {
@@ -49,7 +52,7 @@ class Header extends Component {
               <div class="container">
                 <a class="navbar-brand hideForAni">
                   <img src={logo} class="img-fluid" style={{curor : 'pointer'}} 
-                  alt="" onClick = {()=>{this.props.prop.history.push("/dashboard");}} />
+                  alt="" onClick = {()=>{this.props.prop.history.push(PATH.DASHBOARD);}} />
                 </a>
               </div>
             </div>
@@ -105,9 +108,9 @@ class Header extends Component {
                   <div class="row no-gutters">
                     <ul class="navbar-nav nav-center mr-auto">
                       <li class="nav-item active">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.ADVANCED_SEARCH}>
                           Car Shop
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="#">

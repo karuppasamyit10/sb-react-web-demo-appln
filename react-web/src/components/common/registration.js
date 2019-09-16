@@ -241,7 +241,23 @@ class registration extends Component {
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">ID</label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        type="text"
+                        ref={this.userNameRef}
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        name="userName"
+                        value={this.state.userName}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["userName"]
+                          ? this.state.error["userName"]
+                          : ""}
+                      </p>
                       <small class="form-text text-muted">
                         Please enter valid ID again. (Cannot use the same 4
                         letters continuously and some words, and ‘-’, ‘_’.)
@@ -251,7 +267,26 @@ class registration extends Component {
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">Password</label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        value=""
+                        type="password"
+                        class="form-control"
+                        ref={this.passwordRef}
+                        id="exampleInputPassword1"
+                        name="password"
+                        value={this.state.password}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["password"]
+                          ? this.state.error["password"]
+                          : ""}
+                      </p>
+
                       <small class="form-text text-muted">
                         6~16 characters with letters(a-z), numbers, and special
                         letters.
@@ -263,7 +298,22 @@ class registration extends Component {
                       Confirm Password
                     </label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        type="password"
+                        class="form-control"
+                        ref={this.confirmPasswordRef}
+                        id="exampleInputPassword2"
+                        name="confirmPassword"
+                        value={this.state.confirmPassword}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["confirmPassword"]
+                          ? this.state.error["confirmPassword"]
+                          : ""}
+                      </p>
                       <small class="form-text text-muted">
                         Please enter your password again.
                       </small>
@@ -272,7 +322,24 @@ class registration extends Component {
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">Name</label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        class="form-control"
+                        ref={this.nameRef}
+                        id="nameInput"
+                        name="name"
+                        value={this.state.name}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["name"]
+                          ? this.state.error["name"]
+                          : ""}
+                      </p>
+
                       <small class="form-text text-muted">
                         Please enter English characters only.
                       </small>
@@ -281,13 +348,50 @@ class registration extends Component {
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">Email</label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        value=""
+                        type="email"
+                        ref={this.emailRef}
+                        class="form-control"
+                        id="exampleInputEmail2"
+                        aria-describedby="emailHelp"
+                        name="email"
+                        value={this.state.email}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["email"]
+                          ? this.state.error["email"]
+                          : ""}
+                      </p>
                     </div>
                   </div>
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">Mobile</label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        class="form-control"
+                        type="text"
+                        ref={this.mobileRef}
+                        id="exampleInputPassword2"
+                        // placeholder="enter password"
+                        name="mobile"
+                        pattern="[0-9]"
+                        maxLength="10"
+                        value={this.state.mobile}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["mobile"]
+                          ? this.state.error["mobile"]
+                          : ""}
+                      </p>
                     </div>
                   </div>
                   <div class="form-group row no-gutters align-items-center">
@@ -317,7 +421,22 @@ class registration extends Component {
                     </div>
                   </div>
                   <div class="form-group text-center mt-5 plain">
-                    <button type="button" class="btn btn-primary btn-lg">
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-lg"
+                      onClick={() => this.submit()}
+                      disabled={this.state.isdisable ? "disabled" : null}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center"
+                        }}
+                      >
+                        {this.state.isdisable ? <Spinner color="#FFF" /> : null}
+                        Register
+                      </div>
                       Complete
                     </button>
                   </div>

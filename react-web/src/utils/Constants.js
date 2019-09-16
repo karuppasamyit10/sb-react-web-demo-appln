@@ -16,11 +16,12 @@ module.exports = {
       INDEX: '/',
       SIGIN : '/signin',
       REGISTRATION: '/registration',
-      DASHBOARD: '/dashboard',
+      DASHBOARD: '/',
       UPDATEPASSWORD: '/update_password',
       CHANGEPASSWORD: '/change_password',
       FORGET: '/forgot_password',
-      SEARCH : '/dashboard/search'
+      SEARCH : '/dashboard/search',
+      ADVANCED_SEARCH : '/dashboard/advanced-search'
     },
 
     ACTION_TYPES: {
