@@ -85,15 +85,7 @@ sourceSets {
 
 jar {
     baseName = 'sb-demo-appln'
-    version =  '0.0.1'
-}
-
-sourceSets {
-    main {
-        resources {
-          	exclude '**/build/*'
-        }
-    }
+    version =  ''
 }
 
 repositories {

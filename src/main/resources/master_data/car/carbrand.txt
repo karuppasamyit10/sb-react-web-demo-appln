@@ -1,0 +1,31 @@
+Hyundai                          
+Kia                          
+GM Daewoo (Chevrolet)                          
+Renault Samsung                          
+Ssangyong                          
+Audi                          
+BMW                          
+Cadillac                          
+Chrysler                          
+Citroen                          
+Dodge                          
+Ford                          
+Honda                          
+Infiniti                          
+Jaguar                          
+Jeep                          
+Land Rover                          
+Lexus                          
+Lincoln                          
+Maserati                          
+Mercedes Benz                          
+Mini                          
+Mitsubishi                          
+Nissan                          
+Peugeot                          
+Saab                          
+Toyota                          
+Volkswagen                          
+Volvo                          
+BAIC YINXIANG                          
+Others

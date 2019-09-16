@@ -1,0 +1,6 @@
+Automatic
+Manual
+Automanual
+CVT
+Unspecific
+DCT

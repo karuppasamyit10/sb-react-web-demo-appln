@@ -20,7 +20,7 @@ public class Country {
 	@Column(name="countryId")
 	private long countryId;
 	
-	@Column(name="countryName")
+	@Column(name="countryName", nullable=false)
 	private String countryName;
 	
 	@Column(name="shortName")
