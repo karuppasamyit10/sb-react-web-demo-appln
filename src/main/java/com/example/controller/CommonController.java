@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,6 +58,34 @@ public class CommonController {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>userRegistration<==");
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller userRegistration", null);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/master/country", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getCountries(@RequestParam(required=false, defaultValue="0") long countryId) throws Exception {
+		logger.info("Controller==>Enter==>getCountries<==");
+		String methodName = "GET COUNTRIES";
+		try { 
+			return commonDao.getCountries(countryId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>getCountries<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCountries", null);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/master/car/brand", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getCarBrands(@RequestParam(required=false, defaultValue="0") long carBrandId) throws Exception {
+		logger.info("Controller==>Enter==>getCarBrands<==");
+		String methodName = "GET CAR BRANDS";
+		try { 
+			return commonDao.getCarBrands(carBrandId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>getCarBrands<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarBrands", null);
 		}
 	}
 }

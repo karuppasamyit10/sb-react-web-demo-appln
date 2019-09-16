@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.example.entity.Country;
 
 @Repository
-public interface CountryRepository extends JpaRepository<Country, Long> {
+public interface CarBrandRepository extends JpaRepository<Country, Long> {
 
 	Set<Country> findByIsDeletedOrderByCountryNameAsc(int isDeleted);
 	

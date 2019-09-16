@@ -20,4 +20,20 @@ public interface CommonDao {
 	 * @throws Exception
 	 */
 	Map<?, ?> userRegistration(UserRegistrationBean userRegistrationBean, String userAgent) throws Exception;
+
+	/**
+	 * Get Countries
+	 * @param countryId
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */
+	Map<?, ?> getCountries(long countryId) throws Exception;
+
+	/**
+	 * Get Car Brands
+	 * @param carBrandId
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */
+	Map<?, ?> getCarBrands(long carBrandId)throws Exception;
 }

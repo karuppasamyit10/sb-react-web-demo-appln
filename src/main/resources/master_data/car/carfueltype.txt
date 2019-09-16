@@ -1,0 +1,10 @@
+Gasoline
+Diesel
+CNG
+Electric
+Hybrid Eletric
+Biodiesel
+LPG
+Gasoline LPG
+LPG Electric
+Other

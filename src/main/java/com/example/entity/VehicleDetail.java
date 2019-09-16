@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,8 +16,7 @@ public class VehicleDetail {
 	@Column(name="vehicle_id")
 	private long vehicleId;
 	
-	@ManyToOne
-	@JoinColumn(name="vehicle_category_id")
+	@Column(name="vehicle_category_id")
 	private long vehicleCategoryId;
 	
 	@Column(name="cityName")
@@ -28,35 +25,60 @@ public class VehicleDetail {
 	@Column(name="isDeleted")
 	private int isDeleted;
 
-	public int getCityId() {
-		return cityId;
+	/**
+	 * @return the vehicleId
+	 */
+	public long getVehicleId() {
+		return vehicleId;
 	}
 
-	public void setCityId(int cityId) {
-		this.cityId = cityId;
+	/**
+	 * @param vehicleId the vehicleId to set
+	 */
+	public void setVehicleId(long vehicleId) {
+		this.vehicleId = vehicleId;
 	}
 
-	public int getStateId() {
-		return stateId;
+	/**
+	 * @return the vehicleCategoryId
+	 */
+	public long getVehicleCategoryId() {
+		return vehicleCategoryId;
 	}
 
-	public void setStateId(int stateId) {
-		this.stateId = stateId;
+	/**
+	 * @param vehicleCategoryId the vehicleCategoryId to set
+	 */
+	public void setVehicleCategoryId(long vehicleCategoryId) {
+		this.vehicleCategoryId = vehicleCategoryId;
 	}
 
+	/**
+	 * @return the cityName
+	 */
 	public String getCityName() {
 		return cityName;
 	}
 
+	/**
+	 * @param cityName the cityName to set
+	 */
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
 
+	/**
+	 * @return the isDeleted
+	 */
 	public int getIsDeleted() {
 		return isDeleted;
 	}
 
+	/**
+	 * @param isDeleted the isDeleted to set
+	 */
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
 }
