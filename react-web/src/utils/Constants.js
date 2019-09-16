@@ -14,6 +14,7 @@ module.exports = {
 
     PATH: {
       INDEX: '/',
+      SIGIN : '/signin',
       REGISTRATION: '/registration',
       DASHBOARD: '/dashboard',
       UPDATEPASSWORD: '/update_password',

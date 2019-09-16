@@ -22,4 +22,15 @@
 .footer .flinks li a:hover {
   color: #fff;
 }
+
+.footer .fsocial a {
+  color: #fff;
+  display: inline-block;
+  padding: 0px 5px;
+  font-size: 16px;
+}
+
+.footer .fsocial a:hover {
+  color: #00a0dd;
+}
 /*# sourceMappingURL=footer.css.map */

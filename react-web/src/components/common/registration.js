@@ -3,6 +3,7 @@ import { Spinner } from "react-activity";
 import "react-activity/dist/react-activity.css";
 import { connect } from "react-redux";
 import store from "store";
+import { AppWrapper } from "../public/AppWrapper";
 import { logInUser, userRegistration } from "../../actions/userAction";
 import { showNotification } from "../../actions/NotificationAction";
 import { PATH } from "../../utils/Constants";
@@ -176,10 +177,10 @@ class registration extends Component {
     if (submit) {
       this.setState({ isdisable: true });
       this.props.registration(inputObject, response => {
-        if(response && response.response_code == 0){
-          this.setState({isdisable : false});
-          this.props.showNotification('sucessfully registered','success');
-          this.props.history.push('/');
+        if (response && response.response_code == 0) {
+          this.setState({ isdisable: false });
+          this.props.showNotification("sucessfully registered", "success");
+          this.props.history.push("/");
         }
       });
     }
@@ -187,174 +188,313 @@ class registration extends Component {
 
   render() {
     return (
-      <div className="custom">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-10 col-sm-7 col-lg-5 login-bg-white login-sec">
-              <h2 className="text-center" style={{ color: "#555" }}>
-                ACCOUNT REGISTRATION
-              </h2>
-              <div class="form-group">
-                <label for="exampleInputEmail1" style={{ color: "#555" }}>
-                  Username
-                </label>
-                <input
-                  type="email"
-                  ref={this.userNameRef}
-                  class="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  // placeholder="enter username"
-                  name="userName"
-                  value={this.state.userName}
-                  onChange={e => {
-                    this.handleOnChange(e);
-                  }}
-                />
-                <p style={{ color: "red" }}>
-                  {this.state.error["userName"]
-                    ? this.state.error["userName"]
-                    : ""}
-                </p>
+      <section class="register-wrap spacerTop">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="sidelinks">
+                <div class="slhead text-center medium head3">Sign In</div>
+                <ul class="sllinks medium">
+                  <li class="active">
+                    <a href="register.html">
+                      Register ID{" "}
+                      <span>
+                        <i class="fas fa-chevron-right"></i>
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <Link to={PATH.SIGIN}>
+                      Sign In{" "}
+                      <span>
+                        <i class="fas fa-chevron-right"></i>
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={PATH.REGISTRATION}>
+                      ID Search
+                      <span>
+                        <i class="fas fa-chevron-right"></i>
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={PATH.REGISTRATION}>
+                      Password Search
+                      <span>
+                        <i class="fas fa-chevron-right"></i>
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
               </div>
-
-              <div class="form-group">
-                <label for="exampleInputEmail2" style={{ color: "#555" }}>
-                  Email
-                </label>
-                <input
-                  type="email"
-                  ref={this.emailRef}
-                  class="form-control"
-                  id="exampleInputEmail2"
-                  aria-describedby="emailHelp"
-                  // placeholder="enter username"
-                  name="email"
-                  value={this.state.email}
-                  onChange={e => {
-                    this.handleOnChange(e);
-                  }}
-                />
-                <p style={{ color: "red" }}>
-                  {this.state.error["email"] ? this.state.error["email"] : ""}
-                </p>
-              </div>
-
-              <div class="form-group">
-                <label for="exampleInputPassword1" style={{ color: "#555" }}>
-                  Password
-                </label>
-                <input
-                  type="password"
-                  class="form-control"
-                  ref={this.passwordRef}
-                  id="exampleInputPassword1"
-                  // placeholder="enter password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={e => {
-                    this.handleOnChange(e);
-                  }}
-                />
-                <p style={{ color: "red" }}>
-                  {this.state.error["password"]
-                    ? this.state.error["password"]
-                    : ""}
-                </p>
-              </div>
-
-              <div class="form-group">
-                <label for="exampleInputPassword1" style={{ color: "#555" }}>
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  class="form-control"
-                  ref={this.confirmPasswordRef}
-                  id="exampleInputPassword2"
-                  // placeholder="enter password"
-                  name="confirmPassword"
-                  value={this.state.confirmPassword}
-                  onChange={e => {
-                    this.handleOnChange(e);
-                  }}
-                />
-                <p style={{ color: "red" }}>
-                  {this.state.error["confirmPassword"]
-                    ? this.state.error["confirmPassword"]
-                    : ""}
-                </p>
-              </div>
-
-              <div class="form-group">
-                <label for="exampleInputPassword1" style={{ color: "#555" }}>
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  ref={this.nameRef}
-                  id="nameInput"
-                  // placeholder="enter password"
-                  name="name"
-                  value={this.state.name}
-                  onChange={e => {
-                    this.handleOnChange(e);
-                  }}
-                />
-                <p style={{ color: "red" }}>
-                  {this.state.error["name"] ? this.state.error["name"] : ""}
-                </p>
-              </div>
-
-              <div class="form-group">
-                <label for="exampleInputPassword1" style={{ color: "#555" }}>
-                  Mobile
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  ref={this.mobileRef}
-                  id="exampleInputPassword2"
-                  // placeholder="enter password"
-                  name="mobile"
-                  pattern="[0-9]"
-                  maxLength="10"
-                  value={this.state.mobile}
-                  onChange={e => {
-                    this.handleOnChange(e);
-                  }}
-                />
-                <p style={{ color: "red" }}>
-                  {this.state.error["mobile"] ? this.state.error["mobile"] : ""}
-                </p>
-              </div>
-
-              <div className="text-center">
-                <button
-                  onClick={() => this.submit()}
-                  className="btn btn-primary mt-5 text-center login100-form-btn"
-                  disabled={this.state.isdisable ? "disabled" : null}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}
-                  >
-                    {this.state.isdisable ? <Spinner color="#FFF" /> : null}
-                    Register
+            </div>
+            <div class="col-md-9 form-wrap">
+              <h1 class="form-header">Register ID</h1>
+              <p class="lead">
+                Joinfree at Harasow, the No.1 Trading Platform for Korean Used
+                Cars.
+              </p>
+              <form class="row no-gutters form-rows">
+                <div class="col-lg-12">
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">ID</label>
+                    <div class="col-md-9 form-right">
+                      <input type="text" class="form-control" value="" />
+                      <small class="form-text text-muted">
+                        Please enter valid ID again. (Cannot use the same 4
+                        letters continuously and some words, and ‘-’, ‘_’.)
+                      </small>
+                    </div>
                   </div>
-                </button>
-              </div>
-              <div className="text-center mt-3 mb-3">
-                <Link to={PATH.INDEX}>Back to signin</Link>
-              </div>
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">Password</label>
+                    <div class="col-md-9 form-right">
+                      <input type="text" class="form-control" value="" />
+                      <small class="form-text text-muted">
+                        6~16 characters with letters(a-z), numbers, and special
+                        letters.
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">
+                      Confirm Password
+                    </label>
+                    <div class="col-md-9 form-right">
+                      <input type="text" class="form-control" value="" />
+                      <small class="form-text text-muted">
+                        Please enter your password again.
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">Name</label>
+                    <div class="col-md-9 form-right">
+                      <input type="text" class="form-control" value="" />
+                      <small class="form-text text-muted">
+                        Please enter English characters only.
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">Email</label>
+                    <div class="col-md-9 form-right">
+                      <input type="text" class="form-control" value="" />
+                    </div>
+                  </div>
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">Mobile</label>
+                    <div class="col-md-9 form-right">
+                      <input type="text" class="form-control" value="" />
+                    </div>
+                  </div>
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">Country</label>
+                    <div class="col-md-9 form-right">
+                      <select class="form-control">
+                        <option value="" selected>
+                          Select Country
+                        </option>
+                        <option value="">Loading...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">City</label>
+                    <div class="col-md-9 form-right">
+                      <input type="text" class="form-control" value="" />
+                    </div>
+                  </div>
+                  <div class="form-group row no-gutters align-items-center">
+                    <label class="col-md-3 bold form-left">Terms of Use</label>
+                    <div class="col-md-9 form-right checkboxwrap">
+                      <input type="checkbox" class="form-check-input" />
+                      <label class="form-check-label">
+                        I agree with <a href="javascript:;">Terms of Use</a>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group text-center mt-5 plain">
+                    <button type="button" class="btn btn-primary btn-lg">
+                      Complete
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+      // <div className="custom">
+      //   <div className="container">
+      //     <div className="row justify-content-center">
+      //       <div className="col-10 col-sm-7 col-lg-5 login-bg-white login-sec">
+      //         <h2 className="text-center" style={{ color: "#555" }}>
+      //           ACCOUNT REGISTRATION
+      //         </h2>
+      //         <div class="form-group">
+      //           <label for="exampleInputEmail1" style={{ color: "#555" }}>
+      //             Username
+      //           </label>
+      //           <input
+      //             type="email"
+      //             ref={this.userNameRef}
+      //             class="form-control"
+      //             id="exampleInputEmail1"
+      //             aria-describedby="emailHelp"
+      //             // placeholder="enter username"
+      //             name="userName"
+      //             value={this.state.userName}
+      //             onChange={e => {
+      //               this.handleOnChange(e);
+      //             }}
+      //           />
+      //           <p style={{ color: "red" }}>
+      //             {this.state.error["userName"]
+      //               ? this.state.error["userName"]
+      //               : ""}
+      //           </p>
+      //         </div>
+
+      //         <div class="form-group">
+      //           <label for="exampleInputEmail2" style={{ color: "#555" }}>
+      //             Email
+      //           </label>
+      //           <input
+      //             type="email"
+      //             ref={this.emailRef}
+      //             class="form-control"
+      //             id="exampleInputEmail2"
+      //             aria-describedby="emailHelp"
+      //             // placeholder="enter username"
+      //             name="email"
+      //             value={this.state.email}
+      //             onChange={e => {
+      //               this.handleOnChange(e);
+      //             }}
+      //           />
+      //           <p style={{ color: "red" }}>
+      //             {this.state.error["email"] ? this.state.error["email"] : ""}
+      //           </p>
+      //         </div>
+
+      //         <div class="form-group">
+      //           <label for="exampleInputPassword1" style={{ color: "#555" }}>
+      //             Password
+      //           </label>
+      //           <input
+      //             type="password"
+      //             class="form-control"
+      //             ref={this.passwordRef}
+      //             id="exampleInputPassword1"
+      //             // placeholder="enter password"
+      //             name="password"
+      //             value={this.state.password}
+      //             onChange={e => {
+      //               this.handleOnChange(e);
+      //             }}
+      //           />
+      //           <p style={{ color: "red" }}>
+      //             {this.state.error["password"]
+      //               ? this.state.error["password"]
+      //               : ""}
+      //           </p>
+      //         </div>
+
+      //         <div class="form-group">
+      //           <label for="exampleInputPassword1" style={{ color: "#555" }}>
+      //             Confirm Password
+      //           </label>
+      //           <input
+      //             type="password"
+      //             class="form-control"
+      //             ref={this.confirmPasswordRef}
+      //             id="exampleInputPassword2"
+      //             // placeholder="enter password"
+      //             name="confirmPassword"
+      //             value={this.state.confirmPassword}
+      //             onChange={e => {
+      //               this.handleOnChange(e);
+      //             }}
+      //           />
+      //           <p style={{ color: "red" }}>
+      //             {this.state.error["confirmPassword"]
+      //               ? this.state.error["confirmPassword"]
+      //               : ""}
+      //           </p>
+      //         </div>
+
+      //         <div class="form-group">
+      //           <label for="exampleInputPassword1" style={{ color: "#555" }}>
+      //             Full Name
+      //           </label>
+      //           <input
+      //             type="text"
+      //             class="form-control"
+      //             ref={this.nameRef}
+      //             id="nameInput"
+      //             // placeholder="enter password"
+      //             name="name"
+      //             value={this.state.name}
+      //             onChange={e => {
+      //               this.handleOnChange(e);
+      //             }}
+      //           />
+      //           <p style={{ color: "red" }}>
+      //             {this.state.error["name"] ? this.state.error["name"] : ""}
+      //           </p>
+      //         </div>
+
+      //         <div class="form-group">
+      //           <label for="exampleInputPassword1" style={{ color: "#555" }}>
+      //             Mobile
+      //           </label>
+      //           <input
+      //             type="text"
+      //             class="form-control"
+      //             ref={this.mobileRef}
+      //             id="exampleInputPassword2"
+      //             // placeholder="enter password"
+      //             name="mobile"
+      //             pattern="[0-9]"
+      //             maxLength="10"
+      //             value={this.state.mobile}
+      //             onChange={e => {
+      //               this.handleOnChange(e);
+      //             }}
+      //           />
+      //           <p style={{ color: "red" }}>
+      //             {this.state.error["mobile"] ? this.state.error["mobile"] : ""}
+      //           </p>
+      //         </div>
+
+      //         <div className="text-center">
+      //           <button
+      //             onClick={() => this.submit()}
+      //             className="btn btn-primary mt-5 text-center login100-form-btn"
+      //             disabled={this.state.isdisable ? "disabled" : null}
+      //           >
+      //             <div
+      //               style={{
+      //                 display: "flex",
+      //                 alignItems: "center",
+      //                 justifyContent: "center"
+      //               }}
+      //             >
+      //               {this.state.isdisable ? <Spinner color="#FFF" /> : null}
+      //               Register
+      //             </div>
+      //           </button>
+      //         </div>
+      //         <div className="text-center mt-3 mb-3">
+      //           <Link to={PATH.INDEX}>Back to signin</Link>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </div>
     );
   }
 }
@@ -375,7 +515,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(registration);
+export default AppWrapper(registration, null, mapDispatchToProps);
