@@ -12,19 +12,36 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="master_car_brand")
-public class CarBrand {
+@Table(name="master_car_model")
+public class CarModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="carModelId")
+	private long carModelId;
+	
 	@Column(name="carBrandId")
 	private long carBrandId;
 	
-	@Column(name="carBrand", nullable=false)
-	private String carBrand;
+	@Column(name="carModel", nullable=false)
+	private String carModel;
 	
 	@Column(name="isDeleted")
 	private int isDeleted;
+
+	/**
+	 * @return the carModelId
+	 */
+	public long getCarModelId() {
+		return carModelId;
+	}
+
+	/**
+	 * @param carModelId the carModelId to set
+	 */
+	public void setCarModelId(long carModelId) {
+		this.carModelId = carModelId;
+	}
 
 	/**
 	 * @return the carBrandId
@@ -41,17 +58,17 @@ public class CarBrand {
 	}
 
 	/**
-	 * @return the carBrand
+	 * @return the carModel
 	 */
-	public String getCarBrand() {
-		return carBrand;
+	public String getCarModel() {
+		return carModel;
 	}
 
 	/**
-	 * @param carBrand the carBrand to set
+	 * @param carModel the carModel to set
 	 */
-	public void setCarBrand(String carBrand) {
-		this.carBrand = carBrand;
+	public void setCarModel(String carModel) {
+		this.carModel = carModel;
 	}
 
 	/**

@@ -13,11 +13,14 @@ public class MemberShip {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="memberShip_id")
+	@Column(name="memberShipId")
 	private long MemberShipId;
 	
-	@Column(name="membership_type")
+	@Column(name="membershipType")
 	private String membershipType;
+
+	@Column(name="isDeleted")
+	private int isDeleted;
 
 	/**
 	 * @return the memberShipId
@@ -45,6 +48,20 @@ public class MemberShip {
 	 */
 	public void setMembershipType(String membershipType) {
 		this.membershipType = membershipType;
+	}
+
+	/**
+	 * @return the isDeleted
+	 */
+	public int getIsDeleted() {
+		return isDeleted;
+	}
+
+	/**
+	 * @param isDeleted the isDeleted to set
+	 */
+	public void setIsDeleted(int isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 }

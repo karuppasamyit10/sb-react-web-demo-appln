@@ -14,5 +14,4 @@ public interface CountryRepository extends JpaRepository<Country, Long> {
 	
 	Set<Country> findByCountryIdAndIsDeleted(long countryId, int isDeleted);
 	
-
 }

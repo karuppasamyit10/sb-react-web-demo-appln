@@ -13,11 +13,11 @@ public class VehicleDetail {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="vehicle_id")
+	@Column(name="vehicleId")
 	private long vehicleId;
 	
-	@Column(name="vehicle_category_id")
-	private long vehicleCategoryId;
+	@Column(name="vehicleTypeId")
+	private long vehicleTypeId;
 	
 	@Column(name="cityName")
 	private String cityName;
@@ -40,17 +40,17 @@ public class VehicleDetail {
 	}
 
 	/**
-	 * @return the vehicleCategoryId
+	 * @return the vehicleTypeId
 	 */
-	public long getVehicleCategoryId() {
-		return vehicleCategoryId;
+	public long getVehicleTypeId() {
+		return vehicleTypeId;
 	}
 
 	/**
-	 * @param vehicleCategoryId the vehicleCategoryId to set
+	 * @param vehicleTypeId the vehicleTypeId to set
 	 */
-	public void setVehicleCategoryId(long vehicleCategoryId) {
-		this.vehicleCategoryId = vehicleCategoryId;
+	public void setVehicleTypeId(long vehicleTypeId) {
+		this.vehicleTypeId = vehicleTypeId;
 	}
 
 	/**

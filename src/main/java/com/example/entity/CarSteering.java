@@ -13,45 +13,45 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="master_car_brand")
-public class CarBrand {
+public class CarSteering {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="carBrandId")
-	private long carBrandId;
+	@Column(name="carSteeringId")
+	private long carSteeringId;
 	
-	@Column(name="carBrand", nullable=false)
-	private String carBrand;
+	@Column(name="carSteeringType", nullable=false)
+	private String carSteeringType;
 	
 	@Column(name="isDeleted")
 	private int isDeleted;
 
 	/**
-	 * @return the carBrandId
+	 * @return the carSteeringId
 	 */
-	public long getCarBrandId() {
-		return carBrandId;
+	public long getCarSteeringId() {
+		return carSteeringId;
 	}
 
 	/**
-	 * @param carBrandId the carBrandId to set
+	 * @param carSteeringId the carSteeringId to set
 	 */
-	public void setCarBrandId(long carBrandId) {
-		this.carBrandId = carBrandId;
+	public void setCarSteeringId(long carSteeringId) {
+		this.carSteeringId = carSteeringId;
 	}
 
 	/**
-	 * @return the carBrand
+	 * @return the carSteeringType
 	 */
-	public String getCarBrand() {
-		return carBrand;
+	public String getCarSteeringType() {
+		return carSteeringType;
 	}
 
 	/**
-	 * @param carBrand the carBrand to set
+	 * @param carSteeringType the carSteeringType to set
 	 */
-	public void setCarBrand(String carBrand) {
-		this.carBrand = carBrand;
+	public void setCarSteeringType(String carSteeringType) {
+		this.carSteeringType = carSteeringType;
 	}
 
 	/**

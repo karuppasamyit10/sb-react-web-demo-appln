@@ -13,10 +13,10 @@ public class VehicleType {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="vehicle_type_id")
+	@Column(name="vehicleTypeId")
 	private long vehicleTypeId;
 	
-	@Column(name="vehicle_type")
+	@Column(name="vehicleType")
 	private String vehicleType;
 
 	/**
@@ -46,5 +46,5 @@ public class VehicleType {
 	public void setVehicleType(String vehicleType) {
 		this.vehicleType = vehicleType;
 	}
-	
+
 }

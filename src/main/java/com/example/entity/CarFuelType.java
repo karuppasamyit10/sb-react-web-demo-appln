@@ -12,46 +12,46 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="master_truck_brand")
-public class TruckBrand {
+@Table(name="master_car_fueltype")
+public class CarFuelType {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="carBrandId")
-	private long carBrandId;
+	@Column(name="carFuelTypeId")
+	private long carFuelTypeId;
 	
-	@Column(name="carBrandName", nullable=false)
-	private String carBrandName;
+	@Column(name="carFuelType", nullable=false)
+	private String carFuelType;
 	
 	@Column(name="isDeleted")
 	private int isDeleted;
 
 	/**
-	 * @return the carBrandId
+	 * @return the carFuelTypeId
 	 */
-	public long getCarBrandId() {
-		return carBrandId;
+	public long getCarFuelTypeId() {
+		return carFuelTypeId;
 	}
 
 	/**
-	 * @param carBrandId the carBrandId to set
+	 * @param carFuelTypeId the carFuelTypeId to set
 	 */
-	public void setCarBrandId(long carBrandId) {
-		this.carBrandId = carBrandId;
+	public void setCarFuelTypeId(long carFuelTypeId) {
+		this.carFuelTypeId = carFuelTypeId;
 	}
 
 	/**
-	 * @return the carBrandName
+	 * @return the carFuelType
 	 */
-	public String getCarBrandName() {
-		return carBrandName;
+	public String getCarFuelType() {
+		return carFuelType;
 	}
 
 	/**
-	 * @param carBrandName the carBrandName to set
+	 * @param carFuelType the carFuelType to set
 	 */
-	public void setCarBrandName(String carBrandName) {
-		this.carBrandName = carBrandName;
+	public void setCarFuelType(String carFuelType) {
+		this.carFuelType = carFuelType;
 	}
 
 	/**
