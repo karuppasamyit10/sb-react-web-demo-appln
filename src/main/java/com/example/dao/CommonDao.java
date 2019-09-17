@@ -11,12 +11,21 @@ import com.example.bean.UserRegistrationBean;
 public interface CommonDao {
 
 	Map<?, ?> userRegistration(UserRegistrationBean userRegistrationBean, String userAgent) throws Exception;
+	
+	Map<?, ?> getCarMasterData() throws Exception;
 
-	Map<?, ?> getCountries(long countryId) throws Exception;
+//	Map<?, ?> getCountries(long countryId) throws Exception;
 
-	Map<?, ?> getCarBrands(long carBrandId)throws Exception;
+//	Map<?, ?> getCarBrands(long carBrandId)throws Exception;
+//
+//	Map<?, ?> getCarModels(long carBrandId, long carModelId) throws Exception;
+//	
+//	Map<?, ?> getCarModelsDetails(long carModelId, long carModelDetailId)throws Exception;
+//
+//	Map<?, ?> getCarFuelTypes(long carFuelTypeId) throws Exception;
+//
+//	Map<?, ?> getCarSteerings(long carSteeringId) throws Exception;
+	
 
-	Map<?, ?> getCarModels(long carBrandId, long carModelId) throws Exception;
-
-	Map<?, ?> getCarFuelTypes(long carFuelTypeId) throws Exception;
+	
 }

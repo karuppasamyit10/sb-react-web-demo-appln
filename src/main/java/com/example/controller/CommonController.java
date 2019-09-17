@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -61,95 +60,127 @@ public class CommonController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/master/country", produces = "application/json")
+	//Get Car Master_data
+	@RequestMapping(method = RequestMethod.GET, value = "/car/master_data", produces = "application/json")
 	@ResponseBody
-	public Map<?, ?> getCountries(@RequestParam(required=false, defaultValue="0") long countryId) throws Exception {
-		logger.info("Controller==>Enter==>getCountries<==");
-		String methodName = "GET COUNTRIES";
+	public Map<?, ?> getCarMasterData() throws Exception {
+		logger.info("Controller==>Enter==>getCarMasterData<==");
+		String methodName = "GET CAR MASTER DATA";
 		try { 
-			return commonDao.getCountries(countryId);
+			return commonDao.getCarMasterData();
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.info("Controller==>Exception==>getCountries<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCountries", null);
+			logger.info("Controller==>Exception==>getCarMasterData<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarMasterData", null);
 		}
 	}
 	
-	//Get Car Brand
-	@RequestMapping(method = RequestMethod.GET, value = "/master/car/brand", produces = "application/json")
-	@ResponseBody
-	public Map<?, ?> getCarBrands(@RequestParam(required=false, defaultValue="0") long carBrandId) throws Exception {
-		logger.info("Controller==>Enter==>getCarBrands<==");
-		String methodName = "GET CAR BRANDS";
-		try { 
-			return commonDao.getCarBrands(carBrandId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info("Controller==>Exception==>getCarBrands<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarBrands", null);
-		}
-	}
-	//Get Car Model
-	@RequestMapping(method = RequestMethod.GET, value = "/master/car/model", produces = "application/json")
-	@ResponseBody
-	public Map<?, ?> getCarModels(@RequestParam(required=false, defaultValue="0") long carBrandId,
-			@RequestParam(required=false, defaultValue="0") long carModelId) throws Exception {
-		logger.info("Controller==>Enter==>getCarModels<==");
-		String methodName = "GET CAR MODELS";
-		try { 
-			return commonDao.getCarModels(carBrandId, carModelId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info("Controller==>Exception==>getCarModels<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarModels", null);
-		}
-	}
 	
-	//Get Car Model Detail
-	@RequestMapping(method = RequestMethod.GET, value = "/master/car/model", produces = "application/json")
-	@ResponseBody
-	public Map<?, ?> getCarModels(@RequestParam(required=false, defaultValue="0") long carBrandId,
-			@RequestParam(required=false, defaultValue="0") long carModelId) throws Exception {
-		logger.info("Controller==>Enter==>getCarModels<==");
-		String methodName = "GET CAR MODELS";
-		try { 
-			return commonDao.getCarModels(carBrandId, carModelId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info("Controller==>Exception==>getCarModels<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarModels", null);
-		}
-	}
-	
-	//Get Car Fuel Type
-	@RequestMapping(method = RequestMethod.GET, value = "/master/car/fueltype", produces = "application/json")
-	@ResponseBody
-	public Map<?, ?> getCarFuelTypes(@RequestParam(required=false, defaultValue="0") long carFuelTypeId) throws Exception {
-		logger.info("Controller==>Enter==>getCarFuelTypes<==");
-		String methodName = "GET CAR FUELTYPES";
-		try { 
-			return commonDao.getCarFuelTypes(carFuelTypeId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info("Controller==>Exception==>getCarFuelTypes<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarFuelTypes", null);
-		}
-	}
-	//Get Car Steering Type
-	@RequestMapping(method = RequestMethod.GET, value = "/master/car/fueltype", produces = "application/json")
-	@ResponseBody
-	public Map<?, ?> getCarFuelTypes(@RequestParam(required=false, defaultValue="0") long carFuelTypeId) throws Exception {
-		logger.info("Controller==>Enter==>getCarFuelTypes<==");
-		String methodName = "GET CAR FUELTYPES";
-		try { 
-			return commonDao.getCarFuelTypes(carFuelTypeId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info("Controller==>Exception==>getCarFuelTypes<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarFuelTypes", null);
-		}
-	}
-	//Get Car Transmission
-	//Get Members
-	//Get country
+//	@RequestMapping(method = RequestMethod.GET, value = "/country", produces = "application/json")
+//	@ResponseBody
+//	public Map<?, ?> getCountries(@RequestParam(required=false, defaultValue="0") long countryId) throws Exception {
+//		logger.info("Controller==>Enter==>getCountries<==");
+//		String methodName = "GET COUNTRIES";
+//		try { 
+//			return commonDao.getCountries(countryId);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.info("Controller==>Exception==>getCountries<==");
+//			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCountries", null);
+//		}
+//	}
+//
+//	//Get Car Brand
+//	@RequestMapping(method = RequestMethod.GET, value = "/car/brand", produces = "application/json")
+//	@ResponseBody
+//	public Map<?, ?> getCarBrands(@RequestParam(required=false, defaultValue="0") long carBrandId) throws Exception {
+//		logger.info("Controller==>Enter==>getCarBrands<==");
+//		String methodName = "GET CAR BRANDS";
+//		try { 
+//			return commonDao.getCarBrands(carBrandId);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.info("Controller==>Exception==>getCarBrands<==");
+//			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarBrands", null);
+//		}
+//	}
+//	
+//	//Get Car Model
+//	@RequestMapping(method = RequestMethod.GET, value = "/car/model", produces = "application/json")
+//	@ResponseBody
+//	public Map<?, ?> getCarModels(@RequestParam(required=false, defaultValue="0") long carBrandId,
+//			@RequestParam(required=false, defaultValue="0") long carModelId) throws Exception {
+//		logger.info("Controller==>Enter==>getCarModels<==");
+//		String methodName = "GET CAR MODELS";
+//		try { 
+//			return commonDao.getCarModels(carBrandId, carModelId);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.info("Controller==>Exception==>getCarModels<==");
+//			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarModels", null);
+//		}
+//	}
+//	
+//	//Get Car Model Details
+//	@RequestMapping(method = RequestMethod.GET, value = "/car/model_detail", produces = "application/json")
+//	@ResponseBody
+//	public Map<?, ?> getCarModelDetails(@RequestParam(required=false, defaultValue="0") long carModelId, 
+//			@RequestParam(required=false, defaultValue="0") long carModelDetailId) throws Exception {
+//		logger.info("Controller==>Enter==>getCarModelDetails<==");
+//		String methodName = "GET CAR MODEL DETAILS";
+//		try { 
+//			return commonDao.getCarModelsDetails(carModelId, carModelDetailId);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.info("Controller==>Exception==>getCarModelDetails<==");
+//			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarModelDetails", null);
+//		}
+//	}
+//	
+//	//Get Car FuelType
+//	@RequestMapping(method = RequestMethod.GET, value = "/car/fueltype", produces = "application/json")
+//	@ResponseBody
+//	public Map<?, ?> getCarFuelTypes(@RequestParam(required=false, defaultValue="0") long carFuelTypeId) throws Exception {
+//		logger.info("Controller==>Enter==>getCarFuelTypes<==");
+//		String methodName = "GET CAR FUELTYPES";
+//		try { 
+//			return commonDao.getCarFuelTypes(carFuelTypeId);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.info("Controller==>Exception==>getCarFuelTypes<==");
+//			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarFuelTypes", null);
+//		}
+//	}
+//	
+//	//Get Car Steering
+//	@RequestMapping(method = RequestMethod.GET, value = "/car/steering", produces = "application/json")
+//	@ResponseBody
+//	public Map<?, ?> getCarSteerings(@RequestParam(required=false, defaultValue="0") long carSteeringId) throws Exception {
+//		logger.info("Controller==>Enter==>getCarSteerings<==");
+//		String methodName = "GET CAR STEERINGS";
+//		try { 
+//			return commonDao.getCarSteerings(carSteeringId);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.info("Controller==>Exception==>getCarSteerings<==");
+//			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarSteerings", null);
+//		}
+//	}
+//	
+//	//Get Car Transmission
+//	@RequestMapping(method = RequestMethod.GET, value = "/car/transmission", produces = "application/json")
+//	@ResponseBody
+//	public Map<?, ?> getCarSteerings(@RequestParam(required=false, defaultValue="0") long carSteeringId) throws Exception {
+//		logger.info("Controller==>Enter==>getCarSteerings<==");
+//		String methodName = "GET CAR STEERINGS";
+//		try { 
+//			return commonDao.getCarSteerings(carSteeringId);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.info("Controller==>Exception==>getCarSteerings<==");
+//			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarSteerings", null);
+//		}
+//	}
+////	Get Members
+////	Get country
 }

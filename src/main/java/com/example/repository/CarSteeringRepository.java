@@ -5,14 +5,14 @@ import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.entity.CarTransmission;
+import com.example.entity.CarSteering;
 
 @Repository
-public interface CarSteeringRepository extends JpaRepository<CarTransmission, Long> {
+public interface CarSteeringRepository extends JpaRepository<CarSteering, Long> {
 
-	Set<CarTransmission> findByIsDeletedOrderByCarSteeringTypeAsc(int isDeleted);
+	Set<CarSteering> findByIsDeletedOrderByCarSteeringTypeAsc(int isDeleted);
 	
-	Set<CarTransmission> findByCarSteeringIdAndIsDeleted(long carSteeringId, int isDeleted);
+	Set<CarSteering> findByCarSteeringIdAndIsDeleted(long carSteeringId, int isDeleted);
 	
 
 }

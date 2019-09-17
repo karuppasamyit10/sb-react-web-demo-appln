@@ -12,6 +12,6 @@ public interface CarTransmissionRepository extends JpaRepository<CarTransmission
 
 	Set<CarTransmission> findByIsDeletedOrderByCarTransmissionTypeAsc(int isDeleted);
 	
-	Set<CarTransmission> findByCarTransmissionIdAndIsDeleted(long carSteeringId, int isDeleted);
+	Set<CarTransmission> findByCarTransmissionIdAndIsDeleted(long carTransmissionId, int isDeleted);
 
 }

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="master_car_brand")
+@Table(name="car_steering")
 public class CarSteering {
 	
 	@Id

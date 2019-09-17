@@ -20,21 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
 	public User findByUserNameIgnoreCaseOrEmailIgnoreCase(String username, String upperCase);
 
-	/**
-	 * @param email
-	 * @return User
-	 */
 	public User findByEmail(String email);
 
-	/**
-	 * @param userId
-	 * @return User
-	 */
 	public User findByUserId(long userId);
 
-	/**
-	 * @param string
-	 * @return
-	 */
 	public User findByUserName(String string);
 }

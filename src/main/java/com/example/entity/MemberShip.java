@@ -8,13 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="master_memberships")
+@Table(name="memberships")
 public class MemberShip {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="memberShipId")
-	private long MemberShipId;
+	@Column(name="membershipId")
+	private long membershipId;
 	
 	@Column(name="membershipType")
 	private String membershipType;
@@ -23,17 +23,17 @@ public class MemberShip {
 	private int isDeleted;
 
 	/**
-	 * @return the memberShipId
+	 * @return the membershipId
 	 */
-	public long getMemberShipId() {
-		return MemberShipId;
+	public long getMembershipId() {
+		return membershipId;
 	}
 
 	/**
-	 * @param memberShipId the memberShipId to set
+	 * @param membershipId the membershipId to set
 	 */
-	public void setMemberShipId(long memberShipId) {
-		MemberShipId = memberShipId;
+	public void setMembershipId(long membershipId) {
+		this.membershipId = membershipId;
 	}
 
 	/**
@@ -62,6 +62,5 @@ public class MemberShip {
 	 */
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
-	}
-	
+	}	
 }
