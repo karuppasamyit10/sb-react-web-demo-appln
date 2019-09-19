@@ -10,14 +10,15 @@ import { Link } from "react-router-dom";
 import Background1 from "../assets/img/search/ssangyong.jpg";
 import Background2 from "../assets/img/search/hyundai.jpg";
 import Background3 from "../assets/img/search/kia2.jpg";
-import { getSearchResult } from '../actions/searchAction';
+import { getSearchResult, getMasterData } from '../actions/searchAction';
 import acura from "../assets/img/acura.jpeg";
 
 class AdvancedSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userDetails: {}
+      userDetails: {},
+      master: {}
     };
   }
 
@@ -27,12 +28,19 @@ class AdvancedSearch extends Component {
 
   componentDidMount() {
     let params = {};
-    this.props.getSearchResult(params , (response)=>{
+    this.props.getSearchResult(params, (response) => {
       console.log(response);
     });
+    this.props.getMasterData({}, (response) => {
+      console.log(response);
+      if (response && response.response_code === 0) {
+        this.setState({ master: response.response });
+      }
+    })
   }
 
   render() {
+    let { carBrandList } = this.state.master
     return (
       <React.Fragment>
         <section class="adv_search_wrap">
@@ -104,8 +112,14 @@ class AdvancedSearch extends Component {
                             <option value="" selected>
                               All Makes
                             </option>
-                            <option value="">Nissan</option>
-                            <option value="">Volvo</option>
+                            {carBrandList && carBrandList.length ?
+                              carBrandList.map((car) => {
+                                return (
+                                  <option id={car.carBrandId} value="">{car.carBrand}</option>
+                                )
+                              }) :
+                              ''}
+
                           </select>
                         </div>
                         <div class="form-group">
@@ -1579,6 +1593,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getSearchResult: (params, callback) => {
       dispatch(getSearchResult(params, callback));
+    },
+    getMasterData: (params, callback) => {
+      dispatch(getMasterData(params, callback));
     }
   };
 };

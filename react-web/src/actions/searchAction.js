@@ -20,3 +20,17 @@ export function getSearchResult(params, callback) {
       });
   };
 }
+
+export function getMasterData(params, callback) {
+  return function(dispatch) {
+    Client.get(URL.CAR_MASTER_DATA, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====car master response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====car master response===????", error);
+      });
+  };
+}

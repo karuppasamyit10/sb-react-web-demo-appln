@@ -1,10 +1,10 @@
 let BASE_URL = '';
 let isDevelopment = true
 if (window.location.hostname === 'localhost') {
-  BASE_URL = 'http://localhost:8080/'
+  BASE_URL = 'http://35.160.123.119:8181/'
   isDevelopment = true
 } else {
-  BASE_URL = 'http://localhost:8080/'
+  BASE_URL = 'http://35.160.123.119:8181/'
   isDevelopment = false
 }
 
@@ -19,5 +19,6 @@ module.exports = {
   CHANGEPASSWORD: 'changePassword',
   UPDATEPASSWORD: 'updatePassword',
   PROFILE : 'api/user/profile',
-  ADVANCED_SEARCH : 'api/advanced_search'
+  ADVANCED_SEARCH : 'api/advanced_search',
+  CAR_MASTER_DATA : 'api/public/car/master_data'
 }; 
