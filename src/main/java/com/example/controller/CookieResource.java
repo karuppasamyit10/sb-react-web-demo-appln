@@ -77,7 +77,7 @@ public class CookieResource {
 	
 
 	
-	@GetMapping("/all-cookies")
+	@GetMapping("/api/all-cookies")
 	public String readAllCookies(HttpServletRequest request) {
 	    Cookie[] cookies = request.getCookies();
 	    if (cookies != null) {

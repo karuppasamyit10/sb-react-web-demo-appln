@@ -943,11 +943,11 @@ class Upload extends Component {
               <div class="col-md-4">
                 <div class="no1-cards">
                   <img
-                    src={require("../assets/img/no1/img_autowini01.png")}
+                    src={require("../assets/img/no1/img_autowini01.jpg")}
                     class="img-fluid"
                     alt=""
                   />
-                  <p class="head2 bold white mt-3">What is the Harasow?</p>
+                  <p class="head2 bold white mt-3">AUTO HARASOW Special Service</p>
                   <div class="btn-group">
                     <a href="javascript:;" class="btn btn-primary">
                       Learn More
@@ -958,11 +958,11 @@ class Upload extends Component {
               <div class="col-md-4">
                 <div class="no1-cards">
                   <img
-                    src={require("../assets/img/no1/img_autowini02.png")}
+                    src={require("../assets/img/no1/img_autowini03.jpg")}
                     class="img-fluid"
                     alt=""
                   />
-                  <p class="head2 bold white mt-3">What makes us No.1? </p>
+                  <p class="head2 bold white mt-3">AUTO HARASOW Partners </p>
                   <div class="btn-group">
                     <a href="javascript:;" class="btn btn-primary">
                       Learn More
@@ -973,11 +973,11 @@ class Upload extends Component {
               <div class="col-md-4">
                 <div class="no1-cards">
                   <img
-                    src={require("../assets/img/no1/img_autowini03.png")}
+                    src={require("../assets/img/no1/img_autowini02.jpg")}
                     class="img-fluid"
                     alt=""
                   />
-                  <p class="head2 bold white mt-3">How to buy at Harasow?</p>
+                  <p class="head2 bold white mt-3">AUTO HARASOW Broadcasting</p>
                   <div class="btn-group">
                     <a href="javascript:;" class="btn btn-primary">
                       Learn More
