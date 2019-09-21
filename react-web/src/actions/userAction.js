@@ -77,7 +77,7 @@ export function logout(callback) {
 export function registerCookie(callback) {
   Client.get(URL.COOKIE, null, true)
     .then(response => {
-      console.log(response);
+      console.log(response,'cooooooooooooooookie')
       myLog("====register cookie response===::::", response);
       callback(response);
     })

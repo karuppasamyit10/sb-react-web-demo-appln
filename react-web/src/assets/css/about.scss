@@ -1,0 +1,27 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+
+.about_wrap{
+    .aboutgrid{
+        margin: 30px 0px 0px;
+        p{
+            margin: 10px 0px 0px 0px;
+        }
+        .readmore{
+            margin: 0px 0px 10px 0px;
+            a{
+                color: $green;
+                &:hover{
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    .whatwedo{
+        margin-top: 20px;
+        .quotes{
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+    }
+}

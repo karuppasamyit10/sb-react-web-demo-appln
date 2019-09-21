@@ -21,6 +21,21 @@ export function getSearchResult(params, callback) {
   };
 }
 
+
+export function getDashboardDetails(params, callback) {
+  return function(dispatch) {
+    Client.get(URL.GET_DASHBOARD_DATA, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====get dashboard response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====get dashboard response===????", error);
+      });
+  };
+}
+
 export function getMasterData(params, callback) {
   return function(dispatch) {
     Client.get(URL.CAR_MASTER_DATA, params, true)

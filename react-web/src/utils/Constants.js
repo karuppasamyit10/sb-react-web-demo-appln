@@ -21,7 +21,9 @@ module.exports = {
       CHANGEPASSWORD: '/change_password',
       FORGET: '/forgot_password',
       SEARCH : '/dashboard/search',
-      ADVANCED_SEARCH : '/dashboard/advanced-search'
+      ADVANCED_SEARCH : '/dashboard/advanced-search',
+      ABOUT_US : '/about-us',
+      WHAT_WE_DO : '/about-us/what-we-do'
     },
 
     ACTION_TYPES: {

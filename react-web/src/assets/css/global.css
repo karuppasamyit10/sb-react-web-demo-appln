@@ -171,4 +171,58 @@ a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
   border: 1px solid #aaa;
   padding: 0px 6px;
 }
+
+.breadcrumb_wrap {
+  background: #42d468;
+  margin-top: 10px;
+}
+
+.breadcrumb_wrap .breadcrumb {
+  background: transparent;
+}
+
+.breadcrumb_wrap .breadcrumb li a {
+  color: #fff;
+}
+
+.breadcrumb_wrap .breadcrumb li:before {
+  color: #fff;
+}
+
+.breadcrumb_wrap .breadcrumb li.active {
+  color: #fff;
+}
+
+.spacer1 {
+  height: 70px;
+}
+
+.card-header {
+  padding: 0px;
+}
+
+.card-header .btn-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 20px;
+  color: #000;
+  background: #F5F6F8;
+  position: relative;
+}
+
+.card-header .btn-link:hover, .card-header .btn-link:focus {
+  text-decoration: none;
+}
+
+.card-header .btn-link .state {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+
+.card-header.opened .btn-link {
+  background: #2ab94f;
+  color: #fff;
+}
 /*# sourceMappingURL=global.css.map */

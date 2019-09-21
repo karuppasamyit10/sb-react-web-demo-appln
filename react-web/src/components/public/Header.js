@@ -51,7 +51,7 @@ class Header extends Component {
             <div class="logo-wrap col-12">
               <div class="container">
                 <a class="navbar-brand hideForAni">
-                  <img src={logo} class="img-fluid" style={{curor : 'pointer'}} 
+                  <img src={logo} class="img-fluid" style={{cursor : 'pointer'}} 
                   alt="" onClick = {()=>{this.props.prop.history.push(PATH.DASHBOARD);}} />
                 </a>
               </div>

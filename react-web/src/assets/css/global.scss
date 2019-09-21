@@ -109,3 +109,54 @@ a,button,input,textarea,select,option{
 }
 
 @include selectbox;
+
+.breadcrumb_wrap{
+    background: lighten($color: $green, $amount: 10);
+    margin-top: 10px;
+    .breadcrumb{
+        background: transparent;
+        li{
+            a{
+                color: $white;
+            }
+            &:before{
+                color: $white;
+            }
+        }
+        li.active{
+           
+                color: $white;
+           
+        }
+    }
+}
+.spacer1{
+    @include spacer1;
+}
+
+.card-header {
+    padding: 0px;
+    .btn-link{
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 20px;
+        color: $black;
+        background: $grey2;
+        @include relative;
+        &:hover,&:focus{
+            text-decoration: none;
+        }
+        .state{
+            @include absolute;
+            top: 18px;
+            right: 20px;
+        }
+    }
+}
+.card-header.opened{
+    .btn-link{
+        background: $green;
+        color: $white;
+    }
+}

@@ -12,13 +12,15 @@ import Background2 from "../assets/img/search/hyundai.jpg";
 import Background3 from "../assets/img/search/kia2.jpg";
 import { getSearchResult, getMasterData } from '../actions/searchAction';
 import acura from "../assets/img/acura.jpeg";
+import { showNotification } from "../actions/NotificationAction";
 
 class AdvancedSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userDetails: {},
-      master: {}
+      master: {},
+      isSubscribed: false
     };
   }
 
@@ -39,6 +41,11 @@ class AdvancedSearch extends Component {
     })
   }
 
+  subscribe = () => {
+    this.setState({ isSubscribed: true })
+    this.props.showNotification('Successfully Subscribed', 'success');
+  }
+
   render() {
     let { carBrandList } = this.state.master
     return (
@@ -46,10 +53,10 @@ class AdvancedSearch extends Component {
         <section class="adv_search_wrap">
           <div class="container">
             <div class="mt-5">
-              <p class="head2">
+              {/* <p class="head2">
                 Used <strong> Acura ILX</strong> for Sale in{" "}
                 <strong> Manitowish Waters,</strong> WI
-              </p>
+              </p> */}
             </div>
             <div class="row">
               <div class="col-lg-4">
@@ -110,7 +117,7 @@ class AdvancedSearch extends Component {
                         <div class="form-group">
                           <select name="" id="" class="form-control">
                             <option value="" selected>
-                              All Makes
+                              All Brands
                             </option>
                             {carBrandList && carBrandList.length ?
                               carBrandList.map((car) => {
@@ -1133,35 +1140,37 @@ class AdvancedSearch extends Component {
                     </div>
                   </div>
                 </div>
-                <div class="emailbox">
-                  <div class="row">
-                    <div class="col-12 medium text-center">
-                      Email me price drops and new listings for these results.
+                {!this.state.isSubscribed ?
+                  <div class="emailbox">
+                    <div class="row">
+                      <div class="col-12 medium text-center">
+                        Email me price drops and new listings for these results.
                       <div class="row mt-3 justify-content-center">
-                        <div class="col-md-5 text-right">
-                          <input
-                            type="text"
-                            class="form-control"
-                            value=""
-                            placeholder="email"
-                          />
+                          <div class="col-md-5 text-right">
+                            <input
+                              type="text"
+                              class="form-control"
+                              value=""
+                              placeholder="email"
+                            />
+                          </div>
+                          <div class="col-md-3 text-left">
+                            <input
+                              type="submit"
+                              onClick={() => this.subscribe()}
+                              class="btn btn-primary w-100"
+                              value="Subscribe"
+                            />
+                          </div>
                         </div>
-                        <div class="col-md-3 text-left">
-                          <input
-                            type="submit"
-                            class="btn btn-primary w-100"
-                            value="Subscribe"
-                          />
-                        </div>
+                        <p class="small mt-3">
+                          By clicking "Subscribe," you agree to our{" "}
+                          <a href="javascript:;">Privacy Policy</a> and{" "}
+                          <a href="javascript:;">Terms of Use.</a>
+                        </p>
                       </div>
-                      <p class="small mt-3">
-                        By clicking "Subscribe," you agree to our{" "}
-                        <a href="javascript:;">Privacy Policy</a> and{" "}
-                        <a href="javascript:;">Terms of Use.</a>
-                      </p>
                     </div>
-                  </div>
-                </div>
+                  </div> : ''}
                 <div class="totalresults text-right py-3 mt-3">
                   <span class="bold">1 - 6</span> out of{" "}
                   <span class="bold">6</span> listings
@@ -1596,6 +1605,9 @@ const mapDispatchToProps = dispatch => {
     },
     getMasterData: (params, callback) => {
       dispatch(getMasterData(params, callback));
+    },
+    showNotification: (message, type) => {
+      dispatch(showNotification(message, type));
     }
   };
 };

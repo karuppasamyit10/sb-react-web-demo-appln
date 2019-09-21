@@ -20,6 +20,7 @@ import "./assets/css/popular.css";
 import "./assets/css/search.css";
 import "./assets/css/footer.css";
 import "./assets/css/advanced-search.css";
+import "./assets/css/about.css";
 
 import "jquery";
 import "bootstrap";
@@ -30,8 +31,10 @@ import registration from "./components/common/registration";
 import Notification from './components/common/Notification'
 import search from './components/search';
 import AdvancedSearch from './components/AdvancedSearch';
+import whatWeDo from './components/common/whatWeDo';
 import { cookiePresent } from './utils/AthuService';
 import PropTypes from 'prop-types';
+import aboutUs from "./components/common/aboutUs";
 
 const CustomRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -53,6 +56,8 @@ ReactDOM.render(
         <CustomRoute exact path="/" component={dashboard} />
         <CustomRoute exact path="/dashboard/search" component={search} />
         <CustomRoute exact path="/dashboard/advanced-search" component={AdvancedSearch} />
+        <CustomRoute exact path="/about-us" component={aboutUs} />
+        <CustomRoute exact path="/about-us/what-we-do" component={whatWeDo} />
         {/* Notification  Message*/}
         <Notification />
       </React.Fragment>

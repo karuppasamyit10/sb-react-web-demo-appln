@@ -10,6 +10,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { changeUploadStaus } from "../../actions/userAction";
+import { Link } from 'react-router-dom';
+import { PATH } from '../../utils/Constants';
+
 
 class Footer extends Component {
   constructor(props) {
@@ -50,7 +53,7 @@ class Footer extends Component {
                   <ul class="flinks">
                     <li>About</li>
                     <li>
-                      <a href="javascript:;">About Us</a>
+                      <Link to={PATH.ABOUT_US}>About Us</Link>
                     </li>
                     <li>
                       <a href="javascript:;">Harasow Production</a>

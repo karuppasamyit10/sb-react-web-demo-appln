@@ -20,5 +20,6 @@ module.exports = {
   UPDATEPASSWORD: 'updatePassword',
   PROFILE : 'api/user/profile',
   ADVANCED_SEARCH : 'api/advanced_search',
-  CAR_MASTER_DATA : 'api/public/car/master_data'
+  CAR_MASTER_DATA : 'api/public/car/master_data',
+  GET_DASHBOARD_DATA : 'api/public/car/homePage',
 }; 
