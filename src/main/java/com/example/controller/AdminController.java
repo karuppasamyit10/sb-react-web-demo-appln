@@ -25,8 +25,10 @@ import com.example.entity.CarFuelType;
 import com.example.entity.CarSteering;
 import com.example.entity.CarTransmission;
 import com.example.entity.Country;
+import com.example.entity.Deals;
 import com.example.entity.MemberShip;
 import com.example.entity.User;
+import com.example.entity.VehicleType;
 import com.example.repository.CarBrandRepository;
 import com.example.repository.CarFuelTypeRepository;
 import com.example.repository.CarModelDetailRepository;
@@ -34,8 +36,10 @@ import com.example.repository.CarModelRepository;
 import com.example.repository.CarSteeringRepository;
 import com.example.repository.CarTransmissionRepository;
 import com.example.repository.CountryRepository;
+import com.example.repository.DealsRepository;
 import com.example.repository.MemberShipRepository;
 import com.example.repository.UserRepository;
+import com.example.repository.VehicleTypeRepository;
 import com.example.util.CommonUtil;
 
 
@@ -78,6 +82,12 @@ public class AdminController {
 	
 	@Autowired
 	CarTransmissionRepository carTransmissionRepository;
+	
+	@Autowired
+	DealsRepository dealsRepository;
+	
+	@Autowired
+	VehicleTypeRepository vehicleTypeRepository;
 
 	@PostConstruct
 	public void addSuperAdminUserAccount() throws Exception {
@@ -105,6 +115,7 @@ public class AdminController {
 			//Add common master Data
 			if(masterDataField.equalsIgnoreCase("common")) 
 			{
+				//Add country
 				Set<Country> countryList = countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
 				if(countryList.isEmpty())
 				{
@@ -133,6 +144,7 @@ public class AdminController {
 				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in country", null);
 				    }
 				}
+				//Add MemberShip
 				Set<MemberShip> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
 				if(memberShips.isEmpty())
 				{
@@ -158,6 +170,62 @@ public class AdminController {
 				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
 				        e.printStackTrace();
 				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in membership", null);
+				    }
+				}
+				//Add Deals
+				Set<Deals> deals = dealsRepository.findByIsDeletedOrderByDealNameAsc(0);
+				if(deals.isEmpty())
+				{
+					deals = new LinkedHashSet<Deals>();
+					try
+				    {
+				    	File file = ResourceUtils.getFile("classpath:master_data/common/deals.txt");
+				    	if(file.exists()) 
+				    	{
+				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+							String st;
+							while ((st = br.readLine()) != null)
+							{
+								Deals dealsObj = new Deals();
+								dealsObj.setDealName(st.trim());
+								dealsObj.setIsDeleted(0);
+								deals.add(dealsObj);
+							}
+							dealsRepository.save(deals);
+							br.close();
+				    	}
+				    } catch (Exception e) {
+				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
+				        e.printStackTrace();
+				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in deals", null);
+				    }
+				}
+				//Add vehicletype
+				Set<VehicleType> vehicleTypes = vehicleTypeRepository.findByIsDeletedOrderByVehicleTypeAsc(0);
+				if(vehicleTypes.isEmpty())
+				{
+					vehicleTypes = new LinkedHashSet<VehicleType>();
+					try
+				    {
+				    	File file = ResourceUtils.getFile("classpath:master_data/common/vehicletype.txt");
+				    	if(file.exists()) 
+				    	{
+				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+							String st;
+							while ((st = br.readLine()) != null)
+							{
+								VehicleType vehicleType = new VehicleType();
+								vehicleType.setVehicleType(st.trim());
+								vehicleType.setIsDeleted(0);
+								vehicleTypes.add(vehicleType);
+							}
+							vehicleTypeRepository.save(vehicleTypes);
+							br.close();
+				    	}
+				    } catch (Exception e) {
+				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
+				        e.printStackTrace();
+				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in deals", null);
 				    }
 				}
 			} 

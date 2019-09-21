@@ -12,9 +12,9 @@ import { AppWrapper } from "./public/AppWrapper";
 import store from "store";
 import { formatDate } from "../utils/utils";
 import { PATH } from '../utils/Constants';
-import Background1 from "../assets/img/search/ssangyong.jpg";
-import Background2 from "../assets/img/search/hyundai.jpg";
-import Background3 from "../assets/img/search/kia2.jpg";
+import Background1 from "../assets/img/home/ssangyong_img.jpeg";
+import Background2 from "../assets/img/home/hyundai_img.jpeg";
+import Background3 from "../assets/img/home/kia_img.jpeg";
 import Cookies from 'js-cookie';
 
 class Upload extends Component {
@@ -1130,91 +1130,91 @@ class Upload extends Component {
           <div class="container">
             <div class="head2 black medium text-center">Popular New Cars</div>
             <ul class="list-group popularcars-staggering mt-3">
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">New Buick Encore</div>
                   <p class="para1">39,042 listings starting at $13,990</p>
@@ -1228,7 +1228,7 @@ class Upload extends Component {
           <div class="container">
             <div class="head2 black medium text-center">Popular Sedans</div>
             <ul class="list-group mt-3 popularcars-staggering">
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}} style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">Used BMW 3 Series</div>
                   <p class="para1">
@@ -1236,7 +1236,7 @@ class Upload extends Component {
                   </p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">Used BMW 3 Series</div>
                   <p class="para1">
@@ -1244,7 +1244,7 @@ class Upload extends Component {
                   </p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">Used BMW 3 Series</div>
                   <p class="para1">
@@ -1252,7 +1252,7 @@ class Upload extends Component {
                   </p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">Used BMW 3 Series</div>
                   <p class="para1">
@@ -1260,7 +1260,7 @@ class Upload extends Component {
                   </p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">Used BMW 3 Series</div>
                   <p class="para1">
@@ -1268,7 +1268,7 @@ class Upload extends Component {
                   </p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">Used BMW 3 Series</div>
                   <p class="para1">
@@ -1276,7 +1276,7 @@ class Upload extends Component {
                   </p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">Used BMW 3 Series</div>
                   <p class="para1">
@@ -1284,7 +1284,7 @@ class Upload extends Component {
                   </p>
                 </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style={{opacity: 1}}>
                 <a href="javascript:;">
                   <div class="head3">Used BMW 3 Series</div>
                   <p class="para1">

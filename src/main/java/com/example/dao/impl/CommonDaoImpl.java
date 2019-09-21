@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.bean.UserRegistrationBean;
+import com.example.bean.VehicleSearchBean;
 import com.example.dao.CommonDao;
 import com.example.entity.CarBrand;
 import com.example.entity.CarFuelType;
@@ -186,8 +187,25 @@ public class CommonDaoImpl implements CommonDao {
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
 		}
 	}
-	
-	
+
+	/* (non-Javadoc)
+	 * @see com.example.dao.CommonDao#getVehicleList(com.example.bean.VehicleSearchBean, java.lang.String)
+	 */
+	@Override
+	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, String userAgent) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.example.dao.CommonDao#getVehicleDetails(long, java.lang.String)
+	 */
+	@Override
+	public Map<?, ?> getVehicleDetails(long vehicleId, String userAgent) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 //	/* (non-Javadoc)
 //	 * @see com.example.dao.CommonDao#getAllCountries()

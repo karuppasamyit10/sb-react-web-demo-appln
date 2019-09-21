@@ -60,7 +60,7 @@ class AdvancedSearch extends Component {
                       id="pills-tab"
                       role="tablist"
                     >
-                      <li class="nav-item">
+                      {/*<li class="nav-item">
                         <a
                           class="nav-link active "
                           id="pills-bycar-tab"
@@ -73,7 +73,7 @@ class AdvancedSearch extends Component {
                           By Car
                         </a>
                       </li>
-                      <li class="nav-item">
+                       <li class="nav-item">
                         <a
                           class="nav-link "
                           id="pills-bybodystyle-tab"
@@ -98,7 +98,7 @@ class AdvancedSearch extends Component {
                         >
                           By Price
                         </a>
-                      </li>
+                      </li> */}
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
                       <div

@@ -3,6 +3,7 @@ package com.example.dao;
 import java.util.Map;
 
 import com.example.bean.UserRegistrationBean;
+import com.example.bean.VehicleSearchBean;
 
 /**
  * @author Karuppasamy Mariappan
@@ -13,6 +14,10 @@ public interface CommonDao {
 	Map<?, ?> userRegistration(UserRegistrationBean userRegistrationBean, String userAgent) throws Exception;
 	
 	Map<?, ?> getCarMasterData() throws Exception;
+
+	Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, String userAgent) throws Exception;
+
+	Map<?, ?> getVehicleDetails(long vehicleId, String userAgent) throws Exception;
 
 //	Map<?, ?> getCountries(long countryId) throws Exception;
 

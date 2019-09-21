@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.example.entity;
 
 import javax.persistence.Column;
@@ -7,47 +10,48 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="vehicle_types")
-public class VehicleType {
+@Table(name="deals")
+public class Deals {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="vehicleTypeId")
-	private long vehicleTypeId;
+	@Column(name="dealId")
+	private long dealId;
 	
-	@Column(name="vehicleType")
-	private String vehicleType;
+	@Column(name="dealName", nullable=false)
+	private String dealName;
 	
 	@Column(name="isDeleted")
 	private int isDeleted;
 
 	/**
-	 * @return the vehicleTypeId
+	 * @return the dealId
 	 */
-	public long getVehicleTypeId() {
-		return vehicleTypeId;
+	public long getDealId() {
+		return dealId;
 	}
 
 	/**
-	 * @param vehicleTypeId the vehicleTypeId to set
+	 * @param dealId the dealId to set
 	 */
-	public void setVehicleTypeId(long vehicleTypeId) {
-		this.vehicleTypeId = vehicleTypeId;
+	public void setDealId(long dealId) {
+		this.dealId = dealId;
 	}
 
 	/**
-	 * @return the vehicleType
+	 * @return the dealName
 	 */
-	public String getVehicleType() {
-		return vehicleType;
+	public String getDealName() {
+		return dealName;
 	}
 
 	/**
-	 * @param vehicleType the vehicleType to set
+	 * @param dealName the dealName to set
 	 */
-	public void setVehicleType(String vehicleType) {
-		this.vehicleType = vehicleType;
+	public void setDealName(String dealName) {
+		this.dealName = dealName;
 	}
 
 	/**
@@ -63,4 +67,5 @@ public class VehicleType {
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
 }

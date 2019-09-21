@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bean.UserRegistrationBean;
+import com.example.bean.VehicleSearchBean;
 import com.example.dao.CommonDao;
 import com.example.util.CommonUtil;
 
@@ -75,6 +76,35 @@ public class CommonController {
 		}
 	}
 	
+	//Get vehicle list 
+	@RequestMapping(method = RequestMethod.GET, value = "/vehicleList", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent) throws Exception {
+		logger.info("Controller==>Enter==>getVehicleList<==");
+		String methodName = "GET VEHICLE LIST";
+		try { 
+			return commonDao.getVehicleList(vehicleSearchBean,userAgent);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>getVehicleList<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getVehicleList", null);
+		}
+	}
+	
+	//Get vehicle details
+	@RequestMapping(method = RequestMethod.GET, value = "/vehicleDetails", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getVehicleDetails(long vehicleId, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent) throws Exception {
+		logger.info("Controller==>Enter==>getVehicleList<==");
+		String methodName = "GET VEHICLE DETAILS";
+		try { 
+			return commonDao.getVehicleDetails(vehicleId, userAgent);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>getVehicleDetails<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getVehicleDetails", null);
+		}
+	}
 	
 //	@RequestMapping(method = RequestMethod.GET, value = "/country", produces = "application/json")
 //	@ResponseBody
