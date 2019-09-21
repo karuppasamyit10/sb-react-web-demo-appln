@@ -21,5 +21,8 @@ module.exports = {
   PROFILE : 'api/user/profile',
   ADVANCED_SEARCH : 'api/advanced_search',
   CAR_MASTER_DATA : 'api/public/car/master_data',
-  GET_DASHBOARD_DATA : 'api/public/car/homePage',
+  GET_DASHBOARD_DATA : 'api/public/dashboard',
+  GET_CAR_LIST : 'api/public/car/all_details',
+  GET_CAR_MODEL : 'api/public/car/models',
+  GET_CAR_MODEL_DETAILS : 'api/public/car/model_details',
 }; 

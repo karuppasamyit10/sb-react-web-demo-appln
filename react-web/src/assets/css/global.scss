@@ -160,3 +160,8 @@ a,button,input,textarea,select,option{
         color: $white;
     }
 }
+
+.dotspacer{
+    height: 30px;
+    border-bottom: 1px dotted #ccc;
+}

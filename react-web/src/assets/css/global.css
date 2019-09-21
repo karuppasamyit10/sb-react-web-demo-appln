@@ -225,4 +225,9 @@ a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
   background: #2ab94f;
   color: #fff;
 }
+
+.dotspacer {
+  height: 30px;
+  border-bottom: 1px dotted #ccc;
+}
 /*# sourceMappingURL=global.css.map */

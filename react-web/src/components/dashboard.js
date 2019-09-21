@@ -24,7 +24,8 @@ class Upload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userDetails: {}
+      userDetails: {},
+      dashboardDetails: {}
     };
   }
 
@@ -46,10 +47,14 @@ class Upload extends Component {
   getDashboardDetails = () => {
     this.props.getDashboardDetails({}, response => {
       console.log(response);
+      if (response.response_code === 0) {
+        this.setState({ dashboardDetails: response.response })
+      }
     })
   }
 
   render() {
+    let { ourLastSearchList, popularNewCarsList, popularSedansList, relatedSearchList, savedRecentSearchList } = this.state.dashboardDetails
     return (
       <React.Fragment>
         <section class="search-filter">
@@ -821,59 +826,66 @@ class Upload extends Component {
         <section class="search-showcase spacerTop spacerBottom">
           <div class="container">
             <div class="row">
-              <div class="col-md-4">
-                <div class="ss-cards">
-                  <p class="head3 black">Your Last Search</p>
-                  <div class="ss-img-wrap">
-                    <div
-                      class="ss-img"
-                      style={{
-                        backgroundImage: `url(${Background1})`
-                      }}
-                    >
-                      {" "}
-                    </div>
-                    <div class="ss-title head3 white text-shadow">
-                      2010 Ssangyong Actyon
+              {ourLastSearchList && ourLastSearchList.length === 0 ?
+                <div class="col-md-4">
+                  <div class="ss-cards">
+                    <p class="head3 black">Your Last Search</p>
+                    <div class="ss-img-wrap">
+                      <div
+                        class="ss-img"
+                        style={{
+                          backgroundImage: `url(${Background1})`
+                        }}
+                      >
+                        {" "}
+                      </div>
+                      <div class="ss-title head3 white text-shadow">
+                        2010 Ssangyong Actyon
                       <span>Sports Leather 5Seats 2WD AT</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="ss-cards">
-                  <p class="head3 black">Saved & Recent Searches</p>
-                  <div class="ss-img-wrap">
-                    <div
-                      class="ss-img"
-                      style={{
-                        backgroundImage: `url(${Background2})`
-                      }}
-                    ></div>
-                    <div class="ss-title head3 white text-shadow">
-                      2001 Hyundai Terracan
+                </div> : ""}
+
+              {savedRecentSearchList && savedRecentSearchList.length === 0 ?
+                <div class="col-md-4">
+                  <div class="ss-cards">
+                    <p class="head3 black">Saved & Recent Searches</p>
+                    <div class="ss-img-wrap">
+                      <div
+                        class="ss-img"
+                        style={{
+                          backgroundImage: `url(${Background2})`
+                        }}
+                      ></div>
+                      <div class="ss-title head3 white text-shadow">
+                        2001 Hyundai Terracan
                       <span>JX250 INTERCOOLER 4WD</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="ss-cards">
-                  <p class="head3 black">Related Searches</p>
-                  <div class="ss-img-wrap">
-                    <div
-                      class="ss-img"
-                      style={{
-                        backgroundImage: `url(${Background3})`
-                      }}
-                    ></div>
-                    <div class="ss-title head3 white text-shadow">
-                      2004 Kia Sorento NEW
+                : ""}
+
+              {relatedSearchList && relatedSearchList.length === 0 ?
+                <div class="col-md-4">
+                  <div class="ss-cards">
+                    <p class="head3 black">Related Searches</p>
+                    <div class="ss-img-wrap">
+                      <div
+                        class="ss-img"
+                        style={{
+                          backgroundImage: `url(${Background3})`
+                        }}
+                      ></div>
+                      <div class="ss-title head3 white text-shadow">
+                        2004 Kia Sorento NEW
                       <span> 4WD TLX SUNROOF A/T</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+                : ""}
             </div>
           </div>
         </section>

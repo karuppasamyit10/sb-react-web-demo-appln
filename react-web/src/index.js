@@ -21,6 +21,9 @@ import "./assets/css/search.css";
 import "./assets/css/footer.css";
 import "./assets/css/advanced-search.css";
 import "./assets/css/about.css";
+import "./assets/css/search-detail.css";
+import "./assets/slick/slick.css";
+import "./assets/slick/slick-theme.css";
 
 import "jquery";
 import "bootstrap";
@@ -35,6 +38,9 @@ import whatWeDo from './components/common/whatWeDo';
 import { cookiePresent } from './utils/AthuService';
 import PropTypes from 'prop-types';
 import aboutUs from "./components/common/aboutUs";
+import containerShipping from "./components/common/containerShipping";
+import partsExpress from "./components/common/partsExpress";
+import searchDetail from "./components/searchDetail";
 
 const CustomRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -58,6 +64,9 @@ ReactDOM.render(
         <CustomRoute exact path="/dashboard/advanced-search" component={AdvancedSearch} />
         <CustomRoute exact path="/about-us" component={aboutUs} />
         <CustomRoute exact path="/about-us/what-we-do" component={whatWeDo} />
+        <CustomRoute exact path="/about-us/what-we-do/container-shipping" component={containerShipping} />
+        <CustomRoute exact path="/about-us/what-we-do/parts-express" component={partsExpress} />
+        <CustomRoute exact path="/search-detail" component={searchDetail} />
         {/* Notification  Message*/}
         <Notification />
       </React.Fragment>

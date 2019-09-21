@@ -23,7 +23,10 @@ module.exports = {
       SEARCH : '/dashboard/search',
       ADVANCED_SEARCH : '/dashboard/advanced-search',
       ABOUT_US : '/about-us',
-      WHAT_WE_DO : '/about-us/what-we-do'
+      WHAT_WE_DO : '/about-us/what-we-do',
+      SHIPPING : '/about-us/what-we-do/container-shipping',
+      PARTS_EXPRESS : '/about-us/what-we-do/parts-express',
+      SEARCH_DETAIL:'/search-detail' 
     },
 
     ACTION_TYPES: {

@@ -25,3 +25,18 @@
         }
     }
 }
+
+.list-group-item-action:focus {
+    color: $white;
+    text-decoration: none;
+    background-color: $green;
+}
+
+.container_shipping{
+    .greybox{
+        background: $grey2;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
+}

@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Background1 from "../assets/img/search/ssangyong.jpg";
 import Background2 from "../assets/img/search/hyundai.jpg";
 import Background3 from "../assets/img/search/kia2.jpg";
+import { PATH } from '../utils/Constants';
 import { getSearchResult, getMasterData } from '../actions/searchAction';
 import acura from "../assets/img/acura.jpeg";
 import { showNotification } from "../actions/NotificationAction";
@@ -44,6 +45,9 @@ class AdvancedSearch extends Component {
   subscribe = () => {
     this.setState({ isSubscribed: true })
     this.props.showNotification('Successfully Subscribed', 'success');
+  }
+  searchDetails = () => {
+    this.props.history.push(PATH.SEARCH_DETAIL)
   }
 
   render() {
@@ -1179,7 +1183,7 @@ class AdvancedSearch extends Component {
                   <div class="col-md-3 text-center">
                     <img src={acura} class="w-100 img-fluid" alt="" />
                   </div>
-                  <div class="col-md-9 text-left">
+                  <div class="col-md-9 text-left" onClick={() => { this.searchDetails() }}>
                     <div class="row no-gutters align-items-center">
                       <div class="col pr-3">
                         <div class="head3 bold mb-2">

@@ -26,4 +26,17 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+.list-group-item-action:focus {
+  color: #fff;
+  text-decoration: none;
+  background-color: #2ab94f;
+}
+
+.container_shipping .greybox {
+  background: #F5F6F8;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 /*# sourceMappingURL=about.css.map */
