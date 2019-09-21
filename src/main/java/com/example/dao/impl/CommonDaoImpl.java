@@ -11,6 +11,10 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +23,13 @@ import com.example.bean.VehicleSearchBean;
 import com.example.dao.CommonDao;
 import com.example.entity.CarBrand;
 import com.example.entity.CarFuelType;
+import com.example.entity.CarModel;
+import com.example.entity.CarModelDetail;
 import com.example.entity.CarSteering;
 import com.example.entity.CarTransmission;
 import com.example.entity.Country;
 import com.example.entity.User;
+import com.example.entity.VehicleDetail;
 import com.example.repository.CarBrandRepository;
 import com.example.repository.CarFuelTypeRepository;
 import com.example.repository.CarModelDetailRepository;
@@ -32,6 +39,7 @@ import com.example.repository.CarTransmissionRepository;
 import com.example.repository.CountryRepository;
 import com.example.repository.MemberShipRepository;
 import com.example.repository.UserRepository;
+import com.example.repository.VehicleDetailRepository;
 import com.example.util.CommonUtil;
 
 
@@ -70,6 +78,9 @@ public class CommonDaoImpl implements CommonDao {
 	
 	@Autowired
 	CarTransmissionRepository carTransmissionRepository;
+	
+	@Autowired
+	VehicleDetailRepository vehicleDetailRepository;
 		
 	@Override
 	@Transactional(rollbackOn = { Exception.class})
@@ -115,13 +126,10 @@ public class CommonDaoImpl implements CommonDao {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.example.dao.CommonDao#getCarMasterData()
-	 */
 	@Override
-	public Map<?, ?> getCarMasterData() throws Exception {
-		logger.info("::::Enter(daoImpl)==>getCarMasterData::::");
-		String methodName = "GET CAR MASTER DATA";
+	public Map<?, ?> getCarAllDetails() throws Exception {
+		logger.info("::::Enter(daoImpl)==>getCarAllDetails::::");
+		String methodName = "GET CAR ALL DETAILS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		
 		try {
@@ -188,13 +196,110 @@ public class CommonDaoImpl implements CommonDao {
 		}
 	}
 
+	@Override
+	public Map<?, ?> getCarModels(long brandId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getCarModels::::");
+		String methodName = "GET CAR MODELS";
+		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		
+		try {
+			//CarModel list
+			Set<CarModel> models = carModelRepository.findByCarBrandIdAndIsDeleted(brandId, 0);
+			Set<Object> modelsList = new HashSet<>();
+			for(CarModel carModel : models) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("modelId", carModel.getCarModelId());
+				params.put("model", carModel.getCarModel());
+				modelsList.add(params);
+			}			
+			rootParams.put("modelList", modelsList);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getCarModels::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
+		}
+	}
+
+	@Override
+	public Map<?, ?> getCarModeldetails(long modelId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getCarModeldetails::::");
+		String methodName = "GET CAR MODEL DETAILS";
+		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		try {
+			//CarModelDetail list
+			Set<CarModelDetail> modelDetails = carModelDetailRepository.findByCarModelDetailIdAndIsDeleted(modelId, 0);
+			Set<Object> modelDetailList = new HashSet<>();
+			for(CarModelDetail carModelDetail : modelDetails) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("modelId", carModelDetail.getCarModelDetailId());
+				params.put("model", carModelDetail.getCarModelDetail());
+				modelDetailList.add(params);
+			}			
+			rootParams.put("modelDetailList", modelDetailList);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getCarModeldetails::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.example.dao.CommonDao#getDashboardDetails(java.lang.String)
+	 */
+	@Override
+	public Map<?, ?> getDashboardDetails(String userAgent) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getDashboardDetails::::");
+		String methodName = "GET DASHBOARD DETAILS";
+		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		try {
+			Set<Object> ourLastSearchList = new HashSet<>();
+			Set<Object> savedRecentSearchList = new HashSet<>();
+			Set<Object> relatedSearchList = new HashSet<>();
+			Set<Object> popularNewCarsList = new HashSet<>();
+			Set<Object> popularSedansList = new HashSet<>();
+			rootParams.put("ourLastSearchList", ourLastSearchList);
+			rootParams.put("savedRecentSearchList", savedRecentSearchList);
+			rootParams.put("relatedSearchList", relatedSearchList);
+			rootParams.put("popularNewCarsList", popularNewCarsList);
+			rootParams.put("popularSedansList", popularSedansList);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getCarModeldetails::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
+		}
+	}
+
 	/* (non-Javadoc)
 	 * @see com.example.dao.CommonDao#getVehicleList(com.example.bean.VehicleSearchBean, java.lang.String)
 	 */
 	@Override
 	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, String userAgent) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("::::Enter(daoImpl)==>getVehicleList::::");
+		String methodName = "GET VEHICLE LIST";
+		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		try {
+			//Get VehicleList list
+			Page<Object> vehicleDetails = vehicleDetailRepository.getAllVehicles(vehicleSearchBean.getModels(), 0, pageable(vehicleSearchBean.getPageNo(), 
+					vehicleSearchBean.getItemsPerPage()));
+			Set<Object> vehicleDetailList = new HashSet<>();
+			for(Object obj : vehicleDetails) {
+				Object[]  vehicleDetail = (Object[]) obj;
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("modelId", vehicleDetail[1]);
+//				params.put("model", vehicleDetail.getCarModelDetail());
+				vehicleDetailList.add(params);
+			}
+			rootParams.put("vehicleDetailList", vehicleDetailList);
+			rootParams.put("totalRecords", vehicleDetailList);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getVehicleList::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -202,46 +307,87 @@ public class CommonDaoImpl implements CommonDao {
 	 */
 	@Override
 	public Map<?, ?> getVehicleDetails(long vehicleId, String userAgent) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("::::Enter(daoImpl)==>getVehicleDetails::::");
+		String methodName = "GET VEHICLE DETAILS";
+		try {
+			//Get VehicleDetail
+			VehicleDetail vehicleDetails = vehicleDetailRepository.findByVehicleId(vehicleId);
+			Map<String, Object> params = new LinkedHashMap<String, Object>();
+			params.put("displayName", vehicleDetails.getBrand());
+			params.put("model", vehicleDetails.getModel());
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", params);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getVehicleDetails::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
+		}
 	}
 
 	
-//	/* (non-Javadoc)
-//	 * @see com.example.dao.CommonDao#getAllCountries()
-//	 */
-//	@Override
-//	public Map<?, ?> getCountries(long countryId) throws Exception {
-//		logger.info("::::Enter(daoImpl)==>getCountries::::");
-//		String methodName = "GET COUNTRIES";
-//		Set<Object> countriesList = new HashSet<>();
-//		Set<Country> countries= null;
-//		try {
-//			if(countryId>0){
-//				//Get countries by countryId
-//				countries= countryRepository.findByCountryIdAndIsDeleted(countryId, 0);
-//			} else {
-//				//Get All countries
-//				countries= countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
-//			}
-//			if(countries==null || countries.isEmpty()) {
-//				return CommonUtil.wrapResultResponse(methodName, 1, "No records found", null);
-//			}
-//			for(Country country : countries) {
-//				Map<String, Object> params = new LinkedHashMap<String, Object>();
-//				params.put("countryId", country.getCountryId());
-//				params.put("countryName", country.getCountryName());
-//				countriesList.add(params);
-//			}			
-//			Map<String, Object> response = new LinkedHashMap<String, Object>();
-//			response.put("countryList", countriesList);
-//			return CommonUtil.wrapResultResponse(methodName, 0, "Success", response);
-//		} catch (Exception e) {
-//			logger.error("::::Exception(daoImpl)==>getCountries::::");
-//			e.printStackTrace();
-//			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
-//		}
-//	}
+	/* (non-Javadoc)
+	 * @see com.example.dao.CommonDao#getAllCountries()
+	 */
+	@Override
+	public Map<?, ?> getCountries(long countryId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getCountries::::");
+		String methodName = "GET COUNTRIES";
+		Set<Object> countriesList = new HashSet<>();
+		Set<Country> countries= null;
+		try {
+			if(countryId>0){
+				//Get countries by countryId
+				countries= countryRepository.findByCountryIdAndIsDeleted(countryId, 0);
+			} else {
+				//Get All countries
+				countries= countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
+			}
+			if(countries==null || countries.isEmpty()) {
+				return CommonUtil.wrapResultResponse(methodName, 1, "No records found", null);
+			}
+			for(Country country : countries) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("countryId", country.getCountryId());
+				params.put("countryName", country.getCountryName());
+				countriesList.add(params);
+			}			
+			Map<String, Object> response = new LinkedHashMap<String, Object>();
+			response.put("countryList", countriesList);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", response);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getCountries::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
+		}
+	}
+	
+	public Pageable pageable(int page, int itemsPerPage) 
+	{
+		Pageable pageable = null;
+		if(page==0&&itemsPerPage==0)
+		{
+			pageable = new PageRequest(0, itemsPerPage);
+		}
+		else
+		{
+			pageable = new PageRequest(page - 1, itemsPerPage);
+		}
+		return pageable;	
+	}
+	
+	public Pageable pageableWithSort(int page, int itemsPerPage, Sort sort) 
+	{
+		Pageable pageable = null;
+		if(page==0&&itemsPerPage==0)
+		{
+			pageable = new PageRequest(0, itemsPerPage, sort);
+		}
+		else
+		{
+			pageable = new PageRequest(page - 1, itemsPerPage, sort);
+		}
+		return pageable;	
+	}
+	
 //	
 //	/* (non-Javadoc)
 //	 * @see com.example.dao.CommonDao#getAllCountries()

@@ -58,10 +58,10 @@ task appDeleteBuild(type: Delete) {
     //delete 'src/main/resources/static/'
    	delete fileTree('src/main/resources/static/')
     delete 'react-web/build'
-    delete 'react-web/node_modules'
-    delete fileTree('react-web') {
-        include 'package-lock.json'
-    }
+    //delete 'react-web/node_modules'
+    //delete fileTree('react-web') {
+        //include 'package-lock.json'
+    //}
 }
 
 

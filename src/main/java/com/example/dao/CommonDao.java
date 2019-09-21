@@ -13,13 +13,19 @@ public interface CommonDao {
 
 	Map<?, ?> userRegistration(UserRegistrationBean userRegistrationBean, String userAgent) throws Exception;
 	
-	Map<?, ?> getCarMasterData() throws Exception;
+	Map<?, ?> getCarAllDetails() throws Exception;
+	
+	Map<?, ?> getCarModels(long brandId)throws Exception;
 
+	Map<?, ?> getCarModeldetails(long modelId) throws Exception;
+
+	Map<?, ?> getDashboardDetails(String userAgent) throws Exception;
+	
 	Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, String userAgent) throws Exception;
 
 	Map<?, ?> getVehicleDetails(long vehicleId, String userAgent) throws Exception;
 
-//	Map<?, ?> getCountries(long countryId) throws Exception;
+	Map<?, ?> getCountries(long countryId) throws Exception;
 
 //	Map<?, ?> getCarBrands(long carBrandId)throws Exception;
 //

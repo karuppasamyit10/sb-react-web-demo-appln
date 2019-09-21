@@ -14,6 +14,8 @@ public class VehicleSearchBean {
 	private String fromYear;
 	private String toYear;
 	private String country;
+	private int pageNo; 
+	private int itemsPerPage;
 	/**
 	 * @return the brands
 	 */
@@ -85,6 +87,30 @@ public class VehicleSearchBean {
 	 */
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	/**
+	 * @return the pageNo
+	 */
+	public int getPageNo() {
+		return pageNo;
+	}
+	/**
+	 * @param pageNo the pageNo to set
+	 */
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+	/**
+	 * @return the itemsPerPage
+	 */
+	public int getItemsPerPage() {
+		return itemsPerPage;
+	}
+	/**
+	 * @param itemsPerPage the itemsPerPage to set
+	 */
+	public void setItemsPerPage(int itemsPerPage) {
+		this.itemsPerPage = itemsPerPage;
 	}
 	
 	

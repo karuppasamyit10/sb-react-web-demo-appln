@@ -20,6 +20,9 @@ public class CarModelDetail {
 	@Column(name="carModelDetailId")
 	private long carModelDetailId;
 	
+	@Column(name="carModelId")
+	private long carModelId;
+	
 	@Column(name="carModelDetail", nullable=false)
 	private String carModelDetail;
 	
@@ -38,6 +41,20 @@ public class CarModelDetail {
 	 */
 	public void setCarModelDetailId(long carModelDetailId) {
 		this.carModelDetailId = carModelDetailId;
+	}
+
+	/**
+	 * @return the carModelId
+	 */
+	public long getCarModelId() {
+		return carModelId;
+	}
+
+	/**
+	 * @param carModelId the carModelId to set
+	 */
+	public void setCarModelId(long carModelId) {
+		this.carModelId = carModelId;
 	}
 
 	/**

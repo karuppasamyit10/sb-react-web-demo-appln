@@ -181,6 +181,10 @@ class registration extends Component {
           this.setState({ isdisable: false });
           this.props.showNotification("sucessfully registered", "success");
           this.props.history.push("/");
+        } else if (response && response.response_code >0) {
+          this.setState({ isdisable: false });
+          this.props.showNotification(response.response.response_message, "error");
+          this.props.history.push("/");
         }
       });
     }
