@@ -15,7 +15,7 @@ import { PATH } from '../utils/Constants';
 import Background1 from "../assets/img/home/ssangyong_img.jpeg";
 import Background2 from "../assets/img/home/hyundai_img.jpeg";
 import Background3 from "../assets/img/home/kia_img.jpeg";
-import { getDashboardDetails } from '../actions/searchAction'
+import { getDashboardDetails, getMasterData, getCarModelList } from '../actions/searchAction'
 import { showNotification } from '../actions/NotificationAction'
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
@@ -25,7 +25,11 @@ class Upload extends Component {
     super(props);
     this.state = {
       userDetails: {},
-      dashboardDetails: {}
+      dashboardDetails: {},
+      masterData: {},
+      brandId: null,
+      modelId: null,
+      modelList: []
     };
   }
 
@@ -34,9 +38,11 @@ class Upload extends Component {
   };
 
   componentDidMount() {
+    document.title = "Auto Harasow | Dashboard"
     let cookieData = Cookies.get();
     console.log(cookieData);
     this.getDashboardDetails();
+    this.getMasterData();
   }
 
   handleSearch = () => {
@@ -53,8 +59,38 @@ class Upload extends Component {
     })
   }
 
+  onChangeBrand = (event) => {
+    this.setState({ brandId: event.target.value }, () => {
+      this.getCarModelList(this.state.brandId);
+    })
+  }
+
+
+  onChangeModel = (event) => {
+    this.setState({ modelId: event.target.value }, () => {
+    })
+  }
+
+  getMasterData = () => {
+    this.props.getMasterData({}, (response) => {
+      if (response.response_code === 0) {
+        this.setState({ masterData: response.response })
+      }
+    })
+  }
+
+  getCarModelList = (brandId) => {
+    this.props.getCarModelList({ brandId: brandId }, response => {
+      if (response.response_code === 0) {
+        this.setState({ modelList: response.response.modelList })
+      }
+    })
+  }
+
   render() {
     let { ourLastSearchList, popularNewCarsList, popularSedansList, relatedSearchList, savedRecentSearchList } = this.state.dashboardDetails
+    let { carBrandList, carFuelTypeList, carSteeringList, carTransmissionList, countryList } = this.state.masterData;
+    console.log(this.state.modelList)
     return (
       <React.Fragment>
         <section class="search-filter">
@@ -177,9 +213,16 @@ class Upload extends Component {
                                     aria-hidden="true"
                                   ></i>
                                 </span>
-                                <select>
+                                <select onChange={this.onChangeBrand} value={this.state.brandId}>
                                   <option selected>All Brands</option>
-                                  <option>Loading...</option>
+                                  {carBrandList && carBrandList.length ?
+                                    carBrandList.map((brand) => {
+                                      return (
+                                        <option id={brand.carBrandId} value={brand.carBrandId}>{brand.carBrand}</option>
+                                      )
+                                    })
+                                    :
+                                    <option>Loading...</option>}
                                 </select>
                               </div>
                             </div>
@@ -191,9 +234,14 @@ class Upload extends Component {
                                     aria-hidden="true"
                                   ></i>
                                 </span>
-                                <select>
+                                <select onChange={this.onChangeModel} value={this.state.modelId}>
                                   <option selected>All Models</option>
-                                  <option>Loading...</option>
+                                  {this.state.modelList && this.state.modelList.length ?
+                                    this.state.modelList.map((model) => {
+                                      return (
+                                        <option id={model.modelId} value={model.modelId}>{model.model}</option>
+                                      )
+                                    }) : <option>Choose Brand First</option>}
                                 </select>
                               </div>
                             </div>
@@ -207,7 +255,13 @@ class Upload extends Component {
                                 </span>
                                 <select>
                                   <option selected>Choose Country</option>
-                                  <option>Loading...</option>
+                                  {countryList && countryList.length ?
+                                    countryList.map((country) => {
+                                      return (
+                                        <option id={country.countryId}>{country.countryName}</option>
+                                      )
+                                    }) :
+                                    <option>Loading...</option>}
                                 </select>
                               </div>
                             </div>
@@ -1158,97 +1212,113 @@ class Upload extends Component {
           <div class="container">
             <div class="head2 black medium text-center">Popular New Cars</div>
             <ul class="list-group popularcars-staggering mt-3">
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">New Buick Encore</div>
-                  <p class="para1">39,042 listings starting at $13,990</p>
-                </a>
-              </li>
+              {popularNewCarsList && popularNewCarsList.length ?
+                popularNewCarsList.map((car) => {
+                  return (
+                    <li class="list-group-item" style={{ opacity: 1 }}>
+                      <a href="javascript:;">
+                        <div class="head3">New Buick Encore</div>
+                        <p class="para1">39,042 listings starting at $13,990</p>
+                      </a>
+                    </li>
+                  )
+                })
+                :
+                <ul class="list-group popularcars-staggering mt-3">
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">New Buick Encore</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
+                    </a>
+                  </li>
+                </ul>
+              }
             </ul>
+
           </div>
         </section>
 
@@ -1256,70 +1326,86 @@ class Upload extends Component {
           <div class="container">
             <div class="head2 black medium text-center">Popular Sedans</div>
             <ul class="list-group mt-3 popularcars-staggering">
-              <li class="list-group-item" style={{ opacity: 1 }} style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">Used BMW 3 Series</div>
-                  <p class="para1">
-                    716 Great Deals out of 18,117 listings starting at $1,500
+              {popularSedansList && popularSedansList.length ?
+                popularSedansList.map((sedan) => {
+                  return (
+                    <li class="list-group-item" style={{ opacity: 1 }} style={{ opacity: 1 }}>
+                      <a href="javascript:;">
+                        <div class="head3">Used BMW 3 Series</div>
+                        <p class="para1">
+                          716 Great Deals out of 18,117 listings starting at $1,500
                   </p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">Used BMW 3 Series</div>
-                  <p class="para1">
-                    716 Great Deals out of 18,117 listings starting at $1,500
-                  </p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">Used BMW 3 Series</div>
-                  <p class="para1">
-                    716 Great Deals out of 18,117 listings starting at $1,500
-                  </p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">Used BMW 3 Series</div>
-                  <p class="para1">
-                    716 Great Deals out of 18,117 listings starting at $1,500
-                  </p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">Used BMW 3 Series</div>
-                  <p class="para1">
-                    716 Great Deals out of 18,117 listings starting at $1,500
-                  </p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">Used BMW 3 Series</div>
-                  <p class="para1">
-                    716 Great Deals out of 18,117 listings starting at $1,500
-                  </p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">Used BMW 3 Series</div>
-                  <p class="para1">
-                    716 Great Deals out of 18,117 listings starting at $1,500
-                  </p>
-                </a>
-              </li>
-              <li class="list-group-item" style={{ opacity: 1 }}>
-                <a href="javascript:;">
-                  <div class="head3">Used BMW 3 Series</div>
-                  <p class="para1">
-                    716 Great Deals out of 18,117 listings starting at $1,500
-                  </p>
-                </a>
-              </li>
+                      </a>
+                    </li>
+                  )
+                }) :
+                <ul class="list-group mt-3 popularcars-staggering">
+                  <li class="list-group-item" style={{ opacity: 1 }} style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">Used BMW 3 Series</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at $1,500
+                </p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">Used BMW 3 Series</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at $1,500
+                </p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">Used BMW 3 Series</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at $1,500
+                </p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">Used BMW 3 Series</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at $1,500
+                </p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">Used BMW 3 Series</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at $1,500
+                </p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">Used BMW 3 Series</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at $1,500
+                </p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">Used BMW 3 Series</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at $1,500
+                </p>
+                    </a>
+                  </li>
+                  <li class="list-group-item" style={{ opacity: 1 }}>
+                    <a href="javascript:;">
+                      <div class="head3">Used BMW 3 Series</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at $1,500
+                </p>
+                    </a>
+                  </li>
+                </ul>
+              }
             </ul>
           </div>
         </section>
@@ -1332,6 +1418,12 @@ const mapDispatchToProps = dispatch => {
   return {
     getDashboardDetails: (params, callback) => {
       dispatch(getDashboardDetails(params, callback));
+    },
+    getMasterData: (params, callback) => {
+      dispatch(getMasterData(params, callback));
+    },
+    getCarModelList: (params, callback) => {
+      dispatch(getCarModelList(params, callback));
     },
     showNotification: (message, type) => {
       dispatch(showNotification(message, type));

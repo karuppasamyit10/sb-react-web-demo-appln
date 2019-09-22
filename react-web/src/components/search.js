@@ -24,7 +24,9 @@ class search extends Component {
       prop: PropTypes
     };
   
-    componentDidMount() {}
+    componentDidMount() {
+        document.title = "Auto Harasow | Search"
+    }
   
     render() {
       return (

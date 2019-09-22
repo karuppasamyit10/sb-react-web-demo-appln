@@ -26,7 +26,9 @@ class login extends Component {
     this.passwordRef = React.createRef();
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    document.title = "Auto Harasow | Login"
+  }
 
   handleOnChange = e => {
     let { target } = e;

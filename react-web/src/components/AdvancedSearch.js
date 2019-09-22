@@ -30,6 +30,7 @@ class AdvancedSearch extends Component {
   };
 
   componentDidMount() {
+    document.title = "Auto Harasow | Advanced Search"
     let params = {};
     this.props.getSearchResult(params, (response) => {
       console.log(response);

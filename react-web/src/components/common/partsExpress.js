@@ -15,7 +15,7 @@ class partsExpress extends Component {
     };
 
     componentDidMount() {
-
+        document.title = "Auto Harasow | Parts Express"
     }
 
 

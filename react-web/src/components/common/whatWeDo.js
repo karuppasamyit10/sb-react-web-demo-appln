@@ -15,7 +15,7 @@ class whatWeDo extends Component {
     };
 
     componentDidMount() {
-
+        document.title = "Auto Harasow | What We Do"
     }
 
 

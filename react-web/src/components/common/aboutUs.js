@@ -15,7 +15,7 @@ class aboutUs extends Component {
     };
 
     componentDidMount() {
-
+        document.title = "Auto Harasow | About Us"
     }
 
 

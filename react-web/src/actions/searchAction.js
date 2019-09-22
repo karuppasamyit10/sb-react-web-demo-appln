@@ -36,9 +36,24 @@ export function getDashboardDetails(params, callback) {
   };
 }
 
+
+export function getCarModelList(params, callback) {
+  return function(dispatch) {
+    Client.get(URL.GET_CAR_MODEL, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====get car model response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====get car model response===????", error);
+      });
+  };
+}
+
 export function getMasterData(params, callback) {
   return function(dispatch) {
-    Client.get(URL.CAR_MASTER_DATA, params, true)
+    Client.get(URL.GET_CAR_LIST, params, true)
       .then(response => {
         console.log(response);
         myLog("====car master response===::::", response);

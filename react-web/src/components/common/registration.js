@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import store from "store";
 import { AppWrapper } from "../public/AppWrapper";
 import { logInUser, userRegistration } from "../../actions/userAction";
+import { getMasterData } from "../../actions/searchAction";
 import { showNotification } from "../../actions/NotificationAction";
 import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
@@ -19,13 +20,18 @@ class registration extends Component {
       email: "",
       mobile: "",
       name: "",
+      city: "",
+      countryId: null,
+      countryList: [],
       error: {
         userName: "",
         password: "",
         confirmPassword: "",
         email: "",
         mobile: "",
-        name: ""
+        name: "",
+        countryId: "",
+        city: "",
       },
       token: {},
       isdisable: false
@@ -38,7 +44,18 @@ class registration extends Component {
     this.nameRef = React.createRef();
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    document.title = "Auto Harasow | Registration";
+    this.getMasterData()
+  }
+
+  getMasterData = () => {
+    this.props.getMasterData({}, response => {
+      if (response && response.response_code === 0) {
+        this.setState({ countryList: response.response.countryList })
+      }
+    })
+  }
 
   handleOnChange = e => {
     let { target } = e;
@@ -51,6 +68,10 @@ class registration extends Component {
     });
   };
 
+  onChangeCountry = (e) => {
+    this.setState({ countryId: e.target.value }, () => { });
+  }
+
   handleRemoveError = () => {
     let {
       userName,
@@ -59,7 +80,9 @@ class registration extends Component {
       confirmPassword,
       email,
       name,
-      mobile
+      mobile,
+      countryId,
+      city
     } = this.state;
     if (userName) {
       this.userNameRef.current.classList.remove("error");
@@ -91,6 +114,16 @@ class registration extends Component {
       error.mobile = "";
       this.setState({ error: error });
     }
+    if (countryId) {
+      this.mobileRef.current.classList.remove("error");
+      error.countryId = "";
+      this.setState({ error: error });
+    }
+    if (city) {
+      this.mobileRef.current.classList.remove("error");
+      error.city = "";
+      this.setState({ error: error });
+    }
   };
 
   handleValidate = () => {
@@ -101,7 +134,9 @@ class registration extends Component {
       confirmPassword,
       email,
       name,
-      mobile
+      mobile,
+      countryId,
+      city
     } = this.state;
     if (!userName) {
       this.userNameRef.current.focus();
@@ -152,6 +187,20 @@ class registration extends Component {
       this.setState({ error: error });
       return false;
     }
+    if (!countryId) {
+      this.mobileRef.current.focus();
+      this.mobileRef.current.classList.add("error");
+      error.countryId = "Choose Country";
+      this.setState({ error: error });
+      return false;
+    }
+    if (!city) {
+      this.mobileRef.current.focus();
+      this.mobileRef.current.classList.add("error");
+      error.city = "Enter City";
+      this.setState({ error: error });
+      return false;
+    }
     return true;
   };
 
@@ -181,7 +230,7 @@ class registration extends Component {
           this.setState({ isdisable: false });
           this.props.showNotification("sucessfully registered", "success");
           this.props.history.push("/");
-        } else if (response && response.response_code >0) {
+        } else if (response && response.response_code > 0) {
           this.setState({ isdisable: false });
           this.props.showNotification(response.response.response_message, "error");
           this.props.history.push("/");
@@ -401,18 +450,40 @@ class registration extends Component {
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">Country</label>
                     <div class="col-md-9 form-right">
-                      <select class="form-control">
-                        <option value="" selected>
+                      <select class="form-control" value={this.state.countryId} onChange={this.onChangeCountry}>
+                        <option value={null} selected>
                           Select Country
                         </option>
-                        <option value="">Loading...</option>
+                        {this.state.countryList && this.state.countryList.length ?
+                          this.state.countryList.map((countryList) => {
+                            return (
+                              <option value={countryList.countryId}>{countryList.countryName}</option>
+                            )
+                          }) : <option value="">Loading...</option>}
+
                       </select>
                     </div>
                   </div>
                   <div class="form-group row no-gutters align-items-center">
                     <label class="col-md-3 bold form-left">City</label>
                     <div class="col-md-9 form-right">
-                      <input type="text" class="form-control" value="" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        class="form-control"
+                        ref={this.nameRef}
+                        id="cityInput"
+                        name="city"
+                        value={this.state.city}
+                        onChange={e => {
+                          this.handleOnChange(e);
+                        }}
+                      />
+                      <p style={{ color: "red" }}>
+                        {this.state.error["city"]
+                          ? this.state.error["city"]
+                          : ""}
+                      </p>
                     </div>
                   </div>
                   <div class="form-group row no-gutters align-items-center">
@@ -631,6 +702,9 @@ const mapDispatchToProps = dispatch => {
     },
     registration: (inputObject, callback) => {
       dispatch(userRegistration(inputObject, callback));
+    },
+    getMasterData: (params, callback) => {
+      dispatch(getMasterData(params, callback));
     },
     showNotification: (message, type) => {
       dispatch(showNotification(message, type));

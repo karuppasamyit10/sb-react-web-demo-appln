@@ -15,7 +15,7 @@ class containerShipping extends Component {
     };
 
     componentDidMount() {
-
+        document.title = "Auto Harasow | Container Shipping"
     }
 
     render() {
