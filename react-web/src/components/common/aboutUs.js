@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { AppWrapper } from "../public/AppWrapper";
 import { PATH } from "../../utils/Constants";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class aboutUs extends Component {
     constructor(props) {
@@ -16,6 +16,10 @@ class aboutUs extends Component {
 
     componentDidMount() {
         document.title = "Auto Harasow | About Us"
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
 
@@ -32,7 +36,6 @@ class aboutUs extends Component {
                         </nav>
                     </div>
                 </section>
-                <div class="spacer1"></div>
                 <section class="about_wrap">
                     <div class="container">
                         <div class="head1 medium">
@@ -62,10 +65,10 @@ class aboutUs extends Component {
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, doloribus quam quis qui odit tempore ea perspiciatis est mollitia repellendus numquam aut, necessitatibus, cum nemo molestiae a pariatur fugit voluptas.
                 </p>
                                     <div class="readmore">
-                                        <a href="javascript:;" class="btn btn-link para1 medium">
+                                        <Link to={PATH.WHO_WE_ARE} class="btn btn-link para1 medium">
                                             <span class="d-inline-block align-middle"><i class="fas fa-caret-right"></i></span>
                                             <span class="d-inline-block align-middle">Read More</span>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -77,10 +80,10 @@ class aboutUs extends Component {
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, doloribus quam quis qui odit tempore ea perspiciatis est mollitia repellendus numquam aut, necessitatibus, cum nemo molestiae a pariatur fugit voluptas.
                   </p>
                                     <div class="readmore">
-                                        <a href="javascript:;" class="btn btn-link para1 medium">
+                                        <Link to={PATH.HOW_WE_WORK} class="btn btn-link para1 medium">
                                             <span class="d-inline-block align-middle"><i class="fas fa-caret-right"></i></span>
                                             <span class="d-inline-block align-middle">Read More</span>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -92,10 +95,10 @@ class aboutUs extends Component {
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, doloribus quam quis qui odit tempore ea perspiciatis est mollitia repellendus numquam aut, necessitatibus, cum nemo molestiae a pariatur fugit voluptas.
                     </p>
                                     <div class="readmore">
-                                        <a href="javascript:;" class="btn btn-link para1 medium">
+                                        <Link to={PATH.HOW_TO_ORDER} class="btn btn-link para1 medium">
                                             <span class="d-inline-block align-middle"><i class="fas fa-caret-right"></i></span>
                                             <span class="d-inline-block align-middle">Read More</span>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

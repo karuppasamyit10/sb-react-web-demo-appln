@@ -33,7 +33,6 @@ class containerShipping extends Component {
                         </nav>
                     </div>
                 </section>
-                <div class="spacer1"></div>
                 <section class="container_shipping">
                     <div class="container">
                         <div class="head1 medium">
@@ -78,6 +77,7 @@ class containerShipping extends Component {
                     </div>
 
                 </section>
+                <div class="spacer1"></div>
             </React.Fragment>
         );
     }

@@ -35,7 +35,6 @@ class partsExpress extends Component {
                         </nav>
                     </div>
                 </section>
-                <div class="spacer1"></div>
                 <section class="about_wrap">
                     <div class="container">
                         <div class="head1 medium">
@@ -70,6 +69,7 @@ class partsExpress extends Component {
                     </div>
 
                 </section>
+                <div class="spacer1"></div>
             </React.Fragment>
         );
     }

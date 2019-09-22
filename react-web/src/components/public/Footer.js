@@ -32,6 +32,11 @@ class Footer extends Component {
                 <div class="flogo bold text-uppercase">harasow</div>
                 <p class="para white">&copy; Harasow. All Rights Reserved.</p>
               </div>
+              <div class="footer-left">
+                <i className="fa fa-facebook-square" style={{ color: 'white' }}></i>
+                <i className="	fa fa-twitter ml-2" style={{ color: 'white' }}></i>
+                <i className="fa fa-instagram ml-2" style={{ color: 'white' }}></i>
+              </div>
             </div>
             <div class="col-md-9">
               <div class="row">

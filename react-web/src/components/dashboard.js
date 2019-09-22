@@ -157,6 +157,19 @@ class Upload extends Component {
                       Equipments
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      id="equipments-tab"
+                      data-toggle="tab"
+                      href="#equipments"
+                      role="tab"
+                      aria-controls="equipments"
+                      aria-selected="false"
+                    >
+                      Others
+                    </a>
+                  </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                   <div
@@ -871,6 +884,7 @@ class Upload extends Component {
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -960,7 +974,7 @@ class Upload extends Component {
                     />
                   </div>
                   <div class="cardBody">
-                    <h4 class="head3">Best Deals First</h4>
+                    <h4 class="head3">Evaluation standard</h4>
                     <p class="desc para1">
                       By comparing price, detailed vehicle data and dealer
                       reviews, we give each used car a deal rating from great to
@@ -979,7 +993,7 @@ class Upload extends Component {
                     />
                   </div>
                   <div class="cardBody">
-                    <h4 class="head3">Valuable Insights</h4>
+                    <h4 class="head3">Global A/S System</h4>
                     <p class="desc para1">
                       We provide free access to key info like dealer reviews,
                       market value, price drops and days on lot—all on one page
@@ -997,7 +1011,7 @@ class Upload extends Component {
                     />
                   </div>
                   <div class="cardBody">
-                    <h4 class="head3">Personalized Search</h4>
+                    <h4 class="head3">Contact us</h4>
                     <p class="desc para1">
                       Our powerful search makes it easy to refine and
                       personalize your results so you only see the cars and
@@ -1029,22 +1043,7 @@ class Upload extends Component {
                     class="img-fluid"
                     alt=""
                   />
-                  <p class="head2 bold white mt-3">AUTO HARASOW Special Service</p>
-                  <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-primary">
-                      Learn More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="no1-cards">
-                  <img
-                    src={require("../assets/img/no1/img_autowini03.jpg")}
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <p class="head2 bold white mt-3">AUTO HARASOW Partners </p>
+                  <p class="head2 bold white mt-3">AUTO harasow Media</p>
                   <div class="btn-group">
                     <a href="javascript:;" class="btn btn-primary">
                       Learn More
@@ -1059,7 +1058,22 @@ class Upload extends Component {
                     class="img-fluid"
                     alt=""
                   />
-                  <p class="head2 bold white mt-3">AUTO HARASOW Broadcasting</p>
+                  <p class="head2 bold white mt-3">Why AUTO harasow </p>
+                  <div class="btn-group">
+                    <a href="javascript:;" class="btn btn-primary">
+                      Learn More
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="no1-cards">
+                  <img
+                    src={require("../assets/img/no1/img_autowini03.jpg")}
+                    class="img-fluid"
+                    alt=""
+                  />
+                  <p class="head2 bold white mt-3">Harasow Transport</p>
                   <div class="btn-group">
                     <a href="javascript:;" class="btn btn-primary">
                       Learn More
@@ -1216,20 +1230,20 @@ class Upload extends Component {
                 popularNewCarsList.map((car) => {
                   return (
                     <li class="list-group-item" style={{ opacity: 1 }}>
-                      <a href="javascript:;">
+                      <Link to={PATH.SEARCH_DETAIL}>
                         <div class="head3">New Buick Encore</div>
                         <p class="para1">39,042 listings starting at $13,990</p>
-                      </a>
+                      </Link>
                     </li>
                   )
                 })
                 :
                 <ul class="list-group popularcars-staggering mt-3">
                   <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
+                    <Link to={PATH.SEARCH_DETAIL}>
                       <div class="head3">New Buick Encore</div>
                       <p class="para1">39,042 listings starting at $13,990</p>
-                    </a>
+                    </Link>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <a href="javascript:;">
@@ -1330,31 +1344,30 @@ class Upload extends Component {
                 popularSedansList.map((sedan) => {
                   return (
                     <li class="list-group-item" style={{ opacity: 1 }} style={{ opacity: 1 }}>
-                      <a href="javascript:;">
+                      <Link to={PATH.SEARCH_DETAIL}>
                         <div class="head3">Used BMW 3 Series</div>
                         <p class="para1">
                           716 Great Deals out of 18,117 listings starting at $1,500
                   </p>
-                      </a>
-                    </li>
+                      </Link>                    </li>
                   )
                 }) :
                 <ul class="list-group mt-3 popularcars-staggering">
                   <li class="list-group-item" style={{ opacity: 1 }} style={{ opacity: 1 }}>
-                    <a href="javascript:;">
+                    <Link to={PATH.SEARCH_DETAIL}>
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
                         716 Great Deals out of 18,117 listings starting at $1,500
                 </p>
-                    </a>
+                    </Link>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
+                    <Link to={PATH.SEARCH_DETAIL}>
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
                         716 Great Deals out of 18,117 listings starting at $1,500
                 </p>
-                    </a>
+                    </Link>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <a href="javascript:;">

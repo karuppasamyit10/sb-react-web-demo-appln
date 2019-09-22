@@ -28,6 +28,7 @@ import "./assets/slick/slick-theme.css";
 import "jquery";
 import "bootstrap";
 
+import 'font-awesome/css/font-awesome.min.css';
 import login from "./components/common/login";
 import dashboard from "./components/dashboard";
 import registration from "./components/common/registration";
@@ -35,9 +36,16 @@ import Notification from './components/common/Notification'
 import search from './components/search';
 import AdvancedSearch from './components/AdvancedSearch';
 import whatWeDo from './components/common/whatWeDo';
+import fuelConversion from './components/common/fuelConversion';
+import carAccessories from './components/common/carAccessories';
+import whoWeAre from './components/common/whoWeAre';
+import howWeWork from './components/common/howWeWork';
+import howToOrder from './components/common/howToOrder';
+import howToUseHgs from './components/common/howToUseHgs';
 import { cookiePresent } from './utils/AthuService';
 import PropTypes from 'prop-types';
 import aboutUs from "./components/common/aboutUs";
+import specialServices from "./components/common/specialService";
 import containerShipping from "./components/common/containerShipping";
 import partsExpress from "./components/common/partsExpress";
 import searchDetail from "./components/searchDetail";
@@ -64,6 +72,13 @@ ReactDOM.render(
         <CustomRoute exact path="/dashboard/advanced-search" component={AdvancedSearch} />
         <CustomRoute exact path="/about-us" component={aboutUs} />
         <CustomRoute exact path="/about-us/what-we-do" component={whatWeDo} />
+        <CustomRoute exact path="/about-us/what-we-do/fuel-conversion" component={fuelConversion} />
+        <CustomRoute exact path="/about-us/what-we-do/car-accessories" component={carAccessories} />
+        <CustomRoute exact path="/about-us/who-we-are" component={whoWeAre} />
+        <CustomRoute exact path="/about-us/how-we-work" component={howWeWork} />
+        <CustomRoute exact path="/about-us/how-we-work/special-services" component={specialServices} />
+        <CustomRoute exact path="/about-us/how-to-order" component={howToOrder} />
+        <CustomRoute exact path="/about-us/how-to-order/how-to-use-hgs" component={howToUseHgs} />
         <CustomRoute exact path="/about-us/what-we-do/container-shipping" component={containerShipping} />
         <CustomRoute exact path="/about-us/what-we-do/parts-express" component={partsExpress} />
         <CustomRoute exact path="/search-detail" component={searchDetail} />
