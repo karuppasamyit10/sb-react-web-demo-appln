@@ -147,10 +147,10 @@ public class AdminController {
 				    }
 				}
 				//Add MemberShip
-				Set<MemberShip> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
+				List<MemberShip> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
 				if(memberShips.isEmpty())
 				{
-					memberShips = new LinkedHashSet<MemberShip>();
+					memberShips = new LinkedList<MemberShip>();
 					try
 				    {
 				    	File file = ResourceUtils.getFile("classpath:master_data/common/membership.txt");
@@ -175,10 +175,10 @@ public class AdminController {
 				    }
 				}
 				//Add Deals
-				Set<Deals> deals = dealsRepository.findByIsDeletedOrderByDealNameAsc(0);
+				List<Deals> deals = dealsRepository.findByIsDeletedOrderByDealNameAsc(0);
 				if(deals.isEmpty())
 				{
-					deals = new LinkedHashSet<Deals>();
+					deals = new LinkedList<Deals>();
 					try
 				    {
 				    	File file = ResourceUtils.getFile("classpath:master_data/common/deals.txt");

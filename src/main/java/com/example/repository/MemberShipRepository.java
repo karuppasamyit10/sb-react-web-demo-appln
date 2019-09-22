@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,8 +10,7 @@ import com.example.entity.MemberShip;
 @Repository
 public interface MemberShipRepository extends JpaRepository<MemberShip, Long> {
 
-	Set<MemberShip> findByIsDeletedOrderByMembershipTypeAsc(int isDeleted);
+	List<MemberShip> findByIsDeletedOrderByMembershipTypeAsc(int isDeleted);
 	
-	Set<MemberShip> findByMembershipIdAndIsDeleted(long membershipId, int isDeleted);
-	
+	List<MemberShip> findByMembershipIdAndIsDeleted(long membershipId, int isDeleted);
 }

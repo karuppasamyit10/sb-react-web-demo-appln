@@ -15,7 +15,7 @@ import com.example.entity.VehicleDetail;
 public interface VehicleDetailRepository extends JpaRepository<VehicleDetail, Long> {
 
 	
-	@Query(value="select * from vehicle_details WHERE brand IN :brands AND model IN :models ORDER BY vehicle_id DESC  \n#pageable\n ",
+	@Query(value="select vehicle_id, CONCAT(`year`,' ',brand,' ', model,' ',model_detail,' ',exterior_color) from vehicle_details WHERE brand IN :brands AND model IN :models ORDER BY vehicle_id DESC  \n#pageable\n ",
 	countQuery = "select count(*) from vehicle_details WHERE brand IN :brands AND model IN :models ", nativeQuery = true)
 	Page<Object> getAllVehicles(@Param("brands") Set<String> brands, @Param("models") Set<String> models, Pageable pageable);
 	

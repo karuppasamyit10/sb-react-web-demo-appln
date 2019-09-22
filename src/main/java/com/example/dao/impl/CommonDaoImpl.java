@@ -30,8 +30,13 @@ import com.example.entity.CarModelDetail;
 import com.example.entity.CarSteering;
 import com.example.entity.CarTransmission;
 import com.example.entity.Country;
+import com.example.entity.Deals;
+import com.example.entity.MemberShip;
+import com.example.entity.Mileage;
+import com.example.entity.Price;
 import com.example.entity.User;
 import com.example.entity.VehicleDetail;
+import com.example.entity.Year;
 import com.example.repository.CarBrandRepository;
 import com.example.repository.CarFuelTypeRepository;
 import com.example.repository.CarModelDetailRepository;
@@ -39,9 +44,13 @@ import com.example.repository.CarModelRepository;
 import com.example.repository.CarSteeringRepository;
 import com.example.repository.CarTransmissionRepository;
 import com.example.repository.CountryRepository;
+import com.example.repository.DealsRepository;
 import com.example.repository.MemberShipRepository;
+import com.example.repository.MileageRepository;
+import com.example.repository.PriceRepository;
 import com.example.repository.UserRepository;
 import com.example.repository.VehicleDetailRepository;
+import com.example.repository.YearRepository;
 import com.example.util.CommonUtil;
 
 
@@ -83,6 +92,18 @@ public class CommonDaoImpl implements CommonDao {
 	
 	@Autowired
 	VehicleDetailRepository vehicleDetailRepository;
+	
+	@Autowired
+	DealsRepository dealsRepository;
+	
+	@Autowired
+	MileageRepository mileageRepository;
+	
+	@Autowired
+	PriceRepository priceRepository;
+	
+	@Autowired
+	YearRepository yearRepository;
 		
 	@Override
 	@Transactional(rollbackOn = { Exception.class})
@@ -187,8 +208,61 @@ public class CommonDaoImpl implements CommonDao {
 				params.put("carTransmissionId", carTransmission.getCarTransmissionId());
 				params.put("carTransmissionType", carTransmission.getCarTransmissionType());
 				carTransmissionList.add(params);
-			}			
-			rootParams.put("carTransmissionList", carTransmissionList);			
+			}
+			rootParams.put("carTransmissionList", carTransmissionList);	
+			
+			//Membership list
+			List<MemberShip> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
+			List<Object> memberShipList = new LinkedList<>();
+			for(MemberShip memberShip : memberShips) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("membershipId", memberShip.getMembershipId());
+				params.put("membershipType", memberShip.getMembershipType());
+				memberShipList.add(params);
+			}		
+			rootParams.put("memberShipList", memberShipList);	
+			
+			//Deals list
+			List<Deals> deals = dealsRepository.findByIsDeletedOrderByDealNameAsc(0);
+			List<Object> dealsList = new LinkedList<>();
+			for(Deals deal : deals) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("dealId", deal.getDealId());
+				params.put("dealName", deal.getDealName());
+				dealsList.add(params);
+			}		
+			rootParams.put("dealsList", dealsList);
+			
+			//Price list
+			List<Price> prices = priceRepository.findByOrderByPriceAsc();
+			List<Object> priceList = new LinkedList<>();
+			for(Price price : prices) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("price", price.getPrice());
+				priceList.add(params);
+			}		
+			rootParams.put("priceList", priceList);
+			
+			//Year list
+			List<Year> years = yearRepository.findByOrderByYearAsc();
+			List<Object> yearList = new LinkedList<>();
+			for(Year year : years) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("year", year.getYear());
+				yearList.add(params);
+			}		
+			rootParams.put("yearList", yearList);
+			
+			//mileage list
+			List<Mileage> mileages = mileageRepository.findByOrderByMileageAsc();
+			List<Object> mileageList = new LinkedList<>();
+			for(Mileage mileage : mileages) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("mileage", mileage.getMileage());
+				mileageList.add(params);
+			}		
+			rootParams.put("mileageList", mileageList);
+			
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
 			logger.error("::::Exception(daoImpl)==>getCountries::::");
@@ -289,8 +363,8 @@ public class CommonDaoImpl implements CommonDao {
 			for(Object obj : vehicleDetails.getContent()) {
 				Object[]  vehicleDetail = (Object[]) obj;
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("modelId", vehicleDetail[1]);
-//				params.put("model", vehicleDetail.getCarModelDetail());
+				params.put("vehicleId", vehicleDetail[0]);
+				params.put("vehicleName", vehicleDetail[1]);
 				vehicleDetailList.add(params);
 			}
 			rootParams.put("vehicleDetailList", vehicleDetailList);
@@ -314,8 +388,8 @@ public class CommonDaoImpl implements CommonDao {
 			//Get VehicleDetail
 			VehicleDetail vehicleDetails = vehicleDetailRepository.findByVehicleId(vehicleId);
 			Map<String, Object> params = new LinkedHashMap<String, Object>();
-			params.put("displayName", vehicleDetails.getBrand());
-			params.put("model", vehicleDetails.getModel());
+			params.put("vehicleId", vehicleDetails.getVehicleId());
+			params.put("vehicleName", vehicleDetails.getYear()+" "+vehicleDetails.getBrand()+" "+vehicleDetails.getModel());
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", params);
 		} catch (Exception e) {
 			logger.error("::::Exception(daoImpl)==>getVehicleDetails::::");

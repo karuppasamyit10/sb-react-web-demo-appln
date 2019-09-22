@@ -26,7 +26,7 @@ public class CookieResource {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CookieResource.class);
 	
-	@GetMapping("/api/public/update-cookie")
+	@GetMapping("/api/public/update-cookiee")
 	public String getOrSetCookie(HttpServletResponse response, HttpServletRequest request) {
 		logger.info("Controller==>Enter==>getOrSetCookie<==");
 		Cookie[] cookies = request.getCookies();
