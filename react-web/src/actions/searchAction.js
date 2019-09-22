@@ -8,7 +8,7 @@ import { myLog } from "../utils/Utility";
 import Client from "../utils/client";
 
 export function getSearchResult(params, callback) {
-  return function(dispatch) {
+  return function (dispatch) {
     Client.get(URL.ADVANCED_SEARCH, params, true)
       .then(response => {
         console.log(response);
@@ -23,7 +23,7 @@ export function getSearchResult(params, callback) {
 
 
 export function getDashboardDetails(params, callback) {
-  return function(dispatch) {
+  return function (dispatch) {
     Client.get(URL.GET_DASHBOARD_DATA, params, true)
       .then(response => {
         console.log(response);
@@ -38,7 +38,7 @@ export function getDashboardDetails(params, callback) {
 
 
 export function getCarModelList(params, callback) {
-  return function(dispatch) {
+  return function (dispatch) {
     Client.get(URL.GET_CAR_MODEL, params, true)
       .then(response => {
         console.log(response);
@@ -51,8 +51,38 @@ export function getCarModelList(params, callback) {
   };
 }
 
+
+export function getVehicleSearchList(params, callback) {
+  return function (dispatch) {
+    Client.post(URL.GET_VEHICLE_SEARCH_LIST, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====get car model response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====get car model response===????", error);
+      });
+  };
+}
+
+
+export function getVehicleDetails(params, callback) {
+  return function (dispatch) {
+    Client.get(URL.GET_VEHICLE_DETAILS, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====get car model response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====get car model response===????", error);
+      });
+  };
+}
+
 export function getMasterData(params, callback) {
-  return function(dispatch) {
+  return function (dispatch) {
     Client.get(URL.GET_CAR_LIST, params, true)
       .then(response => {
         console.log(response);

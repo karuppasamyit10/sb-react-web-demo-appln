@@ -25,4 +25,6 @@ module.exports = {
   GET_CAR_LIST : 'api/public/car/all_details',
   GET_CAR_MODEL : 'api/public/car/models',
   GET_CAR_MODEL_DETAILS : 'api/public/car/model_details',
+  GET_VEHICLE_SEARCH_LIST : 'api/public/vehicleList',
+  GET_VEHICLE_DETAILS : 'api/public/vehicleDetails',
 }; 
