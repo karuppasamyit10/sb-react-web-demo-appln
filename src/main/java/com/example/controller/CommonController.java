@@ -1,10 +1,17 @@
 package com.example.controller;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Stream;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +39,29 @@ public class CommonController {
 	@Autowired
 	private CommonDao commonDao;
 
+	@GetMapping("/api/public/update-cookie")
+	public String getOrSetCookie(HttpServletResponse response, HttpServletRequest request) {
+		logger.info("Controller==>Enter==>getOrSetCookie<==");
+		Cookie[] cookies = request.getCookies();
+		
+	    if (cookies != null) {
+	    	Stream<Cookie> cookieObj = Arrays.stream(cookies).filter(c -> c.getName().equalsIgnoreCase("cookie_user_id"));
+	    	if (cookieObj != null) {
+	    		 return "Success";
+	    	}     	 
+	    } 
+	    
+    	// create a cookie
+	    Cookie cookie = new Cookie("cookie_user_id", "1000");
+//		    cookie.setPath("/welcomeUser");
+	    cookie.setComment("cookie_user_id");
+	    cookie.setVersion(1);
+	    //add cookie to response
+	    response.addCookie(cookie);
+	    return "Success";
+	}
+	
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/user/registration", produces = "application/json", consumes = "application/json")
 	@ResponseBody
 	public Map<?, ?> userRegistration(@RequestBody UserRegistrationBean userRegistrationBean, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent) throws Exception {
