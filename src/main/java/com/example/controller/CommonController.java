@@ -108,7 +108,7 @@ public class CommonController {
 	}
 	
 	//Get vehicle list 
-	@RequestMapping(method = RequestMethod.GET, value = "/vehicleList", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/vehicleList", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent) throws Exception {
 		logger.info("Controller==>Enter==>getVehicleList<==");

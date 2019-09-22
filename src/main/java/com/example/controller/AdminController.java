@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -116,10 +118,10 @@ public class AdminController {
 			if(masterDataField.equalsIgnoreCase("common")) 
 			{
 				//Add country
-				Set<Country> countryList = countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
+				List<Country> countryList = countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
 				if(countryList.isEmpty())
 				{
-					countryList = new LinkedHashSet<Country>();
+					countryList = new LinkedList<Country>();
 					try
 				    {
 				    	File file = ResourceUtils.getFile("classpath:master_data/common/country.txt");
@@ -232,10 +234,10 @@ public class AdminController {
 			else if(masterDataField.equalsIgnoreCase("car")) 
 			{
 				// Add Car Brand
-				Set<CarBrand> carBrandList = carBrandRepository.findByIsDeletedOrderByCarBrandAsc(0);
+				List<CarBrand> carBrandList = carBrandRepository.findByIsDeletedOrderByCarBrandAsc(0);
 				if(carBrandList.isEmpty())
 				{
-					carBrandList = new LinkedHashSet<CarBrand>();
+					carBrandList = new LinkedList<CarBrand>();
 					try
 				    {
 				    	File file = ResourceUtils.getFile("classpath:master_data/car/carbrand.txt");
@@ -260,10 +262,10 @@ public class AdminController {
 				    }
 				}
 				// Add Car Fuel type
-				Set<CarFuelType> carFuelTypes = carFuelTypeRepository.findByIsDeletedOrderByCarFuelTypeAsc(0);
+				List<CarFuelType> carFuelTypes = carFuelTypeRepository.findByIsDeletedOrderByCarFuelTypeAsc(0);
 				if(carFuelTypes.isEmpty())
 				{
-					carFuelTypes = new LinkedHashSet<CarFuelType>();
+					carFuelTypes = new LinkedList<CarFuelType>();
 					try
 				    {
 				    	File file = ResourceUtils.getFile("classpath:master_data/car/carfueltype.txt");
@@ -287,10 +289,10 @@ public class AdminController {
 				    }
 				}
 				// Add Car Steering type
-				Set<CarSteering> carSteerings = carSteeringRepository.findByIsDeletedOrderByCarSteeringTypeAsc(0);
+				List<CarSteering> carSteerings = carSteeringRepository.findByIsDeletedOrderByCarSteeringTypeAsc(0);
 				if(carSteerings.isEmpty())
 				{
-					carSteerings = new LinkedHashSet<CarSteering>();
+					carSteerings = new LinkedList<CarSteering>();
 					try
 				    {
 				    	File file = ResourceUtils.getFile("classpath:master_data/car/carsteering.txt");
@@ -314,10 +316,10 @@ public class AdminController {
 				    }
 				}
 				// Add Car transmission
-				Set<CarTransmission> carTransmissions = carTransmissionRepository.findByIsDeletedOrderByCarTransmissionTypeAsc(0);
+				List<CarTransmission> carTransmissions = carTransmissionRepository.findByIsDeletedOrderByCarTransmissionTypeAsc(0);
 				if(carTransmissions.isEmpty())
 				{
-					carTransmissions = new LinkedHashSet<CarTransmission>();
+					carTransmissions = new LinkedList<CarTransmission>();
 					try
 				    {
 				    	File file = ResourceUtils.getFile("classpath:master_data/car/cartransmission.txt");

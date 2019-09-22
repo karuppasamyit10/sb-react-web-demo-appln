@@ -22,9 +22,9 @@ public class ResourceServer extends ResourceServerConfigurerAdapter
     {
 		 http
 	       .authorizeRequests()
-	       .antMatchers("/*").permitAll()
+	       .antMatchers("/**").permitAll()
 		 	.antMatchers("/index.html","/static/css/**","/static/js/**","/static/media/**",
-		 			"/api/public/**").permitAll()
+		 			"/api/public/**", "/dashboard/**").permitAll()
 		 	.anyRequest().authenticated();
 		logger.info("::::::::::::::::::::Method-ResourceServer-ResourceServerConfigurerAdapter::::::::::::::::::::");
     }

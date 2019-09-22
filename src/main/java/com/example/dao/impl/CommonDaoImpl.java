@@ -3,6 +3,8 @@ package com.example.dao.impl;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -134,8 +136,8 @@ public class CommonDaoImpl implements CommonDao {
 		
 		try {
 			//Country list
-			Set<Country> countries= countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
-			Set<Object> countryList = new HashSet<>();
+			List<Country> countries= countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
+			List<Object> countryList = new LinkedList<>();
 			for(Country country : countries) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("countryId", country.getCountryId());
@@ -145,8 +147,8 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("countryList", countryList);
 			
 			//Car Brand list
-			Set<CarBrand> carBrands= carBrandRepository.findByIsDeletedOrderByCarBrandAsc(0);
-			Set<Object> carBrandList = new HashSet<>();
+			List<CarBrand> carBrands= carBrandRepository.findByIsDeletedOrderByCarBrandAsc(0);
+			List<Object> carBrandList = new LinkedList<>();
 			for(CarBrand carBrand : carBrands) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("carBrandId", carBrand.getCarBrandId());
@@ -156,8 +158,8 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("carBrandList", carBrandList);
 			
 			//Car Steering list
-			Set<CarSteering> carSteerings= carSteeringRepository.findByIsDeletedOrderByCarSteeringTypeAsc(0);
-			Set<Object> carSteeringList = new HashSet<>();
+			List<CarSteering> carSteerings= carSteeringRepository.findByIsDeletedOrderByCarSteeringTypeAsc(0);
+			List<Object> carSteeringList = new LinkedList<>();
 			for(CarSteering carSteering : carSteerings) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("carSteeringId", carSteering.getCarSteeringId());
@@ -167,8 +169,8 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("carSteeringList", carSteeringList);
 			
 			//Car FuelType list
-			Set<CarFuelType> carFuelTypes= carFuelTypeRepository.findByIsDeletedOrderByCarFuelTypeAsc(0);
-			Set<Object> carFuelTypeList = new HashSet<>();
+			List<CarFuelType> carFuelTypes= carFuelTypeRepository.findByIsDeletedOrderByCarFuelTypeAsc(0);
+			List<Object> carFuelTypeList = new LinkedList<>();
 			for(CarFuelType carFuelType : carFuelTypes) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("carFuelTypeId", carFuelType.getCarFuelTypeId());
@@ -178,16 +180,15 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("carFuelTypeList", carFuelTypeList);
 			
 			//Car transmission list
-			Set<CarTransmission> carTransmissions= carTransmissionRepository.findByIsDeletedOrderByCarTransmissionTypeAsc(0);
-			Set<Object> carTransmissionList = new HashSet<>();
+			List<CarTransmission> carTransmissions= carTransmissionRepository.findByIsDeletedOrderByCarTransmissionTypeAsc(0);
+			List<Object> carTransmissionList = new LinkedList<>();
 			for(CarTransmission carTransmission : carTransmissions) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("carTransmissionId", carTransmission.getCarTransmissionId());
 				params.put("carTransmissionType", carTransmission.getCarTransmissionType());
 				carTransmissionList.add(params);
 			}			
-			rootParams.put("carTransmissionList", carTransmissionList);
-			
+			rootParams.put("carTransmissionList", carTransmissionList);			
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
 			logger.error("::::Exception(daoImpl)==>getCountries::::");
@@ -204,8 +205,8 @@ public class CommonDaoImpl implements CommonDao {
 		
 		try {
 			//CarModel list
-			Set<CarModel> models = carModelRepository.findByCarBrandIdAndIsDeleted(brandId, 0);
-			Set<Object> modelsList = new HashSet<>();
+			List<CarModel> models = carModelRepository.findByCarBrandIdAndIsDeleted(brandId, 0);
+			List<Object> modelsList = new LinkedList<>();
 			for(CarModel carModel : models) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("modelId", carModel.getCarModelId());
@@ -228,8 +229,8 @@ public class CommonDaoImpl implements CommonDao {
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		try {
 			//CarModelDetail list
-			Set<CarModelDetail> modelDetails = carModelDetailRepository.findByCarModelDetailIdAndIsDeleted(modelId, 0);
-			Set<Object> modelDetailList = new HashSet<>();
+			List<CarModelDetail> modelDetails = carModelDetailRepository.findByCarModelDetailIdAndIsDeleted(modelId, 0);
+			List<Object> modelDetailList = new LinkedList<>();
 			for(CarModelDetail carModelDetail : modelDetails) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("modelId", carModelDetail.getCarModelDetailId());
@@ -254,11 +255,11 @@ public class CommonDaoImpl implements CommonDao {
 		String methodName = "GET DASHBOARD DETAILS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		try {
-			Set<Object> ourLastSearchList = new HashSet<>();
-			Set<Object> savedRecentSearchList = new HashSet<>();
-			Set<Object> relatedSearchList = new HashSet<>();
-			Set<Object> popularNewCarsList = new HashSet<>();
-			Set<Object> popularSedansList = new HashSet<>();
+			List<Object> ourLastSearchList = new LinkedList<>();
+			List<Object> savedRecentSearchList = new LinkedList<>();
+			List<Object> relatedSearchList = new LinkedList<>();
+			List<Object> popularNewCarsList = new LinkedList<>();
+			List<Object> popularSedansList = new LinkedList<>();
 			rootParams.put("ourLastSearchList", ourLastSearchList);
 			rootParams.put("savedRecentSearchList", savedRecentSearchList);
 			rootParams.put("relatedSearchList", relatedSearchList);
@@ -282,10 +283,10 @@ public class CommonDaoImpl implements CommonDao {
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		try {
 			//Get VehicleList list
-			Page<Object> vehicleDetails = vehicleDetailRepository.getAllVehicles(vehicleSearchBean.getModels(), 0, pageable(vehicleSearchBean.getPageNo(), 
+			Page<Object> vehicleDetails = vehicleDetailRepository.getAllVehicles(vehicleSearchBean.getBrands(), vehicleSearchBean.getModels(), pageable(vehicleSearchBean.getPageNo(), 
 					vehicleSearchBean.getItemsPerPage()));
 			Set<Object> vehicleDetailList = new HashSet<>();
-			for(Object obj : vehicleDetails) {
+			for(Object obj : vehicleDetails.getContent()) {
 				Object[]  vehicleDetail = (Object[]) obj;
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("modelId", vehicleDetail[1]);
@@ -293,7 +294,7 @@ public class CommonDaoImpl implements CommonDao {
 				vehicleDetailList.add(params);
 			}
 			rootParams.put("vehicleDetailList", vehicleDetailList);
-			rootParams.put("totalRecords", vehicleDetailList);
+			rootParams.put("totalRecords", vehicleDetails.getTotalElements());
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
 			logger.error("::::Exception(daoImpl)==>getVehicleList::::");
@@ -331,8 +332,8 @@ public class CommonDaoImpl implements CommonDao {
 	public Map<?, ?> getCountries(long countryId) throws Exception {
 		logger.info("::::Enter(daoImpl)==>getCountries::::");
 		String methodName = "GET COUNTRIES";
-		Set<Object> countriesList = new HashSet<>();
-		Set<Country> countries= null;
+		List<Object> countriesList = new LinkedList<>();
+		List<Country> countries= null;
 		try {
 			if(countryId>0){
 				//Get countries by countryId

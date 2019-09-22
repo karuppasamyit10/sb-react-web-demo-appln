@@ -84,11 +84,11 @@ public class MainApplication  extends SpringBootServletInitializer  {
 	        @Override
 	        public void customize(ConfigurableEmbeddedServletContainer container) {
 	        	container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/index.html"));
-//	     	   	container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/errorTemplates/401.html"));
-//	     	   	container.addErrorPages( new ErrorPage( HttpStatus.NOT_FOUND, "/errorTemplates/404.html" ));
-//	     	   	container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/errorTemplates/500.html"));
-//	     	   	container.addErrorPages(new ErrorPage(HttpStatus.TOO_MANY_REQUESTS, "/errorTemplates/many.html"));
-//	     	   	container.addErrorPages(new ErrorPage(HttpStatus.SERVICE_UNAVAILABLE, "/errorTemplates/service.html"));
+	     	   	container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/index.html"));
+	     	   	container.addErrorPages( new ErrorPage( HttpStatus.NOT_FOUND, "/index.html" ));
+	     	   	container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/index.html"));
+	     	   	container.addErrorPages(new ErrorPage(HttpStatus.TOO_MANY_REQUESTS, "/index.html"));
+	     	   	container.addErrorPages(new ErrorPage(HttpStatus.SERVICE_UNAVAILABLE, "/index.html"));
 	        }
 	    };
 	}
