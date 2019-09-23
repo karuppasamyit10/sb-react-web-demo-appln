@@ -43,6 +43,11 @@ class AdvancedSearch extends Component {
   componentDidMount() {
     document.title = "Auto Harasow | Advanced Search"
     let params = {};
+    const { brandId, brandName, modelId, modelName } = this.props.location.state;
+    console.log(brandId, brandName, modelId, modelName);
+    this.setState({ brandId: brandId, brandName: brandName, modelId: modelId, modelName: modelName }, () => {
+      this.getVehicleSearchList();
+    })
     this.props.getSearchResult(params, (response) => {
       console.log(response);
     });
@@ -108,7 +113,7 @@ class AdvancedSearch extends Component {
   }
 
   render() {
-    let { countryList , carBrandList, carTransmissionList, carSteeringList, carFuelTypeList, dealsList, memberShipList, mileageList, priceList, yearList } = this.state.master
+    let { countryList, carBrandList, carTransmissionList, carSteeringList, carFuelTypeList, dealsList, memberShipList, mileageList, priceList, yearList } = this.state.master
     return (
       <React.Fragment>
         <section class="adv_search_wrap">
@@ -139,7 +144,7 @@ class AdvancedSearch extends Component {
                     <div class="tab-content" id="pills-tabContent">
                       <div class="tab-pane fade show active" id="pills-bycar" role="tabpanel" aria-labelledby="pills-bycar-tab">
                         <div class="form-group">
-                          <select value={this.state.brandObject} onChange={this.onChangeBrand} class="form-control">
+                          <select onChange={this.onChangeBrand} class="form-control">
                             <option value={null} selected>
                               All Brands
                             </option>
@@ -156,15 +161,12 @@ class AdvancedSearch extends Component {
                           </select>
                         </div>
                         <div class="form-group">
-                          <select onChange={this.onChangeModel} value={this.state.modelObject} class="form-control">
+                          <select onChange={this.onChangeModel} className="form-control" >
                             <option selected>All Models</option>
                             {this.state.modelList && this.state.modelList.length ?
                               this.state.modelList.map((model) => {
                                 return (
-                                  <option id={model.modelId} value={JSON.stringify({
-                                    modelId: model.modelId,
-                                    modelName: model.model
-                                  })}>{model.model}</option>
+                                  <option id={model.modelId} value={JSON.stringify({ modelId: model.modelId, modelName: model.model })}>{model.model}</option>
                                 )
                               }) : <option>Choose Brand First</option>}
                           </select>
@@ -201,8 +203,8 @@ class AdvancedSearch extends Component {
                         <div class="form-group">
                           <select name="" id="" class="form-control">
                             <option value="" selected>Select Country</option>
-                            {countryList && countryList.length ? countryList.map((country)=>{
-                              return(
+                            {countryList && countryList.length ? countryList.map((country) => {
+                              return (
                                 <option value={country.countryId}>{country.countryName}</option>
                               )
                             }) : ''}
@@ -552,7 +554,7 @@ class AdvancedSearch extends Component {
                       </div>
                     </div>
                     <div class="form-group">
-                    <label for="">Steering</label>
+                      <label for="">Steering</label>
                       <div class="form-group">
                         <select value="" onChange={this.onChangeBrand} class="form-control">
                           <option value={null} selected>
@@ -960,7 +962,7 @@ class AdvancedSearch extends Component {
                   <div class="col-md-3 text-center">
                     <img src={acura} class="w-100 img-fluid" alt="" />
                   </div>
-                  <div class="col-md-9 text-left">
+                  <div class="col-md-9 text-left" onClick={() => { this.searchDetails() }}>
                     <div class="row no-gutters align-items-center">
                       <div class="col pr-3">
                         <div class="head3 bold mb-2">

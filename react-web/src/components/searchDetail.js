@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import Background1 from "../assets/img/search/ssangyong.jpg";
 import Background2 from "../assets/img/search/hyundai.jpg";
 import Background3 from "../assets/img/search/kia2.jpg";
+import $ from 'jquery';
 
 
 class searchDetail extends Component {
@@ -25,7 +26,31 @@ class searchDetail extends Component {
     };
 
     componentDidMount() { 
-        document.title = "Auto Harasow | Search Detail"
+        document.title = "Auto Harasow | Search Detail";
+        const slick = window.slick
+        console.log(slick)
+        // $('.allcars').slick({
+        //     slidesToShow: 5,
+        //     slidesToScroll: 1,
+        //     arrows: true,
+        //     dots: false
+        //   });
+        //   $('.carsbig').slick({
+        //     slidesToShow: 1,
+        //     slidesToScroll: 1,
+        //     arrows: false,
+        //     fade: true,
+        //     dots: false,
+        //     asNavFor: '.carssmall'
+        //   });
+        //   $('.carssmall').slick({
+        //     slidesToShow: 3,
+        //     slidesToScroll: 1,
+        //     asNavFor: '.carsbig',
+        //     dots: false,
+        //     centerMode: true,
+        //     focusOnSelect: true
+        //   });
     }
 
     render() {
@@ -47,13 +72,13 @@ class searchDetail extends Component {
                 <section class="search_detail">
                     <div class="container">
                         <div class="row mt-5 align-items-center">
-                            <div class="col-md-3">
+                            {/* <div class="col-md-3">
                                 <a href="javascript:;" class="d-block text-center allresults">
                                     <span class="d-block"><i class="fas fa-arrow-left"></i></span>
                                     All Results
           </a>
-                            </div>
-                            <div class="col-md-9">
+                            </div> */}
+                            {/* <div class="col-md-9">
                                 <div class="allcars">
                                     <div>
                                         <div class="thumbs text-center">
@@ -111,7 +136,7 @@ class searchDetail extends Component {
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> */}
                         </div>
                         <div class="carname mt-5 text-center">
                             <div class="head1">
@@ -130,7 +155,7 @@ class searchDetail extends Component {
                                             <img src={require("../assets/img/detail/big/big1.jpeg")} class="img-fluid" alt="" />
                                             </div>
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <div class="imgs">
                                             <img src={require("../assets/img/detail/big/big2.jpeg")} class="img-fluid" alt="" />
                                             </div>
@@ -158,9 +183,9 @@ class searchDetail extends Component {
                                             <img src={require("../assets/img/detail/big/big6.jpeg")} class="img-fluid" alt="" />
 
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
-                                    <div class="carssmall">
+                                    {/* <div class="carssmall">
                                         <div>
                                             <a href="javascript:;" class="d-block">
                                             <img src={require("../assets/img/detail/big/big1.jpeg")} class="img-fluid" alt="" />
@@ -191,7 +216,7 @@ class searchDetail extends Component {
                                             <img src={require("../assets/img/detail/big/big6.jpeg")} class="img-fluid" alt="" />
                                             </a>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             <div class="col-lg-5">

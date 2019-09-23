@@ -29,7 +29,11 @@ class Upload extends Component {
       masterData: {},
       brandId: null,
       modelId: null,
-      modelList: []
+      brandName: null,
+      modelName: null,
+      modelList: [],
+      brandObject: {},
+      modelObject: {}
     };
   }
 
@@ -60,14 +64,21 @@ class Upload extends Component {
   }
 
   onChangeBrand = (event) => {
-    this.setState({ brandId: event.target.value }, () => {
+    const object = JSON.parse(event.target.value)
+    console.log(object)
+    const { brandId, brandName } = object
+    this.setState({ brandId: brandId, brandName: brandName, brandObject: object }, () => {
       this.getCarModelList(this.state.brandId);
     })
   }
 
 
   onChangeModel = (event) => {
-    this.setState({ modelId: event.target.value }, () => {
+    const object = JSON.parse(event.target.value)
+    console.log(object)
+    const { modelId, modelName } = object
+    this.setState({ modelId: modelId, modelName: modelName, modelObject: object }, () => {
+      console.log(this.state.brandId, this.state.brandName, this.state.modelId, this.state.modelName)
     })
   }
 
@@ -84,6 +95,14 @@ class Upload extends Component {
       if (response.response_code === 0) {
         this.setState({ modelList: response.response.modelList })
       }
+    })
+  }
+
+  handleSearch = () => {
+    console.log(this.state.brandId, this.state.brandName, this.state.modelId, this.state.modelName);
+    this.props.history.push({
+      pathname: PATH.ADVANCED_SEARCH,
+      state: { ...this.state }
     })
   }
 
@@ -226,16 +245,20 @@ class Upload extends Component {
                                     aria-hidden="true"
                                   ></i>
                                 </span>
-                                <select onChange={this.onChangeBrand} value={this.state.brandId}>
-                                  <option selected>All Brands</option>
+                                <select onChange={this.onChangeBrand} class="form-control">
+                                  <option value={null} selected>
+                                    All Brands
+                            </option>
                                   {carBrandList && carBrandList.length ?
-                                    carBrandList.map((brand) => {
+                                    carBrandList.map((car) => {
                                       return (
-                                        <option id={brand.carBrandId} value={brand.carBrandId}>{brand.carBrand}</option>
+                                        <option id={car.carBrandId}
+                                          value={JSON.stringify({ brandId: car.carBrandId, brandName: car.carBrand })}
+                                        >{car.carBrand}</option>
                                       )
-                                    })
-                                    :
-                                    <option>Loading...</option>}
+                                    }) :
+                                    ''}
+
                                 </select>
                               </div>
                             </div>
@@ -247,12 +270,12 @@ class Upload extends Component {
                                     aria-hidden="true"
                                   ></i>
                                 </span>
-                                <select onChange={this.onChangeModel} value={this.state.modelId}>
+                                <select onChange={this.onChangeModel} >
                                   <option selected>All Models</option>
                                   {this.state.modelList && this.state.modelList.length ?
                                     this.state.modelList.map((model) => {
                                       return (
-                                        <option id={model.modelId} value={model.modelId}>{model.model}</option>
+                                        <option id={model.modelId} value={JSON.stringify({ modelId: model.modelId, modelName: model.model })}>{model.model}</option>
                                       )
                                     }) : <option>Choose Brand First</option>}
                                 </select>
