@@ -1,10 +1,13 @@
 let BASE_URL = '';
 let isDevelopment = true
-if (window.location.hostname === 'localhost') {
+if (window.location.hostname === 'localhost' && window.location.port===3000) {
+  BASE_URL = 'http://35.160.123.119:8181/'
+  isDevelopment = true
+}  else if (window.location.hostname === '35.160.123.119' && window.location.port===8181) {
   BASE_URL = 'http://35.160.123.119:8181/'
   isDevelopment = true
 } else {
-  BASE_URL = 'http://35.160.123.119:8181/'
+  BASE_URL = ''
   isDevelopment = false
 }
 
@@ -15,7 +18,7 @@ module.exports = {
   FORGET : 'forgetPassword',
   LOGOUT: 'api/user/logout',
   REGISTRATION: 'api/public/user/registration',
-  COOKIE : 'api/public/update-cookie',
+  COOKIE : 'api/update-cookie',
   CHANGEPASSWORD: 'changePassword',
   UPDATEPASSWORD: 'updatePassword',
   PROFILE : 'api/user/profile',

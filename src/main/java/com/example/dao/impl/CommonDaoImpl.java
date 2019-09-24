@@ -1,5 +1,6 @@
 package com.example.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -8,12 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -104,6 +114,9 @@ public class CommonDaoImpl implements CommonDao {
 	
 	@Autowired
 	YearRepository yearRepository;
+	
+	@Autowired
+	EntityManager entityManager;
 		
 	@Override
 	@Transactional(rollbackOn = { Exception.class})
@@ -355,18 +368,83 @@ public class CommonDaoImpl implements CommonDao {
 		logger.info("::::Enter(daoImpl)==>getVehicleList::::");
 		String methodName = "GET VEHICLE LIST";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		if(vehicleSearchBean.getPageNo()==0){
+			vehicleSearchBean.setPageNo(1);
+		}
+		if(vehicleSearchBean.getItemsPerPage()==0){
+			vehicleSearchBean.setItemsPerPage(10);
+		}
 		try {
-			//Get VehicleList list
-			Page<Object> vehicleDetails = vehicleDetailRepository.getAllVehicles(vehicleSearchBean.getBrands(), vehicleSearchBean.getModels(), pageable(vehicleSearchBean.getPageNo(), 
-					vehicleSearchBean.getItemsPerPage()));
-			Set<Object> vehicleDetailList = new HashSet<>();
-			for(Object obj : vehicleDetails.getContent()) {
-				Object[]  vehicleDetail = (Object[]) obj;
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("vehicleId", vehicleDetail[0]);
-				params.put("vehicleName", vehicleDetail[1]);
-				vehicleDetailList.add(params);
+			List<Predicate> listPredicate = new ArrayList<Predicate>();
+			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			CriteriaQuery<VehicleDetail> criteriaQuery = criteriaBuilder.createQuery(VehicleDetail.class);
+			Root<VehicleDetail> vehicleRoot = criteriaQuery.from(VehicleDetail.class);
+			if(vehicleSearchBean.getBrands()!=null && !vehicleSearchBean.getBrands().isEmpty())
+			{
+//				Join<?, ?> userDetailJoin=vehicleRoot.join("userDetails");
+				Expression<String> brandExp = vehicleRoot.get("brand");
+				Predicate brandConditionPredicate = brandExp.in(vehicleSearchBean.getBrands());
+				listPredicate.add(brandConditionPredicate);
 			}
+			if(vehicleSearchBean.getModels()!=null && !vehicleSearchBean.getModels().isEmpty())
+			{
+//				Join<?, ?> userDetailJoin=vehicleRoot.join("model");
+				Expression<String> moedlExp = vehicleRoot.get("model");
+				Predicate moedelConditionPredicate = moedlExp.in(vehicleSearchBean.getModels());
+				listPredicate.add(moedelConditionPredicate);
+//				Join<?, ?> contactJoin=physician.join("userDetails").join("contactDetails");
+//				Predicate statePredicate=criteriaBuilder.equal(contactJoin.get("state"), locationCondition);
+//				Predicate cityPredicate=criteriaBuilder.equal(contactJoin.get("city"), locationCondition);
+//				Predicate cityOrStatePredicate=criteriaBuilder.or(statePredicate, cityPredicate);
+//				listPredicate.add(cityOrStatePredicate);
+			}
+//			if(!physicianFilterBean.getExpertise().isEmpty())
+//			{
+//				Join<?, ?> expertisesJoin=physician.join("expertises");
+//				Expression<String> expertiseExp = expertisesJoin.get("expertiseName");
+//				Predicate expertisePredicate = expertiseExp.in(physicianFilterBean.getExpertise());
+//				listPredicate.add(expertisePredicate);
+//			}
+			Predicate allPredicate=null;
+			if(!listPredicate.isEmpty())
+			{
+				allPredicate=criteriaBuilder.and(listPredicate.toArray(new Predicate[0]));
+				criteriaQuery.where(allPredicate);
+			} 
+			criteriaQuery.distinct(true);	
+//			allPredicate=criteriaBuilder.and(listPredicate.toArray(new Predicate[0]));
+//			criteriaQuery.isDistinct();
+			
+			List<Order> orders = new ArrayList<Order>(1);
+		    orders.add(criteriaBuilder.desc(vehicleRoot.get("vehicleId")));
+		    criteriaQuery.orderBy(orders);
+		     
+			TypedQuery<VehicleDetail> query = entityManager.createQuery(criteriaQuery);
+			int totalRows = query.getResultList().size();
+		    Page<VehicleDetail> vehicleDetails = new PageImpl<VehicleDetail>(query.getResultList(), pageable(vehicleSearchBean.getPageNo(), vehicleSearchBean.getItemsPerPage()), totalRows);
+			Set<Object> vehicleDetailList = new HashSet<>();
+			for(VehicleDetail vehicleDetail : vehicleDetails.getContent()) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("vehicleId", vehicleDetail.getBrand());
+				params.put("vehicleName", vehicleDetail.getModel());
+				vehicleDetailList.add(params);
+			}    
+			    
+//			vehicleDetails = query.getResultList();
+			//Here Check least one of online or offline status And expertise atleast one	
+			
+//			//Get VehicleList list
+//			Page<Object> vehicleDetails = vehicleDetailRepository.getAllVehicles(vehicleSearchBean.getBrands(), vehicleSearchBean.getModels(), pageable(vehicleSearchBean.getPageNo(), 
+//					vehicleSearchBean.getItemsPerPage()));
+//			Set<Object> vehicleDetailList = new HashSet<>();
+//			for(Object obj : vehicleDetails.getContent()) {
+//				Object[]  vehicleDetail = (Object[]) obj;
+//				Map<String, Object> params = new LinkedHashMap<String, Object>();
+//				params.put("vehicleId", vehicleDetail[0]);
+//				params.put("vehicleName", vehicleDetail[1]);
+//				vehicleDetailList.add(params);
+//			}
+			
 			rootParams.put("vehicleDetailList", vehicleDetailList);
 			rootParams.put("totalRecords", vehicleDetails.getTotalElements());
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);

@@ -3,6 +3,9 @@ endpoints:
     enabled: true
     sensitive: false
 spring:
+  data:
+    rest:
+      base-path: /api
   application:
     name: sb-demo-appln
 #  resources:

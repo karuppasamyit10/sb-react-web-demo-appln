@@ -38,8 +38,8 @@ public class CommonController {
 	
 	@Autowired
 	private CommonDao commonDao;
-
-	@GetMapping("/api/public/update-cookie")
+	
+	@GetMapping("/update-cookie")
 	public String getOrSetCookie(HttpServletResponse response, HttpServletRequest request) {
 		logger.info("Controller==>Enter==>getOrSetCookie<==");
 		Cookie[] cookies = request.getCookies();
@@ -140,9 +140,18 @@ public class CommonController {
 	//Get vehicle list 
 	@RequestMapping(method = RequestMethod.POST, value = "/vehicleList", produces = "application/json")
 	@ResponseBody
-	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent) throws Exception {
+	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent, 
+			 HttpServletRequest request) throws Exception {
 		logger.info("Controller==>Enter==>getVehicleList<==");
 		String methodName = "GET VEHICLE LIST";
+		logger.info("Controller==>Enter==>getOrSetCookie<==");
+		Cookie[] cookies = request.getCookies();
+	    if (cookies != null) {
+	    	Stream<Cookie> cookieObj = Arrays.stream(cookies).filter(c -> c.getName().equalsIgnoreCase("cookie_user_id"));
+	    	if (cookieObj != null) {
+	    		cookieObj.forEach(c-> { System.out.println(c.getName()+"-"+c.getValue()); });
+	    	}    
+	    } 
 		try { 
 			return commonDao.getVehicleList(vehicleSearchBean,userAgent);
 		} catch (Exception e) {
@@ -156,7 +165,7 @@ public class CommonController {
 	@RequestMapping(method = RequestMethod.GET, value = "/vehicleDetails", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> getVehicleDetails(long vehicleId, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent) throws Exception {
-		logger.info("Controller==>Enter==>getVehicleList<==");
+		logger.info("Controller==>Enter==>getVehicleDetails<==");
 		String methodName = "GET VEHICLE DETAILS";
 		try { 
 			return commonDao.getVehicleDetails(vehicleId, userAgent);

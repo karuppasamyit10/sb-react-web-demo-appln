@@ -140,7 +140,7 @@ class login extends Component {
             <div class="col-md-9 form-wrap">
               <h1 class="form-header">Sign In</h1>
               <p class="lead">
-                Buy and Sell all types of vehicles on Autowini.com, The smart
+                Buy and Sell all types of vehicles on autoharasow.com, The smart
                 Auto Trader's Network!
               </p>
               <form class="row no-gutters form-rows">

@@ -14,19 +14,42 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author concertcare
  *
  */
 
-@RestController
+@org.springframework.stereotype.Controller
 public class CookieResource {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CookieResource.class);
 	
-	@GetMapping("/api/public/update-cookiee")
+	
+//    @GetMapping(value = "/")
+//    public String index(HttpServletResponse response, HttpServletRequest request) 
+//    {
+//    	logger.info("Controller==>Enter==>getOrSetCookie<==");
+//    	String cookie_user_id = null;
+//		Cookie[] cookies = request.getCookies();
+//	    if (cookies != null) {
+//	    	Stream<Cookie> cookieObj = Arrays.stream(cookies).filter(c -> c.getName().equalsIgnoreCase("cookie_user_id"));
+//	    	if (cookieObj != null) {
+//	    		for(Cookie cookie : cookieObj.collect(Collectors.toList())){
+//	    			cookie_user_id = cookie.getValue();
+//	    		}
+//	    	}     	 
+//	    } 
+//	    if(cookie_user_id==null){
+//	    	Cookie cookie = new Cookie("cookie_user_id", "1000");
+//		    cookie.setComment("cookie_user_id");
+//		    cookie.setVersion(1);
+//		    response.addCookie(cookie);
+//	    }
+//    	return "redirect:/index.html";
+//    }
+	
+	@GetMapping("/api/update-cookiee")
 	public String getOrSetCookie(HttpServletResponse response, HttpServletRequest request) {
 		logger.info("Controller==>Enter==>getOrSetCookie<==");
 		Cookie[] cookies = request.getCookies();
