@@ -11,13 +11,18 @@ import Background1 from "../assets/img/search/ssangyong.jpg";
 import Background2 from "../assets/img/search/hyundai.jpg";
 import Background3 from "../assets/img/search/kia2.jpg";
 import $ from 'jquery';
+import { PATH } from '../utils/Constants';
+import {getVehicleDetails} from '../actions/searchAction';
+import {showNotification} from '../actions/NotificationAction';
 
 
 class searchDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userDetails: {}
+            vehicleDetails: {},
+            vehicleId : this.props.location.state && this.props.location.state.vehicleId ? 
+            this.props.location.state.vehicleId : null 
         };
     }
 
@@ -29,28 +34,17 @@ class searchDetail extends Component {
         document.title = "Auto Harasow | Search Detail";
         const slick = window.slick
         console.log(slick)
-        // $('.allcars').slick({
-        //     slidesToShow: 5,
-        //     slidesToScroll: 1,
-        //     arrows: true,
-        //     dots: false
-        //   });
-        //   $('.carsbig').slick({
-        //     slidesToShow: 1,
-        //     slidesToScroll: 1,
-        //     arrows: false,
-        //     fade: true,
-        //     dots: false,
-        //     asNavFor: '.carssmall'
-        //   });
-        //   $('.carssmall').slick({
-        //     slidesToShow: 3,
-        //     slidesToScroll: 1,
-        //     asNavFor: '.carsbig',
-        //     dots: false,
-        //     centerMode: true,
-        //     focusOnSelect: true
-        //   });
+        this.getVehicleDetails();
+    }
+
+    getVehicleDetails = () =>{
+        const { vehicleId } = this.state;
+        this.props.getVehicleDetails({vehicleId : vehicleId} , (response)=>{
+            console.log(response);
+            if (response && response.response_code === 0) {
+                this.setState({ vehicleDetails: response.response })
+              }
+        })
     }
 
     render() {
@@ -61,8 +55,8 @@ class searchDetail extends Component {
                     <div class="container">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:;">Used Cars</a></li>
+                                <li class="breadcrumb-item"><Link to={PATH.DASHBOARD}>Home</Link></li>
+                                <li class="breadcrumb-item"><Link to={PATH.ADVANCED_SEARCH}>Used Cars</Link></li>
                                 <li class="breadcrumb-item active" aria-current="page">Jeep</li>
                             </ol>
                         </nav>
@@ -140,7 +134,7 @@ class searchDetail extends Component {
                         </div>
                         <div class="carname mt-5 text-center">
                             <div class="head1">
-                                2016 Jeep Compass Latitude 4WD - $15,999
+                                {this.state.vehicleDetails && this.state.vehicleDetails.vehicleName ? this.state.vehicleDetails.vehicleName : ''}
         </div>
                             <div class="head3">
                                 Neenah, WI · 33 miles away
@@ -483,6 +477,16 @@ class searchDetail extends Component {
         )
     }
 }
+const mapDispatchToProps = dispatch => {
+    return {
+      showNotification: (message, type) => {
+        dispatch(showNotification(message, type));
+      },
+      getVehicleDetails: (params, callback) => {
+        dispatch(getVehicleDetails(params, callback));
+      },
+    };
+  };
 
-export default AppWrapper(searchDetail, null, null);
+export default AppWrapper(searchDetail, null, mapDispatchToProps);
 

@@ -22,17 +22,18 @@ class AdvancedSearch extends Component {
       userDetails: {},
       master: {},
       isSubscribed: false,
-      brandId: null,
-      brandName: null,
-      modelId: null,
-      modelName: null,
+      brandId: this.props.location.state && this.props.location.state.brandId ? this.props.location.state.brandId : null ,
+      brandName: this.props.location.state && this.props.location.state.brandName ? this.props.location.state.brandName : null,
+      modelId: this.props.location.state && this.props.location.state.modelId ? this.props.location.state.modelId : null,
+      modelName: this.props.location.state && this.props.location.state.modelName ? this.props.location.state.modelName : null,
       modelList: [],
       pageNo: 1,
       itemsPerPage: 10,
       total: 0,
       vehicleList: [],
       brandObject: {},
-      modelObject: {}
+      modelObject: {},
+      isLoading: false
     };
   }
 
@@ -43,11 +44,7 @@ class AdvancedSearch extends Component {
   componentDidMount() {
     document.title = "Auto Harasow | Advanced Search"
     let params = {};
-    const { brandId, brandName, modelId, modelName } = this.props.location.state;
-    console.log(brandId, brandName, modelId, modelName);
-    this.setState({ brandId: brandId, brandName: brandName, modelId: modelId, modelName: modelName }, () => {
-      this.getVehicleSearchList();
-    })
+    this.getVehicleSearchList();
     this.props.getSearchResult(params, (response) => {
       console.log(response);
     });
@@ -103,12 +100,21 @@ class AdvancedSearch extends Component {
     SearchData.set("itemsPerPage", itemsPerPage);
     SearchData.set("brands", brandName);
     SearchData.set("models", modelName);
+    this.setState({ isLoading: true });
     this.props.getVehicleSearchList(SearchData, response => {
       console.log(response)
+      this.setState({ isLoading: false });
       if (response && response.response_code === 0) {
         const { totalRecords, vehicleDetailList } = response.response;
         this.setState({ total: totalRecords, vehicleList: vehicleDetailList })
       }
+    })
+  }
+
+  vehicleDetails = (vehicleId) => {
+    this.props.history.push({
+      pathname : PATH.SEARCH_DETAIL,
+      state : { vehicleId : vehicleId}
     })
   }
 
@@ -880,8 +886,8 @@ class AdvancedSearch extends Component {
                     </div>
                   </div> : ''}
                 <div class="totalresults text-right py-3 mt-3">
-                  <span class="bold">1 - 6</span> out of{" "}
-                  <span class="bold">6</span> listings
+                  {/* <span class="bold">1 - 6</span> out of{" "} */}
+                  {/* <span class="bold">6</span> listings */}
                 </div>
                 {this.state.vehicleList && this.state.vehicleList.length ?
                   this.state.vehicleList.map((vehicle) => {
@@ -890,12 +896,12 @@ class AdvancedSearch extends Component {
                         <div class="col-md-3 text-center">
                           <img src={acura} class="w-100 img-fluid" alt="" />
                         </div>
-                        <div class="col-md-9 text-left" onClick={() => { this.searchDetails() }}>
+                        <div class="col-md-9 text-left" onClick={() => { this.vehicleDetails(vehicle.vehicleId) }}>
                           <div class="row no-gutters align-items-center">
                             <div class="col pr-3">
                               <div class="head3 bold mb-2">
-                                2017 Acura ILX FWD with AcuraWatch Plus Package
-                        </div>
+                                {vehicle.vehicleName}
+                              </div>
                             </div>
                             <div class="col whishlist">
                               <span>
@@ -956,353 +962,10 @@ class AdvancedSearch extends Component {
                         </div>
                       </div>
                     )
-                  }) : ''}
-
-                <div class="row searched_cards align-items-center">
-                  <div class="col-md-3 text-center">
-                    <img src={acura} class="w-100 img-fluid" alt="" />
-                  </div>
-                  <div class="col-md-9 text-left" onClick={() => { this.searchDetails() }}>
-                    <div class="row no-gutters align-items-center">
-                      <div class="col pr-3">
-                        <div class="head3 bold mb-2">
-                          2017 Acura ILX FWD with AcuraWatch Plus Package
-                        </div>
-                      </div>
-                      <div class="col whishlist">
-                        <span>
-                          <i class="fas fa-heart"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-5">
-                        <div class="head4 mb-4 text-uppercase bold">
-                          <span>
-                            <span class="fair">
-                              <i class="fas fa-arrow-circle-right"></i>
-                            </span>
-                          </span>{" "}
-                          Good Deal
-                        </div>
-                        <div class="para2">$509 Below.</div>
-                        <div class="para2">Harasow IMV of $15,000</div>
-                      </div>
-                      <div class="col-sm-7">
-                        <table class="para1">
-                          <tbody>
-                            <tr>
-                              <td class="medium">Price:</td>
-                              <td>
-                                $15,000{" "}
-                                <a class="blue small" href="javascript:;">
-                                  $286/mo est.
-                                </a>
-                                <div class="blue">Includes $338 delivery.</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Mileage:</td>
-                              <td>62,150 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Location:</td>
-                              <td>Highland, IN 338 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Dealer rating:</td>
-                              <td>
-                                <span class="Ratings">
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star empty"></i>
-                                </span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row searched_cards align-items-center">
-                  <div class="col-md-3 text-center">
-                    <img src={acura} class="w-100 img-fluid" alt="" />
-                  </div>
-                  <div class="col-md-9 text-left">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col pr-3">
-                        <div class="head3 bold mb-2">
-                          2017 Acura ILX FWD with AcuraWatch Plus Package
-                        </div>
-                      </div>
-                      <div class="col whishlist">
-                        <span>
-                          <i class="fas fa-heart"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-5">
-                        <div class="head4 mb-4 text-uppercase bold">
-                          <span>
-                            <span class="fair">
-                              <i class="fas fa-arrow-circle-right"></i>
-                            </span>
-                          </span>{" "}
-                          Good Deal
-                        </div>
-                        <div class="para2">$509 Below.</div>
-                        <div class="para2">Harasow IMV of $15,000</div>
-                      </div>
-                      <div class="col-sm-7">
-                        <table class="para1">
-                          <tbody>
-                            <tr>
-                              <td class="medium">Price:</td>
-                              <td>
-                                $15,000{" "}
-                                <a class="blue small" href="javascript:;">
-                                  $286/mo est.
-                                </a>
-                                <div class="blue">Includes $338 delivery.</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Mileage:</td>
-                              <td>62,150 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Location:</td>
-                              <td>Highland, IN 338 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Dealer rating:</td>
-                              <td>
-                                <span class="Ratings">
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star empty"></i>
-                                </span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row searched_cards align-items-center">
-                  <div class="col-md-3 text-center">
-                    <img src={acura} class="w-100 img-fluid" alt="" />
-                  </div>
-                  <div class="col-md-9 text-left">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col pr-3">
-                        <div class="head3 bold mb-2">
-                          2017 Acura ILX FWD with AcuraWatch Plus Package
-                        </div>
-                      </div>
-                      <div class="col whishlist">
-                        <span>
-                          <i class="fas fa-heart"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-5">
-                        <div class="head4 mb-4 text-uppercase bold">
-                          <span>
-                            <span class="fair">
-                              <i class="fas fa-arrow-circle-right"></i>
-                            </span>
-                          </span>{" "}
-                          Good Deal
-                        </div>
-                        <div class="para2">$509 Below.</div>
-                        <div class="para2">Harasow IMV of $15,000</div>
-                      </div>
-                      <div class="col-sm-7">
-                        <table class="para1">
-                          <tbody>
-                            <tr>
-                              <td class="medium">Price:</td>
-                              <td>
-                                $15,000{" "}
-                                <a class="blue small" href="javascript:;">
-                                  $286/mo est.
-                                </a>
-                                <div class="blue">Includes $338 delivery.</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Mileage:</td>
-                              <td>62,150 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Location:</td>
-                              <td>Highland, IN 338 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Dealer rating:</td>
-                              <td>
-                                <span class="Ratings">
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star empty"></i>
-                                </span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row searched_cards align-items-center">
-                  <div class="col-md-3 text-center">
-                    <img src={acura} class="w-100 img-fluid" alt="" />
-                  </div>
-                  <div class="col-md-9 text-left">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col pr-3">
-                        <div class="head3 bold mb-2">
-                          2017 Acura ILX FWD with AcuraWatch Plus Package
-                        </div>
-                      </div>
-                      <div class="col whishlist">
-                        <span>
-                          <i class="fas fa-heart"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-5">
-                        <div class="head4 mb-4 text-uppercase bold">
-                          <span>
-                            <span class="fair">
-                              <i class="fas fa-arrow-circle-right"></i>
-                            </span>
-                          </span>{" "}
-                          Good Deal
-                        </div>
-                        <div class="para2">$509 Below.</div>
-                        <div class="para2">Harasow IMV of $15,000</div>
-                      </div>
-                      <div class="col-sm-7">
-                        <table class="para1">
-                          <tbody>
-                            <tr>
-                              <td class="medium">Price:</td>
-                              <td>
-                                $15,000{" "}
-                                <a class="blue small" href="javascript:;">
-                                  $286/mo est.
-                                </a>
-                                <div class="blue">Includes $338 delivery.</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Mileage:</td>
-                              <td>62,150 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Location:</td>
-                              <td>Highland, IN 338 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Dealer rating:</td>
-                              <td>
-                                <span class="Ratings">
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star empty"></i>
-                                </span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row searched_cards align-items-center">
-                  <div class="col-md-3 text-center">
-                    <img src={acura} class="w-100 img-fluid" alt="" />
-                  </div>
-                  <div class="col-md-9 text-left">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col pr-3">
-                        <div class="head3 bold mb-2">
-                          2017 Acura ILX FWD with AcuraWatch Plus Package
-                        </div>
-                      </div>
-                      <div class="col whishlist">
-                        <span>
-                          <i class="fas fa-heart"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-5">
-                        <div class="head4 mb-4 text-uppercase bold">
-                          <span>
-                            <span class="fair">
-                              <i class="fas fa-arrow-circle-right"></i>
-                            </span>
-                          </span>{" "}
-                          Good Deal
-                        </div>
-                        <div class="para2">$509 Below.</div>
-                        <div class="para2">Harasow IMV of $15,000</div>
-                      </div>
-                      <div class="col-sm-7">
-                        <table class="para1">
-                          <tbody>
-                            <tr>
-                              <td class="medium">Price:</td>
-                              <td>
-                                $15,000{" "}
-                                <a class="blue small" href="javascript:;">
-                                  $286/mo est.
-                                </a>
-                                <div class="blue">Includes $338 delivery.</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Mileage:</td>
-                              <td>62,150 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Location:</td>
-                              <td>Highland, IN 338 mi</td>
-                            </tr>
-                            <tr>
-                              <td class="medium">Dealer rating:</td>
-                              <td>
-                                <span class="Ratings">
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star"></i>
-                                  <i class="fas fa-star cg-star empty"></i>
-                                </span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  }) : <div className="text-center">
+                    {this.state.isLoading ?
+                      <Spinner color="black" /> : "No Data Found"}
+                  </div>}
               </div>
             </div>
           </div>
