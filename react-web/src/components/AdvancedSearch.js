@@ -22,7 +22,7 @@ class AdvancedSearch extends Component {
       userDetails: {},
       master: {},
       isSubscribed: false,
-      brandId: this.props.location.state && this.props.location.state.brandId ? this.props.location.state.brandId : null ,
+      brandId: this.props.location.state && this.props.location.state.brandId ? this.props.location.state.brandId : null,
       brandName: this.props.location.state && this.props.location.state.brandName ? this.props.location.state.brandName : null,
       modelId: this.props.location.state && this.props.location.state.modelId ? this.props.location.state.modelId : null,
       modelName: this.props.location.state && this.props.location.state.modelName ? this.props.location.state.modelName : null,
@@ -33,7 +33,23 @@ class AdvancedSearch extends Component {
       vehicleList: [],
       brandObject: {},
       modelObject: {},
-      isLoading: false
+      isLoading: false,
+      carFuelType: null,
+      carFuelTypeId: null,
+      carFuelTypeObject: null,
+      carTransmissionId: null,
+      carTransmissionType: null,
+      transmissionObject: {},
+      carSteeringId: null,
+      carSteeringType: null,
+      fromYear: null,
+      toYear: null,
+      fromPrice: null,
+      toPrice: null,
+      fromMileage: null,
+      toMileage: null,
+      dealType: null,
+      membershipType : null
     };
   }
 
@@ -64,11 +80,13 @@ class AdvancedSearch extends Component {
     this.props.history.push(PATH.SEARCH_DETAIL)
   }
 
+
+
   onChangeBrand = (event) => {
     const object = JSON.parse(event.target.value)
     console.log(object)
     const { brandId, brandName } = object
-    this.setState({ brandId: brandId, brandName: brandName, brandObject: object }, () => {
+    this.setState({ brandId: brandId, brandName: brandName }, () => {
       this.getCarModelList(this.state.brandId);
     })
   }
@@ -77,7 +95,7 @@ class AdvancedSearch extends Component {
     const object = JSON.parse(event.target.value)
     console.log(object)
     const { modelId, modelName } = object
-    this.setState({ modelId: modelId, modelName: modelName, modelObject: object }, () => {
+    this.setState({ modelId: modelId, modelName: modelName }, () => {
     })
   }
 
@@ -93,13 +111,24 @@ class AdvancedSearch extends Component {
 
 
   getVehicleSearchList = () => {
-    const { pageNo, itemsPerPage, brandId, modelId, brandName, modelName } = this.state;
+    const { pageNo, itemsPerPage, brandId, modelId, brandName, modelName, 
+    carTransmissionType, carFuelType, dealName, membershipType, fromYear, toYear, fromPrice , toPrice , fromMileage , toMileage } = this.state;
     console.log(this.state);
     const SearchData = new FormData();
     SearchData.set("pageNo", pageNo);
     SearchData.set("itemsPerPage", itemsPerPage);
     SearchData.set("brands", brandName);
     SearchData.set("models", modelName);
+    SearchData.set("transmissionType", carTransmissionType);
+    SearchData.set("fuelType", carFuelType);
+    SearchData.set("dealName", dealName);
+    SearchData.set("membershipType", membershipType);
+    SearchData.set("fromYear", fromYear);
+    SearchData.set("toYear", toYear);
+    SearchData.set("fromPrice", fromPrice);
+    SearchData.set("toPrice", toPrice);
+    SearchData.set("fromMileage", fromMileage);
+    SearchData.set("toMileage", toMileage);
     this.setState({ isLoading: true });
     this.props.getVehicleSearchList(SearchData, response => {
       console.log(response)
@@ -113,8 +142,8 @@ class AdvancedSearch extends Component {
 
   vehicleDetails = (vehicleId) => {
     this.props.history.push({
-      pathname : PATH.SEARCH_DETAIL,
-      state : { vehicleId : vehicleId}
+      pathname: PATH.SEARCH_DETAIL,
+      state: { vehicleId: vehicleId }
     })
   }
 
@@ -180,7 +209,7 @@ class AdvancedSearch extends Component {
                         <div class="form-group">
                           <div class="row align-items-center">
                             <div class="col-5">
-                              <select name="" id="" class="form-control">
+                              <select name="" id="" value={this.state.fromYear} onChange={(e) => { this.setState({ fromPrice: e.target.value }) }} class="form-control">
                                 <option value="" selected>All Years</option>
                                 {yearList && yearList.length ?
                                   yearList.map((year) => {
@@ -194,7 +223,7 @@ class AdvancedSearch extends Component {
                               to
                   </div>
                             <div class="col-5">
-                              <select name="" id="" class="form-control">
+                              <select name="" id="" value={this.state.toYear} onChange={(e) => { this.setState({ toPrice: e.target.value }) }} class="form-control">
                                 <option value="" selected>All Years</option>
                                 {yearList && yearList.length ?
                                   yearList.map((year) => {
@@ -207,17 +236,17 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                         <div class="form-group">
-                          <select name="" id="" class="form-control">
+                          <select name="" id="" onChange={(e) => { this.setState({ country: e.target.value }) }} class="form-control">
                             <option value="" selected>Select Country</option>
                             {countryList && countryList.length ? countryList.map((country) => {
                               return (
-                                <option value={country.countryId}>{country.countryName}</option>
+                                <option value={country.countryName}>{country.countryName}</option>
                               )
                             }) : ''}
                           </select>
                         </div>
                         <div class="form-group">
-                          <input type="button" class="btn btn-primary w-100" onClick={() => { this.getVehicleSearchList() }} value="Search" />
+                          <input type="button" class="btn btn-primary w-100" onClick={(e) => { this.getVehicleSearchList() }} value="Search" />
                         </div>
                       </div>
                       <div class="tab-pane fade" id="pills-bybodystyle" role="tabpanel" aria-labelledby="pills-bybodystyle-tab">
@@ -278,7 +307,7 @@ class AdvancedSearch extends Component {
                               <label for="">Price</label>
                             </div>
                             <div class="col-5">
-                              <select name="" id="" class="form-control">
+                              <select name="" id="" value={this.state.fromPrice} onChange={(e) => { this.setState({ fromPrice: e.target.value }) }} class="form-control">
                                 {priceList && priceList.length ?
                                   priceList.map((price) => {
                                     return (
@@ -292,7 +321,7 @@ class AdvancedSearch extends Component {
                               to
                           </div>
                             <div class="col-5">
-                              <select name="" id="" class="form-control">
+                              <select name="" id="" value={this.state.toPrice} onChange={(e) => { this.setState({ toPrice: e.target.value }) }} class="form-control">
                                 {priceList && priceList.length ?
                                   priceList.map((price) => {
                                     return (
@@ -310,10 +339,14 @@ class AdvancedSearch extends Component {
                               <label for="">Maximum Mileage</label>
                             </div>
                             <div class="col-6">
-                              <select name="" id="" class="form-control">
-                                <option value="" selected>--- </option>
-                                <option value="">50,000</option>
-                                <option value="">80,000</option>
+                              <select name="" value={this.state.mileage} id="" onChange={(e) => { this.setState({ mileage: e.target.value }) }} class="form-control">
+                                {mileageList && mileageList.length ?
+                                  mileageList.map((mileage) => {
+                                    return (
+                                      <option value={mileage.mileage}>$ {mileage.mileage}</option>
+                                    )
+                                  })
+                                  : ''}
                               </select>
                             </div>
                             <div class="col-2">
@@ -329,7 +362,7 @@ class AdvancedSearch extends Component {
                             </div>
                             <div class="col-12">
                               <div class="form-group">
-                                <select value="" onChange={this.onChangeBrand} class="form-control">
+                                <select value={this.state.carTransmissionType} onChange={(e) => { this.setState({ carTransmissionType: e.target.value }) }} class="form-control">
                                   <option value={null} selected>
                                     All Transmission
                             </option>
@@ -339,6 +372,34 @@ class AdvancedSearch extends Component {
                                         <option id={transmisson.carTransmissionId}
                                           value={transmisson.carTransmissionType}
                                         >{transmisson.carTransmissionType}</option>
+                                      )
+                                    }) :
+                                    ''}
+
+                                </select>
+                              </div>
+
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="row align-items-center">
+                            <div class="col-12">
+                              <label for="">Fuel Type</label>
+                            </div>
+                            <div class="col-12">
+                              <div class="form-group">
+                                <select value={this.state.carFuelType} onChange={(e) => { this.setState({ carFuelType: e.target.value }) }} class="form-control">
+                                  <option value={null} selected>
+                                    All Fuel Type
+                            </option>
+                                  {carFuelTypeList && carFuelTypeList.length ?
+                                    carFuelTypeList.map((fuelType) => {
+                                      return (
+                                        <option id={fuelType.carFuelTypeId}
+                                          value={fuelType.carFuelType}
+                                        >{fuelType.carFuelType}</option>
                                       )
                                     }) :
                                     ''}
@@ -404,20 +465,27 @@ class AdvancedSearch extends Component {
                               <label for="">Price</label>
                             </div>
                             <div class="col-5">
-                              <select name="" id="" class="form-control">
+                              <select name="" id="" value={this.state.fromPrice} onChange={(e) => { this.setState({ fromPrice: e.target.value }) }} class="form-control">
                                 <option value="" selected>--- </option>
-                                <option value="">$ 1000</option>
-                                <option value="">$ 2000</option>
+                                {priceList && priceList.length ?
+                                  priceList.map((price) => {
+                                    return (
+                                      <option value={price.price}>$ {price.price}</option>
+                                    )
+                                  }) : ''}
                               </select>
                             </div>
                             <div class="col-2">
                               to
                         </div>
                             <div class="col-5">
-                              <select name="" id="" class="form-control">
-                                <option value="" selected>--- </option>
-                                <option value="">$ 1000</option>
-                                <option value="">$ 2000</option>
+                              <select name="" id="" value={this.state.toPrice} onChange={(e) => { this.setState({ fromPrice: e.target.value }) }} class="form-control">
+                                {priceList && priceList.length ?
+                                  priceList.map((price) => {
+                                    return (
+                                      <option value={price.price}>$ {price.price}</option>
+                                    )
+                                  }) : ''}
                               </select>
                             </div>
                           </div>
@@ -428,10 +496,13 @@ class AdvancedSearch extends Component {
                               <label for="">Maximum Mileage</label>
                             </div>
                             <div class="col-6">
-                              <select name="" id="" class="form-control">
-                                <option value="" selected>--- </option>
-                                <option value="">50,000</option>
-                                <option value="">80,000</option>
+                              <select name="" id="" value={this.state.mileage} onChange={(e) => { this.setState({ mileage: e.target.value }) }} class="form-control">
+                                {mileageList && mileageList.length ?
+                                  mileageList.map((mileage) => {
+                                    return (
+                                      <option value={mileage.mileage}>$ {mileage.mileage}</option>
+                                    )
+                                  }) : ''}
                               </select>
                             </div>
                             <div class="col-2">
@@ -447,7 +518,7 @@ class AdvancedSearch extends Component {
                             </div>
                             <div class="col-12">
                               <div class="form-group">
-                                <select value="" onChange={this.onChangeBrand} class="form-control">
+                                <select value={this.state.carTransmissionType} onChange={(e) => { this.setState({ carTransmissionType: e.target.value }) }} class="form-control">
                                   <option value={null} selected>
                                     All Transmission
                             </option>
@@ -482,20 +553,26 @@ class AdvancedSearch extends Component {
                           <label for="">Price</label>
                         </div>
                         <div class="col-5">
-                          <select name="" id="" class="form-control">
-                            <option value="" selected>--- </option>
-                            <option value="">$ 1000</option>
-                            <option value="">$ 2000</option>
+                          <select name="" id="" value={this.state.fromPrice} onChange={(e) => { this.setState({ fromPrice: e.target.value }) }} class="form-control">
+                            {priceList && priceList.length ?
+                              priceList.map((price) => {
+                                return (
+                                  <option value={price.price}>$ {price.price}</option>
+                                )
+                              }) : ''}
                           </select>
                         </div>
                         <div class="col-2">
                           to
                           </div>
                         <div class="col-5">
-                          <select name="" id="" class="form-control">
-                            <option value="" selected>--- </option>
-                            <option value="">$ 1000</option>
-                            <option value="">$ 2000</option>
+                          <select name="" id="" value={this.state.toPrice} onChange={(e) => { this.setState({ toPrice: e.target.value }) }} class="form-control">
+                            {priceList && priceList.length ?
+                              priceList.map((price) => {
+                                return (
+                                  <option value={price.price}>$ {price.price}</option>
+                                )
+                              }) : ''}
                           </select>
                         </div>
                       </div>
@@ -512,7 +589,7 @@ class AdvancedSearch extends Component {
                       <div class="form-group">
                         <div class="row align-items-center">
                           <div class="col-5">
-                            <select name="" id="" class="form-control">
+                            <select name="" id="" value={this.state.fromMileage} onChange={(e) => { this.setState({ fromMileage: e.target.value }) }} class="form-control">
                               <option value="" selected>All Mileage</option>
                               {mileageList && mileageList.length ?
                                 mileageList.map((mileage) => {
@@ -526,7 +603,7 @@ class AdvancedSearch extends Component {
                             to
                   </div>
                           <div class="col-5">
-                            <select name="" id="" class="form-control">
+                            <select name="" id="" value={this.state.toMileage} onChange={(e) => { this.setState({ toMileage: e.target.value }) }} class="form-control">
                               <option value="" selected>All Mileage</option>
                               {mileageList && mileageList.length ?
                                 mileageList.map((mileage) => {
@@ -542,7 +619,7 @@ class AdvancedSearch extends Component {
                     <div class="form-group">
                       <label for="">Transmission</label>
                       <div class="form-group">
-                        <select value="" onChange={this.onChangeBrand} class="form-control">
+                        <select value={this.state.carTransmissionType} onChange={(e) => { this.setState({ carTransmissionType: e.target.value }) }} class="form-control">
                           <option value={null} selected>
                             All Transmission
                             </option>
@@ -560,9 +637,37 @@ class AdvancedSearch extends Component {
                       </div>
                     </div>
                     <div class="form-group">
+                      <div class="row align-items-center">
+                        <div class="col-12">
+                          <label for="">Fuel Type</label>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <select value={this.state.fuelType} onChange={(e) => { this.setState({ fuelType: e.target.value }) }} class="form-control">
+                              <option value={null} selected>
+                                All Fuel Type
+                            </option>
+                              {carFuelTypeList && carFuelTypeList.length ?
+                                carFuelTypeList.map((fuelType) => {
+                                  return (
+                                    <option id={fuelType.carFuelTypeId}
+                                      value={fuelType.carFuelType}
+                                    >{fuelType.carFuelType}</option>
+                                  )
+                                }) :
+                                ''}
+
+                            </select>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="form-group">
                       <label for="">Steering</label>
                       <div class="form-group">
-                        <select value="" onChange={this.onChangeBrand} class="form-control">
+                        <select value={this.state.carSteeringType} onChange={(e) => { this.setState({ carSteeringType: e.target.value }) }} class="form-control">
                           <option value={null} selected>
                             All Steering
                             </option>
