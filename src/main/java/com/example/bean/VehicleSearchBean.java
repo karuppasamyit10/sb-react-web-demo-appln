@@ -8,14 +8,41 @@ import java.util.Set;
  */
 public class VehicleSearchBean {
 
+	private String search;
 	private Set<String> brands;
 	private Set<String> models;
 	private Set<String> modelDetails;
+
+	private Set<String> transmissionType;
+	private Set<String> fuelType;
+	private Set<String> steeringType;
+	private Set<String> dealType;
+	private Set<String> membershipType;
+	
 	private String fromYear;
 	private String toYear;
+	
+	private String fromPrice;
+	private String toPrice;
+
+	private String fromMileage;
+	private String toMileage;
+	
 	private String country;
 	private int pageNo; 
 	private int itemsPerPage;
+	/**
+	 * @return the search
+	 */
+	public String getSearch() {
+		return search;
+	}
+	/**
+	 * @param search the search to set
+	 */
+	public void setSearch(String search) {
+		this.search = search;
+	}
 	/**
 	 * @return the brands
 	 */
@@ -53,6 +80,66 @@ public class VehicleSearchBean {
 		this.modelDetails = modelDetails;
 	}
 	/**
+	 * @return the transmissionType
+	 */
+	public Set<String> getTransmissionType() {
+		return transmissionType;
+	}
+	/**
+	 * @param transmissionType the transmissionType to set
+	 */
+	public void setTransmissionType(Set<String> transmissionType) {
+		this.transmissionType = transmissionType;
+	}
+	/**
+	 * @return the fuelType
+	 */
+	public Set<String> getFuelType() {
+		return fuelType;
+	}
+	/**
+	 * @param fuelType the fuelType to set
+	 */
+	public void setFuelType(Set<String> fuelType) {
+		this.fuelType = fuelType;
+	}
+	/**
+	 * @return the steeringType
+	 */
+	public Set<String> getSteeringType() {
+		return steeringType;
+	}
+	/**
+	 * @param steeringType the steeringType to set
+	 */
+	public void setSteeringType(Set<String> steeringType) {
+		this.steeringType = steeringType;
+	}
+	/**
+	 * @return the dealType
+	 */
+	public Set<String> getDealType() {
+		return dealType;
+	}
+	/**
+	 * @param dealType the dealType to set
+	 */
+	public void setDealType(Set<String> dealType) {
+		this.dealType = dealType;
+	}
+	/**getDealType
+	 * @return the membershipType
+	 */
+	public Set<String> getMembershipType() {
+		return membershipType;
+	}
+	/**
+	 * @param membershipType the membershipType to set
+	 */
+	public void setMembershipType(Set<String> membershipType) {
+		this.membershipType = membershipType;
+	}
+	/**
 	 * @return the fromYear
 	 */
 	public String getFromYear() {
@@ -75,6 +162,54 @@ public class VehicleSearchBean {
 	 */
 	public void setToYear(String toYear) {
 		this.toYear = toYear;
+	}
+	/**
+	 * @return the fromPrice
+	 */
+	public String getFromPrice() {
+		return fromPrice;
+	}
+	/**
+	 * @param fromPrice the fromPrice to set
+	 */
+	public void setFromPrice(String fromPrice) {
+		this.fromPrice = fromPrice;
+	}
+	/**
+	 * @return the toPrice
+	 */
+	public String getToPrice() {
+		return toPrice;
+	}
+	/**
+	 * @param toPrice the toPrice to set
+	 */
+	public void setToPrice(String toPrice) {
+		this.toPrice = toPrice;
+	}
+	/**
+	 * @return the fromMileage
+	 */
+	public String getFromMileage() {
+		return fromMileage;
+	}
+	/**
+	 * @param fromMileage the fromMileage to set
+	 */
+	public void setFromMileage(String fromMileage) {
+		this.fromMileage = fromMileage;
+	}
+	/**
+	 * @return the toMileage
+	 */
+	public String getToMileage() {
+		return toMileage;
+	}
+	/**
+	 * @param toMileage the toMileage to set
+	 */
+	public void setToMileage(String toMileage) {
+		this.toMileage = toMileage;
 	}
 	/**
 	 * @return the country

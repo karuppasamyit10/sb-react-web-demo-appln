@@ -20,8 +20,8 @@ public class Deals {
 	@Column(name="dealId")
 	private long dealId;
 	
-	@Column(name="dealName", nullable=false)
-	private String dealName;
+	@Column(name="dealType", nullable=false)
+	private String dealType;
 	
 	@Column(name="isDeleted")
 	private int isDeleted;
@@ -41,17 +41,17 @@ public class Deals {
 	}
 
 	/**
-	 * @return the dealName
+	 * @return the dealType
 	 */
-	public String getDealName() {
-		return dealName;
+	public String getDealType() {
+		return dealType;
 	}
 
 	/**
-	 * @param dealName the dealName to set
+	 * @param dealType the dealType to set
 	 */
-	public void setDealName(String dealName) {
-		this.dealName = dealName;
+	public void setDealType(String dealType) {
+		this.dealType = dealType;
 	}
 
 	/**
@@ -68,4 +68,5 @@ public class Deals {
 		this.isDeleted = isDeleted;
 	}
 
+	
 }
