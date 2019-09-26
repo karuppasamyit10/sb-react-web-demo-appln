@@ -175,7 +175,7 @@ public class AdminController {
 				    }
 				}
 				//Add Deals
-				List<Deals> deals = dealsRepository.findByIsDeletedOrderByDealNameAsc(0);
+				List<Deals> deals = dealsRepository.findByIsDeletedOrderByDealTypeAsc(0);
 				if(deals.isEmpty())
 				{
 					deals = new LinkedList<Deals>();
@@ -189,7 +189,7 @@ public class AdminController {
 							while ((st = br.readLine()) != null)
 							{
 								Deals dealsObj = new Deals();
-								dealsObj.setDealName(st.trim());
+								dealsObj.setDealType(st.trim());
 								dealsObj.setIsDeleted(0);
 								deals.add(dealsObj);
 							}

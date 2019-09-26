@@ -236,12 +236,12 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("memberShipList", memberShipList);	
 			
 			//Deals list
-			List<Deals> deals = dealsRepository.findByIsDeletedOrderByDealNameAsc(0);
+			List<Deals> deals = dealsRepository.findByIsDeletedOrderByDealTypeAsc(0);
 			List<Object> dealsList = new LinkedList<>();
 			for(Deals deal : deals) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("dealId", deal.getDealId());
-				params.put("dealName", deal.getDealName());
+				params.put("dealType", deal.getDealType());
 				dealsList.add(params);
 			}		
 			rootParams.put("dealsList", dealsList);
@@ -392,11 +392,58 @@ public class CommonDaoImpl implements CommonDao {
 				Expression<String> moedlExp = vehicleRoot.get("model");
 				Predicate moedelConditionPredicate = moedlExp.in(vehicleSearchBean.getModels());
 				listPredicate.add(moedelConditionPredicate);
-//				Join<?, ?> contactJoin=physician.join("userDetails").join("contactDetails");
-//				Predicate statePredicate=criteriaBuilder.equal(contactJoin.get("state"), locationCondition);
-//				Predicate cityPredicate=criteriaBuilder.equal(contactJoin.get("city"), locationCondition);
-//				Predicate cityOrStatePredicate=criteriaBuilder.or(statePredicate, cityPredicate);
-//				listPredicate.add(cityOrStatePredicate);
+			}
+			if(vehicleSearchBean.getModelDetails()!=null && !vehicleSearchBean.getModelDetails().isEmpty())
+			{
+				Expression<String> moedlDetailsExp = vehicleRoot.get("modelDetail");
+				Predicate moedelDetailConditionPredicate = moedlDetailsExp.in(vehicleSearchBean.getModelDetails());
+				listPredicate.add(moedelDetailConditionPredicate);
+			}
+			if(vehicleSearchBean.getTransmissionType()!=null && !vehicleSearchBean.getTransmissionType().isEmpty())
+			{
+				Expression<String> transmissionTypeExp = vehicleRoot.get("transmissionType");
+				Predicate transmissionTypeConditionPredicate = transmissionTypeExp.in(vehicleSearchBean.getTransmissionType());
+				listPredicate.add(transmissionTypeConditionPredicate);
+			}
+			if(vehicleSearchBean.getSteeringType()!=null && !vehicleSearchBean.getSteeringType().isEmpty())
+			{
+				Expression<String> steeringTypeExp = vehicleRoot.get("steeringType");
+				Predicate steeringTypeConditionPredicate = steeringTypeExp.in(vehicleSearchBean.getSteeringType());
+				listPredicate.add(steeringTypeConditionPredicate);
+			}
+			if(vehicleSearchBean.getFuelType()!=null && !vehicleSearchBean.getFuelType().isEmpty())
+			{
+				Expression<String> fuelTypeExp = vehicleRoot.get("fuelType");
+				Predicate fuelTypeConditionPredicate = fuelTypeExp.in(vehicleSearchBean.getFuelType());
+				listPredicate.add(fuelTypeConditionPredicate);
+			}
+			if(vehicleSearchBean.getCountry()!=null && !vehicleSearchBean.getCountry().isEmpty())
+			{
+				Expression<String> countryExp = vehicleRoot.get("country");
+				Predicate countryConditionPredicate = countryExp.in(vehicleSearchBean.getCountry());
+				listPredicate.add(countryConditionPredicate);
+			}
+			if(vehicleSearchBean.getMembershipType()!=null && !vehicleSearchBean.getMembershipType().isEmpty())
+			{
+				Expression<String> membershipExp = vehicleRoot.get("membership");
+				Predicate membershipConditionPredicate = membershipExp.in(vehicleSearchBean.getMembershipType());
+				listPredicate.add(membershipConditionPredicate);
+			}
+			if(vehicleSearchBean.getDealType()!=null && !vehicleSearchBean.getDealType().isEmpty())
+			{
+				Expression<String> dealTypeExp = vehicleRoot.get("dealType");
+				Predicate dealTypeConditionPredicate = dealTypeExp.in(vehicleSearchBean.getDealType());
+				listPredicate.add(dealTypeConditionPredicate);
+			}
+			if(vehicleSearchBean.getFromYear()!=null && !vehicleSearchBean.getFromYear().isEmpty())
+			{
+//				Expression<String> yearExp = vehicleRoot.get("year");
+//				Predicate yearExpConditionPredicate = yearExp.(vehicleSearchBean.getFromYear());
+//				
+				List<Predicate> restrictions = new ArrayList<>();
+				restrictions.add(criteriaBuilder.between(vehicleRoot.<String>get("year"), vehicleSearchBean.getFromYear(), vehicleSearchBean.getToYear()));
+//				listPredicate.add(yearExpConditionPredicate);
+				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
 			}
 //			if(!physicianFilterBean.getExpertise().isEmpty())
 //			{

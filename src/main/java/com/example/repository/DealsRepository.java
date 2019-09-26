@@ -10,7 +10,7 @@ import com.example.entity.Deals;
 @Repository
 public interface DealsRepository extends JpaRepository<Deals, Long> {
 
-	List<Deals> findByIsDeletedOrderByDealNameAsc(int isDeleted);
+	List<Deals> findByIsDeletedOrderByDealTypeAsc(int isDeleted);
 	
 	List<Deals> findByDealIdAndIsDeleted(long dealId	, int isDeleted);
 }
