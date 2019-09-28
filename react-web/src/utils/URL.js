@@ -7,7 +7,7 @@ if (window.location.hostname === 'localhost' && window.location.port===3000) {
   BASE_URL = 'http://35.160.123.119:8181/'
   isDevelopment = true
 } else {
-  BASE_URL = ''
+  BASE_URL = 'http://35.160.123.119:8181/'
   isDevelopment = false
 }
 
