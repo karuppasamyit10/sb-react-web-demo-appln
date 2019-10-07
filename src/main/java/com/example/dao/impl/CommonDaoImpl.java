@@ -163,9 +163,9 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public Map<?, ?> getCarAllDetails() throws Exception {
-		logger.info("::::Enter(daoImpl)==>getCarAllDetails::::");
-		String methodName = "GET CAR ALL DETAILS";
+	public Map<?, ?> getAllVehicleDetails(long vehicleTypeId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getAllVehicleDetails::::");
+		String methodName = "GET ALL VEHICLE DETAILS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		
 		try {
@@ -185,44 +185,44 @@ public class CommonDaoImpl implements CommonDao {
 			List<Object> carBrandList = new LinkedList<>();
 			for(CarBrand carBrand : carBrands) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("carBrandId", carBrand.getCarBrandId());
-				params.put("carBrand", carBrand.getCarBrand());
+				params.put("brandId", carBrand.getCarBrandId());
+				params.put("brand", carBrand.getCarBrand());
 				carBrandList.add(params);
 			}			
-			rootParams.put("carBrandList", carBrandList);
+			rootParams.put("brandList", carBrandList);
 			
 			//Car Steering list
 			List<CarSteering> carSteerings= carSteeringRepository.findByIsDeletedOrderByCarSteeringTypeAsc(0);
 			List<Object> carSteeringList = new LinkedList<>();
 			for(CarSteering carSteering : carSteerings) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("carSteeringId", carSteering.getCarSteeringId());
-				params.put("carSteeringType", carSteering.getCarSteeringType());
+				params.put("steeringId", carSteering.getCarSteeringId());
+				params.put("steeringType", carSteering.getCarSteeringType());
 				carSteeringList.add(params);
 			}			
-			rootParams.put("carSteeringList", carSteeringList);
+			rootParams.put("steeringList", carSteeringList);
 			
 			//Car FuelType list
 			List<CarFuelType> carFuelTypes= carFuelTypeRepository.findByIsDeletedOrderByCarFuelTypeAsc(0);
 			List<Object> carFuelTypeList = new LinkedList<>();
 			for(CarFuelType carFuelType : carFuelTypes) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("carFuelTypeId", carFuelType.getCarFuelTypeId());
-				params.put("carFuelType", carFuelType.getCarFuelType());
+				params.put("fuelTypeId", carFuelType.getCarFuelTypeId());
+				params.put("fuelType", carFuelType.getCarFuelType());
 				carFuelTypeList.add(params);
 			}			
-			rootParams.put("carFuelTypeList", carFuelTypeList);
+			rootParams.put("fuelTypeList", carFuelTypeList);
 			
 			//Car transmission list
 			List<CarTransmission> carTransmissions= carTransmissionRepository.findByIsDeletedOrderByCarTransmissionTypeAsc(0);
 			List<Object> carTransmissionList = new LinkedList<>();
 			for(CarTransmission carTransmission : carTransmissions) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("carTransmissionId", carTransmission.getCarTransmissionId());
-				params.put("carTransmissionType", carTransmission.getCarTransmissionType());
+				params.put("transmissionId", carTransmission.getCarTransmissionId());
+				params.put("transmissionType", carTransmission.getCarTransmissionType());
 				carTransmissionList.add(params);
 			}
-			rootParams.put("carTransmissionList", carTransmissionList);	
+			rootParams.put("transmissionList", carTransmissionList);	
 			
 			//Membership list
 			List<MemberShip> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
@@ -379,6 +379,14 @@ public class CommonDaoImpl implements CommonDao {
 			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 			CriteriaQuery<VehicleDetail> criteriaQuery = criteriaBuilder.createQuery(VehicleDetail.class);
 			Root<VehicleDetail> vehicleRoot = criteriaQuery.from(VehicleDetail.class);
+			if(vehicleSearchBean.getVehicleTypeId()>0)
+			{
+//				Join<?, ?> userDetailJoin=vehicleRoot.join("userDetails");
+				Expression<String> brandExp = vehicleRoot.get("vehicleTypeId");
+				Predicate brandConditionPredicate = brandExp.in(vehicleSearchBean.getVehicleTypeId());
+				listPredicate.add(brandConditionPredicate);
+			}
+			
 			if(vehicleSearchBean.getBrands()!=null && !vehicleSearchBean.getBrands().isEmpty())
 			{
 //				Join<?, ?> userDetailJoin=vehicleRoot.join("userDetails");
@@ -435,7 +443,7 @@ public class CommonDaoImpl implements CommonDao {
 				Predicate dealTypeConditionPredicate = dealTypeExp.in(vehicleSearchBean.getDealType());
 				listPredicate.add(dealTypeConditionPredicate);
 			}
-			if(vehicleSearchBean.getFromYear()!=null && !vehicleSearchBean.getFromYear().isEmpty())
+			if(vehicleSearchBean.getFromYear()!=null && !vehicleSearchBean.getFromYear().isEmpty() && !vehicleSearchBean.getFromYear().equalsIgnoreCase("null"))
 			{
 //				Expression<String> yearExp = vehicleRoot.get("year");
 //				Predicate yearExpConditionPredicate = yearExp.(vehicleSearchBean.getFromYear());

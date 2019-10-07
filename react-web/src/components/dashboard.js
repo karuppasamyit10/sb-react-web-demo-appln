@@ -365,13 +365,33 @@ class Upload extends Component {
                                 </div>
                               </div>
                             </div>
-                            <div class="col-md-3 colgrids">
+                            {/* <div class="col-md-3 colgrids">
                               <div class="inputtxt">
                                 <input
                                   type="text"
                                   value=""
                                   placeholder="Zipcode"
                                 />
+                              </div>
+                            </div> */}
+                            <div class="col-md-3 colgrids">
+                              <div class="selectdd">
+                                <span class="caret">
+                                  <i
+                                    class="fa fa-angle-down"
+                                    aria-hidden="true"
+                                  ></i>
+                                </span>
+                                <select onChange={(e)=>{this.onChangeCountry(e)}}>
+                                  <option selected>Choose Country</option>
+                                  {countryList && countryList.length ?
+                                    countryList.map((country) => {
+                                      return (
+                                        <option value={country.countryName} id={country.countryId}>{country.countryName}</option>
+                                      )
+                                    }) :
+                                    <option>Loading...</option>}
+                                </select>
                               </div>
                             </div>
                             <div class="col-md-3 colgrids">

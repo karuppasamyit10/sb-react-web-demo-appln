@@ -93,17 +93,17 @@ public class CommonController {
 	}
 	
 	//Get Car Master_data
-	@RequestMapping(method = RequestMethod.GET, value = "/car/all_details", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "/vehicle/all_details", produces = "application/json")
 	@ResponseBody
-	public Map<?, ?> getCarAllDetails() throws Exception {
-		logger.info("Controller==>Enter==>getCarAllDetails<==");
-		String methodName = "GET CAR ALL DETAILS";
+	public Map<?, ?> getAllVehicleDetails(long vehicleTypeId) throws Exception {
+		logger.info("Controller==>Enter==>getAllVehicleDetails<==");
+		String methodName = "GET ALL VEHICLE DETAILS";
 		try { 
-			return commonDao.getCarAllDetails();
+			return commonDao.getAllVehicleDetails(vehicleTypeId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.info("Controller==>Exception==>getCarAllDetails<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCarAllDetails", null);
+			logger.info("Controller==>Exception==>getAllVehicleDetails<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getAllVehicleDetails", null);
 		}
 	}
 	

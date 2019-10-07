@@ -31,6 +31,8 @@ public class VehicleSearchBean {
 	private String country;
 	private int pageNo; 
 	private int itemsPerPage;
+	
+	private long vehicleTypeId;
 	/**
 	 * @return the search
 	 */
@@ -247,6 +249,17 @@ public class VehicleSearchBean {
 	public void setItemsPerPage(int itemsPerPage) {
 		this.itemsPerPage = itemsPerPage;
 	}
-	
-	
+	/**
+	 * @return the vehicleTypeId
+	 */
+	public long getVehicleTypeId() {
+		return vehicleTypeId;
+	}
+	/**
+	 * @param vehicleTypeId the vehicleTypeId to set
+	 */
+	public void setVehicleTypeId(long vehicleTypeId) {
+		this.vehicleTypeId = vehicleTypeId;
+	}
+
 }
