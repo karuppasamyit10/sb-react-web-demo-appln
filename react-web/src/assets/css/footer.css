@@ -7,6 +7,19 @@
   color: #fff;
 }
 
+@media screen and (max-width: 1199px) {
+  .footer .flinks {
+    padding-left: 0px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .footer .flinks {
+    padding-left: 10px;
+    margin-top: 20px;
+  }
+}
+
 .footer .flinks li {
   display: block;
   color: #fff;

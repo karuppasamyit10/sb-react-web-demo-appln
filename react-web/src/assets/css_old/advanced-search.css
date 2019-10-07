@@ -1,0 +1,121 @@
+.adv_search_wrap .filters_wrap {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.adv_search_wrap .filters_wrap .filters {
+  background: #F5F6F6;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.adv_search_wrap .filters_wrap .filters .ui-widget-header {
+  background: #00a0dd;
+}
+
+.adv_search_wrap .filters_wrap .filters .ui-selecting {
+  background: #11bdff;
+  color: #fff;
+}
+
+.adv_search_wrap .filters_wrap .filters .ui-selected {
+  background: #00a0dd;
+  color: white;
+}
+
+.adv_search_wrap .filters_wrap .filters .selectable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.adv_search_wrap .filters_wrap .filters .selectable li {
+  margin: 3px 0px;
+  display: inline-block;
+  padding: 10px;
+  font-size: 16px;
+  height: auto;
+}
+
+.adv_search_wrap .filters_wrap .filters .checkboxgroup {
+  background: #fff;
+  padding: 0px 10px;
+  height: 180px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+
+.adv_search_wrap .filters_wrap .filters .checkboxgroup .form-check {
+  margin: 10px 0px;
+}
+
+.adv_search_wrap .filters_wrap .filters .checkboxgroup.hauto {
+  height: auto;
+}
+
+.adv_search_wrap .filters_wrap .filter_1 .nav-link {
+  background: #fff;
+  border-radius: 0px;
+  border-right: 1px solid #ccc;
+  color: #000;
+}
+
+.adv_search_wrap .filters_wrap .filter_1 .nav-link.active {
+  background: #00a0dd;
+  color: #fff;
+}
+
+.adv_search_wrap .resultbox {
+  border: 1px solid #ccc;
+  background: #F5F6F8;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.adv_search_wrap .emailbox {
+  border: 1px solid #ccc;
+  background: #ddf6ff;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.adv_search_wrap .fair {
+  color: #2ab94f;
+}
+
+.adv_search_wrap .over {
+  color: #D10023;
+}
+
+.adv_search_wrap .high {
+  color: orange;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  display: inline-block;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+
+.adv_search_wrap .cg-star {
+  color: #2ab94f;
+}
+
+.adv_search_wrap .empty {
+  color: #ddd;
+}
+
+.adv_search_wrap .searched_cards {
+  background: #F5F6F8;
+  padding: 10px 0px;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.adv_search_wrap .searched_cards .whishlist {
+  color: orange;
+  font-size: 18px;
+  max-width: 30px;
+}
+/*# sourceMappingURL=advanced-search.css.map */

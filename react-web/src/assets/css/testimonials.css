@@ -11,6 +11,13 @@
   margin-top: 40px;
 }
 
+@media screen and (max-width: 1199px) {
+  .testimonial .users-holder .blockquote {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+}
+
 .testimonial .users-holder .blockquote div {
   font-size: 40px;
   color: #00a0dd;
@@ -29,7 +36,24 @@
   left: 60%;
 }
 
+@media screen and (max-width: 767px) {
+  .testimonial .carousel-control-prev {
+    left: 10%;
+  }
+}
+
 .testimonial .carousel-control-next {
   left: 65%;
+}
+
+@media screen and (max-width: 767px) {
+  .testimonial .carousel-control-next {
+    left: auto;
+    right: 10%;
+  }
+}
+
+.testimonial .carousel {
+  padding-bottom: 40px;
 }
 /*# sourceMappingURL=testimonials.css.map */

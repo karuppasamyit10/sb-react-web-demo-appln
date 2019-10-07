@@ -1,0 +1,94 @@
+.form-wrap {
+  padding-left: 40px;
+}
+
+.form-wrap .form-header {
+  color: #2ab94f;
+  margin-bottom: 20px;
+}
+
+.form-wrap .form-rows {
+  border-top: 2px solid #000;
+}
+
+.form-wrap .form-rows .form-group {
+  margin-bottom: 0px;
+  border-bottom: 1px solid #ddd;
+  background: #F5F6F8;
+}
+
+.form-wrap .form-rows .form-group .form-left {
+  padding: 15px 15px;
+  margin-bottom: 0px;
+}
+
+.form-wrap .form-rows .form-group .form-right {
+  background: #fff;
+  padding: 15px 15px;
+}
+
+.form-wrap .form-rows .form-group .form-right.checkboxwrap {
+  padding-left: 40px;
+}
+
+.form-wrap .form-rows .form-group.plain {
+  margin-bottom: 1rem;
+  border-bottom: 0px;
+  background: transparent;
+}
+
+.register-wrap {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.sidelinks .slhead {
+  background: #2ab94f;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.sidelinks .sllinks {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.sidelinks .sllinks li {
+  display: block;
+}
+
+.sidelinks .sllinks li a {
+  display: block;
+  position: relative;
+  color: #666;
+  border: 1px solid #666;
+  border-top: 0px;
+  padding: 10px 15px;
+}
+
+.sidelinks .sllinks li a span {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 14px;
+  display: none;
+}
+
+.sidelinks .sllinks li a:hover span {
+  display: block;
+}
+
+.sidelinks .sllinks li a:hover {
+  text-decoration: none;
+  color: #2ab94f;
+}
+
+.sidelinks .sllinks li.active a {
+  color: #2ab94f;
+}
+
+.sidelinks .sllinks li.active a span {
+  display: block;
+}
+/*# sourceMappingURL=form.css.map */

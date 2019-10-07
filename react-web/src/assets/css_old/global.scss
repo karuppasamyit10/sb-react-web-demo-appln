@@ -1,0 +1,167 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+body{
+    background: $white;
+    padding-top: 89px;
+}
+.hideForAnim{
+    opacity: 0;
+}
+.container{
+    width: 1200px;
+    max-width: 1200px;
+    @include max-1200(){
+        width: 970px;
+        max-width: 970px;
+    }
+    @include max-991(){
+        width: 100%;
+        max-width: 100%;
+    }
+    @include max-767(){
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.head1{
+    font-size: 2rem;
+}
+.head2{
+    font-size: 1.5rem;
+}
+.head3{
+    font-size: 1.25rem;
+}
+.head4{
+    font-size: 1rem;
+}
+.para1{
+    font-size: 16px;
+}
+.para2{
+    font-size: 14px;
+}
+.white{
+    color: $white;
+}
+.black{
+    color: $black;
+}
+.green{
+    color: $green;
+}
+.red{
+    color: $red;
+}
+.blue{
+    color: $blue;
+}
+sup{
+    font-size: 50%;
+}
+
+a,button,input,textarea,select,option{
+    outline: 0px;
+    &:focus{
+        outline: 0px;
+    }
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: $green;
+    border-color: $green;
+}
+.btn-primary:focus,.btn-primary:hover{
+    background-color: darken($color: $green, $amount: 5);
+    border-color: darken($color: $green, $amount: 5);
+    outline: 0px;
+    box-shadow: none;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    background-color: darken($color: $green, $amount: 5);
+    border-color: darken($color: $green, $amount: 5);
+    outline: 0px;
+    box-shadow: none;
+}
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: none;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: $blue;
+}
+.text-shadow{
+    text-shadow: 1px 1px 2px #0a0a0a;
+}
+.spacerTop{
+    @include spacerTop;
+}
+.spacerBottom{
+    @include spacerBottom;
+}
+.bold{
+    font-weight: bold;
+}
+.medium{
+    font-weight: 500;
+}
+
+@include selectbox;
+
+.breadcrumb_wrap{
+    background: lighten($color: $green, $amount: 10);
+    margin-top: 10px;
+    .breadcrumb{
+        background: transparent;
+        li{
+            a{
+                color: $white;
+            }
+            &:before{
+                color: $white;
+            }
+        }
+        li.active{
+           
+                color: $white;
+           
+        }
+    }
+}
+.spacer1{
+    @include spacer1;
+}
+
+.card-header {
+    padding: 0px;
+    .btn-link{
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 20px;
+        color: $black;
+        background: $grey2;
+        @include relative;
+        &:hover,&:focus{
+            text-decoration: none;
+        }
+        .state{
+            @include absolute;
+            top: 18px;
+            right: 20px;
+        }
+    }
+}
+.card-header.opened{
+    .btn-link{
+        background: $green;
+        color: $white;
+    }
+}
+
+.dotspacer{
+    height: 30px;
+    border-bottom: 1px dotted #ccc;
+}

@@ -3,6 +3,9 @@
 body{
     background: $white;
     padding-top: 89px;
+    @include max-767{
+        padding-top: 85px;
+    }
 }
 .hideForAnim{
     opacity: 0;
@@ -10,6 +13,10 @@ body{
 .container{
     width: 1200px;
     max-width: 1200px;
+    @include max-1280(){
+        width: 1170px;
+        max-width: 1170px;
+    }
     @include max-1200(){
         width: 970px;
         max-width: 970px;
@@ -26,18 +33,37 @@ body{
 
 .head1{
     font-size: 2rem;
+    @include max-1200{
+        font-size: 1.8rem;
+    }
+    @include max-767{
+        font-size: 20px;
+    }
 }
 .head2{
     font-size: 1.5rem;
+    @include max-1200{
+        font-size: 1.4rem;
+    }
+    
 }
 .head3{
     font-size: 1.25rem;
+    @include max-1200{
+        font-size: 1.2rem;
+    }
 }
 .head4{
     font-size: 1rem;
+    @include max-1200{
+        font-size: 16px;
+    }
 }
 .para1{
     font-size: 16px;
+    @include max-1200{
+        font-size: 15px;
+    }
 }
 .para2{
     font-size: 14px;
@@ -144,6 +170,7 @@ a,button,input,textarea,select,option{
         color: $black;
         background: $grey2;
         @include relative;
+        white-space: normal;
         &:hover,&:focus{
             text-decoration: none;
         }

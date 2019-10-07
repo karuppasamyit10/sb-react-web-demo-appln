@@ -1,0 +1,94 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+
+.adv_search_wrap{
+    .filters_wrap{
+        margin-top: 20px;
+        margin-bottom: 30px;
+        .filters{
+            background: $grey4;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 15px;
+            .ui-widget-header{
+                background: $blue;
+            }
+           .ui-selecting { background: lighten($color: $blue, $amount: 10); color: $white; }
+  .ui-selected { background: $blue; color: white; }
+  .selectable{
+    list-style-type: none; margin: 0; padding: 0; 
+    li { margin: 3px 0px; display: inline-block; padding: 10px; font-size: 16px; height: auto; }
+  }
+.checkboxgroup{
+    background: $white;
+    padding: 0px 10px;
+    height: 180px;
+    overflow-y: auto;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    .form-check{
+        margin: 10px 0px;
+
+    }
+}
+.checkboxgroup.hauto{
+    height: auto;
+}
+        }
+        .filter_1{
+            .nav-link{
+                background: $white;
+                border-radius: 0px;
+                border-right: 1px solid #ccc;
+                color: $black;
+            }
+           
+            .nav-link.active{
+                background: $blue;
+                color: $white;
+            }
+        }
+ 
+    }
+    .resultbox{
+        border: 1px solid #ccc;
+        background: $grey2;
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .emailbox{
+        border: 1px solid #ccc;
+        background: lighten($color: $blue, $amount: 50);
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .fair{
+        color: $green;
+    }
+    .over{
+        color: $red;
+    }
+    .high{
+        color: $orange;
+        transform: rotate(-45deg);
+display: inline-block;
+transform-origin: center;
+    }
+    .cg-star{
+        color: $green;
+    }
+    .empty{
+        color: $grey3;
+    }
+    .searched_cards{
+        background: $grey2;
+        padding: 10px 0px;
+        border-bottom: 2px solid #ccc;
+        margin-bottom: 20px;
+        .whishlist{
+            color: $orange;
+            font-size: 18px;
+            max-width: 30px;
+        }
+    }
+}

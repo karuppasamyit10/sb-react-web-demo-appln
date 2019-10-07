@@ -12,10 +12,15 @@
     .blockquote{
         font-size: 24px;
         margin-top: 40px;
+        @include max-1200{
+            font-size: 20px;
+            margin-top: 10px;
+        }
         div{
             font-size: 40px;
             color: $blue;
         }
+        
     }
 }
 .carousel-control-next, .carousel-control-prev {
@@ -28,8 +33,18 @@
 }
 .carousel-control-prev{
     left: 60%;
+    @include max-767{
+        left: 10%;
+    }
 }
 .carousel-control-next{
     left: 65%;
+    @include max-767{
+        left: auto;
+        right: 10%;
+    }
+}
+.carousel{
+    padding-bottom: 40px;
 }
 }

@@ -1,0 +1,124 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+
+.search_detail{
+.allresults{
+background: $grey2;
+padding: 20px 10px;
+color: $blue;
+font-size: 16px;
+width: 100px;
+border: 1px solid #ccc;
+&:hover,&:focus{
+    text-decoration: none;
+    background: $blue;
+    color: $white;
+}
+}
+.thumbs{
+    border: 1px solid #000;
+    padding: 10px 10px 5px;
+    width: 100%;
+    img{
+        width: 100%;
+    }
+    .price{
+        span:first-child{
+            font-size: 18px;
+        }
+        font-size: 14px;
+    }
+}
+.cargallery{
+    border: 2px solid $black;
+    .carsbig{
+        border: 2px solid $black;
+    }
+    .carssmall{
+        a{
+            border: 1px solid $black;
+        }
+    }
+}
+.detail_right{
+    padding-left: 30px;
+    .greatdeal{
+        background: $grey2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        .ratings{
+            a{
+                display: inline-block;
+            }
+            .fill{
+                color: $green;
+            }
+            .empty{
+                color: $grey;
+            }
+        }
+    }
+    .contact_dealer{
+        background: $grey2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        .para_form{
+            margin-top: 30px;
+            line-height: 30px;
+            .form-control{
+                display: inline-block;
+                width: 180px;
+                height: 35px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    .disclaimer{
+        background: $white;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+.vehicle{
+   
+    .icon{
+        max-width: 50px;
+        text-align: center;
+    }
+    .para1{
+        margin-bottom: 20px;
+    }
+}
+.detailright2{
+   
+    padding-left: 40px;
+    .sellerinfo{
+        margin-top: 20px;
+        a{
+            color: $blue;
+            &:hover{
+                text-decoration: none;
+            }
+        }
+    }
+    .dealer_desc{
+        margin-top: 20px;
+        .para1{
+            background: $grey2;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+    }
+}
+
+}
+.slick-prev, .slick-next{
+ z-index: 99;
+}
+.slick-prev:before, .slick-next:before{
+    color: $blue;
+    font-size: 24px;
+}

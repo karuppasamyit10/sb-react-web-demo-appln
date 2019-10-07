@@ -4,4 +4,14 @@
   background: url("../img/no1/bg_autowiniAbout.png") no-repeat top center;
   background-size: cover;
 }
+
+@media screen and (max-width: 767px) {
+  .no-one-trading {
+    height: auto;
+    padding: 30px 0px;
+  }
+  .no-one-trading .no1-cards {
+    margin-bottom: 20px;
+  }
+}
 /*# sourceMappingURL=no-one-trading.css.map */

@@ -11,6 +11,13 @@
         
     }
     .flinks{
+        @include max-1200{
+            padding-left: 0px;
+        }
+        @include max-767{
+            padding-left: 10px;
+            margin-top: 20px;
+        }
         li{
             display: block;
             color: $white;

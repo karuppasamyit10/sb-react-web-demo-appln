@@ -26,12 +26,37 @@
   border-radius: 0px;
 }
 
+@media screen and (max-width: 767px) {
+  .search-filter .nav-tabs .nav-link {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .search-filter .nav-tabs {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
 .search-filter .nav-tabs .nav-item {
   margin-right: 5px;
   -webkit-box-flex: 1;
   -ms-flex: 1 0;
       flex: 1 0;
   width: auto;
+}
+
+@media screen and (max-width: 767px) {
+  .search-filter .nav-tabs .nav-item {
+    margin-left: 0px;
+    margin-right: 0px;
+    -ms-flex: 0 0 33.333333%;
+    -webkit-box-flex: 0;
+            flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
 }
 
 .search-filter .nav-tabs .nav-item:last-child {
@@ -73,6 +98,12 @@
 
 .search-filter .model-filter .colgrids {
   padding: 0px 10px !important;
+}
+
+@media screen and (max-width: 767px) {
+  .search-filter .model-filter .btn-wrap {
+    margin-top: 10px;
+  }
 }
 
 .search-filter .price-filter .inputtxt input {

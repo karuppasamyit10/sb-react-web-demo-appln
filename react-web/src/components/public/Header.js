@@ -10,16 +10,17 @@
 import React, { Component } from "react";
 import logo from "../../assets/img/logo.png";
 import store from "store";
-import { connect } from 'react-redux'
-import {PATH} from '../../utils/Constants'
-import { logout } from '../../actions/userAction';
-import {Link} from 'react-router-dom';
+import { connect } from "react-redux";
+import { PATH } from "../../utils/Constants";
+import { logout } from "../../actions/userAction";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: null
+      token: null,
+      open : false
     };
   }
 
@@ -30,10 +31,10 @@ class Header extends Component {
   }
 
   handleSignOut = () => {
-    this.props.logout((response)=>{
+    this.props.logout(response => {
       console.log(response);
       this.props.prop.history.push("/");
-    })
+    });
   };
 
   handleSignIn = () => {
@@ -51,12 +52,76 @@ class Header extends Component {
             <div class="logo-wrap col-12">
               <div class="container">
                 <a class="navbar-brand hideForAni">
-                  <img src={logo} class="img-fluid" style={{cursor : 'pointer'}} 
-                  alt="" onClick = {()=>{this.props.prop.history.push(PATH.DASHBOARD);}} />
+                  <img
+                    src={logo}
+                    class="img-fluid"
+                    style={{ cursor: "pointer" }}
+                    alt=""
+                    onClick={() => {
+                      this.props.prop.history.push(PATH.DASHBOARD);
+                    }}
+                  />
                 </a>
+                <div class="mobiletop d-block d-xl-none">
+                  <ul class="navbar-nav d-inline-flex">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <span>
+                          <i class="fa fa-bell" aria-hidden="true"></i>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        id="dropdown01Mob"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <span class="mr-1">
+                          <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdown01Mob"
+                      >
+                        <a class="dropdown-item" href="register.html">
+                          Saved Searches
+                        </a>
+                        <a class="dropdown-item" href="register.html">
+                          Saved Listings
+                        </a>
+                        <a class="dropdown-item" href="register.html">
+                          Financing
+                        </a>
+                        <a class="dropdown-item" href="register.html">
+                          Inbox
+                        </a>
+                        <a class="dropdown-item" href="sign-in.html">
+                          Sign In
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="hamburger_wrap d-inline-flex">
+                    <button
+                      id="hamburg"
+                      class={`hamburger hamburger--collapse ${this.state.open ? 'is-active' : ''}`}
+                      type="button"
+                      onClick={()=>{this.setState({open : !this.state.open})}}
+                    >
+                      <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                      </span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="menu-wrap col-12">
+            <div class={`menu-wrap col-12 ${this.state.open ? 'active' : ''}`}>
               <div class="menu-languages">
                 <div class="container">
                   <span class="d-inline-block globe">
@@ -171,19 +236,34 @@ class Header extends Component {
                           My Account
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                          <a class="dropdown-item" style={{cursor : 'pointer'}}>
+                          <a
+                            class="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
                             Saved Searches
                           </a>
-                          <a class="dropdown-item" style={{cursor : 'pointer'}}>
+                          <a
+                            class="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
                             Saved Listings
                           </a>
-                          <a class="dropdown-item" style={{cursor : 'pointer'}}>
+                          <a
+                            class="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
                             Financing
                           </a>
-                          <a class="dropdown-item" style={{cursor : 'pointer'}}>
+                          <a
+                            class="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
                             Inbox
                           </a>
-                          <a class="dropdown-item" style={{cursor : 'pointer'}}>
+                          <a
+                            class="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
                             {this.state.token ? (
                               <span
                                 onClick={() => {
@@ -221,7 +301,7 @@ const mapDispatchToProps = dispatch => {
   return {
     logout: (username, password, callback) => {
       dispatch(logout(username, password, callback));
-    },
+    }
   };
 };
 

@@ -12,6 +12,16 @@
         -ms-flex: 0 0 25%;
         flex: 0 0 25%;
         max-width: 25%;
+        @include max-991{
+            -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+        @include max-767{
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
         a{
             text-decoration: none;
             color: $black;

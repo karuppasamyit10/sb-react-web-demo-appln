@@ -3,6 +3,12 @@ body {
   padding-top: 89px;
 }
 
+@media screen and (max-width: 767px) {
+  body {
+    padding-top: 85px;
+  }
+}
+
 .hideForAnim {
   opacity: 0;
 }
@@ -10,6 +16,13 @@ body {
 .container {
   width: 1200px;
   max-width: 1200px;
+}
+
+@media screen and (max-width: 1280px) {
+  .container {
+    width: 1170px;
+    max-width: 1170px;
+  }
 }
 
 @media screen and (max-width: 1199px) {
@@ -37,20 +50,56 @@ body {
   font-size: 2rem;
 }
 
+@media screen and (max-width: 1199px) {
+  .head1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .head1 {
+    font-size: 20px;
+  }
+}
+
 .head2 {
   font-size: 1.5rem;
+}
+
+@media screen and (max-width: 1199px) {
+  .head2 {
+    font-size: 1.4rem;
+  }
 }
 
 .head3 {
   font-size: 1.25rem;
 }
 
+@media screen and (max-width: 1199px) {
+  .head3 {
+    font-size: 1.2rem;
+  }
+}
+
 .head4 {
   font-size: 1rem;
 }
 
+@media screen and (max-width: 1199px) {
+  .head4 {
+    font-size: 16px;
+  }
+}
+
 .para1 {
   font-size: 16px;
+}
+
+@media screen and (max-width: 1199px) {
+  .para1 {
+    font-size: 15px;
+  }
 }
 
 .para2 {
@@ -129,8 +178,20 @@ a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
   padding-top: 30px;
 }
 
+@media screen and (max-width: 767px) {
+  .spacerTop {
+    padding-top: 15px;
+  }
+}
+
 .spacerBottom {
   padding-bottom: 30px;
+}
+
+@media screen and (max-width: 767px) {
+  .spacerBottom {
+    padding-bottom: 15px;
+  }
 }
 
 .bold {
@@ -172,6 +233,12 @@ a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
   padding: 0px 6px;
 }
 
+@media screen and (max-width: 1199px) {
+  .selectdd select {
+    font-size: 12px;
+  }
+}
+
 .breadcrumb_wrap {
   background: #42d468;
   margin-top: 10px;
@@ -194,7 +261,7 @@ a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
 }
 
 .spacer1 {
-  height: 70px;
+  height: 30px;
 }
 
 .card-header {
@@ -209,6 +276,7 @@ a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
   color: #000;
   background: #F5F6F8;
   position: relative;
+  white-space: normal;
 }
 
 .card-header .btn-link:hover, .card-header .btn-link:focus {

@@ -1,0 +1,87 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+
+
+
+.form-wrap{
+    padding-left: 40px;
+.form-header{
+    color: $green;
+    margin-bottom: 20px;
+}
+.form-rows{
+    border-top: 2px solid $black;
+    .form-group{
+        margin-bottom: 0px;
+        border-bottom: 1px solid $grey3;
+        background: $grey2;
+        .form-left{            
+            padding: 15px 15px;
+            margin-bottom: 0px;
+        }
+        .form-right{
+            background: $white;
+            padding: 15px 15px;
+        }
+        .form-right.checkboxwrap{
+            padding-left: 40px;
+        }
+    }
+    .form-group.plain{
+        margin-bottom: 1rem;
+        border-bottom: 0px;
+        background: transparent;
+    }
+}
+
+}
+
+.register-wrap{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.sidelinks{
+    .slhead{
+        background: $green;
+        color: $white;
+        padding: 10px 20px;
+    }
+    .sllinks{
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        li{
+            display: block;
+            a{
+                display: block;
+                @include relative;
+                color: $grey;
+                border: 1px solid $grey;
+                border-top: 0px;
+                padding: 10px 15px;
+                span{
+                    @include absolute;
+                    top: 10px;
+                    right: 20px;
+                    font-size: 14px;
+                    display: none;
+                }
+                &:hover span{
+                    display: block;
+                }
+                &:hover{
+                    text-decoration: none;
+                    color: $green;
+                }
+            }
+        }
+        li.active{
+            a{
+                color: $green;
+                span{
+                    display: block;
+                }
+            }
+        }
+    }
+}

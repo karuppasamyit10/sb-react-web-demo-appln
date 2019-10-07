@@ -3,7 +3,9 @@
 
 .search-showcase{
     .ss-cards{
-        
+        @include max-767{
+            margin-bottom: 20px;
+        }
         p{
             margin-bottom: 10px;
         }

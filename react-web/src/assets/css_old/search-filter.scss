@@ -1,0 +1,86 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+
+.search-filter{
+    height: 500px;
+    background: url('../img/banner.jpg') no-repeat top right;
+    background-size: cover;
+    .container{
+        @include padding-x-none;
+    }
+    .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+        border-color: transparent;
+        outline: 0px;
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+        border-color: transparent;
+    }
+    .nav-tabs .nav-link{
+        color: $white;
+        background-color: rgba(82,125,137,.8);
+        font-size: 1rem;
+        text-align: center;
+        border-radius: 0px;
+    }
+    .nav-tabs .nav-item{
+        margin-right: 5px;
+        -webkit-box-flex: 1;
+    -webkit-flex: 1 0;
+    flex: 1 0;
+    width: auto;
+    &:last-child{
+        margin-right: 0px;
+    }
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+        color: $white;
+        background-color: $blue;
+        border-color: transparent;
+    }
+    .nav-tabs {
+        border-bottom: 0px;
+    }
+    .tab-content{
+        margin-top: 5px;
+        background: $white;
+    }
+    .tab-content>.tab-pane{
+        padding: 10px;
+    }
+    .pills-tabContent>.tab-pane{
+        padding: 0px;
+    }
+    .sfcol{
+        max-width: 750px;
+    }
+    .model-filter{
+      
+        .inputtxt{
+            input{
+                border: 0px;
+                border-bottom: 1px solid $light-grey;
+                height: 38px;
+            }
+        }
+        .colgrids{
+            padding: 0px 10px !important;
+        }
+    }
+
+    .price-filter{
+        
+        .inputtxt{
+            input{
+                border: 0px;
+                border-bottom: 1px solid $light-grey;
+                height: 38px;
+            }
+        }
+        .colgrids{
+            padding: 0px 10px !important;
+        }
+    }
+    .form-group {
+        margin-bottom: 0px;
+    }
+}

@@ -1,0 +1,36 @@
+.search-showcase .ss-cards p {
+  margin-bottom: 10px;
+}
+
+.search-showcase .ss-cards .ss-img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.search-showcase .ss-cards .ss-img-wrap .ss-img {
+  height: 250px;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  position: relative;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.search-showcase .ss-cards .ss-img-wrap .ss-img:hover {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+.search-showcase .ss-cards .ss-img-wrap .ss-title {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  padding: 10px;
+}
+
+.search-showcase .ss-cards .ss-img-wrap .ss-title span {
+  display: block;
+  font-size: 16px;
+}
+/*# sourceMappingURL=search-showcase.css.map */

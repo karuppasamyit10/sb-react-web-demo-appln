@@ -1,0 +1,35 @@
+.testimonial .video-holder {
+  width: 100%;
+}
+
+.testimonial .users-holder .heading {
+  color: #666;
+}
+
+.testimonial .users-holder .blockquote {
+  font-size: 24px;
+  margin-top: 40px;
+}
+
+.testimonial .users-holder .blockquote div {
+  font-size: 40px;
+  color: #00a0dd;
+}
+
+.testimonial .carousel-control-next, .testimonial .carousel-control-prev {
+  top: auto;
+  bottom: 0;
+  opacity: 1;
+  width: 30px;
+  height: 30px;
+  background: #00a0dd;
+}
+
+.testimonial .carousel-control-prev {
+  left: 60%;
+}
+
+.testimonial .carousel-control-next {
+  left: 65%;
+}
+/*# sourceMappingURL=testimonials.css.map */

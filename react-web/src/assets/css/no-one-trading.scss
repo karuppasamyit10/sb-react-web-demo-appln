@@ -6,4 +6,11 @@ height: 700px;
 padding: 100px 0px;
 background: url("../img/no1/bg_autowiniAbout.png") no-repeat top center;
 background-size: cover;
+@include max-767{
+    height: auto;
+    padding: 30px 0px;
+    .no1-cards{
+        margin-bottom: 20px;
+    }
+}
 }

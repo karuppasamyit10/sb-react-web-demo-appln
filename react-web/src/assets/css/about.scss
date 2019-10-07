@@ -38,5 +38,55 @@
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 10px;
+        .insidegreybox{
+            background: $white;
+            padding: 10px;
+        }
+    }
+    .benefits{
+        .icon{
+            max-width: 120px;
+            text-align: center;
+        }
+    }
+    @include max-767{
+        .col-md-3.text-right{
+            text-align: center !important;
+        }
+        .btn{
+            white-space: normal;
+            margin-bottom: 10px;
+        }
+    }
+}
+.customertxt{
+    span{
+        @include absolute;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+        padding: 10px;
+        display: block;
+        @include max-767{
+        @include relative;
+        color: $black;
+        }
+    }
+   
+}
+.gurantees.bggrey{
+    background: $grey2;
+}
+.parts{
+    text-align: left;
+    .numbers{
+        color: $green;
+        font-size: 50px;
+        max-width: 100px;
+    }
+}
+.gurantees{
+    @include max-767{
+        padding: 0px 10px;
     }
 }

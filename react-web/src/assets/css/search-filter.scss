@@ -21,6 +21,14 @@
         font-size: 1rem;
         text-align: center;
         border-radius: 0px;
+        @include max-767{
+            font-size: 13px;
+        }
+    }
+    .nav-tabs{
+        @include max-767{
+            justify-content: center;
+        }
     }
     .nav-tabs .nav-item{
         margin-right: 5px;
@@ -28,6 +36,13 @@
     -webkit-flex: 1 0;
     flex: 1 0;
     width: auto;
+    @include max-767{
+        margin-left: 0px;
+        margin-right: 0px;
+        -ms-flex: 0 0 33.333333%;
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
     &:last-child{
         margin-right: 0px;
     }
@@ -64,6 +79,11 @@
         }
         .colgrids{
             padding: 0px 10px !important;
+        }
+        .btn-wrap{
+            @include max-767{
+                margin-top: 10px;
+            }
         }
     }
 

@@ -1,0 +1,129 @@
+@import 'partials/variables';
+@import 'partials/mixins';
+.navbar {
+    padding: 0px;
+    align-items: flex-start;
+.row.parent-row{
+    width: 100%;
+}
+    .container {
+        align-items: flex-start;
+        @include padding-x-none;
+    }
+.logo-wrap{
+    width: 100%;
+    .navbar-brand{
+        width: 130px;
+        @include relative;
+        z-index: 1;
+    }
+}
+    .menu-wrap {
+        width: 100%;
+        margin-top: -89px;
+        background: $white;
+        .menu-languages {
+            background: #f5f5f5;
+            .container{
+                padding-left: 180px;
+            }
+            .globe{
+                a{
+                    color: $grey;
+                    padding: 0px 5px;
+                }
+                
+            }
+            .language-links {
+                @include ul-reset;
+
+                li {
+                    display: inline-block;
+
+                    a {
+                        display: inline-block;
+                        padding: 8px 5px;
+                        font-size: 12px;
+                        line-height: 18px;
+                        color: $light_grey;
+                        min-width: 70px;
+                        text-align: center;
+                        text-decoration: none;
+                        
+
+                        &:hover,
+                        &:focus {
+                            color: $primary;
+                        }
+                    }
+
+                    a.active {
+                        background: $white;
+                        color: $grey;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+        .menu-main {
+            .container{
+                padding-left: 180px;
+            }
+            .navbar-nav.nav-center {
+                li {
+                    a {
+                        padding: 17px 25px 0px;
+                        min-height: 55px;
+                        @include relative;
+                        background: #fff;
+                        font-size: 15px;
+                        font-weight: 500;
+                        &:before {
+                            content: "";
+                            width: 1px;
+                            height: 12px;
+                            border-left: 1px solid #ccc;
+                            @include absolute;
+                            @include absolute-center(auto 0px auto auto);
+                        }
+
+
+                    }
+                    &:last-child{
+                     a{
+                         &:before{
+                            display: none;
+                         }
+                     }
+                            
+                        
+                        
+                    }
+                }
+            }
+            .navbar-nav.nav-right{
+                li{
+                    a {
+                        padding: 17px 8px 0px;
+                        min-height: 55px;
+                        @include relative;
+                        background: #fff;
+                        color: #000;
+                        font-size: 14px;
+                    }
+                    .dropdown-menu{
+                        margin: -1px 0px 0px;                       
+                            a{
+                                padding: 10px 20px;
+                                min-height: 1px;
+                            }
+                       
+                    }
+                }
+            }
+        }
+
+
+    }
+}
