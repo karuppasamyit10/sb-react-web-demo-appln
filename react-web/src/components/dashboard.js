@@ -31,6 +31,7 @@ class Upload extends Component {
       modelId: null,
       brandName: null,
       modelName: null,
+      country : null,
       modelList: [],
       brandObject: {},
       modelObject: {}
@@ -49,11 +50,6 @@ class Upload extends Component {
     this.getMasterData();
   }
 
-  handleSearch = () => {
-    // this.props.history.push(PATH.SEARCH)
-    this.props.history.push(PATH.ADVANCED_SEARCH)
-  }
-
   getDashboardDetails = () => {
     this.props.getDashboardDetails({}, response => {
       console.log(response);
@@ -61,6 +57,10 @@ class Upload extends Component {
         this.setState({ dashboardDetails: response.response })
       }
     })
+  }
+
+  onChangeCountry = (event) =>{
+    this.setState({ country : event.target.value});
   }
 
   onChangeBrand = (event) => {
@@ -99,10 +99,10 @@ class Upload extends Component {
   }
 
   handleSearch = () => {
-    console.log(this.state.brandId, this.state.brandName, this.state.modelId, this.state.modelName);
+    const { brandName , modelName , country , brandId , modelId} = this.state;
     this.props.history.push({
       pathname: PATH.ADVANCED_SEARCH,
-      state: { ...this.state }
+      state: { brandName :  brandName , brandId : brandId , modelId : modelId , modelName : modelName , country : country}
     })
   }
 
@@ -289,12 +289,12 @@ class Upload extends Component {
                                     aria-hidden="true"
                                   ></i>
                                 </span>
-                                <select>
+                                <select onChange={(e)=>{this.onChangeCountry(e)}}>
                                   <option selected>Choose Country</option>
                                   {countryList && countryList.length ?
                                     countryList.map((country) => {
                                       return (
-                                        <option id={country.countryId}>{country.countryName}</option>
+                                        <option value={country.countryName} id={country.countryId}>{country.countryName}</option>
                                       )
                                     }) :
                                     <option>Loading...</option>}
