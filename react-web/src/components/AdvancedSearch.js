@@ -29,6 +29,10 @@ class AdvancedSearch extends Component {
       userDetails: {},
       master: {},
       isSubscribed: false,
+      vehicleType:
+        this.props.location.state && this.props.location.state.vehicleType
+          ? this.props.location.state.vehicleType
+          : null,
       brandId:
         this.props.location.state && this.props.location.state.brandId
           ? this.props.location.state.brandId
@@ -114,19 +118,22 @@ class AdvancedSearch extends Component {
     this.props.getSearchResult(params, response => {
       console.log(response);
     });
-    this.props.getMasterData({}, response => {
-      console.log(response);
-      if (response && response.response_code === 0) {
-        this.setState({ master: response.response }, () => {
-          this.setCarBrand();
-          this.setTransmissionType();
-          this.setFuelType();
-          this.setSteeringType();
-          this.setDealType();
-          this.setMembershipType();
-        });
+    this.props.getMasterData(
+      { vehicleTypeId : this.state.vehicleType },
+      response => {
+        console.log(response);
+        if (response && response.response_code === 0) {
+          this.setState({ master: response.response }, () => {
+            this.setCarBrand();
+            this.setTransmissionType();
+            this.setFuelType();
+            this.setSteeringType();
+            this.setDealType();
+            this.setMembershipType();
+          });
+        }
       }
-    });
+    );
     if (this.state.brandId) {
       this.getCarModelList(this.state.brandId);
       this.getVehicleSearchList();

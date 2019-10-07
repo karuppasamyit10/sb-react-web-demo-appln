@@ -34,7 +34,8 @@ class Upload extends Component {
       country : null,
       modelList: [],
       brandObject: {},
-      modelObject: {}
+      modelObject: {},
+      vehicleType : 1
     };
   }
 
@@ -99,10 +100,11 @@ class Upload extends Component {
   }
 
   handleSearch = () => {
-    const { brandName , modelName , country , brandId , modelId} = this.state;
+    const { brandName , modelName , country , brandId , modelId , vehicleType} = this.state;
     this.props.history.push({
       pathname: PATH.ADVANCED_SEARCH,
-      state: { brandName :  brandName , brandId : brandId , modelId : modelId , modelName : modelName , country : country}
+      state: { brandName :  brandName , brandId : brandId , modelId : modelId ,
+         modelName : modelName , country : country , vehicleType : vehicleType}
     })
   }
 
@@ -124,7 +126,7 @@ class Upload extends Component {
                   <sup class="sup">TM</sup>
                 </div>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
+                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 1})}}>
                     <a
                       class="nav-link active"
                       id="usedCar-tab"
@@ -137,7 +139,7 @@ class Upload extends Component {
                       Car
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 2})}}>
                     <a
                       class="nav-link"
                       id="truck-tab"
@@ -150,7 +152,7 @@ class Upload extends Component {
                       Truck
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 3})}}>
                     <a
                       class="nav-link"
                       id="bus-tab"
@@ -163,7 +165,7 @@ class Upload extends Component {
                       Bus
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 4})}}>
                     <a
                       class="nav-link"
                       id="equipments-tab"
@@ -176,7 +178,7 @@ class Upload extends Component {
                       Equipments
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 5})}}>
                     <a
                       class="nav-link"
                       id="equipments-tab"
@@ -399,6 +401,7 @@ class Upload extends Component {
                                 <button
                                   type="button"
                                   class="btn btn-primary w-100"
+                                  onClick={() => { this.handleSearch() }}
                                 >
                                   Search
                                 </button>
@@ -497,6 +500,7 @@ class Upload extends Component {
                                 <button
                                   type="button"
                                   class="btn btn-primary w-100"
+                                  onClick={() => { this.handleSearch() }}
                                 >
                                   Search
                                 </button>
@@ -569,6 +573,7 @@ class Upload extends Component {
                                 <button
                                   type="button"
                                   class="btn btn-primary w-100"
+                                  onClick={() => { this.handleSearch() }}
                                 >
                                   Search
                                 </button>
@@ -671,6 +676,7 @@ class Upload extends Component {
                                 <button
                                   type="button"
                                   class="btn btn-primary w-100"
+                                  onClick={() => { this.handleSearch() }}
                                 >
                                   Search
                                 </button>
@@ -743,6 +749,7 @@ class Upload extends Component {
                                 <button
                                   type="button"
                                   class="btn btn-primary w-100"
+                                  onClick={() => { this.handleSearch() }}
                                 >
                                   Search
                                 </button>
@@ -845,6 +852,7 @@ class Upload extends Component {
                                 <button
                                   type="button"
                                   class="btn btn-primary w-100"
+                                  onClick={() => { this.handleSearch() }}
                                 >
                                   Search
                                 </button>
@@ -917,6 +925,7 @@ class Upload extends Component {
                                 <button
                                   type="button"
                                   class="btn btn-primary w-100"
+                                  onClick={() => { this.handleSearch() }}
                                 >
                                   Search
                                 </button>
