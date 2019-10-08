@@ -10,7 +10,9 @@ import com.example.entity.Brand;
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Long> {
 
-	List<Brand> findByIsDeletedOrderByBrandAsc(int isDeleted);
+	List<Brand> findByVehicleTypeIdAndIsDeletedOrderByBrandAsc(long vehicleTypeId, int isDeleted);
 	
 	List<Brand> findByBrandIdAndIsDeleted(long brandId, int isDeleted);
+
+	List<Brand> findByIsDeletedOrderByBrandAsc(int isDeleted);
 }

@@ -201,7 +201,7 @@ class Upload extends Component {
                       aria-controls="usedCar"
                       aria-selected="false"
                     >
-                      Others
+                      Parts
                     </a>
                   </li>
                 </ul>

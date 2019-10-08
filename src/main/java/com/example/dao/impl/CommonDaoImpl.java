@@ -185,7 +185,7 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("countryList", countryList);
 			
 			//Car Brand list
-			List<Brand> Brands= brandRepository.findByIsDeletedOrderByBrandAsc(0);
+			List<Brand> Brands= brandRepository.findByVehicleTypeIdAndIsDeletedOrderByBrandAsc(vehicleTypeId, 0);
 			List<Object> BrandList = new LinkedList<>();
 			for(Brand Brand : Brands) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
