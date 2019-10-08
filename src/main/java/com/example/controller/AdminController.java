@@ -22,24 +22,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.CarBrand;
-import com.example.entity.CarFuelType;
-import com.example.entity.CarSteering;
-import com.example.entity.CarTransmission;
+import com.example.entity.Brand;
 import com.example.entity.Country;
 import com.example.entity.Deals;
-import com.example.entity.MemberShip;
+import com.example.entity.FuelType;
+import com.example.entity.MemberShips;
+import com.example.entity.SteeringType;
+import com.example.entity.TransmissionType;
 import com.example.entity.User;
 import com.example.entity.VehicleType;
-import com.example.repository.CarBrandRepository;
-import com.example.repository.CarFuelTypeRepository;
-import com.example.repository.CarModelDetailRepository;
-import com.example.repository.CarModelRepository;
-import com.example.repository.CarSteeringRepository;
-import com.example.repository.CarTransmissionRepository;
+import com.example.repository.BrandRepository;
 import com.example.repository.CountryRepository;
 import com.example.repository.DealsRepository;
+import com.example.repository.FuelTypeRepository;
 import com.example.repository.MemberShipRepository;
+import com.example.repository.ModelDetailRepository;
+import com.example.repository.ModelRepository;
+import com.example.repository.SteeringTypeRepository;
+import com.example.repository.TransmissionTypeRepository;
 import com.example.repository.UserRepository;
 import com.example.repository.VehicleTypeRepository;
 import com.example.util.CommonUtil;
@@ -68,22 +68,22 @@ public class AdminController {
 	MemberShipRepository memberShipRepository;
 	
 	@Autowired
-	CarBrandRepository carBrandRepository;
+	BrandRepository brandRepository;
 	
 	@Autowired
-	CarModelRepository carModelRepository;
+	ModelRepository modelRepository;
 	
 	@Autowired
-	CarModelDetailRepository carModelDetailRepository;
+	ModelDetailRepository modelDetailRepository;
 	
 	@Autowired
-	CarFuelTypeRepository carFuelTypeRepository;
+	FuelTypeRepository fuelTypeRepository;
 	
 	@Autowired
-	CarSteeringRepository carSteeringRepository;
+	SteeringTypeRepository steeringTypeRepository;
 	
 	@Autowired
-	CarTransmissionRepository carTransmissionRepository;
+	TransmissionTypeRepository transmissionTypeRepository;
 	
 	@Autowired
 	DealsRepository dealsRepository;
@@ -147,10 +147,10 @@ public class AdminController {
 				    }
 				}
 				//Add MemberShip
-				List<MemberShip> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
+				List<MemberShips> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
 				if(memberShips.isEmpty())
 				{
-					memberShips = new LinkedList<MemberShip>();
+					memberShips = new LinkedList<MemberShips>();
 					try
 				    {
 				    	File file = ResourceUtils.getFile("classpath:master_data/common/membership.txt");
@@ -160,7 +160,7 @@ public class AdminController {
 							String st;
 							while ((st = br.readLine()) != null)
 							{
-								MemberShip memberShip = new MemberShip();
+								MemberShips memberShip = new MemberShips();
 								memberShip.setMembershipType(st.trim());
 								memberShip.setIsDeleted(0);
 								memberShips.add(memberShip);
@@ -230,56 +230,25 @@ public class AdminController {
 				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in deals", null);
 				    }
 				}
-			} 
-			else if(masterDataField.equalsIgnoreCase("car")) 
-			{
-				// Add Car Brand
-				List<CarBrand> carBrandList = carBrandRepository.findByIsDeletedOrderByCarBrandAsc(0);
-				if(carBrandList.isEmpty())
-				{
-					carBrandList = new LinkedList<CarBrand>();
-					try
-				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/car/carbrand.txt");
-				    	if(file.exists()) 
-				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
-							String st;
-							while ((st = br.readLine()) != null)
-							{
-								CarBrand carBrand = new CarBrand();
-								carBrand.setCarBrand(st.trim());
-								carBrand.setIsDeleted(0);
-								carBrandList.add(carBrand);
-							}
-							carBrandRepository.save(carBrandList);
-							br.close();
-				    	}
-				    } catch (Exception e) {
-				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
-				        e.printStackTrace();
-				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in CarBrand", null);
-				    }
-				}
-				// Add Car Fuel type
-				List<CarFuelType> carFuelTypes = carFuelTypeRepository.findByIsDeletedOrderByCarFuelTypeAsc(0);
+				// Add Fuel type
+				List<FuelType> carFuelTypes = fuelTypeRepository.findByIsDeletedOrderByFuelTypeAsc(0);
 				if(carFuelTypes.isEmpty())
 				{
-					carFuelTypes = new LinkedList<CarFuelType>();
+					carFuelTypes = new LinkedList<FuelType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/car/carfueltype.txt");
+				    	File file = ResourceUtils.getFile("classpath:master_data/common/fueltype.txt");
 				    	if(file.exists()) 
 				    	{
 				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
-								CarFuelType carFuelType = new CarFuelType();
-								carFuelType.setCarFuelType(st.trim());
+								FuelType carFuelType = new FuelType();
+								carFuelType.setFuelType(st.trim());
 								carFuelTypes.add(carFuelType);
 							}
-							carFuelTypeRepository.save(carFuelTypes);
+							fuelTypeRepository.save(carFuelTypes);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -288,25 +257,25 @@ public class AdminController {
 				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in carFuelType", null);
 				    }
 				}
-				// Add Car Steering type
-				List<CarSteering> carSteerings = carSteeringRepository.findByIsDeletedOrderByCarSteeringTypeAsc(0);
+				// Add Steering type
+				List<SteeringType> carSteerings = steeringTypeRepository.findByIsDeletedOrderBySteeringTypeAsc(0);
 				if(carSteerings.isEmpty())
 				{
-					carSteerings = new LinkedList<CarSteering>();
+					carSteerings = new LinkedList<SteeringType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/car/carsteering.txt");
+				    	File file = ResourceUtils.getFile("classpath:master_data/common/steering.txt");
 				    	if(file.exists()) 
 				    	{
 				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
-								CarSteering carSteering = new CarSteering();
-								carSteering.setCarSteeringType(st.trim());
+								SteeringType carSteering = new SteeringType();
+								carSteering.setSteeringType(st.trim());
 								carSteerings.add(carSteering);
 							}
-							carSteeringRepository.save(carSteerings);
+							steeringTypeRepository.save(carSteerings);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -316,30 +285,62 @@ public class AdminController {
 				    }
 				}
 				// Add Car transmission
-				List<CarTransmission> carTransmissions = carTransmissionRepository.findByIsDeletedOrderByCarTransmissionTypeAsc(0);
+				List<TransmissionType> carTransmissions = transmissionTypeRepository.findByIsDeletedOrderByTransmissionTypeAsc(0);
 				if(carTransmissions.isEmpty())
 				{
-					carTransmissions = new LinkedList<CarTransmission>();
+					carTransmissions = new LinkedList<TransmissionType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/car/cartransmission.txt");
+				    	File file = ResourceUtils.getFile("classpath:master_data/common/transmission.txt");
 				    	if(file.exists()) 
 				    	{
 				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
-								CarTransmission carTransmission = new CarTransmission();
-								carTransmission.setCarTransmissionType(st.trim());
+								TransmissionType carTransmission = new TransmissionType();
+								carTransmission.setTransmissionType(st.trim());
 								carTransmissions.add(carTransmission);
 							}
-							carTransmissionRepository.save(carTransmissions);
+							transmissionTypeRepository.save(carTransmissions);
 							br.close();
 				    	}
 				    } catch (Exception e) {
 				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
 				        e.printStackTrace();
 				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in cartransmission", null);
+				    }
+				}
+			} 
+			else if(masterDataField.equalsIgnoreCase("car")) 
+			{
+				// Add Brand
+				List<Brand> carBrandList = brandRepository.findByIsDeletedOrderByBrandAsc(0);
+				if(carBrandList.isEmpty())
+				{
+					carBrandList = new LinkedList<Brand>();
+					try
+				    {
+				    	File file = ResourceUtils.getFile("classpath:master_data/carbrand.txt");
+				    	if(file.exists()) 
+				    	{
+				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+							String st;
+							while ((st = br.readLine()) != null)
+							{
+								Brand carBrand = new Brand();
+								carBrand.setBrand(st.trim());
+								carBrand.setVehicleTypeId(1);
+								carBrand.setIsDeleted(0);
+								carBrandList.add(carBrand);
+							}
+							brandRepository.save(carBrandList);
+							br.close();
+				    	}
+				    } catch (Exception e) {
+				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
+				        e.printStackTrace();
+				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in CarBrand", null);
 				    }
 				}
 			}

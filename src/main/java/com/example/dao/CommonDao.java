@@ -15,9 +15,9 @@ public interface CommonDao {
 	
 	Map<?, ?> getAllVehicleDetails(long vehicleTypeId) throws Exception;
 	
-	Map<?, ?> getCarModels(long brandId)throws Exception;
+	Map<?, ?> getModels(long brandId)throws Exception;
 
-	Map<?, ?> getCarModeldetails(long modelId) throws Exception;
+	Map<?, ?> getModeldetails(long modelId) throws Exception;
 
 	Map<?, ?> getDashboardDetails(String userAgent) throws Exception;
 	

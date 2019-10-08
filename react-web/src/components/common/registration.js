@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import store from "store";
 import { AppWrapper } from "../public/AppWrapper";
 import { logInUser, userRegistration } from "../../actions/userAction";
-import { getMasterData } from "../../actions/searchAction";
+import { getVehicleMasterData } from "../../actions/searchAction";
 import { showNotification } from "../../actions/NotificationAction";
 import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
@@ -46,11 +46,11 @@ class registration extends Component {
 
   componentDidMount() {
     document.title = "Auto Harasow | Registration";
-    this.getMasterData()
+    this.getVehicleMasterData()
   }
 
-  getMasterData = () => {
-    this.props.getMasterData({}, response => {
+  getVehicleMasterData = () => {
+    this.props.getVehicleMasterData({}, response => {
       if (response && response.response_code === 0) {
         this.setState({ countryList: response.response.countryList })
       }
@@ -703,8 +703,8 @@ const mapDispatchToProps = dispatch => {
     registration: (inputObject, callback) => {
       dispatch(userRegistration(inputObject, callback));
     },
-    getMasterData: (params, callback) => {
-      dispatch(getMasterData(params, callback));
+    getVehicleMasterData: (params, callback) => {
+      dispatch(getVehicleMasterData(params, callback));
     },
     showNotification: (message, type) => {
       dispatch(showNotification(message, type));

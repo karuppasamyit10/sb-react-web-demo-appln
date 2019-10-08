@@ -37,9 +37,9 @@ export function getDashboardDetails(params, callback) {
 }
 
 
-export function getCarModelList(params, callback) {
+export function getVehicleModelList(params, callback) {
   return function (dispatch) {
-    Client.get(URL.GET_CAR_MODEL, params, true)
+    Client.get(URL.GET_VEHICLE_MODEL, params, true)
       .then(response => {
         console.log(response);
         myLog("====get car model response===::::", response);
@@ -81,9 +81,9 @@ export function getVehicleDetails(params, callback) {
   };
 }
 
-export function getMasterData(params, callback) {
+export function getVehicleMasterData(params, callback) {
   return function (dispatch) {
-    Client.get(URL.GET_CAR_LIST, params, true)
+    Client.get(URL.GET_VEHICLE_ALL_DETAILS, params, true)
       .then(response => {
         console.log(response);
         myLog("====car master response===::::", response);

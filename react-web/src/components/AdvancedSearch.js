@@ -14,8 +14,8 @@ import Background3 from "../assets/img/search/kia2.jpg";
 import { PATH } from "../utils/Constants";
 import {
   getSearchResult,
-  getMasterData,
-  getCarModelList,
+  getVehicleMasterData,
+  getVehicleModelList,
   getVehicleSearchList,
   getVehicleDetails
 } from "../actions/searchAction";
@@ -118,7 +118,7 @@ class AdvancedSearch extends Component {
     this.props.getSearchResult(params, response => {
       console.log(response);
     });
-    this.props.getMasterData(
+    this.props.getVehicleMasterData(
       { vehicleTypeId : this.state.vehicleType },
       response => {
         console.log(response);
@@ -135,7 +135,7 @@ class AdvancedSearch extends Component {
       }
     );
     if (this.state.brandId) {
-      this.getCarModelList(this.state.brandId);
+      this.getVehicleModelList(this.state.brandId);
       this.getVehicleSearchList();
     }
   }
@@ -155,14 +155,14 @@ class AdvancedSearch extends Component {
   };
 
   setCarBrand = () => {
-    let { carBrandList } = this.state.master;
+    let { brandList } = this.state.master;
     let carBrandOptions = [];
-    if (carBrandList && carBrandList.length) {
-      carBrandList.forEach(car => {
+    if (brandList && brandList.length) {
+      brandList.forEach(car => {
         carBrandOptions.push({
-          value: car.carBrand,
-          label: car.carBrand,
-          id: car.carBrandId
+          value: car.brandName,
+          label: car.brandName,
+          id: car.brandId
         });
       });
       this.setState({ carBrandOptions: carBrandOptions });
@@ -268,20 +268,20 @@ class AdvancedSearch extends Component {
   //   }
   //   this.setState({ selectedBrandOptions: selectedOption, brands: result });
   //   if (result && result.length) {
-  //     this.getCarModelList(selectedOption[0].id);
+  //     this.getVehicleModelList(selectedOption[0].id);
   //   }
   //   console.log(`Option selected:`, selectedOption);
   // };
 
   handleChangeBrand = e => {
     this.setState({ brands: e.target.value });
-    let { carBrandList } = this.state.master;
+    let { brandList } = this.state.master;
 
-    let found = carBrandList.find(car => {
-      return car.carBrand === e.target.value;
+    let found = brandList.find(car => {
+      return car.brandName === e.target.value;
     });
     if (found) {
-      this.getCarModelList(found.carBrandId);
+      this.getVehicleModelList(found.brandId);
     }
   };
 
@@ -341,7 +341,7 @@ class AdvancedSearch extends Component {
     console.log(object);
     const { brandId, brandName } = object;
     this.setState({ brandId: brandId, brandName: brandName }, () => {
-      this.getCarModelList(this.state.brandId);
+      this.getVehicleModelList(this.state.brandId);
     });
   };
 
@@ -352,8 +352,8 @@ class AdvancedSearch extends Component {
     this.setState({ modelId: modelId, modelName: modelName }, () => {});
   };
 
-  getCarModelList = brandId => {
-    this.props.getCarModelList({ brandId: brandId }, response => {
+  getVehicleModelList = brandId => {
+    this.props.getVehicleModelList({ brandId: brandId }, response => {
       if (response.response_code === 0) {
         this.setState({ modelList: response.response.modelList }, () => {
           this.setCarModel();
@@ -426,7 +426,7 @@ class AdvancedSearch extends Component {
   render() {
     let {
       countryList,
-      carBrandList,
+      brandList,
       carTransmissionList,
       carSteeringList,
       carFuelTypeList,
@@ -537,14 +537,14 @@ class AdvancedSearch extends Component {
                             value={this.state.brands}
                           >
                             <option>All Brands</option>
-                            {carBrandList &&
-                              carBrandList.map(brand => {
+                            {brandList &&
+                              brandList.map(brand => {
                                 return (
                                   <option
-                                    id={brand.carBrandId}
-                                    value={brand.carBrand}
+                                    id={brand.brandId}
+                                    value={brand.brandName}
                                   >
-                                    {brand.carBrand}
+                                    {brand.brandName}
                                   </option>
                                 );
                               })}
@@ -2041,14 +2041,14 @@ const mapDispatchToProps = dispatch => {
     getSearchResult: (params, callback) => {
       dispatch(getSearchResult(params, callback));
     },
-    getMasterData: (params, callback) => {
-      dispatch(getMasterData(params, callback));
+    getVehicleMasterData: (params, callback) => {
+      dispatch(getVehicleMasterData(params, callback));
     },
     showNotification: (message, type) => {
       dispatch(showNotification(message, type));
     },
-    getCarModelList: (params, callback) => {
-      dispatch(getCarModelList(params, callback));
+    getVehicleModelList: (params, callback) => {
+      dispatch(getVehicleModelList(params, callback));
     },
     getVehicleSearchList: (params, callback) => {
       dispatch(getVehicleSearchList(params, callback));

@@ -95,7 +95,7 @@ public class CommonController {
 	//Get Car Master_data
 	@RequestMapping(method = RequestMethod.GET, value = "/vehicle/all_details", produces = "application/json")
 	@ResponseBody
-	public Map<?, ?> getAllVehicleDetails(long vehicleTypeId) throws Exception {
+	public Map<?, ?> getAllVehicleDetails(@RequestParam(required=false, defaultValue="1") long vehicleTypeId) throws Exception {
 		logger.info("Controller==>Enter==>getAllVehicleDetails<==");
 		String methodName = "GET ALL VEHICLE DETAILS";
 		try { 
@@ -108,13 +108,13 @@ public class CommonController {
 	}
 	
 	//Get Car model by brandId
-	@RequestMapping(method = RequestMethod.GET, value = "/car/models", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "/vehicle/models", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> getCarModels(long brandId) throws Exception {
 		logger.info("Controller==>Enter==>getCarModels<==");
 		String methodName = "GET CAR MODELS";
 		try { 
-			return commonDao.getCarModels(brandId);
+			return commonDao.getModels(brandId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>getCarModels<==");
@@ -123,13 +123,13 @@ public class CommonController {
 	}
 	
 	//Get Car model by brandId
-	@RequestMapping(method = RequestMethod.GET, value = "/car/model_details", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "/vehicle/model_details", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> getCarModeldetails(long modelId) throws Exception {
 		logger.info("Controller==>Enter==>getCarModeldetails<==");
 		String methodName = "GET CAR MODEL DETAILS";
 		try { 
-			return commonDao.getCarModeldetails(modelId);
+			return commonDao.getModeldetails(modelId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>getCarModeldetails<==");
@@ -138,7 +138,7 @@ public class CommonController {
 	}
 	
 	//Get vehicle list 
-	@RequestMapping(method = RequestMethod.POST, value = "/vehicleList", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/vehicle/list", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent, 
 			 HttpServletRequest request) throws Exception {
@@ -162,7 +162,7 @@ public class CommonController {
 	}
 	
 	//Get vehicle details
-	@RequestMapping(method = RequestMethod.GET, value = "/vehicleDetails", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "/vehicle/details", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> getVehicleDetails(long vehicleId, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent) throws Exception {
 		logger.info("Controller==>Enter==>getVehicleDetails<==");

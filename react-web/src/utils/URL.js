@@ -1,7 +1,7 @@
 let BASE_URL = '';
 let isDevelopment = true
 if (window.location.hostname === 'localhost' && window.location.port===3000) {
-  BASE_URL = 'http://35.160.123.119:8181/'
+  BASE_URL = 'http://localhost:8181/'
   isDevelopment = true
 }  else if (window.location.hostname === '35.160.123.119' && window.location.port===8181) {
   BASE_URL = 'http://35.160.123.119:8181/'
@@ -12,7 +12,7 @@ if (window.location.hostname === 'localhost' && window.location.port===3000) {
 }
 
 module.exports = {
-  BASE_URL: BASE_URL,
+  BASE_URL: 'http://localhost:8181/',
   isDevelopment: isDevelopment,
   OATHU: 'oauth/token',
   FORGET : 'forgetPassword',
@@ -23,11 +23,11 @@ module.exports = {
   UPDATEPASSWORD: 'updatePassword',
   PROFILE : 'api/user/profile',
   ADVANCED_SEARCH : 'api/advanced_search',
-  CAR_MASTER_DATA : 'api/public/car/master_data',
+  CAR_MASTER_DATA : 'api/public/vehicle/master_data',
   GET_DASHBOARD_DATA : 'api/public/dashboard',
-  GET_CAR_LIST : 'api/public/vehicle/all_details',
-  GET_CAR_MODEL : 'api/public/car/models',
-  GET_CAR_MODEL_DETAILS : 'api/public/car/model_details',
-  GET_VEHICLE_SEARCH_LIST : 'api/public/vehicleList',
-  GET_VEHICLE_DETAILS : 'api/public/vehicleDetails',
+  GET_VEHICLE_ALL_DETAILS : 'api/public/vehicle/all_details',
+  GET_VEHICLE_MODEL : 'api/public/vehicle/models',
+  GET_VEHICLE_MODEL_DETAILS : 'api/public/vehicle/model_details',
+  GET_VEHICLE_SEARCH_LIST : 'api/public/vehicle/list',
+  GET_VEHICLE_DETAILS : 'api/public/vehicle/details',
 }; 

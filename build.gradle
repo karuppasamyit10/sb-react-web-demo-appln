@@ -92,12 +92,13 @@ jar {
     version =  ''
 }
 
-
+/*
 apply plugin: 'war'
 war {
     baseName = 'sb-demo-appln'
     version =  ''
 }
+*/
 
 
 sourceSets {

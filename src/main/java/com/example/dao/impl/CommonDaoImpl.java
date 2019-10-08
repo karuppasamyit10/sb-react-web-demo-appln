@@ -33,26 +33,26 @@ import org.springframework.stereotype.Component;
 import com.example.bean.UserRegistrationBean;
 import com.example.bean.VehicleSearchBean;
 import com.example.dao.CommonDao;
-import com.example.entity.CarBrand;
-import com.example.entity.CarFuelType;
-import com.example.entity.CarModel;
-import com.example.entity.CarModelDetail;
-import com.example.entity.CarSteering;
-import com.example.entity.CarTransmission;
+import com.example.entity.Brand;
+import com.example.entity.FuelType;
+import com.example.entity.Model;
+import com.example.entity.ModelDetail;
+import com.example.entity.SteeringType;
+import com.example.entity.TransmissionType;
 import com.example.entity.Country;
 import com.example.entity.Deals;
-import com.example.entity.MemberShip;
+import com.example.entity.MemberShips;
 import com.example.entity.Mileage;
 import com.example.entity.Price;
 import com.example.entity.User;
 import com.example.entity.VehicleDetail;
 import com.example.entity.Year;
-import com.example.repository.CarBrandRepository;
-import com.example.repository.CarFuelTypeRepository;
-import com.example.repository.CarModelDetailRepository;
-import com.example.repository.CarModelRepository;
-import com.example.repository.CarSteeringRepository;
-import com.example.repository.CarTransmissionRepository;
+import com.example.repository.BrandRepository;
+import com.example.repository.FuelTypeRepository;
+import com.example.repository.ModelDetailRepository;
+import com.example.repository.ModelRepository;
+import com.example.repository.SteeringTypeRepository;
+import com.example.repository.TransmissionTypeRepository;
 import com.example.repository.CountryRepository;
 import com.example.repository.DealsRepository;
 import com.example.repository.MemberShipRepository;
@@ -60,6 +60,7 @@ import com.example.repository.MileageRepository;
 import com.example.repository.PriceRepository;
 import com.example.repository.UserRepository;
 import com.example.repository.VehicleDetailRepository;
+import com.example.repository.VehiclePhotosRepository;
 import com.example.repository.YearRepository;
 import com.example.util.CommonUtil;
 
@@ -83,25 +84,28 @@ public class CommonDaoImpl implements CommonDao {
 	MemberShipRepository memberShipRepository;
 	
 	@Autowired
-	CarBrandRepository carBrandRepository;
+	BrandRepository brandRepository;
 	
 	@Autowired
-	CarModelRepository carModelRepository;
+	ModelRepository modelRepository;
 	
 	@Autowired
-	CarModelDetailRepository carModelDetailRepository;
+	ModelDetailRepository modelDetailRepository;
 	
 	@Autowired
-	CarFuelTypeRepository carFuelTypeRepository;
+	FuelTypeRepository fuelTypeRepository;
 	
 	@Autowired
-	CarSteeringRepository carSteeringRepository;
+	SteeringTypeRepository steeringTypeRepository;
 	
 	@Autowired
-	CarTransmissionRepository carTransmissionRepository;
+	TransmissionTypeRepository transmissionTypeRepository;
 	
 	@Autowired
 	VehicleDetailRepository vehicleDetailRepository;
+	
+	@Autowired
+	VehiclePhotosRepository vehiclePhotosRepository;
 	
 	@Autowired
 	DealsRepository dealsRepository;
@@ -181,53 +185,53 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("countryList", countryList);
 			
 			//Car Brand list
-			List<CarBrand> carBrands= carBrandRepository.findByIsDeletedOrderByCarBrandAsc(0);
-			List<Object> carBrandList = new LinkedList<>();
-			for(CarBrand carBrand : carBrands) {
+			List<Brand> Brands= brandRepository.findByIsDeletedOrderByBrandAsc(0);
+			List<Object> BrandList = new LinkedList<>();
+			for(Brand Brand : Brands) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("brandId", carBrand.getCarBrandId());
-				params.put("brand", carBrand.getCarBrand());
-				carBrandList.add(params);
+				params.put("brandId", Brand.getBrandId());
+				params.put("brandName", Brand.getBrand());
+				BrandList.add(params);
 			}			
-			rootParams.put("brandList", carBrandList);
+			rootParams.put("brandList", BrandList);
 			
-			//Car Steering list
-			List<CarSteering> carSteerings= carSteeringRepository.findByIsDeletedOrderByCarSteeringTypeAsc(0);
-			List<Object> carSteeringList = new LinkedList<>();
-			for(CarSteering carSteering : carSteerings) {
+			// Steering list
+			List<SteeringType> Steerings= steeringTypeRepository.findByIsDeletedOrderBySteeringTypeAsc(0);
+			List<Object> SteeringList = new LinkedList<>();
+			for(SteeringType Steering : Steerings) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("steeringId", carSteering.getCarSteeringId());
-				params.put("steeringType", carSteering.getCarSteeringType());
-				carSteeringList.add(params);
+				params.put("steeringId", Steering.getSteeringId());
+				params.put("steeringType", Steering.getSteeringType());
+				SteeringList.add(params);
 			}			
-			rootParams.put("steeringList", carSteeringList);
+			rootParams.put("steeringTypeList", SteeringList);
 			
-			//Car FuelType list
-			List<CarFuelType> carFuelTypes= carFuelTypeRepository.findByIsDeletedOrderByCarFuelTypeAsc(0);
-			List<Object> carFuelTypeList = new LinkedList<>();
-			for(CarFuelType carFuelType : carFuelTypes) {
+			// FuelType list
+			List<FuelType> FuelTypes= fuelTypeRepository.findByIsDeletedOrderByFuelTypeAsc(0);
+			List<Object> FuelTypeList = new LinkedList<>();
+			for(FuelType FuelType : FuelTypes) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("fuelTypeId", carFuelType.getCarFuelTypeId());
-				params.put("fuelType", carFuelType.getCarFuelType());
-				carFuelTypeList.add(params);
+				params.put("fuelTypeId", FuelType.getFuelTypeId());
+				params.put("fuelType", FuelType.getFuelType());
+				FuelTypeList.add(params);
 			}			
-			rootParams.put("fuelTypeList", carFuelTypeList);
+			rootParams.put("fuelTypeList", FuelTypeList);
 			
-			//Car transmission list
-			List<CarTransmission> carTransmissions= carTransmissionRepository.findByIsDeletedOrderByCarTransmissionTypeAsc(0);
-			List<Object> carTransmissionList = new LinkedList<>();
-			for(CarTransmission carTransmission : carTransmissions) {
+			// transmission list
+			List<TransmissionType> Transmissions= transmissionTypeRepository.findByIsDeletedOrderByTransmissionTypeAsc(0);
+			List<Object> TransmissionList = new LinkedList<>();
+			for(TransmissionType Transmission : Transmissions) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("transmissionId", carTransmission.getCarTransmissionId());
-				params.put("transmissionType", carTransmission.getCarTransmissionType());
-				carTransmissionList.add(params);
+				params.put("transmissionId", Transmission.getTransmissionId());
+				params.put("transmissionType", Transmission.getTransmissionType());
+				TransmissionList.add(params);
 			}
-			rootParams.put("transmissionList", carTransmissionList);	
+			rootParams.put("transmissionTypeList", TransmissionList);	
 			
 			//Membership list
-			List<MemberShip> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
+			List<MemberShips> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
 			List<Object> memberShipList = new LinkedList<>();
-			for(MemberShip memberShip : memberShips) {
+			for(MemberShips memberShip : memberShips) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("membershipId", memberShip.getMembershipId());
 				params.put("membershipType", memberShip.getMembershipType());
@@ -285,49 +289,49 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public Map<?, ?> getCarModels(long brandId) throws Exception {
-		logger.info("::::Enter(daoImpl)==>getCarModels::::");
-		String methodName = "GET CAR MODELS";
+	public Map<?, ?> getModels(long brandId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getModels::::");
+		String methodName = "GET  MODELS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		
 		try {
-			//CarModel list
-			List<CarModel> models = carModelRepository.findByCarBrandIdAndIsDeleted(brandId, 0);
+			//Model list
+			List<Model> models = modelRepository.findByBrandIdAndIsDeleted(brandId, 0);
 			List<Object> modelsList = new LinkedList<>();
-			for(CarModel carModel : models) {
+			for(Model Model : models) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("modelId", carModel.getCarModelId());
-				params.put("model", carModel.getCarModel());
+				params.put("modelId", Model.getModelId());
+				params.put("model", Model.getModel());
 				modelsList.add(params);
 			}			
 			rootParams.put("modelList", modelsList);
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
-			logger.error("::::Exception(daoImpl)==>getCarModels::::");
+			logger.error("::::Exception(daoImpl)==>getModels::::");
 			e.printStackTrace();
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
 		}
 	}
 
 	@Override
-	public Map<?, ?> getCarModeldetails(long modelId) throws Exception {
-		logger.info("::::Enter(daoImpl)==>getCarModeldetails::::");
-		String methodName = "GET CAR MODEL DETAILS";
+	public Map<?, ?> getModeldetails(long modelId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getModeldetails::::");
+		String methodName = "GET  MODEL DETAILS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		try {
-			//CarModelDetail list
-			List<CarModelDetail> modelDetails = carModelDetailRepository.findByCarModelDetailIdAndIsDeleted(modelId, 0);
+			//ModelDetail list
+			List<ModelDetail> modelDetails = modelDetailRepository.findByModelDetailIdAndIsDeleted(modelId, 0);
 			List<Object> modelDetailList = new LinkedList<>();
-			for(CarModelDetail carModelDetail : modelDetails) {
+			for(ModelDetail ModelDetail : modelDetails) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("modelId", carModelDetail.getCarModelDetailId());
-				params.put("model", carModelDetail.getCarModelDetail());
+				params.put("modelId", ModelDetail.getModelDetailId());
+				params.put("model", ModelDetail.getModelDetail());
 				modelDetailList.add(params);
 			}			
 			rootParams.put("modelDetailList", modelDetailList);
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
-			logger.error("::::Exception(daoImpl)==>getCarModeldetails::::");
+			logger.error("::::Exception(daoImpl)==>getModeldetails::::");
 			e.printStackTrace();
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
 		}
@@ -345,16 +349,16 @@ public class CommonDaoImpl implements CommonDao {
 			List<Object> ourLastSearchList = new LinkedList<>();
 			List<Object> savedRecentSearchList = new LinkedList<>();
 			List<Object> relatedSearchList = new LinkedList<>();
-			List<Object> popularNewCarsList = new LinkedList<>();
+			List<Object> popularNewsList = new LinkedList<>();
 			List<Object> popularSedansList = new LinkedList<>();
 			rootParams.put("ourLastSearchList", ourLastSearchList);
 			rootParams.put("savedRecentSearchList", savedRecentSearchList);
 			rootParams.put("relatedSearchList", relatedSearchList);
-			rootParams.put("popularNewCarsList", popularNewCarsList);
+			rootParams.put("popularNewsList", popularNewsList);
 			rootParams.put("popularSedansList", popularSedansList);
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
-			logger.error("::::Exception(daoImpl)==>getCarModeldetails::::");
+			logger.error("::::Exception(daoImpl)==>getModeldetails::::");
 			e.printStackTrace();
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
 		}
@@ -601,15 +605,15 @@ public class CommonDaoImpl implements CommonDao {
 //	 * @see com.example.dao.CommonDao#getAllCountries()
 //	 */
 //	@Override
-//	public Map<?, ?> getCarBrands(long carBrandId) throws Exception {
+//	public Map<?, ?> getBrands(long BrandId) throws Exception {
 //		logger.info("::::Enter(daoImpl)==>getCountries::::");
 //		String methodName = "GET COUNTRIES";
 //		Set<Object> countriesList = new HashSet<>();
 //		Set<Country> countries= null;
 //		try {
-//			if(carBrandId>0){
+//			if(BrandId>0){
 //				//Get countries by countryId
-//				countries= countryRepository.findByCountryIdAndIsDeleted(carBrandId, 0);
+//				countries= countryRepository.findByCountryIdAndIsDeleted(BrandId, 0);
 //			} else {
 //				//Get All countries
 //				countries= countryRepository.findByIsDeletedOrderByCountryNameAsc(0);

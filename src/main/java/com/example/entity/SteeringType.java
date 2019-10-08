@@ -12,46 +12,46 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="car_fuel_type")
-public class CarFuelType {
+@Table(name="steering_type")
+public class SteeringType {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="carFuelTypeId")
-	private long carFuelTypeId;
+	@Column(name="steeringId")
+	private long steeringId;
 	
-	@Column(name="carFuelType", nullable=false)
-	private String carFuelType;
+	@Column(name="steeringType", nullable=false)
+	private String steeringType;
 	
 	@Column(name="isDeleted")
 	private int isDeleted;
 
 	/**
-	 * @return the carFuelTypeId
+	 * @return the steeringId
 	 */
-	public long getCarFuelTypeId() {
-		return carFuelTypeId;
+	public long getSteeringId() {
+		return steeringId;
 	}
 
 	/**
-	 * @param carFuelTypeId the carFuelTypeId to set
+	 * @param steeringId the steeringId to set
 	 */
-	public void setCarFuelTypeId(long carFuelTypeId) {
-		this.carFuelTypeId = carFuelTypeId;
+	public void setSteeringId(long steeringId) {
+		this.steeringId = steeringId;
 	}
 
 	/**
-	 * @return the carFuelType
+	 * @return the steeringType
 	 */
-	public String getCarFuelType() {
-		return carFuelType;
+	public String getSteeringType() {
+		return steeringType;
 	}
 
 	/**
-	 * @param carFuelType the carFuelType to set
+	 * @param steeringType the steeringType to set
 	 */
-	public void setCarFuelType(String carFuelType) {
-		this.carFuelType = carFuelType;
+	public void setSteeringType(String steeringType) {
+		this.steeringType = steeringType;
 	}
 
 	/**

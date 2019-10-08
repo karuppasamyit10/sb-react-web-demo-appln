@@ -15,7 +15,7 @@ import { PATH } from '../utils/Constants';
 import Background1 from "../assets/img/home/ssangyong_img.jpeg";
 import Background2 from "../assets/img/home/hyundai_img.jpeg";
 import Background3 from "../assets/img/home/kia_img.jpeg";
-import { getDashboardDetails, getMasterData, getCarModelList } from '../actions/searchAction'
+import { getDashboardDetails, getVehicleMasterData, getVehicleModelList } from '../actions/searchAction'
 import { showNotification } from '../actions/NotificationAction'
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
@@ -35,7 +35,7 @@ class Upload extends Component {
       modelList: [],
       brandObject: {},
       modelObject: {},
-      vehicleType : 1
+      vehicleTypeId : 1
     };
   }
 
@@ -48,7 +48,7 @@ class Upload extends Component {
     let cookieData = Cookies.get();
     console.log(cookieData);
     this.getDashboardDetails();
-    this.getMasterData();
+    this.getVehicleMasterData();
   }
 
   getDashboardDetails = () => {
@@ -60,8 +60,21 @@ class Upload extends Component {
     })
   }
 
+  getVehicleMasterDataByVehicleTypeId= (vehicleTypeId) => {
+    this.getVehicleMasterData(vehicleTypeId);
+    this.setState({ vehicleTypeId : vehicleTypeId});
+  }
+
   onChangeCountry = (event) =>{
     this.setState({ country : event.target.value});
+  }
+
+  onChangeFromPrice = (event) =>{
+    this.setState({ fromPrice : event.target.value});
+  }
+
+  onChangeToPrice = (event) =>{
+    this.setState({ toPrice : event.target.value});
   }
 
   onChangeBrand = (event) => {
@@ -69,7 +82,7 @@ class Upload extends Component {
     console.log(object)
     const { brandId, brandName } = object
     this.setState({ brandId: brandId, brandName: brandName, brandObject: object }, () => {
-      this.getCarModelList(this.state.brandId);
+      this.getVehicleModelList(this.state.brandId);
     })
   }
 
@@ -83,16 +96,16 @@ class Upload extends Component {
     })
   }
 
-  getMasterData = () => {
-    this.props.getMasterData({}, (response) => {
+  getVehicleMasterData = (vehicleTypeId) => {
+    this.props.getVehicleMasterData({vehicleTypeId}, (response) => {
       if (response.response_code === 0) {
         this.setState({ masterData: response.response })
       }
     })
   }
 
-  getCarModelList = (brandId) => {
-    this.props.getCarModelList({ brandId: brandId }, response => {
+  getVehicleModelList = (brandId) => {
+    this.props.getVehicleModelList({ brandId: brandId }, response => {
       if (response.response_code === 0) {
         this.setState({ modelList: response.response.modelList })
       }
@@ -100,17 +113,17 @@ class Upload extends Component {
   }
 
   handleSearch = () => {
-    const { brandName , modelName , country , brandId , modelId , vehicleType} = this.state;
+    const { brandName , modelName , country , brandId , modelId , vehicleTypeId} = this.state;
     this.props.history.push({
       pathname: PATH.ADVANCED_SEARCH,
       state: { brandName :  brandName , brandId : brandId , modelId : modelId ,
-         modelName : modelName , country : country , vehicleType : vehicleType}
+         modelName : modelName , country : country , vehicleTypeId : vehicleTypeId}
     })
   }
 
   render() {
     let { ourLastSearchList, popularNewCarsList, popularSedansList, relatedSearchList, savedRecentSearchList } = this.state.dashboardDetails
-    let { carBrandList, carFuelTypeList, carSteeringList, carTransmissionList, countryList } = this.state.masterData;
+    let { brandList, countryList, priceList } = this.state.masterData;
     console.log(this.state.modelList)
     return (
       <React.Fragment>
@@ -126,7 +139,7 @@ class Upload extends Component {
                   <sup class="sup">TM</sup>
                 </div>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 1})}}>
+                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(1)}}>
                     <a
                       class="nav-link active"
                       id="usedCar-tab"
@@ -139,53 +152,53 @@ class Upload extends Component {
                       Car
                     </a>
                   </li>
-                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 2})}}>
+                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(2)}}>
                     <a
                       class="nav-link"
-                      id="truck-tab"
+                      id="usedCar-tab"
                       data-toggle="tab"
-                      href="#truck"
+                      href="#usedCar"
                       role="tab"
-                      aria-controls="truck"
+                      aria-controls="usedCar"
                       aria-selected="false"
                     >
                       Truck
                     </a>
                   </li>
-                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 3})}}>
+                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(3)}}>
                     <a
                       class="nav-link"
-                      id="bus-tab"
+                      id="usedCar-tab"
                       data-toggle="tab"
-                      href="#bus"
+                      href="#usedCar"
                       role="tab"
-                      aria-controls="bus"
+                      aria-controls="usedCar"
                       aria-selected="false"
                     >
                       Bus
                     </a>
                   </li>
-                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 4})}}>
+                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(4)}}>
                     <a
                       class="nav-link"
-                      id="equipments-tab"
+                      id="usedCar-tab"
                       data-toggle="tab"
-                      href="#equipments"
+                      href="#usedCar"
                       role="tab"
-                      aria-controls="equipments"
+                      aria-controls="usedCar"
                       aria-selected="false"
                     >
                       Equipments
                     </a>
                   </li>
-                  <li class="nav-item" onClick={()=>{this.setState({vehicleType : 5})}}>
+                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(5)}}>
                     <a
                       class="nav-link"
-                      id="equipments-tab"
+                      id="usedCar-tab"
                       data-toggle="tab"
-                      href="#equipments"
+                      href="#usedCar"
                       role="tab"
-                      aria-controls="equipments"
+                      aria-controls="usedCar"
                       aria-selected="false"
                     >
                       Others
@@ -251,12 +264,12 @@ class Upload extends Component {
                                   <option value={null} selected>
                                     All Brands
                             </option>
-                                  {carBrandList && carBrandList.length ?
-                                    carBrandList.map((car) => {
+                                  {brandList && brandList.length ?
+                                    brandList.map((vehicle) => {
                                       return (
-                                        <option id={car.carBrandId}
-                                          value={JSON.stringify({ brandId: car.carBrandId, brandName: car.carBrand })}
-                                        >{car.carBrand}</option>
+                                        <option id={vehicle.brandId}
+                                          value={JSON.stringify({ brandId: vehicle.brandId, brandName: vehicle.brandName })}
+                                        >{vehicle.brandName}</option>
                                       )
                                     }) :
                                     ''}
@@ -327,9 +340,9 @@ class Upload extends Component {
                           <div class="row no-gutters align-items-center">
                             <div class="col-md-3 colgrids">
                               <div class="form-group row align-items-center">
-                                <label class="col-sm-4 col-form-label text-center">
+                                {/* <label class="col-sm-4 col-form-label text-center">
                                   Price
-                                </label>
+                                </label> */}
                                 <div class="col-sm-8">
                                   <div class="selectdd">
                                     <span class="caret">
@@ -338,19 +351,25 @@ class Upload extends Component {
                                         aria-hidden="true"
                                       ></i>
                                     </span>
-                                    <select>
-                                      <option selected>----</option>
-                                      <option>Loading...</option>
-                                    </select>
+                                    <select onChange={(e)=>{this.onChangeFromPrice(e)}}>
+                                      <option selected>From</option>
+                                      {priceList && priceList.length ?
+                                        priceList.map((price) => {
+                                          return (
+                                            <option value={price.price} id={price.price}>{price.price}</option>
+                                          )
+                                        }) :
+                                        <option>Loading...</option>}
+                                      </select>
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-3 colgrids">
                               <div class="form-group row align-items-center">
-                                <label class="col-sm-4 col-form-label text-center">
+                                {/* <label class="col-sm-4 col-form-label text-center">
                                   To
-                                </label>
+                                </label> */}
                                 <div class="col-sm-8">
                                   <div class="selectdd">
                                     <span class="caret">
@@ -359,10 +378,16 @@ class Upload extends Component {
                                         aria-hidden="true"
                                       ></i>
                                     </span>
-                                    <select>
-                                      <option selected>----</option>
-                                      <option>Loading...</option>
-                                    </select>
+                                    <select onChange={(e)=>{this.onChangeToPrice(e)}}>
+                                      <option selected>To</option>
+                                      {priceList && priceList.length ?
+                                        priceList.map((price) => {
+                                          return (
+                                            <option value={price.price} id={price.price}>{price.price}</option>
+                                          )
+                                        }) :
+                                        <option>Loading...</option>}
+                                      </select>
                                   </div>
                                 </div>
                               </div>
@@ -1484,11 +1509,11 @@ const mapDispatchToProps = dispatch => {
     getDashboardDetails: (params, callback) => {
       dispatch(getDashboardDetails(params, callback));
     },
-    getMasterData: (params, callback) => {
-      dispatch(getMasterData(params, callback));
+    getVehicleMasterData: (params, callback) => {
+      dispatch(getVehicleMasterData(params, callback));
     },
-    getCarModelList: (params, callback) => {
-      dispatch(getCarModelList(params, callback));
+    getVehicleModelList: (params, callback) => {
+      dispatch(getVehicleModelList(params, callback));
     },
     showNotification: (message, type) => {
       dispatch(showNotification(message, type));

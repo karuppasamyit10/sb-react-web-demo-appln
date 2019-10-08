@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.entity.MemberShip;
+import com.example.entity.MemberShips;
 
 @Repository
-public interface MemberShipRepository extends JpaRepository<MemberShip, Long> {
+public interface MemberShipRepository extends JpaRepository<MemberShips, Long> {
 
-	List<MemberShip> findByIsDeletedOrderByMembershipTypeAsc(int isDeleted);
+	List<MemberShips> findByIsDeletedOrderByMembershipTypeAsc(int isDeleted);
 	
-	List<MemberShip> findByMembershipIdAndIsDeleted(long membershipId, int isDeleted);
+	List<MemberShips> findByMembershipIdAndIsDeleted(long membershipId, int isDeleted);
 }
