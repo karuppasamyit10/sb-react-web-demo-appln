@@ -30,8 +30,8 @@ class AdvancedSearch extends Component {
       master: {},
       isSubscribed: false,
       vehicleType:
-        this.props.location.state && this.props.location.state.vehicleType
-          ? this.props.location.state.vehicleType
+        this.props.location.state && this.props.location.state.vehicleTypeId
+          ? this.props.location.state.vehicleTypeId
           : null,
       brandId:
         this.props.location.state && this.props.location.state.brandId
@@ -119,7 +119,7 @@ class AdvancedSearch extends Component {
       console.log(response);
     });
     this.props.getVehicleMasterData(
-      { vehicleTypeId : this.state.vehicleType },
+      { vehicleTypeId: this.state.vehicleType },
       response => {
         console.log(response);
         if (response && response.response_code === 0) {
@@ -349,7 +349,7 @@ class AdvancedSearch extends Component {
     const object = JSON.parse(event.target.value);
     console.log(object);
     const { modelId, modelName } = object;
-    this.setState({ modelId: modelId, modelName: modelName }, () => {});
+    this.setState({ modelId: modelId, modelName: modelName }, () => { });
   };
 
   getVehicleModelList = brandId => {
@@ -443,9 +443,10 @@ class AdvancedSearch extends Component {
       fuelTypeOptions,
       steeringOptions,
       memberShipOptions,
-      dealOptions
+      dealOptions,
+      vehicleType
     } = this.state;
-    console.log(carBrandOptions, "lllllllllllllll");
+    console.log(vehicleType, "lllllllllllllll");
     const options = [
       { value: "chocolate", label: "Chocolate" },
       { value: "strawberry", label: "Strawberry" },
@@ -461,7 +462,25 @@ class AdvancedSearch extends Component {
                 <strong> Manitowish Waters,</strong> WI
               </p> */}
             </div>
+            <ul class="nav nav-pills mb-3 text-right" id="pills-tab" role="tablist">
+              <li class="nav-item" onClick={()=>{this.setState({vehicleType : 1})}}>
+                <a class={`nav-link ${vehicleType === 1 ? 'active' : ''}`} id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Car</a>
+              </li>
+              <li class="nav-item" onClick={()=>{this.setState({vehicleType : 2})}}>
+                <a class={`nav-link ${vehicleType === 2 ? 'active' : ''}`} id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Truck</a>
+              </li>
+              <li class="nav-item" onClick={()=>{this.setState({vehicleType : 3})}}>
+                <a class={`nav-link ${vehicleType === 3 ? 'active' : ''}`} id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Bus</a>
+              </li>
+              <li class="nav-item" onClick={()=>{this.setState({vehicleType : 4})}}>
+                <a class={`nav-link ${vehicleType === 4 ? 'active' : ''}`} id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Equipments</a>
+              </li>
+              <li class="nav-item" onClick={()=>{this.setState({vehicleType : 5})}}>
+                <a class={`nav-link ${vehicleType === 5 ? 'active' : ''}`} id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Parts</a>
+              </li>
+            </ul>
             <div class="row">
+
               {/* start */}
               <div class="col-lg-4">
                 <div class="filters_wrap">
@@ -598,12 +617,12 @@ class AdvancedSearch extends Component {
                                 </option>
                                 {yearList && yearList.length
                                   ? yearList.map(year => {
-                                      return (
-                                        <option value={year.year}>
-                                          {year.year}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={year.year}>
+                                        {year.year}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -623,12 +642,12 @@ class AdvancedSearch extends Component {
                                 </option>
                                 {yearList && yearList.length
                                   ? yearList.map(year => {
-                                      return (
-                                        <option value={year.year}>
-                                          {year.year}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={year.year}>
+                                        {year.year}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -649,12 +668,12 @@ class AdvancedSearch extends Component {
                             </option>
                             {countryList && countryList.length
                               ? countryList.map(country => {
-                                  return (
-                                    <option value={country.countryName}>
-                                      {country.countryName}
-                                    </option>
-                                  );
-                                })
+                                return (
+                                  <option value={country.countryName}>
+                                    {country.countryName}
+                                  </option>
+                                );
+                              })
                               : ""}
                           </select>
                         </div>
@@ -751,12 +770,12 @@ class AdvancedSearch extends Component {
                               >
                                 {priceList && priceList.length
                                   ? priceList.map(price => {
-                                      return (
-                                        <option value={price.price}>
-                                          $ {price.price}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={price.price}>
+                                        $ {price.price}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -773,12 +792,12 @@ class AdvancedSearch extends Component {
                               >
                                 {priceList && priceList.length
                                   ? priceList.map(price => {
-                                      return (
-                                        <option value={price.price}>
-                                          $ {price.price}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={price.price}>
+                                        $ {price.price}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -801,12 +820,12 @@ class AdvancedSearch extends Component {
                               >
                                 {mileageList && mileageList.length
                                   ? mileageList.map(mileage => {
-                                      return (
-                                        <option value={mileage.mileage}>
-                                          $ {mileage.mileage}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={mileage.mileage}>
+                                        $ {mileage.mileage}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -979,12 +998,12 @@ class AdvancedSearch extends Component {
                                 </option>
                                 {priceList && priceList.length
                                   ? priceList.map(price => {
-                                      return (
-                                        <option value={price.price}>
-                                          $ {price.price}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={price.price}>
+                                        $ {price.price}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -1001,12 +1020,12 @@ class AdvancedSearch extends Component {
                               >
                                 {priceList && priceList.length
                                   ? priceList.map(price => {
-                                      return (
-                                        <option value={price.price}>
-                                          $ {price.price}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={price.price}>
+                                        $ {price.price}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -1029,12 +1048,12 @@ class AdvancedSearch extends Component {
                               >
                                 {mileageList && mileageList.length
                                   ? mileageList.map(mileage => {
-                                      return (
-                                        <option value={mileage.mileage}>
-                                          $ {mileage.mileage}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={mileage.mileage}>
+                                        $ {mileage.mileage}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -1115,12 +1134,12 @@ class AdvancedSearch extends Component {
                           >
                             {priceList && priceList.length
                               ? priceList.map(price => {
-                                  return (
-                                    <option value={price.price}>
-                                      $ {price.price}
-                                    </option>
-                                  );
-                                })
+                                return (
+                                  <option value={price.price}>
+                                    $ {price.price}
+                                  </option>
+                                );
+                              })
                               : ""}
                           </select>
                         </div>
@@ -1137,12 +1156,12 @@ class AdvancedSearch extends Component {
                           >
                             {priceList && priceList.length
                               ? priceList.map(price => {
-                                  return (
-                                    <option value={price.price}>
-                                      $ {price.price}
-                                    </option>
-                                  );
-                                })
+                                return (
+                                  <option value={price.price}>
+                                    $ {price.price}
+                                  </option>
+                                );
+                              })
                               : ""}
                           </select>
                         </div>
@@ -1180,12 +1199,12 @@ class AdvancedSearch extends Component {
                               </option>
                               {mileageList && mileageList.length
                                 ? mileageList.map(mileage => {
-                                    return (
-                                      <option value={mileage.mileage}>
-                                        {mileage.mileage}
-                                      </option>
-                                    );
-                                  })
+                                  return (
+                                    <option value={mileage.mileage}>
+                                      {mileage.mileage}
+                                    </option>
+                                  );
+                                })
                                 : ""}
                             </select>
                           </div>
@@ -1205,12 +1224,12 @@ class AdvancedSearch extends Component {
                               </option>
                               {mileageList && mileageList.length
                                 ? mileageList.map(mileage => {
-                                    return (
-                                      <option value={mileage.mileage}>
-                                        {mileage.mileage}
-                                      </option>
-                                    );
-                                  })
+                                  return (
+                                    <option value={mileage.mileage}>
+                                      {mileage.mileage}
+                                    </option>
+                                  );
+                                })
                                 : ""}
                             </select>
                           </div>
@@ -1931,8 +1950,8 @@ class AdvancedSearch extends Component {
                     </div>
                   </div>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 <div class="totalresults text-right py-3 mt-3">
                   {/* <span class="bold">1 - 6</span> out of{" "} */}
                   {/* <span class="bold">6</span> listings */}
@@ -2019,14 +2038,14 @@ class AdvancedSearch extends Component {
                     );
                   })
                 ) : (
-                  <div className="text-center">
-                    {this.state.isLoading ? (
-                      <Spinner color="black" />
-                    ) : (
-                      "No Data Found"
-                    )}
-                  </div>
-                )}
+                    <div className="text-center">
+                      {this.state.isLoading ? (
+                        <Spinner color="black" />
+                      ) : (
+                          "No Data Found"
+                        )}
+                    </div>
+                  )}
               </div>
             </div>
           </div>
