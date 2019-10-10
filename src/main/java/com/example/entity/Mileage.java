@@ -18,7 +18,7 @@ public class Mileage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="mileageId")
-	private long mileageId;
+	private int mileageId;
 	
 	@Column(name="mileage", nullable=false)
 	private String mileage;
@@ -26,14 +26,14 @@ public class Mileage {
 	/**
 	 * @return the mileageId
 	 */
-	public long getMileageId() {
+	public int getMileageId() {
 		return mileageId;
 	}
 
 	/**
 	 * @param mileageId the mileageId to set
 	 */
-	public void setMileageId(long mileageId) {
+	public void setMileageId(int mileageId) {
 		this.mileageId = mileageId;
 	}
 

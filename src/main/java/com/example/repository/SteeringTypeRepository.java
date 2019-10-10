@@ -12,7 +12,7 @@ public interface SteeringTypeRepository extends JpaRepository<SteeringType, Long
 
 	List<SteeringType> findByIsDeletedOrderBySteeringTypeAsc(int isDeleted);
 	
-	List<SteeringType> findBySteeringIdAndIsDeleted(long steeringId, int isDeleted);
+	List<SteeringType> findBySteeringTypeIdAndIsDeleted(long steeringId, int isDeleted);
 	
 
 }

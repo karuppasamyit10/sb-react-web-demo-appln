@@ -34,30 +34,38 @@ import com.example.bean.UserRegistrationBean;
 import com.example.bean.VehicleSearchBean;
 import com.example.dao.CommonDao;
 import com.example.entity.Brand;
+import com.example.entity.Category1;
+import com.example.entity.ConditionType;
+import com.example.entity.Country;
+import com.example.entity.DealsType;
+import com.example.entity.EngineType;
 import com.example.entity.FuelType;
+import com.example.entity.LoadingWeightType;
+import com.example.entity.MemberShipType;
+import com.example.entity.Mileage;
 import com.example.entity.Model;
 import com.example.entity.ModelDetail;
+import com.example.entity.Price;
 import com.example.entity.SteeringType;
 import com.example.entity.TransmissionType;
-import com.example.entity.Country;
-import com.example.entity.Deals;
-import com.example.entity.MemberShips;
-import com.example.entity.Mileage;
-import com.example.entity.Price;
 import com.example.entity.User;
 import com.example.entity.VehicleDetail;
 import com.example.entity.Year;
 import com.example.repository.BrandRepository;
+import com.example.repository.Category1Repository;
+import com.example.repository.ConditionTypeRepository;
+import com.example.repository.CountryRepository;
+import com.example.repository.DealsTypeRepository;
+import com.example.repository.EngineTypeRepository;
 import com.example.repository.FuelTypeRepository;
+import com.example.repository.LoadingWeightTypeRepository;
+import com.example.repository.MemberShipTypeRepository;
+import com.example.repository.MileageRepository;
 import com.example.repository.ModelDetailRepository;
 import com.example.repository.ModelRepository;
+import com.example.repository.PriceRepository;
 import com.example.repository.SteeringTypeRepository;
 import com.example.repository.TransmissionTypeRepository;
-import com.example.repository.CountryRepository;
-import com.example.repository.DealsRepository;
-import com.example.repository.MemberShipRepository;
-import com.example.repository.MileageRepository;
-import com.example.repository.PriceRepository;
 import com.example.repository.UserRepository;
 import com.example.repository.VehicleDetailRepository;
 import com.example.repository.VehiclePhotosRepository;
@@ -75,13 +83,16 @@ public class CommonDaoImpl implements CommonDao {
 	private static final Logger logger = LoggerFactory.getLogger(CommonDaoImpl.class);
 	
 	@Autowired
+	ConditionTypeRepository conditionTypeRepository;
+	
+	@Autowired
 	CountryRepository countryRepository;
 	
 	@Autowired
 	UserRepository userRepository;
 	
 	@Autowired
-	MemberShipRepository memberShipRepository;
+	MemberShipTypeRepository memberShipTypeRepository;
 	
 	@Autowired
 	BrandRepository brandRepository;
@@ -96,6 +107,9 @@ public class CommonDaoImpl implements CommonDao {
 	FuelTypeRepository fuelTypeRepository;
 	
 	@Autowired
+	LoadingWeightTypeRepository loadingWeightTypeRepository;
+	
+	@Autowired
 	SteeringTypeRepository steeringTypeRepository;
 	
 	@Autowired
@@ -108,7 +122,13 @@ public class CommonDaoImpl implements CommonDao {
 	VehiclePhotosRepository vehiclePhotosRepository;
 	
 	@Autowired
-	DealsRepository dealsRepository;
+	DealsTypeRepository dealsTypeRepository;
+	
+	@Autowired
+	EngineTypeRepository engineTypeRepository;
+	
+	@Autowired
+	Category1Repository category1Repository;
 	
 	@Autowired
 	MileageRepository mileageRepository;
@@ -167,88 +187,161 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public Map<?, ?> getAllVehicleDetails(long vehicleTypeId) throws Exception {
+	public Map<?, ?> getAllVehicleDetails(int vehicleTypeId) throws Exception {
 		logger.info("::::Enter(daoImpl)==>getAllVehicleDetails::::");
 		String methodName = "GET ALL VEHICLE DETAILS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		
 		try {
+			//Vehicle Brand list
+			List<Object> BrandList = new LinkedList<>();
+			if(vehicleTypeId!=4) 
+			{
+				List<Brand> Brands= brandRepository.findByVehicleTypeIdAndIsDeletedOrderByBrandAsc(vehicleTypeId, 0);
+				for(Brand Brand : Brands) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("brandId", Brand.getBrandId());
+					params.put("brand", Brand.getBrand());
+					BrandList.add(params);
+				}	
+				rootParams.put("brandList", BrandList);
+			}
+			
+			//ConditionType List
+			List<Object> conditionTypeList = new LinkedList<>();
+			List<ConditionType> conditionTypes = conditionTypeRepository.findByIsDeletedOrderByConditionTypeAsc(0);
+			for(ConditionType conditionType : conditionTypes) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("conditionTypeId", conditionType.getConditionTypeId());
+				params.put("conditionType", conditionType.getConditionType());
+				conditionTypeList.add(params);
+			}			
+			rootParams.put("conditionTypeList", conditionTypeList);
+			
 			//Country list
-			List<Country> countries= countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
+			List<Country> countries= countryRepository.findByIsDeletedOrderByCountryAsc(0);
 			List<Object> countryList = new LinkedList<>();
 			for(Country country : countries) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("countryId", country.getCountryId());
-				params.put("countryName", country.getCountryName());
+				params.put("country", country.getCountry());
 				countryList.add(params);
 			}			
 			rootParams.put("countryList", countryList);
 			
-			//Car Brand list
-			List<Brand> Brands= brandRepository.findByVehicleTypeIdAndIsDeletedOrderByBrandAsc(vehicleTypeId, 0);
-			List<Object> BrandList = new LinkedList<>();
-			for(Brand Brand : Brands) {
+			//DealsType list
+			List<DealsType> dealsTypeList = dealsTypeRepository.findByIsDeletedOrderByDealsTypeAsc(0);
+			List<Object> dealsList = new LinkedList<>();
+			for(DealsType deal : dealsTypeList) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("brandId", Brand.getBrandId());
-				params.put("brandName", Brand.getBrand());
-				BrandList.add(params);
-			}			
-			rootParams.put("brandList", BrandList);
+				params.put("dealsTypeId", deal.getDealsTypeId());
+				params.put("dealsType", deal.getDealsType());
+				dealsList.add(params);
+			}		
+			rootParams.put("dealsTypeList", dealsList);
+			
+			//EngineType list
+			List<Object> engineTypeList = new LinkedList<>();
+			if(vehicleTypeId!=4) 
+			{
+				List<EngineType> engineTypes = engineTypeRepository.findByIsDeletedOrderByEngineTypeAsc(0);
+				for(EngineType engineType : engineTypes) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("engineTypeId", engineType.getEngineTypeId());
+					params.put("enginetype", engineType.getEngineType());
+					engineTypeList.add(params);
+				}	
+				rootParams.put("engineTypeList", engineTypeList);
+			}
+			
+			//Category1 list
+			List<Object> category1List = new LinkedList<>();
+			if(vehicleTypeId == 4 || vehicleTypeId == 5) 
+			{
+				List<Category1> category1s = category1Repository.findByIsDeletedAndVehicleTypeIdOrderByCategory1Asc(0, vehicleTypeId);
+				for(Category1 category1 : category1s) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("category1Id", category1.getCategory1Id());
+					params.put("category1", category1.getCategory1());
+					category1List.add(params);
+				}	
+				rootParams.put("category1List", category1List);
+			}
+			
+			//TruckCategory list
+			List<Object> truckCategoryList = new LinkedList<>();
+			if(vehicleTypeId == 2) 
+			{
+				List<Category1> category1s = category1Repository.findByIsDeletedAndVehicleTypeIdOrderByCategory1Asc(0, vehicleTypeId);
+				for(Category1 category1 : category1s) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("category1Id", category1.getCategory1Id());
+					params.put("category1", category1.getCategory1());
+					truckCategoryList.add(params);
+				}	
+				rootParams.put("truckCategoryList", truckCategoryList);
+			}
+				
+			// FuelType list
+			List<Object> fuelTypeList = new LinkedList<>();
+			if(vehicleTypeId == 1) 
+			{
+				List<FuelType> fuelTypes= fuelTypeRepository.findByIsDeletedOrderByFuelTypeAsc(0);
+				for(FuelType FuelType : fuelTypes) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("fuelTypeId", FuelType.getFuelTypeId());
+					params.put("fuelType", FuelType.getFuelType());
+					fuelTypeList.add(params);
+				}	
+				rootParams.put("fuelTypeList", fuelTypeList);
+			}
+			
+			// LoadingWeight list
+			List<Object> loadingWeightTypeList = new LinkedList<>();
+			if(vehicleTypeId == 2) 
+			{
+				List<LoadingWeightType> loadingWeightTypes= loadingWeightTypeRepository.findByIsDeletedOrderByLoadingWeightTypeAsc(0);
+				for(LoadingWeightType loadingWeightType : loadingWeightTypes) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("loadingWeightTypeId", loadingWeightType.getLoadingWeightTypeId());
+					params.put("loadingWeightType", loadingWeightType.getLoadingWeightType());
+					loadingWeightTypeList.add(params);
+				}	
+				rootParams.put("loadingWeightTypeList", loadingWeightTypeList);
+			}
+				
+			//MembershipType list
+			List<MemberShipType> MemberShipTypes = memberShipTypeRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
+			List<Object> memberShipTypeList = new LinkedList<>();
+			for(MemberShipType memberShipType : MemberShipTypes) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("membershipTypeId", memberShipType.getMembershipTypeId());
+				params.put("membershipType", memberShipType.getMembershipType());
+				memberShipTypeList.add(params);
+			}		
+			rootParams.put("MemberShipTypeList", memberShipTypeList);	
 			
 			// Steering list
 			List<SteeringType> Steerings= steeringTypeRepository.findByIsDeletedOrderBySteeringTypeAsc(0);
 			List<Object> SteeringList = new LinkedList<>();
 			for(SteeringType Steering : Steerings) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("steeringId", Steering.getSteeringId());
+				params.put("steeringTypeId", Steering.getSteeringTypeId());
 				params.put("steeringType", Steering.getSteeringType());
 				SteeringList.add(params);
 			}			
 			rootParams.put("steeringTypeList", SteeringList);
-			
-			// FuelType list
-			List<FuelType> FuelTypes= fuelTypeRepository.findByIsDeletedOrderByFuelTypeAsc(0);
-			List<Object> FuelTypeList = new LinkedList<>();
-			for(FuelType FuelType : FuelTypes) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("fuelTypeId", FuelType.getFuelTypeId());
-				params.put("fuelType", FuelType.getFuelType());
-				FuelTypeList.add(params);
-			}			
-			rootParams.put("fuelTypeList", FuelTypeList);
 			
 			// transmission list
 			List<TransmissionType> Transmissions= transmissionTypeRepository.findByIsDeletedOrderByTransmissionTypeAsc(0);
 			List<Object> TransmissionList = new LinkedList<>();
 			for(TransmissionType Transmission : Transmissions) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("transmissionId", Transmission.getTransmissionId());
+				params.put("transmissionId", Transmission.getTransmissionTypeId());
 				params.put("transmissionType", Transmission.getTransmissionType());
 				TransmissionList.add(params);
 			}
 			rootParams.put("transmissionTypeList", TransmissionList);	
-			
-			//Membership list
-			List<MemberShips> memberShips = memberShipRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
-			List<Object> memberShipList = new LinkedList<>();
-			for(MemberShips memberShip : memberShips) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("membershipId", memberShip.getMembershipId());
-				params.put("membershipType", memberShip.getMembershipType());
-				memberShipList.add(params);
-			}		
-			rootParams.put("memberShipList", memberShipList);	
-			
-			//Deals list
-			List<Deals> deals = dealsRepository.findByIsDeletedOrderByDealTypeAsc(0);
-			List<Object> dealsList = new LinkedList<>();
-			for(Deals deal : deals) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("dealId", deal.getDealId());
-				params.put("dealType", deal.getDealType());
-				dealsList.add(params);
-			}		
-			rootParams.put("dealsList", dealsList);
 			
 			//Price list
 			List<Price> prices = priceRepository.findByOrderByPriceAsc();
@@ -551,7 +644,7 @@ public class CommonDaoImpl implements CommonDao {
 				countries= countryRepository.findByCountryIdAndIsDeleted(countryId, 0);
 			} else {
 				//Get All countries
-				countries= countryRepository.findByIsDeletedOrderByCountryNameAsc(0);
+				countries= countryRepository.findByIsDeletedOrderByCountryAsc(0);
 			}
 			if(countries==null || countries.isEmpty()) {
 				return CommonUtil.wrapResultResponse(methodName, 1, "No records found", null);
@@ -559,7 +652,7 @@ public class CommonDaoImpl implements CommonDao {
 			for(Country country : countries) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("countryId", country.getCountryId());
-				params.put("countryName", country.getCountryName());
+				params.put("country", country.getCountry());
 				countriesList.add(params);
 			}			
 			Map<String, Object> response = new LinkedHashMap<String, Object>();

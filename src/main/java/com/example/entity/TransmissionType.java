@@ -17,8 +17,8 @@ public class TransmissionType {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="transmissionId")
-	private long transmissionId;
+	@Column(name="transmissionTypeId")
+	private int transmissionTypeId;
 	
 	@Column(name="transmissionType", nullable=false)
 	private String transmissionType;
@@ -26,18 +26,19 @@ public class TransmissionType {
 	@Column(name="isDeleted")
 	private int isDeleted;
 
+
 	/**
-	 * @return the transmissionId
+	 * @return the transmissionTypeId
 	 */
-	public long getTransmissionId() {
-		return transmissionId;
+	public int getTransmissionTypeId() {
+		return transmissionTypeId;
 	}
 
 	/**
-	 * @param transmissionId the transmissionId to set
+	 * @param transmissionTypeId the transmissionTypeId to set
 	 */
-	public void setTransmissionId(long transmissionId) {
-		this.transmissionId = transmissionId;
+	public void setTransmissionTypeId(int transmissionTypeId) {
+		this.transmissionTypeId = transmissionTypeId;
 	}
 
 	/**
@@ -67,6 +68,5 @@ public class TransmissionType {
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-
 
 }

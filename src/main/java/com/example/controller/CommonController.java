@@ -95,7 +95,7 @@ public class CommonController {
 	//Get Car Master_data
 	@RequestMapping(method = RequestMethod.GET, value = "/vehicle/all_details", produces = "application/json")
 	@ResponseBody
-	public Map<?, ?> getAllVehicleDetails(@RequestParam(required=false, defaultValue="1") long vehicleTypeId) throws Exception {
+	public Map<?, ?> getAllVehicleDetails(@RequestParam(required=false, defaultValue="1") int vehicleTypeId) throws Exception {
 		logger.info("Controller==>Enter==>getAllVehicleDetails<==");
 		String methodName = "GET ALL VEHICLE DETAILS";
 		try { 

@@ -10,7 +10,7 @@ import com.example.entity.Country;
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Long> {
 
-	List<Country> findByIsDeletedOrderByCountryNameAsc(int isDeleted);
+	List<Country> findByIsDeletedOrderByCountryAsc(int isDeleted);
 	
 	List<Country> findByCountryIdAndIsDeleted(long countryId, int isDeleted);
 	

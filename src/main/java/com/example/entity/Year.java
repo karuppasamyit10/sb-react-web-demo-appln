@@ -18,22 +18,23 @@ public class Year {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="yearId")
-	private long yearId;
+	private int yearId;
 	
 	@Column(name="year", nullable=false)
 	private String year;
 
+
 	/**
 	 * @return the yearId
 	 */
-	public long getYearId() {
+	public int getYearId() {
 		return yearId;
 	}
 
 	/**
 	 * @param yearId the yearId to set
 	 */
-	public void setYearId(long yearId) {
+	public void setYearId(int yearId) {
 		this.yearId = yearId;
 	}
 

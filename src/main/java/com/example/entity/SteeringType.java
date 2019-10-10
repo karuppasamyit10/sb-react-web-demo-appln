@@ -17,8 +17,8 @@ public class SteeringType {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="steeringId")
-	private long steeringId;
+	@Column(name="steeringTypeId")
+	private int steeringTypeId;
 	
 	@Column(name="steeringType", nullable=false)
 	private String steeringType;
@@ -27,17 +27,17 @@ public class SteeringType {
 	private int isDeleted;
 
 	/**
-	 * @return the steeringId
+	 * @return the steeringTypeId
 	 */
-	public long getSteeringId() {
-		return steeringId;
+	public int getSteeringTypeId() {
+		return steeringTypeId;
 	}
 
 	/**
-	 * @param steeringId the steeringId to set
+	 * @param steeringTypeId the steeringTypeId to set
 	 */
-	public void setSteeringId(long steeringId) {
-		this.steeringId = steeringId;
+	public void setSteeringTypeId(int steeringTypeId) {
+		this.steeringTypeId = steeringTypeId;
 	}
 
 	/**
@@ -67,5 +67,6 @@ public class SteeringType {
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
 
 }

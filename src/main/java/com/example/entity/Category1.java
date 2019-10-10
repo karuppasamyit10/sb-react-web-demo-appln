@@ -12,36 +12,35 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="brands")
-public class Brand {
+@Table(name="category1")
+public class Category1 {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="brandId")
-	private long brandId;
+	@Column(name="category1Id")
+	private int category1Id;
 	
 	@Column(name="vehicleTypeId")
 	private int vehicleTypeId;
 	
-	@Column(name="brand", nullable=false)
-	private String brand;
+	@Column(name="category1", nullable=false)
+	private String category1;
 	
 	@Column(name="isDeleted")
 	private int isDeleted;
 
-
 	/**
-	 * @return the brandId
+	 * @return the category1Id
 	 */
-	public long getBrandId() {
-		return brandId;
+	public int getCategory1Id() {
+		return category1Id;
 	}
 
 	/**
-	 * @param brandId the brandId to set
+	 * @param category1Id the category1Id to set
 	 */
-	public void setBrandId(long brandId) {
-		this.brandId = brandId;
+	public void setCategory1Id(int category1Id) {
+		this.category1Id = category1Id;
 	}
 
 	/**
@@ -59,17 +58,17 @@ public class Brand {
 	}
 
 	/**
-	 * @return the brand
+	 * @return the category1
 	 */
-	public String getBrand() {
-		return brand;
+	public String getCategory1() {
+		return category1;
 	}
 
 	/**
-	 * @param brand the brand to set
+	 * @param category1 the category1 to set
 	 */
-	public void setBrand(String brand) {
-		this.brand = brand;
+	public void setCategory1(String category1) {
+		this.category1 = category1;
 	}
 
 	/**

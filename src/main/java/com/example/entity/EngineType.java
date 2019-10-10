@@ -12,46 +12,47 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="fuel_type")
-public class FuelType {
+@Table(name="engine_type")
+public class EngineType {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="fuelTypeId")
-	private int fuelTypeId;
+	@Column(name="engineTypeId")
+	private int engineTypeId;
 	
-	@Column(name="fuelType", nullable=false)
-	private String fuelType;
+	@Column(name="engineType", nullable=false)
+	private String engineType;
 	
 	@Column(name="isDeleted")
 	private int isDeleted;
 
+
 	/**
-	 * @return the fuelTypeId
+	 * @return the engineTypeId
 	 */
-	public int getFuelTypeId() {
-		return fuelTypeId;
+	public int getEngineTypeId() {
+		return engineTypeId;
 	}
 
 	/**
-	 * @param fuelTypeId the fuelTypeId to set
+	 * @param engineTypeId the engineTypeId to set
 	 */
-	public void setFuelTypeId(int fuelTypeId) {
-		this.fuelTypeId = fuelTypeId;
+	public void setEngineTypeId(int engineTypeId) {
+		this.engineTypeId = engineTypeId;
 	}
 
 	/**
-	 * @return the fuelType
+	 * @return the engineType
 	 */
-	public String getFuelType() {
-		return fuelType;
+	public String getEngineType() {
+		return engineType;
 	}
 
 	/**
-	 * @param fuelType the fuelType to set
+	 * @param engineType the engineType to set
 	 */
-	public void setFuelType(String fuelType) {
-		this.fuelType = fuelType;
+	public void setEngineType(String engineType) {
+		this.engineType = engineType;
 	}
 
 	/**
@@ -66,7 +67,5 @@ public class FuelType {
 	 */
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
-	}
-
-
+	}		
 }

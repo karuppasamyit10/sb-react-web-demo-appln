@@ -12,46 +12,46 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="deals")
-public class Deals {
+@Table(name="parts_type")
+public class PartsType {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="dealId")
-	private long dealId;
+	@Column(name="partsTypeId")
+	private int partsTypeId;
 	
-	@Column(name="dealType", nullable=false)
-	private String dealType;
-	
+	@Column(name="partsType", nullable=false)
+	private String partsType;
+
 	@Column(name="isDeleted")
 	private int isDeleted;
 
 	/**
-	 * @return the dealId
+	 * @return the partsTypeId
 	 */
-	public long getDealId() {
-		return dealId;
+	public int getPartsTypeId() {
+		return partsTypeId;
 	}
 
 	/**
-	 * @param dealId the dealId to set
+	 * @param partsTypeId the partsTypeId to set
 	 */
-	public void setDealId(long dealId) {
-		this.dealId = dealId;
+	public void setPartsTypeId(int partsTypeId) {
+		this.partsTypeId = partsTypeId;
 	}
 
 	/**
-	 * @return the dealType
+	 * @return the partsType
 	 */
-	public String getDealType() {
-		return dealType;
+	public String getPartsType() {
+		return partsType;
 	}
 
 	/**
-	 * @param dealType the dealType to set
+	 * @param partsType the partsType to set
 	 */
-	public void setDealType(String dealType) {
-		this.dealType = dealType;
+	public void setPartsType(String partsType) {
+		this.partsType = partsType;
 	}
 
 	/**
@@ -67,6 +67,5 @@ public class Deals {
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-
 	
 }

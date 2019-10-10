@@ -12,6 +12,6 @@ public interface TransmissionTypeRepository extends JpaRepository<TransmissionTy
 
 	List<TransmissionType> findByIsDeletedOrderByTransmissionTypeAsc(int isDeleted);
 	
-	List<TransmissionType> findByTransmissionIdAndIsDeleted(long transmissionId, int isDeleted);
+	List<TransmissionType> findByTransmissionTypeIdAndIsDeleted(long transmissionId, int isDeleted);
 
 }

@@ -13,7 +13,7 @@ public interface CommonDao {
 
 	Map<?, ?> userRegistration(UserRegistrationBean userRegistrationBean, String userAgent) throws Exception;
 	
-	Map<?, ?> getAllVehicleDetails(long vehicleTypeId) throws Exception;
+	Map<?, ?> getAllVehicleDetails(int vehicleTypeId) throws Exception;
 	
 	Map<?, ?> getModels(long brandId)throws Exception;
 

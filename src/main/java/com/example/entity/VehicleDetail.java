@@ -17,7 +17,7 @@ public class VehicleDetail {
 	private long vehicleId;
 	
 	@Column(name="vehicleTypeId")
-	private long vehicleTypeId;
+	private int vehicleTypeId;
 	
 	@Column(name="brand")
 	private String brand;
@@ -105,14 +105,14 @@ public class VehicleDetail {
 	/**
 	 * @return the vehicleTypeId
 	 */
-	public long getVehicleTypeId() {
+	public int getVehicleTypeId() {
 		return vehicleTypeId;
 	}
 
 	/**
 	 * @param vehicleTypeId the vehicleTypeId to set
 	 */
-	public void setVehicleTypeId(long vehicleTypeId) {
+	public void setVehicleTypeId(int vehicleTypeId) {
 		this.vehicleTypeId = vehicleTypeId;
 	}
 

@@ -14,7 +14,7 @@ public class VehicleType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="vehicleTypeId")
-	private long vehicleTypeId;
+	private int vehicleTypeId;
 	
 	@Column(name="vehicleType")
 	private String vehicleType;
@@ -25,14 +25,14 @@ public class VehicleType {
 	/**
 	 * @return the vehicleTypeId
 	 */
-	public long getVehicleTypeId() {
+	public int getVehicleTypeId() {
 		return vehicleTypeId;
 	}
 
 	/**
 	 * @param vehicleTypeId the vehicleTypeId to set
 	 */
-	public void setVehicleTypeId(long vehicleTypeId) {
+	public void setVehicleTypeId(int vehicleTypeId) {
 		this.vehicleTypeId = vehicleTypeId;
 	}
 
@@ -63,4 +63,5 @@ public class VehicleType {
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
 }

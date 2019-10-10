@@ -18,10 +18,10 @@ public class Country {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="countryId")
-	private long countryId;
+	private int countryId;
 	
-	@Column(name="countryName", nullable=false)
-	private String countryName;
+	@Column(name="country", nullable=false)
+	private String country;
 	
 	@Column(name="shortName")
 	private String shortName;
@@ -32,29 +32,29 @@ public class Country {
 	/**
 	 * @return the countryId
 	 */
-	public long getCountryId() {
+	public int getCountryId() {
 		return countryId;
 	}
 
 	/**
 	 * @param countryId the countryId to set
 	 */
-	public void setCountryId(long countryId) {
+	public void setCountryId(int countryId) {
 		this.countryId = countryId;
 	}
 
 	/**
-	 * @return the countryName
+	 * @return the country
 	 */
-	public String getCountryName() {
-		return countryName;
+	public String getCountry() {
+		return country;
 	}
 
 	/**
-	 * @param countryName the countryName to set
+	 * @param country the country to set
 	 */
-	public void setCountryName(String countryName) {
-		this.countryName = countryName;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	/**
@@ -84,6 +84,5 @@ public class Country {
 	public void setIsDeleted(int isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-
 
 }

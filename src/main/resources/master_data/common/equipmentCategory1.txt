@@ -1,0 +1,8 @@
+Excavator
+Loader / Dozer / Grader
+Concrete Machinery
+Forklift
+Paving Machinery
+Crane / Auger / Drill
+Agricultural Machinery
+Others

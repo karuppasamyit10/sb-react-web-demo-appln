@@ -1,0 +1,13 @@
+Cargo Trucks
+Box Trucks (Normal / Refrigerator / Freezer)
+Wingbody Trucks (Normal / Refrigerator / Freezer)
+Dump Trucks
+Tractor Head
+Tank Lorry
+Cargo Crane Trucks
+Aerial Lift Trucks
+Garbage Trucks
+Ladder Truck
+Wreckers/Safety Loaders
+Ambulances
+Others

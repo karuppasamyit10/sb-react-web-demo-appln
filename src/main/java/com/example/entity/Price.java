@@ -18,22 +18,23 @@ public class Price {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="priceId")
-	private long priceId;
+	private int priceId;
 	
 	@Column(name="price", nullable=false)
 	private String price;
 
+
 	/**
 	 * @return the priceId
 	 */
-	public long getPriceId() {
+	public int getPriceId() {
 		return priceId;
 	}
 
 	/**
 	 * @param priceId the priceId to set
 	 */
-	public void setPriceId(long priceId) {
+	public void setPriceId(int priceId) {
 		this.priceId = priceId;
 	}
 

@@ -1,0 +1,17 @@
+Hyundai
+Kia
+Daewoo
+Scania
+Volvo
+Mercedes Benz
+MAN
+Iveco
+Fiat
+Hino
+Isuzu
+Mazda
+Mitsubishi
+Nissan
+Opel
+Renault
+Toyota
