@@ -33,6 +33,7 @@ class Upload extends Component {
       modelName: null,
       country : null,
       modelList: [],
+      modelisDisable: true,
       brandObject: {},
       modelObject: {},
       vehicleTypeId : 1
@@ -108,6 +109,7 @@ class Upload extends Component {
     this.props.getVehicleModelList({ brandId: brandId }, response => {
       if (response.response_code === 0) {
         this.setState({ modelList: response.response.modelList })
+        this.setState({modelisDisable : false});
       }
     })
   }
@@ -285,14 +287,14 @@ class Upload extends Component {
                                     aria-hidden="true"
                                   ></i>
                                 </span>
-                                <select onChange={this.onChangeModel} >
-                                  <option selected>All Models</option>
+                                <select disabled={this.state.modelisDisable} onChange={this.onChangeModel} class="form-control">
+                                  <option selecte={true} >All Models</option>
                                   {this.state.modelList && this.state.modelList.length ?
                                     this.state.modelList.map((model) => {
                                       return (
                                         <option id={model.modelId} value={JSON.stringify({ modelId: model.modelId, modelName: model.model })}>{model.model}</option>
                                       )
-                                    }) : <option>Choose Brand First</option>}
+                                    }) : <option>NO Data Found</option>}
                                 </select>
                               </div>
                             </div>
@@ -304,7 +306,7 @@ class Upload extends Component {
                                     aria-hidden="true"
                                   ></i>
                                 </span>
-                                <select onChange={(e)=>{this.onChangeCountry(e)}}>
+                                <select onChange={(e)=>{this.onChangeCountry(e)}} class="form-control">
                                   <option selected>Choose Country</option>
                                   {countryList && countryList.length ?
                                     countryList.map((country) => {
