@@ -61,21 +61,21 @@ class AdvancedSearch extends Component {
       brandObject: {},
       modelObject: {},
       isLoading: false,
-      carFuelType: null,
-      carFuelTypeId: null,
-      carFuelTypeObject: null,
-      carTransmissionId: null,
-      carTransmissionType: null,
+      fuelType: null,
+      fuelTypeId: null,
+      fuelTypeObject: null,
+      transmissionId: null,
+      transmissionType: null,
       transmissionObject: {},
-      carSteeringId: null,
-      carSteeringType: null,
+      steeringTypeId: null,
+      steeringType: null,
       fromYear: null,
       toYear: null,
       fromPrice: null,
       toPrice: null,
       fromMileage: null,
       toMileage: null,
-      dealType: null,
+      dealsType: null,
 
       //newly added for multiselect
       selectedBrandOptions: null,
@@ -97,8 +97,9 @@ class AdvancedSearch extends Component {
       transmissionType: [],
       fuelType: [],
       steeringType: [],
-      dealType: [],
-      membershipType: []
+      dealsType: [],
+      membershipType: [],
+      partsType: []
     };
   }
 
@@ -118,6 +119,15 @@ class AdvancedSearch extends Component {
     this.props.getSearchResult(params, response => {
       console.log(response);
     });
+    this.getAllMasterByvehicleTypeId();
+    if (this.state.brandId) {
+      this.getVehicleModelList(this.state.brandId);
+      this.getVehicleSearchList();
+    }
+  }
+
+
+  getAllMasterByvehicleTypeId = () => {
     this.props.getVehicleMasterData(
       { vehicleTypeId: this.state.vehicleType },
       response => {
@@ -128,17 +138,13 @@ class AdvancedSearch extends Component {
             this.setTransmissionType();
             this.setFuelType();
             this.setSteeringType();
-            this.setDealType();
+            this.setDealsType();
             this.setMembershipType();
           });
         }
       }
     );
-    if (this.state.brandId) {
-      this.getVehicleModelList(this.state.brandId);
-      this.getVehicleSearchList();
-    }
-  }
+  };
 
   setSelectDropDownData = (name, data) => {
     if (data && data.length) {
@@ -160,8 +166,8 @@ class AdvancedSearch extends Component {
     if (brandList && brandList.length) {
       brandList.forEach(car => {
         carBrandOptions.push({
-          value: car.brandName,
-          label: car.brandName,
+          value: car.brand,
+          label: car.brand,
           id: car.brandId
         });
       });
@@ -183,55 +189,55 @@ class AdvancedSearch extends Component {
     }
   };
   setTransmissionType = () => {
-    let { carTransmissionList } = this.state.master;
+    let { transmissionTypeList } = this.state.master;
     let transmissionOptions = [];
-    if (carTransmissionList && carTransmissionList.length) {
-      carTransmissionList.forEach(transmission => {
+    if (transmissionTypeList && transmissionTypeList.length) {
+      transmissionTypeList.forEach(transmission => {
         transmissionOptions.push({
-          value: transmission.carTransmissionType,
-          label: transmission.carTransmissionType,
-          id: transmission.carTransmissionId
+          value: transmission.transmissionType,
+          label: transmission.transmissionType,
+          id: transmission.transmissionTypeId
         });
       });
       this.setState({ transmissionOptions: transmissionOptions });
     }
   };
   setFuelType = () => {
-    let { carFuelTypeList } = this.state.master;
+    let { fuelTypeList } = this.state.master;
     let fuelTypeOptions = [];
-    if (carFuelTypeList && carFuelTypeList.length) {
-      carFuelTypeList.forEach(fuelType => {
+    if (fuelTypeList && fuelTypeList.length) {
+      fuelTypeList.forEach(fuelType => {
         fuelTypeOptions.push({
-          value: fuelType.carFuelType,
-          label: fuelType.carFuelType,
-          id: fuelType.carFuelTypeId
+          value: fuelType.fuelType,
+          label: fuelType.fuelType,
+          id: fuelType.fuelTypeId
         });
       });
       this.setState({ fuelTypeOptions: fuelTypeOptions });
     }
   };
   setSteeringType = () => {
-    let { carSteeringList } = this.state.master;
+    let { steeringTypeList } = this.state.master;
     let steeringOptions = [];
-    if (carSteeringList && carSteeringList.length) {
-      carSteeringList.forEach(steering => {
+    if (steeringTypeList && steeringTypeList.length) {
+      steeringTypeList.forEach(steering => {
         steeringOptions.push({
-          value: steering.carSteeringType,
-          label: steering.carSteeringType,
-          id: steering.carSteeringId
+          value: steering.steeringType,
+          label: steering.steeringType,
+          id: steering.steeringTypeId
         });
       });
       this.setState({ steeringOptions: steeringOptions });
     }
   };
-  setDealType = () => {
-    let { dealsList } = this.state.master;
+  setDealsType = () => {
+    let { dealsTypeList } = this.state.master;
     let dealOptions = [];
-    if (dealsList && dealsList.length) {
-      dealsList.forEach(deal => {
+    if (dealsTypeList && dealsTypeList.length) {
+      dealsTypeList.forEach(deal => {
         dealOptions.push({
-          value: deal.dealType,
-          label: deal.dealType,
+          value: deal.dealsType,
+          label: deal.dealsType,
           id: deal.dealId
         });
       });
@@ -239,14 +245,14 @@ class AdvancedSearch extends Component {
     }
   };
   setMembershipType = () => {
-    let { memberShipList } = this.state.master;
+    let { memberShipTypeList } = this.state.master;
     let memberShipOptions = [];
-    if (memberShipList && memberShipList.length) {
-      memberShipList.forEach(membership => {
+    if (memberShipTypeList && memberShipTypeList.length) {
+      memberShipTypeList.forEach(membership => {
         memberShipOptions.push({
           value: membership.membershipType,
           label: membership.membershipType,
-          id: membership.membershipId
+          id: membership.membershipTypeId
         });
       });
       this.setState({ memberShipOptions: memberShipOptions });
@@ -278,7 +284,7 @@ class AdvancedSearch extends Component {
     let { brandList } = this.state.master;
 
     let found = brandList.find(car => {
-      return car.brandName === e.target.value;
+      return car.brand === e.target.value;
     });
     if (found) {
       this.getVehicleModelList(found.brandId);
@@ -332,15 +338,15 @@ class AdvancedSearch extends Component {
 
   handleChangeDeal = selectedOption => {
     let result = selectedOption.map(obj => obj.value);
-    this.setState({ selectedDealOptions: selectedOption, dealType: result });
+    this.setState({ selectedDealOptions: selectedOption, dealsType: result });
     console.log(`Option selected:`, selectedOption);
   };
 
   onChangeBrand = event => {
     const object = JSON.parse(event.target.value);
     console.log(object);
-    const { brandId, brandName } = object;
-    this.setState({ brandId: brandId, brandName: brandName }, () => {
+    const { brandId, brand } = object;
+    this.setState({ brandId: brandId, brand: brand }, () => {
       this.getVehicleModelList(this.state.brandId);
     });
   };
@@ -348,8 +354,8 @@ class AdvancedSearch extends Component {
   onChangeModel = event => {
     const object = JSON.parse(event.target.value);
     console.log(object);
-    const { modelId, modelName } = object;
-    this.setState({ modelId: modelId, modelName: modelName }, () => { });
+    const { modelId, model } = object;
+    this.setState({ modelId: modelId, model: model }, () => { });
   };
 
   getVehicleModelList = brandId => {
@@ -368,11 +374,11 @@ class AdvancedSearch extends Component {
       itemsPerPage,
       brandId,
       modelId,
-      brandName,
-      modelName,
-      carTransmissionType,
-      carFuelType,
-      dealName,
+      brand,
+      model,
+      transmissionType,
+      fuelType,
+      dealsType,
       fromYear,
       toYear,
       fromPrice,
@@ -384,10 +390,10 @@ class AdvancedSearch extends Component {
     const {
       brands,
       models,
-      transmissionType,
-      fuelType,
-      steeringType,
-      dealType,
+      // transmissionType,
+      // fuelType,
+      // steeringType,
+      // dealsType,
       membershipType
     } = this.state;
     const SearchData = new FormData();
@@ -397,7 +403,7 @@ class AdvancedSearch extends Component {
     SearchData.set("models", models);
     SearchData.set("transmissionType", transmissionType);
     SearchData.set("fuelType", fuelType);
-    SearchData.set("dealName", dealType);
+    SearchData.set("dealsType", dealsType);
     SearchData.set("membershipType", membershipType);
     SearchData.set("fromYear", fromYear);
     SearchData.set("toYear", toYear);
@@ -427,11 +433,11 @@ class AdvancedSearch extends Component {
     let {
       countryList,
       brandList,
-      carTransmissionList,
-      carSteeringList,
-      carFuelTypeList,
-      dealsList,
-      memberShipList,
+      transmissionTypeList,
+      steeringTypeList,
+      fuelTypeList,
+      dealsTypeList,
+      memberShipTypeList,
       mileageList,
       priceList,
       yearList
@@ -447,6 +453,7 @@ class AdvancedSearch extends Component {
       vehicleType
     } = this.state;
     console.log(vehicleType, "lllllllllllllll");
+    // this.getAllMasterByvehicleTypeId();
     const options = [
       { value: "chocolate", label: "Chocolate" },
       { value: "strawberry", label: "Strawberry" },
@@ -561,9 +568,9 @@ class AdvancedSearch extends Component {
                                 return (
                                   <option
                                     id={brand.brandId}
-                                    value={brand.brandName}
+                                    value={brand.brand}
                                   >
-                                    {brand.brandName}
+                                    {brand.brand}
                                   </option>
                                 );
                               })}
@@ -669,14 +676,24 @@ class AdvancedSearch extends Component {
                             {countryList && countryList.length
                               ? countryList.map(country => {
                                 return (
-                                  <option value={country.countryName}>
-                                    {country.countryName}
+                                  <option value={country.country}>
+                                    {country.country}
                                   </option>
                                 );
                               })
                               : ""}
                           </select>
                         </div>
+                        <div class="form-group">
+                      <input
+                        type="button"
+                        class="btn btn-primary w-100"
+                        onClick={e => {
+                          this.getVehicleSearchList();
+                        }}
+                        value="Search"
+                      />
+                    </div>
                         {/* <div class="form-group">
                           <input
                             type="button"
@@ -857,16 +874,16 @@ class AdvancedSearch extends Component {
                                   value={this.state.transmissionType}
                                 >
                                   <option>All Transmission</option>
-                                  {carTransmissionList &&
-                                    carTransmissionList.map(transmission => {
+                                  {transmissionTypeList &&
+                                    transmissionTypeList.map(transmission => {
                                       return (
                                         <option
-                                          id={transmission.carTransmissionId}
+                                          id={transmission.transmissionTypeId}
                                           value={
-                                            transmission.carTransmissionType
+                                            transmission.transmissionType
                                           }
                                         >
-                                          {transmission.carTransmissionType}
+                                          {transmission.transmissionType}
                                         </option>
                                       );
                                     })}
@@ -899,14 +916,14 @@ class AdvancedSearch extends Component {
                                   value={this.state.fuelType}
                                 >
                                   <option>All Fuel Type</option>
-                                  {carFuelTypeList &&
-                                    carFuelTypeList.map(fuelType => {
+                                  {fuelTypeList &&
+                                    fuelTypeList.map(fuelType => {
                                       return (
                                         <option
-                                          id={fuelType.carFuelTypeId}
-                                          value={fuelType.carFuelType}
+                                          id={fuelType.fuelTypeId}
+                                          value={fuelType.fuelType}
                                         >
-                                          {fuelType.carFuelType}
+                                          {fuelType.fuelType}
                                         </option>
                                       );
                                     })}
@@ -1084,16 +1101,16 @@ class AdvancedSearch extends Component {
                                   value={this.state.transmissionType}
                                 >
                                   <option>All Transmission</option>
-                                  {carTransmissionList &&
-                                    carTransmissionList.map(transmission => {
+                                  {transmissionTypeList &&
+                                    transmissionTypeList.map(transmission => {
                                       return (
                                         <option
-                                          id={transmission.carTransmissionId}
+                                          id={transmission.transmissionTypeId}
                                           value={
-                                            transmission.carTransmissionType
+                                            transmission.transmissionType
                                           }
                                         >
-                                          {transmission.carTransmissionType}
+                                          {transmission.transmissionType}
                                         </option>
                                       );
                                     })}
@@ -1256,14 +1273,14 @@ class AdvancedSearch extends Component {
                           value={this.state.transmissionType}
                         >
                           <option>All Transmission</option>
-                          {carTransmissionList &&
-                            carTransmissionList.map(transmission => {
+                          {transmissionTypeList &&
+                            transmissionTypeList.map(transmission => {
                               return (
                                 <option
-                                  id={transmission.carTransmissionId}
-                                  value={transmission.carTransmissionType}
+                                  id={transmission.transmissionTypeId}
+                                  value={transmission.transmissionType}
                                 >
-                                  {transmission.carTransmissionType}
+                                  {transmission.transmissionType}
                                 </option>
                               );
                             })}
@@ -1294,14 +1311,14 @@ class AdvancedSearch extends Component {
                               value={this.state.fuelType}
                             >
                               <option>All Fuel Type</option>
-                              {carFuelTypeList &&
-                                carFuelTypeList.map(fuelType => {
+                              {fuelTypeList &&
+                                fuelTypeList.map(fuelType => {
                                   return (
                                     <option
-                                      id={fuelType.carFuelTypeId}
-                                      value={fuelType.carFuelType}
+                                      id={fuelType.fuelTypeId}
+                                      value={fuelType.fuelType}
                                     >
-                                      {fuelType.carFuelType}
+                                      {fuelType.fuelType}
                                     </option>
                                   );
                                 })}
@@ -1331,14 +1348,14 @@ class AdvancedSearch extends Component {
                           value={this.state.steeringType}
                         >
                           <option>All Steering</option>
-                          {carSteeringList &&
-                            carSteeringList.map(steer => {
+                          {steeringTypeList &&
+                            steeringTypeList.map(steer => {
                               return (
                                 <option
-                                  id={steer.carSteeringId}
-                                  value={steer.carSteeringType}
+                                  id={steer.steeringTypeId}
+                                  value={steer.steeringType}
                                 >
-                                  {steer.carSteeringType}
+                                  {steer.steeringType}
                                 </option>
                               );
                             })}
@@ -1659,18 +1676,18 @@ class AdvancedSearch extends Component {
 
                         <select
                           className="form-control"
-                          name="dealType"
+                          name="dealsType"
                           onChange={e => {
                             this.handleChange(e);
                           }}
-                          value={this.state.dealType}
+                          value={this.state.dealsType}
                         >
                           <option>All Deals</option>
-                          {dealsList &&
-                            dealsList.map(deal => {
+                          {dealsTypeList &&
+                            dealsTypeList.map(deal => {
                               return (
-                                <option id={deal.dealId} value={deal.dealType}>
-                                  {deal.dealType}
+                                <option id={deal.dealsTypeId} value={deal.dealsType}>
+                                  {deal.dealsType}
                                 </option>
                               );
                             })}
@@ -1697,11 +1714,11 @@ class AdvancedSearch extends Component {
                           value={this.state.membershipType}
                         >
                           <option>All Memberships</option>
-                          {memberShipList &&
-                            memberShipList.map(memberShip => {
+                          {memberShipTypeList &&
+                            memberShipTypeList.map(memberShip => {
                               return (
                                 <option
-                                  id={memberShip.membershipId}
+                                  id={memberShip.membershipTypeId}
                                   value={memberShip.membershipType}
                                 >
                                   {memberShip.membershipType}

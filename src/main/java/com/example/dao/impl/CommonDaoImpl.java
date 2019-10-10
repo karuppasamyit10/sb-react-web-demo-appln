@@ -311,15 +311,15 @@ public class CommonDaoImpl implements CommonDao {
 			}
 				
 			//MembershipType list
-			List<MemberShipType> MemberShipTypes = memberShipTypeRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
+			List<MemberShipType> memberShipTypes = memberShipTypeRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
 			List<Object> memberShipTypeList = new LinkedList<>();
-			for(MemberShipType memberShipType : MemberShipTypes) {
+			for(MemberShipType memberShipType : memberShipTypes) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("membershipTypeId", memberShipType.getMembershipTypeId());
 				params.put("membershipType", memberShipType.getMembershipType());
 				memberShipTypeList.add(params);
 			}		
-			rootParams.put("MemberShipTypeList", memberShipTypeList);	
+			rootParams.put("memberShipTypeList", memberShipTypeList);	
 			
 			// Steering list
 			List<SteeringType> Steerings= steeringTypeRepository.findByIsDeletedOrderBySteeringTypeAsc(0);
@@ -337,7 +337,7 @@ public class CommonDaoImpl implements CommonDao {
 			List<Object> TransmissionList = new LinkedList<>();
 			for(TransmissionType Transmission : Transmissions) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("transmissionId", Transmission.getTransmissionTypeId());
+				params.put("transmissionTypeId", Transmission.getTransmissionTypeId());
 				params.put("transmissionType", Transmission.getTransmissionType());
 				TransmissionList.add(params);
 			}
@@ -534,10 +534,10 @@ public class CommonDaoImpl implements CommonDao {
 				Predicate membershipConditionPredicate = membershipExp.in(vehicleSearchBean.getMembershipType());
 				listPredicate.add(membershipConditionPredicate);
 			}
-			if(vehicleSearchBean.getDealType()!=null && !vehicleSearchBean.getDealType().isEmpty())
+			if(vehicleSearchBean.getDealsType()!=null && !vehicleSearchBean.getDealsType().isEmpty())
 			{
 				Expression<String> dealTypeExp = vehicleRoot.get("dealType");
-				Predicate dealTypeConditionPredicate = dealTypeExp.in(vehicleSearchBean.getDealType());
+				Predicate dealTypeConditionPredicate = dealTypeExp.in(vehicleSearchBean.getDealsType());
 				listPredicate.add(dealTypeConditionPredicate);
 			}
 			if(vehicleSearchBean.getFromYear()!=null && !vehicleSearchBean.getFromYear().isEmpty() && !vehicleSearchBean.getFromYear().equalsIgnoreCase("null"))

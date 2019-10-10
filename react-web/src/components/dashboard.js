@@ -81,8 +81,8 @@ class Upload extends Component {
   onChangeBrand = (event) => {
     const object = JSON.parse(event.target.value)
     console.log(object)
-    const { brandId, brandName } = object
-    this.setState({ brandId: brandId, brandName: brandName, brandObject: object }, () => {
+    const { brandId, brand } = object
+    this.setState({ brandId: brandId, brand: brand, brandObject: object }, () => {
       this.getVehicleModelList(this.state.brandId);
     })
   }
@@ -270,8 +270,8 @@ class Upload extends Component {
                                     brandList.map((vehicle) => {
                                       return (
                                         <option id={vehicle.brandId}
-                                          value={JSON.stringify({ brandId: vehicle.brandId, brandName: vehicle.brandName })}
-                                        >{vehicle.brandName}</option>
+                                          value={JSON.stringify({ brandId: vehicle.brandId, brand: vehicle.brand })}
+                                        >{vehicle.brand}</option>
                                       )
                                     }) :
                                     ''}
@@ -311,7 +311,7 @@ class Upload extends Component {
                                   {countryList && countryList.length ?
                                     countryList.map((country) => {
                                       return (
-                                        <option value={country.countryName} id={country.countryId}>{country.countryName}</option>
+                                        <option value={country.country} id={country.countryId}>{country.country}</option>
                                       )
                                     }) :
                                     <option>Loading...</option>}
@@ -416,7 +416,7 @@ class Upload extends Component {
                                   {countryList && countryList.length ?
                                     countryList.map((country) => {
                                       return (
-                                        <option value={country.countryName} id={country.countryId}>{country.countryName}</option>
+                                        <option value={country.country} id={country.countryId}>{country.country}</option>
                                       )
                                     }) :
                                     <option>Loading...</option>}
