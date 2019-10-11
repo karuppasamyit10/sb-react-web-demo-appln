@@ -19,6 +19,7 @@ import { getDashboardDetails, getVehicleMasterData, getVehicleModelList } from '
 import { showNotification } from '../actions/NotificationAction'
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
+import LoadingOverlay from 'react-loading-overlay';
 
 class Upload extends Component {
   constructor(props) {
@@ -31,12 +32,13 @@ class Upload extends Component {
       modelId: null,
       brandName: null,
       modelName: null,
-      country : null,
+      country: null,
       modelList: [],
       modelisDisable: true,
       brandObject: {},
       modelObject: {},
-      vehicleTypeId : 1
+      vehicleTypeId: 1,
+      isLoading: false
     };
   }
 
@@ -53,29 +55,31 @@ class Upload extends Component {
   }
 
   getDashboardDetails = () => {
+    this.setState({ isLoading: true });
     this.props.getDashboardDetails({}, response => {
       console.log(response);
+      this.setState({ isLoading: false });
       if (response.response_code === 0) {
         this.setState({ dashboardDetails: response.response })
       }
     })
   }
 
-  getVehicleMasterDataByVehicleTypeId= (vehicleTypeId) => {
+  getVehicleMasterDataByVehicleTypeId = (vehicleTypeId) => {
     this.getVehicleMasterData(vehicleTypeId);
-    this.setState({ vehicleTypeId : vehicleTypeId});
+    this.setState({ vehicleTypeId: vehicleTypeId });
   }
 
-  onChangeCountry = (event) =>{
-    this.setState({ country : event.target.value});
+  onChangeCountry = (event) => {
+    this.setState({ country: event.target.value });
   }
 
-  onChangeFromPrice = (event) =>{
-    this.setState({ fromPrice : event.target.value});
+  onChangeFromPrice = (event) => {
+    this.setState({ fromPrice: event.target.value });
   }
 
-  onChangeToPrice = (event) =>{
-    this.setState({ toPrice : event.target.value});
+  onChangeToPrice = (event) => {
+    this.setState({ toPrice: event.target.value });
   }
 
   onChangeBrand = (event) => {
@@ -98,7 +102,7 @@ class Upload extends Component {
   }
 
   getVehicleMasterData = (vehicleTypeId) => {
-    this.props.getVehicleMasterData({vehicleTypeId}, (response) => {
+    this.props.getVehicleMasterData({ vehicleTypeId }, (response) => {
       if (response.response_code === 0) {
         this.setState({ masterData: response.response })
       }
@@ -106,20 +110,24 @@ class Upload extends Component {
   }
 
   getVehicleModelList = (brandId) => {
+    this.setState({ isLoading: true });
     this.props.getVehicleModelList({ brandId: brandId }, response => {
+      this.setState({ isLoading: false });
       if (response.response_code === 0) {
         this.setState({ modelList: response.response.modelList })
-        this.setState({modelisDisable : false});
+        this.setState({ modelisDisable: false });
       }
     })
   }
 
   handleSearch = () => {
-    const { brandName , modelName , country , brandId , modelId , vehicleTypeId} = this.state;
+    const { brandName, modelName, country, brandId, modelId, vehicleTypeId } = this.state;
     this.props.history.push({
       pathname: PATH.ADVANCED_SEARCH,
-      state: { brandName :  brandName , brandId : brandId , modelId : modelId ,
-         modelName : modelName , country : country , vehicleTypeId : vehicleTypeId}
+      state: {
+        brandName: brandName, brandId: brandId, modelId: modelId,
+        modelName: modelName, country: country, vehicleTypeId: vehicleTypeId
+      }
     })
   }
 
@@ -128,273 +136,282 @@ class Upload extends Component {
     let { brandList, countryList, priceList } = this.state.masterData;
     console.log(this.state.modelList)
     return (
-      <React.Fragment>
-        <section class="search-filter">
-          <div class="container h-100">
-            <div
-              id="sf-content"
-              class="row no-gutters h-100 align-items-center justify-content-center hideForAni"
-            >
-              <div class="col sfcol">
-                <div class="head1 white text-center mb-3 text-shadow">
-                  Find great deals from top-rated dealers{" "}
-                  <sup class="sup">TM</sup>
-                </div>
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(1)}}>
-                    <a
-                      class="nav-link active"
-                      id="usedCar-tab"
-                      data-toggle="tab"
-                      href="#usedCar"
-                      role="tab"
-                      aria-controls="usedCar"
-                      aria-selected="true"
-                    >
-                      Car
-                    </a>
-                  </li>
-                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(2)}}>
-                    <a
-                      class="nav-link"
-                      id="usedCar-tab"
-                      data-toggle="tab"
-                      href="#usedCar"
-                      role="tab"
-                      aria-controls="usedCar"
-                      aria-selected="false"
-                    >
-                      Truck
-                    </a>
-                  </li>
-                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(3)}}>
-                    <a
-                      class="nav-link"
-                      id="usedCar-tab"
-                      data-toggle="tab"
-                      href="#usedCar"
-                      role="tab"
-                      aria-controls="usedCar"
-                      aria-selected="false"
-                    >
-                      Bus
-                    </a>
-                  </li>
-                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(4)}}>
-                    <a
-                      class="nav-link"
-                      id="usedCar-tab"
-                      data-toggle="tab"
-                      href="#usedCar"
-                      role="tab"
-                      aria-controls="usedCar"
-                      aria-selected="false"
-                    >
-                      Equipments
-                    </a>
-                  </li>
-                  <li class="nav-item" onClick={()=>{this.getVehicleMasterDataByVehicleTypeId(5)}}>
-                    <a
-                      class="nav-link"
-                      id="usedCar-tab"
-                      data-toggle="tab"
-                      href="#usedCar"
-                      role="tab"
-                      aria-controls="usedCar"
-                      aria-selected="false"
-                    >
-                      Parts
-                    </a>
-                  </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                  <div
-                    class="tab-pane fade show active"
-                    id="usedCar"
-                    role="tabpanel"
-                    aria-labelledby="usedCar-tab"
-                  >
-                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                      <li class="nav-item">
-                        <a
-                          class="nav-link active"
-                          id="by-models-tab"
-                          data-toggle="pill"
-                          href="#by-models"
-                          role="tab"
-                          aria-controls="by-models"
-                          aria-selected="true"
-                        >
-                          By Brand / Models
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          id="by-price-tab"
-                          data-toggle="pill"
-                          href="#by-price"
-                          role="tab"
-                          aria-controls="by-price"
-                          aria-selected="false"
-                        >
-                          By Price
-                        </a>
-                      </li>
-                    </ul>
-                    <div
-                      class="tab-content pills-tabContent"
-                      id="pills-tabContent"
-                    >
-                      <div
-                        class="tab-pane fade show active"
-                        id="by-models"
-                        role="tabpanel"
-                        aria-labelledby="by-models-tab"
-                      >
-                        <div class="model-filter">
-                          <div class="row no-gutters align-items-center">
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select onChange={this.onChangeBrand} class="form-control">
-                                  <option value={null} selected>
-                                    All Brands
-                            </option>
-                                  {brandList && brandList.length ?
-                                    brandList.map((vehicle) => {
-                                      return (
-                                        <option id={vehicle.brandId}
-                                          value={JSON.stringify({ brandId: vehicle.brandId, brand: vehicle.brand })}
-                                        >{vehicle.brand}</option>
-                                      )
-                                    }) :
-                                    ''}
+      <React.Fragment
+      >
+        <LoadingOverlay
+          active={this.state.isLoading}
+          spinner
+          text='Loading ...'
+        >
+          <section class="search-filter">
+            <div class="container h-100">
+              <div
+                id="sf-content"
+                class="row no-gutters h-100 align-items-center justify-content-center hideForAni"
+              >
 
-                                </select>
+                <div class="col sfcol">
+
+
+                  <div class="head1 white text-center mb-3 text-shadow">
+                    Find great deals from top-rated dealers{" "}
+                    <sup class="sup">TM</sup>
+                  </div>
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(1) }}>
+                      <a
+                        class="nav-link active"
+                        id="usedCar-tab"
+                        data-toggle="tab"
+                        href="#usedCar"
+                        role="tab"
+                        aria-controls="usedCar"
+                        aria-selected="true"
+                      >
+                        Car
+                    </a>
+                    </li>
+                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(2) }}>
+                      <a
+                        class="nav-link"
+                        id="usedCar-tab"
+                        data-toggle="tab"
+                        href="#usedCar"
+                        role="tab"
+                        aria-controls="usedCar"
+                        aria-selected="false"
+                      >
+                        Truck
+                    </a>
+                    </li>
+                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(3) }}>
+                      <a
+                        class="nav-link"
+                        id="usedCar-tab"
+                        data-toggle="tab"
+                        href="#usedCar"
+                        role="tab"
+                        aria-controls="usedCar"
+                        aria-selected="false"
+                      >
+                        Bus
+                    </a>
+                    </li>
+                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(4) }}>
+                      <a
+                        class="nav-link"
+                        id="usedCar-tab"
+                        data-toggle="tab"
+                        href="#usedCar"
+                        role="tab"
+                        aria-controls="usedCar"
+                        aria-selected="false"
+                      >
+                        Equipments
+                    </a>
+                    </li>
+                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(5) }}>
+                      <a
+                        class="nav-link"
+                        id="usedCar-tab"
+                        data-toggle="tab"
+                        href="#usedCar"
+                        role="tab"
+                        aria-controls="usedCar"
+                        aria-selected="false"
+                      >
+                        Parts
+                    </a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div
+                      class="tab-pane fade show active"
+                      id="usedCar"
+                      role="tabpanel"
+                      aria-labelledby="usedCar-tab"
+                    >
+                      <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            id="by-models-tab"
+                            data-toggle="pill"
+                            href="#by-models"
+                            role="tab"
+                            aria-controls="by-models"
+                            aria-selected="true"
+                          >
+                            By Brand / Models
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            id="by-price-tab"
+                            data-toggle="pill"
+                            href="#by-price"
+                            role="tab"
+                            aria-controls="by-price"
+                            aria-selected="false"
+                          >
+                            By Price
+                        </a>
+                        </li>
+                      </ul>
+                      <div
+                        class="tab-content pills-tabContent"
+                        id="pills-tabContent"
+                      >
+                        <div
+                          class="tab-pane fade show active"
+                          id="by-models"
+                          role="tabpanel"
+                          aria-labelledby="by-models-tab"
+                        >
+                          <div class="model-filter">
+                            <div class="row no-gutters align-items-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select onChange={this.onChangeBrand} class="form-control">
+                                    <option value={null} selected>
+                                      All Brands
+                            </option>
+                                    {brandList && brandList.length ?
+                                      brandList.map((vehicle) => {
+                                        return (
+                                          <option id={vehicle.brandId}
+                                            value={JSON.stringify({ brandId: vehicle.brandId, brand: vehicle.brand })}
+                                          >{vehicle.brand}</option>
+                                        )
+                                      }) :
+                                      ''}
+
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select disabled={this.state.modelisDisable} onChange={this.onChangeModel} class="form-control">
-                                  <option selecte={true} >All Models</option>
-                                  {this.state.modelList && this.state.modelList.length ?
-                                    this.state.modelList.map((model) => {
-                                      return (
-                                        <option id={model.modelId} value={JSON.stringify({ modelId: model.modelId, modelName: model.model })}>{model.model}</option>
-                                      )
-                                    }) : <option>NO Data Found</option>}
-                                </select>
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select disabled={this.state.modelisDisable} onChange={this.onChangeModel} class="form-control">
+                                    <option selecte={true} >All Models</option>
+                                    {this.state.modelList && this.state.modelList.length ?
+                                      this.state.modelList.map((model) => {
+                                        return (
+                                          <option id={model.modelId} value={JSON.stringify({ modelId: model.modelId, modelName: model.model })}>{model.model}</option>
+                                        )
+                                      }) : <option>NO Data Found</option>}
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select onChange={(e)=>{this.onChangeCountry(e)}} class="form-control">
-                                  <option selected>Choose Country</option>
-                                  {countryList && countryList.length ?
-                                    countryList.map((country) => {
-                                      return (
-                                        <option value={country.country} id={country.countryId}>{country.country}</option>
-                                      )
-                                    }) :
-                                    <option>Loading...</option>}
-                                </select>
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select onChange={(e) => { this.onChangeCountry(e) }} class="form-control">
+                                    <option selected>Choose Country</option>
+                                    {countryList && countryList.length ?
+                                      countryList.map((country) => {
+                                        return (
+                                          <option value={country.country} id={country.countryId}>{country.country}</option>
+                                        )
+                                      }) :
+                                      <option>Loading...</option>}
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="btn-wrap">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary w-100"
-                                  onClick={() => { this.handleSearch() }}
-                                >
-                                  Search
+                              <div class="col-md-3 colgrids">
+                                <div class="btn-wrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary w-100"
+                                    onClick={() => { this.handleSearch() }}
+                                  >
+                                    Search
                                 </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="tab-pane fade"
-                        id="by-price"
-                        role="tabpanel"
-                        aria-labelledby="by-price-tab"
-                      >
-                        <div class="price-filter">
-                          <div class="row no-gutters align-items-center">
-                            <div class="col-md-3 colgrids">
-                              <div class="form-group row align-items-center">
-                                {/* <label class="col-sm-4 col-form-label text-center">
+                        <div
+                          class="tab-pane fade"
+                          id="by-price"
+                          role="tabpanel"
+                          aria-labelledby="by-price-tab"
+                        >
+                          <div class="price-filter">
+                            <div class="row no-gutters align-items-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="form-group row align-items-center">
+                                  {/* <label class="col-sm-4 col-form-label text-center">
                                   Price
                                 </label> */}
-                                <div class="col-sm-8">
-                                  <div class="selectdd">
-                                    <span class="caret">
-                                      <i
-                                        class="fa fa-angle-down"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </span>
-                                    <select onChange={(e)=>{this.onChangeFromPrice(e)}}>
-                                      <option selected>From</option>
-                                      {priceList && priceList.length ?
-                                        priceList.map((price) => {
-                                          return (
-                                            <option value={price.price} id={price.price}>{price.price}</option>
-                                          )
-                                        }) :
-                                        <option>Loading...</option>}
+                                  <div class="col-sm-8">
+                                    <div class="selectdd">
+                                      <span class="caret">
+                                        <i
+                                          class="fa fa-angle-down"
+                                          aria-hidden="true"
+                                        ></i>
+                                      </span>
+                                      <select onChange={(e) => { this.onChangeFromPrice(e) }}>
+                                        <option selected>From</option>
+                                        {priceList && priceList.length ?
+                                          priceList.map((price) => {
+                                            return (
+                                              <option value={price.price} id={price.price}>{price.price}</option>
+                                            )
+                                          }) :
+                                          <option>Loading...</option>}
                                       </select>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="form-group row align-items-center">
-                                {/* <label class="col-sm-4 col-form-label text-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="form-group row align-items-center">
+                                  {/* <label class="col-sm-4 col-form-label text-center">
                                   To
                                 </label> */}
-                                <div class="col-sm-8">
-                                  <div class="selectdd">
-                                    <span class="caret">
-                                      <i
-                                        class="fa fa-angle-down"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </span>
-                                    <select onChange={(e)=>{this.onChangeToPrice(e)}}>
-                                      <option selected>To</option>
-                                      {priceList && priceList.length ?
-                                        priceList.map((price) => {
-                                          return (
-                                            <option value={price.price} id={price.price}>{price.price}</option>
-                                          )
-                                        }) :
-                                        <option>Loading...</option>}
+                                  <div class="col-sm-8">
+                                    <div class="selectdd">
+                                      <span class="caret">
+                                        <i
+                                          class="fa fa-angle-down"
+                                          aria-hidden="true"
+                                        ></i>
+                                      </span>
+                                      <select onChange={(e) => { this.onChangeToPrice(e) }}>
+                                        <option selected>To</option>
+                                        {priceList && priceList.length ?
+                                          priceList.map((price) => {
+                                            return (
+                                              <option value={price.price} id={price.price}>{price.price}</option>
+                                            )
+                                          }) :
+                                          <option>Loading...</option>}
                                       </select>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            {/* <div class="col-md-3 colgrids">
+                              {/* <div class="col-md-3 colgrids">
                               <div class="inputtxt">
                                 <input
                                   type="text"
@@ -403,573 +420,573 @@ class Upload extends Component {
                                 />
                               </div>
                             </div> */}
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select onChange={(e)=>{this.onChangeCountry(e)}}>
-                                  <option selected>Choose Country</option>
-                                  {countryList && countryList.length ?
-                                    countryList.map((country) => {
-                                      return (
-                                        <option value={country.country} id={country.countryId}>{country.country}</option>
-                                      )
-                                    }) :
-                                    <option>Loading...</option>}
-                                </select>
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select onChange={(e) => { this.onChangeCountry(e) }}>
+                                    <option selected>Choose Country</option>
+                                    {countryList && countryList.length ?
+                                      countryList.map((country) => {
+                                        return (
+                                          <option value={country.country} id={country.countryId}>{country.country}</option>
+                                        )
+                                      }) :
+                                      <option>Loading...</option>}
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="btn-wrap">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary w-100"
-                                  onClick={() => { this.handleSearch() }}
-                                >
-                                  Search
+                              <div class="col-md-3 colgrids">
+                                <div class="btn-wrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary w-100"
+                                    onClick={() => { this.handleSearch() }}
+                                  >
+                                    Search
                                 </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="tab-pane fade"
-                    id="truck"
-                    role="tabpanel"
-                    aria-labelledby="truck-tab"
-                  >
-                    <ul class="nav nav-pills" id="pills-tab-two" role="tablist">
-                      <li class="nav-item">
-                        <a
-                          class="nav-link active"
-                          id="by-models-tab-two"
-                          data-toggle="pill"
-                          href="#by-models-two"
-                          role="tab"
-                          aria-controls="by-models-two"
-                          aria-selected="true"
-                        >
-                          By Make / Models
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          id="by-price-tab-two"
-                          data-toggle="pill"
-                          href="#by-price-two"
-                          role="tab"
-                          aria-controls="by-price-two"
-                          aria-selected="false"
-                        >
-                          By Price
-                        </a>
-                      </li>
-                    </ul>
                     <div
-                      class="tab-content pills-tabContent"
-                      id="pills-tabContent-two"
+                      class="tab-pane fade"
+                      id="truck"
+                      role="tabpanel"
+                      aria-labelledby="truck-tab"
                     >
+                      <ul class="nav nav-pills" id="pills-tab-two" role="tablist">
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            id="by-models-tab-two"
+                            data-toggle="pill"
+                            href="#by-models-two"
+                            role="tab"
+                            aria-controls="by-models-two"
+                            aria-selected="true"
+                          >
+                            By Make / Models
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            id="by-price-tab-two"
+                            data-toggle="pill"
+                            href="#by-price-two"
+                            role="tab"
+                            aria-controls="by-price-two"
+                            aria-selected="false"
+                          >
+                            By Price
+                        </a>
+                        </li>
+                      </ul>
                       <div
-                        class="tab-pane fade show active"
-                        id="by-models-two"
-                        role="tabpanel"
-                        aria-labelledby="by-models-tab-two"
+                        class="tab-content pills-tabContent"
+                        id="pills-tabContent-two"
                       >
-                        <div class="model-filter">
-                          <div class="row no-gutters align-items-center">
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select>
-                                  <option selected>All Makes</option>
-                                  <option>Loading...</option>
-                                </select>
+                        <div
+                          class="tab-pane fade show active"
+                          id="by-models-two"
+                          role="tabpanel"
+                          aria-labelledby="by-models-tab-two"
+                        >
+                          <div class="model-filter">
+                            <div class="row no-gutters align-items-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select>
+                                    <option selected>All Makes</option>
+                                    <option>Loading...</option>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select>
-                                  <option selected>All Models</option>
-                                  <option>Loading...</option>
-                                </select>
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select>
+                                    <option selected>All Models</option>
+                                    <option>Loading...</option>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="inputtxt">
-                                <input
-                                  type="text"
-                                  value=""
-                                  placeholder="Zipcode"
-                                />
+                              <div class="col-md-3 colgrids">
+                                <div class="inputtxt">
+                                  <input
+                                    type="text"
+                                    value=""
+                                    placeholder="Zipcode"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="btn-wrap">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary w-100"
-                                  onClick={() => { this.handleSearch() }}
-                                >
-                                  Search
+                              <div class="col-md-3 colgrids">
+                                <div class="btn-wrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary w-100"
+                                    onClick={() => { this.handleSearch() }}
+                                  >
+                                    Search
                                 </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="tab-pane fade"
-                        id="by-price-two"
-                        role="tabpanel"
-                        aria-labelledby="by-price-tab-two"
-                      >
-                        <div class="price-filter">
-                          <div class="row no-gutters align-items-center">
-                            <div class="col-md-3 colgrids">
-                              <div class="form-group row align-items-center">
-                                <label class="col-sm-4 col-form-label text-center">
-                                  Price
+                        <div
+                          class="tab-pane fade"
+                          id="by-price-two"
+                          role="tabpanel"
+                          aria-labelledby="by-price-tab-two"
+                        >
+                          <div class="price-filter">
+                            <div class="row no-gutters align-items-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="form-group row align-items-center">
+                                  <label class="col-sm-4 col-form-label text-center">
+                                    Price
                                 </label>
-                                <div class="col-sm-8">
-                                  <div class="selectdd">
-                                    <span class="caret">
-                                      <i
-                                        class="fa fa-angle-down"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </span>
-                                    <select>
-                                      <option selected>----</option>
-                                      <option>Loading...</option>
-                                    </select>
+                                  <div class="col-sm-8">
+                                    <div class="selectdd">
+                                      <span class="caret">
+                                        <i
+                                          class="fa fa-angle-down"
+                                          aria-hidden="true"
+                                        ></i>
+                                      </span>
+                                      <select>
+                                        <option selected>----</option>
+                                        <option>Loading...</option>
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="form-group row align-items-center">
-                                <label class="col-sm-4 col-form-label text-center">
-                                  To
+                              <div class="col-md-3 colgrids">
+                                <div class="form-group row align-items-center">
+                                  <label class="col-sm-4 col-form-label text-center">
+                                    To
                                 </label>
-                                <div class="col-sm-8">
-                                  <div class="selectdd">
-                                    <span class="caret">
-                                      <i
-                                        class="fa fa-angle-down"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </span>
-                                    <select>
-                                      <option selected>----</option>
-                                      <option>Loading...</option>
-                                    </select>
+                                  <div class="col-sm-8">
+                                    <div class="selectdd">
+                                      <span class="caret">
+                                        <i
+                                          class="fa fa-angle-down"
+                                          aria-hidden="true"
+                                        ></i>
+                                      </span>
+                                      <select>
+                                        <option selected>----</option>
+                                        <option>Loading...</option>
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="inputtxt">
-                                <input
-                                  type="text"
-                                  value=""
-                                  placeholder="Zipcode"
-                                />
+                              <div class="col-md-3 colgrids">
+                                <div class="inputtxt">
+                                  <input
+                                    type="text"
+                                    value=""
+                                    placeholder="Zipcode"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="btn-wrap">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary w-100"
-                                  onClick={() => { this.handleSearch() }}
-                                >
-                                  Search
+                              <div class="col-md-3 colgrids">
+                                <div class="btn-wrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary w-100"
+                                    onClick={() => { this.handleSearch() }}
+                                  >
+                                    Search
                                 </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="tab-pane fade"
-                    id="bus"
-                    role="tabpanel"
-                    aria-labelledby="bus-tab"
-                  >
-                    <ul
-                      class="nav nav-pills"
-                      id="pills-tab-three"
-                      role="tablist"
-                    >
-                      <li class="nav-item">
-                        <a
-                          class="nav-link active"
-                          id="by-models-tab-three"
-                          data-toggle="pill"
-                          href="#by-models-three"
-                          role="tab"
-                          aria-controls="by-models-three"
-                          aria-selected="true"
-                        >
-                          By Make / Models
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          id="by-price-tab-three"
-                          data-toggle="pill"
-                          href="#by-price-three"
-                          role="tab"
-                          aria-controls="by-price-three"
-                          aria-selected="false"
-                        >
-                          By Price
-                        </a>
-                      </li>
-                    </ul>
                     <div
-                      class="tab-content pills-tabContent"
-                      id="pills-tabContent-three"
+                      class="tab-pane fade"
+                      id="bus"
+                      role="tabpanel"
+                      aria-labelledby="bus-tab"
                     >
-                      <div
-                        class="tab-pane fade show active"
-                        id="by-models-three"
-                        role="tabpanel"
-                        aria-labelledby="by-models-tab-three"
+                      <ul
+                        class="nav nav-pills"
+                        id="pills-tab-three"
+                        role="tablist"
                       >
-                        <div class="model-filter">
-                          <div class="row no-gutters align-items-center">
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select>
-                                  <option selected>All Makes</option>
-                                  <option>Loading...</option>
-                                </select>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            id="by-models-tab-three"
+                            data-toggle="pill"
+                            href="#by-models-three"
+                            role="tab"
+                            aria-controls="by-models-three"
+                            aria-selected="true"
+                          >
+                            By Make / Models
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            id="by-price-tab-three"
+                            data-toggle="pill"
+                            href="#by-price-three"
+                            role="tab"
+                            aria-controls="by-price-three"
+                            aria-selected="false"
+                          >
+                            By Price
+                        </a>
+                        </li>
+                      </ul>
+                      <div
+                        class="tab-content pills-tabContent"
+                        id="pills-tabContent-three"
+                      >
+                        <div
+                          class="tab-pane fade show active"
+                          id="by-models-three"
+                          role="tabpanel"
+                          aria-labelledby="by-models-tab-three"
+                        >
+                          <div class="model-filter">
+                            <div class="row no-gutters align-items-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select>
+                                    <option selected>All Makes</option>
+                                    <option>Loading...</option>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select>
-                                  <option selected>All Models</option>
-                                  <option>Loading...</option>
-                                </select>
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select>
+                                    <option selected>All Models</option>
+                                    <option>Loading...</option>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="inputtxt">
-                                <input
-                                  type="text"
-                                  value=""
-                                  placeholder="Zipcode"
-                                />
+                              <div class="col-md-3 colgrids">
+                                <div class="inputtxt">
+                                  <input
+                                    type="text"
+                                    value=""
+                                    placeholder="Zipcode"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="btn-wrap">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary w-100"
-                                  onClick={() => { this.handleSearch() }}
-                                >
-                                  Search
+                              <div class="col-md-3 colgrids">
+                                <div class="btn-wrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary w-100"
+                                    onClick={() => { this.handleSearch() }}
+                                  >
+                                    Search
                                 </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="tab-pane fade"
-                        id="by-price-three"
-                        role="tabpanel"
-                        aria-labelledby="by-price-tab-three"
-                      >
-                        <div class="price-filter">
-                          <div class="row no-gutters align-items-center">
-                            <div class="col-md-3 colgrids">
-                              <div class="form-group row align-items-center">
-                                <label class="col-sm-4 col-form-label text-center">
-                                  Price
+                        <div
+                          class="tab-pane fade"
+                          id="by-price-three"
+                          role="tabpanel"
+                          aria-labelledby="by-price-tab-three"
+                        >
+                          <div class="price-filter">
+                            <div class="row no-gutters align-items-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="form-group row align-items-center">
+                                  <label class="col-sm-4 col-form-label text-center">
+                                    Price
                                 </label>
-                                <div class="col-sm-8">
-                                  <div class="selectdd">
-                                    <span class="caret">
-                                      <i
-                                        class="fa fa-angle-down"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </span>
-                                    <select>
-                                      <option selected>----</option>
-                                      <option>Loading...</option>
-                                    </select>
+                                  <div class="col-sm-8">
+                                    <div class="selectdd">
+                                      <span class="caret">
+                                        <i
+                                          class="fa fa-angle-down"
+                                          aria-hidden="true"
+                                        ></i>
+                                      </span>
+                                      <select>
+                                        <option selected>----</option>
+                                        <option>Loading...</option>
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="form-group row align-items-center">
-                                <label class="col-sm-4 col-form-label text-center">
-                                  To
+                              <div class="col-md-3 colgrids">
+                                <div class="form-group row align-items-center">
+                                  <label class="col-sm-4 col-form-label text-center">
+                                    To
                                 </label>
-                                <div class="col-sm-8">
-                                  <div class="selectdd">
-                                    <span class="caret">
-                                      <i
-                                        class="fa fa-angle-down"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </span>
-                                    <select>
-                                      <option selected>----</option>
-                                      <option>Loading...</option>
-                                    </select>
+                                  <div class="col-sm-8">
+                                    <div class="selectdd">
+                                      <span class="caret">
+                                        <i
+                                          class="fa fa-angle-down"
+                                          aria-hidden="true"
+                                        ></i>
+                                      </span>
+                                      <select>
+                                        <option selected>----</option>
+                                        <option>Loading...</option>
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="inputtxt">
-                                <input
-                                  type="text"
-                                  value=""
-                                  placeholder="Zipcode"
-                                />
+                              <div class="col-md-3 colgrids">
+                                <div class="inputtxt">
+                                  <input
+                                    type="text"
+                                    value=""
+                                    placeholder="Zipcode"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="btn-wrap">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary w-100"
-                                  onClick={() => { this.handleSearch() }}
-                                >
-                                  Search
+                              <div class="col-md-3 colgrids">
+                                <div class="btn-wrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary w-100"
+                                    onClick={() => { this.handleSearch() }}
+                                  >
+                                    Search
                                 </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="tab-pane fade"
-                    id="equipments"
-                    role="tabpanel"
-                    aria-labelledby="equipments-tab"
-                  >
-                    <ul
-                      class="nav nav-pills"
-                      id="pills-tab-four"
-                      role="tablist"
-                    >
-                      <li class="nav-item">
-                        <a
-                          class="nav-link active"
-                          id="by-models-tab-four"
-                          data-toggle="pill"
-                          href="#by-models-four"
-                          role="tab"
-                          aria-controls="by-models-four"
-                          aria-selected="true"
-                        >
-                          By Make / Models
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          id="by-price-tab-four"
-                          data-toggle="pill"
-                          href="#by-price-four"
-                          role="tab"
-                          aria-controls="by-price-four"
-                          aria-selected="false"
-                        >
-                          By Price
-                        </a>
-                      </li>
-                    </ul>
                     <div
-                      class="tab-content pills-tabContent"
-                      id="pills-tabContent-four"
+                      class="tab-pane fade"
+                      id="equipments"
+                      role="tabpanel"
+                      aria-labelledby="equipments-tab"
                     >
-                      <div
-                        class="tab-pane fade show active"
-                        id="by-models-four"
-                        role="tabpanel"
-                        aria-labelledby="by-models-tab-four"
+                      <ul
+                        class="nav nav-pills"
+                        id="pills-tab-four"
+                        role="tablist"
                       >
-                        <div class="model-filter">
-                          <div class="row no-gutters align-items-center">
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select>
-                                  <option selected>All Makes</option>
-                                  <option>Loading...</option>
-                                </select>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            id="by-models-tab-four"
+                            data-toggle="pill"
+                            href="#by-models-four"
+                            role="tab"
+                            aria-controls="by-models-four"
+                            aria-selected="true"
+                          >
+                            By Make / Models
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            id="by-price-tab-four"
+                            data-toggle="pill"
+                            href="#by-price-four"
+                            role="tab"
+                            aria-controls="by-price-four"
+                            aria-selected="false"
+                          >
+                            By Price
+                        </a>
+                        </li>
+                      </ul>
+                      <div
+                        class="tab-content pills-tabContent"
+                        id="pills-tabContent-four"
+                      >
+                        <div
+                          class="tab-pane fade show active"
+                          id="by-models-four"
+                          role="tabpanel"
+                          aria-labelledby="by-models-tab-four"
+                        >
+                          <div class="model-filter">
+                            <div class="row no-gutters align-items-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select>
+                                    <option selected>All Makes</option>
+                                    <option>Loading...</option>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="selectdd">
-                                <span class="caret">
-                                  <i
-                                    class="fa fa-angle-down"
-                                    aria-hidden="true"
-                                  ></i>
-                                </span>
-                                <select>
-                                  <option selected>All Models</option>
-                                  <option>Loading...</option>
-                                </select>
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select>
+                                    <option selected>All Models</option>
+                                    <option>Loading...</option>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="inputtxt">
-                                <input
-                                  type="text"
-                                  value=""
-                                  placeholder="Zipcode"
-                                />
+                              <div class="col-md-3 colgrids">
+                                <div class="inputtxt">
+                                  <input
+                                    type="text"
+                                    value=""
+                                    placeholder="Zipcode"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="btn-wrap">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary w-100"
-                                  onClick={() => { this.handleSearch() }}
-                                >
-                                  Search
+                              <div class="col-md-3 colgrids">
+                                <div class="btn-wrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary w-100"
+                                    onClick={() => { this.handleSearch() }}
+                                  >
+                                    Search
                                 </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="tab-pane fade"
-                        id="by-price-four"
-                        role="tabpanel"
-                        aria-labelledby="by-price-tab-four"
-                      >
-                        <div class="price-filter">
-                          <div class="row no-gutters align-items-center">
-                            <div class="col-md-3 colgrids">
-                              <div class="form-group row align-items-center">
-                                <label class="col-sm-4 col-form-label text-center">
-                                  Price
+                        <div
+                          class="tab-pane fade"
+                          id="by-price-four"
+                          role="tabpanel"
+                          aria-labelledby="by-price-tab-four"
+                        >
+                          <div class="price-filter">
+                            <div class="row no-gutters align-items-center">
+                              <div class="col-md-3 colgrids">
+                                <div class="form-group row align-items-center">
+                                  <label class="col-sm-4 col-form-label text-center">
+                                    Price
                                 </label>
-                                <div class="col-sm-8">
-                                  <div class="selectdd">
-                                    <span class="caret">
-                                      <i
-                                        class="fa fa-angle-down"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </span>
-                                    <select>
-                                      <option selected>----</option>
-                                      <option>Loading...</option>
-                                    </select>
+                                  <div class="col-sm-8">
+                                    <div class="selectdd">
+                                      <span class="caret">
+                                        <i
+                                          class="fa fa-angle-down"
+                                          aria-hidden="true"
+                                        ></i>
+                                      </span>
+                                      <select>
+                                        <option selected>----</option>
+                                        <option>Loading...</option>
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="form-group row align-items-center">
-                                <label class="col-sm-4 col-form-label text-center">
-                                  To
+                              <div class="col-md-3 colgrids">
+                                <div class="form-group row align-items-center">
+                                  <label class="col-sm-4 col-form-label text-center">
+                                    To
                                 </label>
-                                <div class="col-sm-8">
-                                  <div class="selectdd">
-                                    <span class="caret">
-                                      <i
-                                        class="fa fa-angle-down"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </span>
-                                    <select>
-                                      <option selected>----</option>
-                                      <option>Loading...</option>
-                                    </select>
+                                  <div class="col-sm-8">
+                                    <div class="selectdd">
+                                      <span class="caret">
+                                        <i
+                                          class="fa fa-angle-down"
+                                          aria-hidden="true"
+                                        ></i>
+                                      </span>
+                                      <select>
+                                        <option selected>----</option>
+                                        <option>Loading...</option>
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="inputtxt">
-                                <input
-                                  type="text"
-                                  value=""
-                                  placeholder="Zipcode"
-                                />
+                              <div class="col-md-3 colgrids">
+                                <div class="inputtxt">
+                                  <input
+                                    type="text"
+                                    value=""
+                                    placeholder="Zipcode"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-3 colgrids">
-                              <div class="btn-wrap">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary w-100"
-                                  onClick={() => { this.handleSearch() }}
-                                >
-                                  Search
+                              <div class="col-md-3 colgrids">
+                                <div class="btn-wrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary w-100"
+                                    onClick={() => { this.handleSearch() }}
+                                  >
+                                    Search
                                 </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
+          </section>
+        </LoadingOverlay>
         <section class="search-showcase spacerTop spacerBottom">
           <div class="container">
             <div class="row">
