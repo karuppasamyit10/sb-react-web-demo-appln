@@ -166,6 +166,19 @@ class Header extends Component {
                       <a href="javascript:;">한국어</a>
                     </li>
                   </ul>
+                  <select class="language_select">
+                    <option value="0">English</option>
+                    <option value="1">Español</option>
+                    <option value="2">Français</option>
+                    <option value="3">العربية</option>
+                    <option value="4">ქართული</option>
+                    <option value="5">Kiswahili</option>
+                    <option value="6">русский</option>
+                    <option value="7">Português</option>
+                    <option value="8">日本語</option>
+                    <option value="9">中文</option>
+                    <option value="10">한국어</option>
+                </select>
                 </div>
               </div>
               <div class="menu-main">
