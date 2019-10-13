@@ -311,7 +311,7 @@ class Upload extends Component {
                                         return (
                                           <option id={model.modelId} value={JSON.stringify({ modelId: model.modelId, modelName: model.model })}>{model.model}</option>
                                         )
-                                      }) : <option>NO Data Found</option>}
+                                      }) : <option>No Data Found</option>}
                                   </select>
                                 </div>
                               </div>

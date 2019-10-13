@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
+import LoadingOverlay from "react-loading-overlay";
 
 export const AppWrapper = (Content, ...propsMapping) => {
   class HOC extends Component {

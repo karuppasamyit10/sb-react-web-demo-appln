@@ -9,6 +9,8 @@ import stores from "./stores";
 import "./assets/css/bootstrap.min.css";
 import "./assets/icons/css/all.min.css";
 import "./assets/css/global.css";
+import "./assets/css/bootstrap.min.css";
+import "./assets/css/dev.css";
 import "./assets/css/header.css";
 import "./assets/css/form.css";
 import "./assets/css/hamburgers/hamburgers.css";

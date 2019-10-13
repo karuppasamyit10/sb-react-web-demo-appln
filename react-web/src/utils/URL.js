@@ -1,7 +1,7 @@
 let BASE_URL = '';
 let isDevelopment = true
 if (window.location.hostname === 'localhost' && window.location.port===3000) {
-  BASE_URL = 'http://localhost:8181/'
+  BASE_URL = 'http://35.160.123.119:8181/'
   isDevelopment = true
 }  else if (window.location.hostname === '35.160.123.119' && window.location.port===8181) {
   BASE_URL = 'http://35.160.123.119:8181/'
@@ -12,7 +12,7 @@ if (window.location.hostname === 'localhost' && window.location.port===3000) {
 }
 
 module.exports = {
-  BASE_URL: 'http://localhost:8181/',
+  BASE_URL: BASE_URL,
   isDevelopment: isDevelopment,
   OATHU: 'oauth/token',
   FORGET : 'forgetPassword',
