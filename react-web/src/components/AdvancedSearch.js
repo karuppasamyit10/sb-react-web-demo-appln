@@ -411,17 +411,20 @@ class AdvancedSearch extends Component {
     SearchData.set("itemsPerPage", itemsPerPage);
     SearchData.set("brands", brands ? brands : []);
     SearchData.set("models", models ? models : []);
-    SearchData.set("transmissionType", transmissionType ? transmissionType : []);
+    SearchData.set(
+      "transmissionType",
+      transmissionType ? transmissionType : []
+    );
     SearchData.set("steeringType", steeringType ? steeringType : []);
     SearchData.set("fuelType", fuelType ? fuelType : []);
     SearchData.set("dealsType", dealsType ? dealsType : []);
     SearchData.set("membershipType", membershipType ? membershipType : []);
-    SearchData.set("fromYear", fromYear);
-    SearchData.set("toYear", toYear);
-    SearchData.set("fromPrice", fromPrice);
-    SearchData.set("toPrice", toPrice);
-    SearchData.set("fromMileage", fromMileage);
-    SearchData.set("toMileage", toMileage);
+    SearchData.set("fromYear", fromYear ? fromYear : "");
+    SearchData.set("toYear", toYear ? toYear : "");
+    SearchData.set("fromPrice", fromPrice ? fromPrice : "");
+    SearchData.set("toPrice", toPrice ? toPrice : "");
+    SearchData.set("fromMileage", fromMileage ? fromMileage : "");
+    SearchData.set("toMileage", toMileage ? toMileage : "");
     this.setState({ isLoading: true });
     this.props.getVehicleSearchList(SearchData, response => {
       console.log(response);
@@ -450,12 +453,12 @@ class AdvancedSearch extends Component {
       this.setState({ toYearList: filteredArray });
     }
     if (e.target.name === "fromPrice") {
-      console.log('jjjjjjjjjjjjjjjjjjjjj')
+      console.log("jjjjjjjjjjjjjjjjjjjjj");
       let toPriceList = this.state.master.priceList;
       let filteredArray = toPriceList.filter(
         price => parseInt(price.price) > parseInt(e.target.value)
       );
-      console.log(filteredArray ,'lllllllllllllllllllll')
+      console.log(filteredArray, "lllllllllllllllllllll");
       this.setState({ toPriceList: filteredArray });
     }
   };
@@ -687,7 +690,7 @@ class AdvancedSearch extends Component {
                             >
                               <option id="all">All Brands</option>
                               {brandList &&
-                                brandList.map((brand , i) => {
+                                brandList.map((brand, i) => {
                                   return (
                                     <option
                                       id={`${i}${brand.brandId}`}
@@ -1119,7 +1122,7 @@ class AdvancedSearch extends Component {
                             </div>
                           </div>
                           <div class="form-group">
-                          <div class="row align-items-center">
+                            <div class="row align-items-center">
                               <div class="col-12">
                                 <label for="">Price</label>
                               </div>
@@ -1255,54 +1258,54 @@ class AdvancedSearch extends Component {
                     <div class="filters filter_2">
                       <div class="head3 mb-2">Filter Results</div>
                       <div class="form-group">
-                      <div class="row align-items-center">
-                              <div class="col-12">
-                                <label for="">Price</label>
-                              </div>
-                              <div class="col-5">
-                                <select
-                                  name="fromPrice"
-                                  id="fromPrice"
-                                  value={this.state.fromPrice}
-                                  onChange={e => {
-                                    this.onChangeDropDown(e);
-                                  }}
-                                  class="form-control"
-                                >
-                                  {fromPriceList && fromPriceList.length
-                                    ? fromPriceList.map(price => {
-                                        return (
-                                          <option value={price.price}>
-                                            $ {price.price}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
-                              <div class="col-2">to</div>
-                              <div class="col-5">
-                                <select
-                                  name="toPrice"
-                                  id="toPrice"
-                                  value={this.state.toPrice}
-                                  onChange={e => {
-                                    this.onChangeDropDown(e);
-                                  }}
-                                  class="form-control"
-                                >
-                                  {toPriceList && toPriceList.length
-                                    ? toPriceList.map(price => {
-                                        return (
-                                          <option value={price.price}>
-                                            $ {price.price}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
-                            </div>
+                        <div class="row align-items-center">
+                          <div class="col-12">
+                            <label for="">Price</label>
+                          </div>
+                          <div class="col-5">
+                            <select
+                              name="fromPrice"
+                              id="fromPrice"
+                              value={this.state.fromPrice}
+                              onChange={e => {
+                                this.onChangeDropDown(e);
+                              }}
+                              class="form-control"
+                            >
+                              {fromPriceList && fromPriceList.length
+                                ? fromPriceList.map(price => {
+                                    return (
+                                      <option value={price.price}>
+                                        $ {price.price}
+                                      </option>
+                                    );
+                                  })
+                                : ""}
+                            </select>
+                          </div>
+                          <div class="col-2">to</div>
+                          <div class="col-5">
+                            <select
+                              name="toPrice"
+                              id="toPrice"
+                              value={this.state.toPrice}
+                              onChange={e => {
+                                this.onChangeDropDown(e);
+                              }}
+                              class="form-control"
+                            >
+                              {toPriceList && toPriceList.length
+                                ? toPriceList.map(price => {
+                                    return (
+                                      <option value={price.price}>
+                                        $ {price.price}
+                                      </option>
+                                    );
+                                  })
+                                : ""}
+                            </select>
+                          </div>
+                        </div>
                       </div>
                       {/* <div class="form-group">
                       <label for="">Financing</label>
