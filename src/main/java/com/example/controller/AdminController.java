@@ -19,11 +19,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Brand;
 import com.example.entity.Category1;
+import com.example.entity.Category2;
 import com.example.entity.ConditionType;
 import com.example.entity.Country;
 import com.example.entity.DealsType;
@@ -32,6 +34,8 @@ import com.example.entity.FuelType;
 import com.example.entity.LoadingWeightType;
 import com.example.entity.MemberShipType;
 import com.example.entity.Mileage;
+import com.example.entity.Model;
+import com.example.entity.ModelDetail;
 import com.example.entity.PartsType;
 import com.example.entity.Price;
 import com.example.entity.SeatsType;
@@ -42,6 +46,7 @@ import com.example.entity.VehicleType;
 import com.example.entity.Year;
 import com.example.repository.BrandRepository;
 import com.example.repository.Category1Repository;
+import com.example.repository.Category2Repository;
 import com.example.repository.ConditionTypeRepository;
 import com.example.repository.CountryRepository;
 import com.example.repository.DealsTypeRepository;
@@ -90,6 +95,9 @@ public class AdminController {
 	
 	@Autowired
 	Category1Repository category1Repository;
+	
+	@Autowired
+	Category2Repository category2Repository;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -169,10 +177,10 @@ public class AdminController {
 					vehicleTypes = new LinkedHashSet<VehicleType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/vehicleType.txt");
-				    	if(file.exists()) 
+				    	File vehicleFile = ResourceUtils.getFile("classpath:master_data/common/vehicleType.txt");
+				    	if(vehicleFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(vehicleFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
@@ -198,10 +206,10 @@ public class AdminController {
 					conditionTypeList = new LinkedList<ConditionType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/conditionType.txt");
-				    	if(file.exists()) 
+				    	File conditionFile = ResourceUtils.getFile("classpath:master_data/common/conditionType.txt");
+				    	if(conditionFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(conditionFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
@@ -227,10 +235,10 @@ public class AdminController {
 					countryList = new LinkedList<Country>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/country.txt");
-				    	if(file.exists()) 
+				    	File countryFile = ResourceUtils.getFile("classpath:master_data/common/country.txt");
+				    	if(countryFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(countryFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
@@ -257,10 +265,10 @@ public class AdminController {
 					dealsTypeList = new LinkedList<DealsType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/dealsType.txt");
-				    	if(file.exists()) 
+				    	File dealsTypeFile = ResourceUtils.getFile("classpath:master_data/common/dealsType.txt");
+				    	if(dealsTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(dealsTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
@@ -286,10 +294,10 @@ public class AdminController {
 					engineTypeList = new LinkedList<EngineType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/dealsType.txt");
-				    	if(file.exists()) 
+				    	File engineTypeFile = ResourceUtils.getFile("classpath:master_data/common/engineType.txt");
+				    	if(engineTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(engineTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
@@ -308,17 +316,17 @@ public class AdminController {
 				    }
 				}
 				
-				//Add category1
+				//Add truckCategory1
 				List<Category1> category1List = category1Repository.findByIsDeletedOrderByCategory1Asc(0);
 				if(category1List.isEmpty())
 				{
 					category1List = new LinkedList<Category1>();
 					try
 				    {
-				    	File file1 = ResourceUtils.getFile("classpath:master_data/common/truckCategory1.txt");
-				    	if(file1.exists()) 
+				    	File truckCategory1file = ResourceUtils.getFile("classpath:master_data/common/truckCategory1.txt");
+				    	if(truckCategory1file.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file1.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(truckCategory1file.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
@@ -330,36 +338,38 @@ public class AdminController {
 							category1Repository.save(category1List);
 							br.close();
 				    	}
-				    	
-				    	File file2 = ResourceUtils.getFile("classpath:master_data/common/equipmentCategory1.txt");
-				    	if(file2.exists()) 
+				    	//Add equipmentCategory1
+				    	List<Category1> equipmentCategory1List = new LinkedList<Category1>();
+				    	File equipmentCategory1File = ResourceUtils.getFile("classpath:master_data/common/equipmentCategory1.txt");
+				    	if(equipmentCategory1File.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file2.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(equipmentCategory1File.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
 								Category1 category1 = new Category1();
 								category1.setVehicleTypeId(4);
 								category1.setCategory1(st.trim());
-								category1List.add(category1);
+								equipmentCategory1List.add(category1);
 							}
-							engineTypeRepository.save(engineTypeList);
+							category1Repository.save(equipmentCategory1List);
 							br.close();
 				    	}
-				    	
-				    	File file3 = ResourceUtils.getFile("classpath:master_data/common/partsCategory1.txt");
-				    	if(file2.exists()) 
+				    	//Add partsCategory1
+				    	List<Category1> partsCategory1List = new LinkedList<Category1>();
+				    	File partsCategory1File = ResourceUtils.getFile("classpath:master_data/common/partsCategory1.txt");
+				    	if(partsCategory1File.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file3.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(partsCategory1File.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
 								Category1 category1 = new Category1();
 								category1.setVehicleTypeId(5);
 								category1.setCategory1(st.trim());
-								category1List.add(category1);
+								partsCategory1List.add(category1);
 							}
-							engineTypeRepository.save(engineTypeList);
+							category1Repository.save(partsCategory1List);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -370,24 +380,24 @@ public class AdminController {
 				}
 				
 				// Add Fueltype
-				List<FuelType> carFuelTypes = fuelTypeRepository.findByIsDeletedOrderByFuelTypeAsc(0);
-				if(carFuelTypes.isEmpty())
+				List<FuelType> fuelTypesList = fuelTypeRepository.findByIsDeletedOrderByFuelTypeAsc(0);
+				if(fuelTypesList.isEmpty())
 				{
-					carFuelTypes = new LinkedList<FuelType>();
+					fuelTypesList = new LinkedList<FuelType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/fuelType.txt");
-				    	if(file.exists()) 
+				    	File fuelTypeFile = ResourceUtils.getFile("classpath:master_data/common/fuelType.txt");
+				    	if(fuelTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(fuelTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
-								FuelType carFuelType = new FuelType();
-								carFuelType.setFuelType(st.trim());
-								carFuelTypes.add(carFuelType);
+								FuelType fuelType = new FuelType();
+								fuelType.setFuelType(st.trim());
+								fuelTypesList.add(fuelType);
 							}
-							fuelTypeRepository.save(carFuelTypes);
+							fuelTypeRepository.save(fuelTypesList);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -397,55 +407,55 @@ public class AdminController {
 				    }
 				}
 				
-				//Add MemberShip
-				List<MemberShipType> memberShipTypes = memberShipTypeRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
-				if(memberShipTypes.isEmpty())
+				//Add membershipType
+				List<MemberShipType> memberShipTypeList = memberShipTypeRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
+				if(memberShipTypeList.isEmpty())
 				{
-					memberShipTypes = new LinkedList<MemberShipType>();
+					memberShipTypeList = new LinkedList<MemberShipType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/membershipType.txt");
-				    	if(file.exists()) 
+				    	File memberShipTypeFile = ResourceUtils.getFile("classpath:master_data/common/membershipType.txt");
+				    	if(memberShipTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(memberShipTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
 								MemberShipType memberShipType = new MemberShipType();
 								memberShipType.setMembershipType(st.trim());
 								memberShipType.setIsDeleted(0);
-								memberShipTypes.add(memberShipType);
+								memberShipTypeList.add(memberShipType);
 							}
-							memberShipTypeRepository.save(memberShipTypes);
+							memberShipTypeRepository.save(memberShipTypeList);
 							br.close();
 				    	}
 				    } catch (Exception e) {
 				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
 				        e.printStackTrace();
-				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in membership", null);
+				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in membershipType", null);
 				    }
 				}
 				
 				//Add PartsType
-				List<PartsType> partsTypes = partsTypeRepository.findByIsDeletedOrderByPartsTypeAsc(0);
-				if(partsTypes.isEmpty())
+				List<PartsType> partsTypeList = partsTypeRepository.findByIsDeletedOrderByPartsTypeAsc(0);
+				if(partsTypeList.isEmpty())
 				{
-					partsTypes = new LinkedList<PartsType>();
+					partsTypeList = new LinkedList<PartsType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/partsType.txt");
-				    	if(file.exists()) 
+				    	File partsTypeFile = ResourceUtils.getFile("classpath:master_data/common/partsType.txt");
+				    	if(partsTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(partsTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
 								PartsType partsType = new PartsType();
 								partsType.setPartsType(st.trim());
 								partsType.setIsDeleted(0);
-								partsTypes.add(partsType);
+								partsTypeList.add(partsType);
 							}
-							partsTypeRepository.save(partsTypes);
+							partsTypeRepository.save(partsTypeList);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -456,25 +466,25 @@ public class AdminController {
 				}
 				
 				//Add SeatsType
-				List<SeatsType> seatsTypes = seatsTypeRepository.findByIsDeletedOrderBySeatsTypeAsc(0);
-				if(seatsTypes.isEmpty())
+				List<SeatsType> seatsTypeList = seatsTypeRepository.findByIsDeletedOrderBySeatsTypeAsc(0);
+				if(seatsTypeList.isEmpty())
 				{
-					seatsTypes = new LinkedList<SeatsType>();
+					seatsTypeList = new LinkedList<SeatsType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/SeatsType.txt");
-				    	if(file.exists()) 
+				    	File seatsTypeFile = ResourceUtils.getFile("classpath:master_data/common/seatsType.txt");
+				    	if(seatsTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(seatsTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
 								SeatsType seatsType = new SeatsType();
 								seatsType.setSeatsType(st.trim());
 								seatsType.setIsDeleted(0);
-								seatsTypes.add(seatsType);
+								seatsTypeList.add(seatsType);
 							}
-							seatsTypeRepository.save(seatsTypes);
+							seatsTypeRepository.save(seatsTypeList);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -485,24 +495,24 @@ public class AdminController {
 				}
 				
 				// Add SteeringType
-				List<SteeringType> carSteerings = steeringTypeRepository.findByIsDeletedOrderBySteeringTypeAsc(0);
-				if(carSteerings.isEmpty())
+				List<SteeringType> steeringTypeList  = steeringTypeRepository.findByIsDeletedOrderBySteeringTypeAsc(0);
+				if(steeringTypeList.isEmpty())
 				{
-					carSteerings = new LinkedList<SteeringType>();
+					steeringTypeList = new LinkedList<SteeringType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/steeringType.txt");
-				    	if(file.exists()) 
+				    	File steeringTypeFile = ResourceUtils.getFile("classpath:master_data/common/steeringType.txt");
+				    	if(steeringTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(steeringTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
-								SteeringType carSteering = new SteeringType();
-								carSteering.setSteeringType(st.trim());
-								carSteerings.add(carSteering);
+								SteeringType steeringType = new SteeringType();
+								steeringType.setSteeringType(st.trim());
+								steeringTypeList.add(steeringType);
 							}
-							steeringTypeRepository.save(carSteerings);
+							steeringTypeRepository.save(steeringTypeList);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -512,25 +522,25 @@ public class AdminController {
 				    }
 				}
 				
-				// Add TransmissionType
-				List<TransmissionType> carTransmissions = transmissionTypeRepository.findByIsDeletedOrderByTransmissionTypeAsc(0);
-				if(carTransmissions.isEmpty())
+				// Add transmissionType
+				List<TransmissionType> transmissionTypeList = transmissionTypeRepository.findByIsDeletedOrderByTransmissionTypeAsc(0);
+				if(transmissionTypeList.isEmpty())
 				{
-					carTransmissions = new LinkedList<TransmissionType>();
+					transmissionTypeList = new LinkedList<TransmissionType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/transmissionType.txt");
-				    	if(file.exists()) 
+				    	File transmissionTypeFile = ResourceUtils.getFile("classpath:master_data/common/transmissionType.txt");
+				    	if(transmissionTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(transmissionTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
-								TransmissionType carTransmission = new TransmissionType();
-								carTransmission.setTransmissionType(st.trim());
-								carTransmissions.add(carTransmission);
+								TransmissionType transmissionType = new TransmissionType();
+								transmissionType.setTransmissionType(st.trim());
+								transmissionTypeList.add(transmissionType);
 							}
-							transmissionTypeRepository.save(carTransmissions);
+							transmissionTypeRepository.save(transmissionTypeList);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -541,24 +551,24 @@ public class AdminController {
 				}
 				
 				// Add loadingWeightType
-				List<LoadingWeightType> loadingWeightTypes = loadingWeightTypeRepository.findByIsDeletedOrderByLoadingWeightTypeAsc(0);
-				if(loadingWeightTypes.isEmpty())
+				List<LoadingWeightType> loadingWeightTypeList = loadingWeightTypeRepository.findByIsDeletedOrderByLoadingWeightTypeAsc(0);
+				if(loadingWeightTypeList.isEmpty())
 				{
-					loadingWeightTypes = new LinkedList<LoadingWeightType>();
+					loadingWeightTypeList = new LinkedList<LoadingWeightType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/loadingWeightType.txt");
-				    	if(file.exists()) 
+				    	File loadingWeightTypeFile = ResourceUtils.getFile("classpath:master_data/common/loadingWeightType.txt");
+				    	if(loadingWeightTypeFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(loadingWeightTypeFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
 								LoadingWeightType loadingWeightType = new LoadingWeightType();
 								loadingWeightType.setLoadingWeightType(st.trim());
-								loadingWeightTypes.add(loadingWeightType);
+								loadingWeightTypeList.add(loadingWeightType);
 							}
-							loadingWeightTypeRepository.save(loadingWeightTypes);
+							loadingWeightTypeRepository.save(loadingWeightTypeList);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -569,24 +579,24 @@ public class AdminController {
 				}
 				
 				// Add Mileage
-				List<Mileage> mileages = mileageRepository.findByOrderByMileageAsc();
-				if(mileages.isEmpty())
+				List<Mileage> mileagesList = mileageRepository.findByOrderByMileageAsc();
+				if(mileagesList.isEmpty())
 				{
-					mileages = new LinkedList<Mileage>();
+					mileagesList = new LinkedList<Mileage>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/mileage.txt");
-				    	if(file.exists()) 
+				    	File mileageFile = ResourceUtils.getFile("classpath:master_data/common/mileage.txt");
+				    	if(mileageFile.exists()) 
 				    	{
-				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+				    		BufferedReader br = new BufferedReader(new FileReader(mileageFile.getAbsoluteFile()));
 							String st;
 							while ((st = br.readLine()) != null)
 							{
 								Mileage mileage = new Mileage();
 								mileage.setMileage(st.trim());
-								mileages.add(mileage);
+								mileagesList.add(mileage);
 							}
-							mileageRepository.save(mileages);
+							mileageRepository.save(mileagesList);
 							br.close();
 				    	}
 				    } catch (Exception e) {
@@ -765,4 +775,140 @@ public class AdminController {
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller userLogout", null);
 		}
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/admin/add/category2", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> addCategory2ByCategory1Id(@RequestParam int category1Id, @RequestParam List<String> category2) throws Exception 
+	{
+		logger.info("Controller==>Enter==>addCategory2ByCategory1Id<==");
+		String methodName = "ADD CATEGORY2 BY CATEGORY1ID";
+		try 
+		{
+			List<Category2> category2ListObj = new LinkedList<Category2>();
+			//Add category2 data by category1Id 
+			if(category1Id>0 && category2!=null && !category2.isEmpty()) 
+			{
+				for(String category2Obj : category2)
+				{
+					//Check category2Obj is null or empty 
+					if(category2Obj!=null && !category2Obj.isEmpty()) 
+					{
+						//Find Category2 by category1Id and category2
+						List<Category2> category2List = category2Repository.findByIsDeletedAndCategory1IdAndCategory2OrderByCategory2Asc(0, category1Id, category2Obj.trim());
+						if(category2List.isEmpty())
+						{
+							Category2 categoryObj = new Category2();
+							categoryObj.setCategory1Id(category1Id);
+							categoryObj.setCategory2(category2Obj.trim());
+							category2ListObj.add(categoryObj);
+						}
+					}
+				}
+				if(!category2ListObj.isEmpty())
+				{
+					category2Repository.save(category2ListObj);
+				}
+				logger.info("Controller==>Exit==>addCategory2ByCategory1Id<==");
+			    return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+			} else
+			{
+			    return CommonUtil.wrapResultResponse(methodName, 1, "Error", null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			 logger.info("Controller==>Exception==>addCategory2ByCategory1Id<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller addCategory2Bycategory1Id", null);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/admin/add/model", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> addModelByBrandId(@RequestParam long brandId, @RequestParam List<String> model) throws Exception 
+	{
+		logger.info("Controller==>Enter==>addModelByBrandId<==");
+		String methodName = "ADD MODEL BY BRANDID";
+		try 
+		{
+			List<Model> modelListObj = new LinkedList<Model>();
+			//Add Model data by brandId 
+			if(brandId>0 && model!=null && !model.isEmpty()) 
+			{
+				for(String modelObj : model)
+				{
+					//Check modelObj is null or empty 
+					if(modelObj!=null && !modelObj.isEmpty()) 
+					{
+						//Find Model by brandId and model
+						List<Model> modelList = modelRepository.findByIsDeletedAndBrandIdAndModelOrderByModelAsc(0, brandId, modelObj.trim());
+						if(modelList.isEmpty())
+						{
+							Model modelObject = new Model();
+							modelObject.setBrandId(brandId);
+							modelObject.setModel(modelObj.trim());
+							modelListObj.add(modelObject);
+						}
+					}
+				}
+				if(!modelListObj.isEmpty())
+				{
+					modelRepository.save(modelListObj);
+				}
+				logger.info("Controller==>Exit==>addModelByBrandId<==");
+			    return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+			} else
+			{
+			    return CommonUtil.wrapResultResponse(methodName, 1, "Error", null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			 logger.info("Controller==>Exception==>addModelByBrandId<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller addModelByBrandId", null);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/admin/add/modelDetails", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> addModelDetailsByModelId(@RequestParam long modelId, @RequestParam List<String> modelDetail) throws Exception 
+	{
+		logger.info("Controller==>Enter==>addModelDetailByModelId<==");
+		String methodName = "ADD MODEL DETAILS BY MODELID";
+		try 
+		{
+			List<ModelDetail> modelListObj = new LinkedList<ModelDetail>();
+			//Add ModelDetail data by modelId 
+			if(modelId>0 && modelDetail!=null && !modelDetail.isEmpty()) 
+			{
+				for(String modelDetailObj : modelDetail)
+				{
+					//Check modelDetailObj is null or empty 
+					if(modelDetailObj!=null && !modelDetailObj.isEmpty()) 
+					{
+						//Find ModelDetail by modelId and modelDetails
+						List<ModelDetail> category2List = modelDetailRepository.findByIsDeletedAndModelIdAndModelDetailOrderByModelDetailAsc(0, modelId, modelDetailObj.trim());
+						if(category2List.isEmpty())
+						{
+							ModelDetail modelDetailObject = new ModelDetail();
+							modelDetailObject.setModelId(modelId);
+							modelDetailObject.setModelDetail(modelDetailObj.trim());
+							modelListObj.add(modelDetailObject);
+						}
+					}
+				}
+				if(!modelListObj.isEmpty())
+				{
+					modelDetailRepository.save(modelListObj);
+				}
+				logger.info("Controller==>Exit==>addModelDetailByModelId<==");
+			    return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+			} else
+			{
+			    return CommonUtil.wrapResultResponse(methodName, 1, "Error", null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			 logger.info("Controller==>Exception==>addModelDetailByModelId<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller addModelDetailByModelId", null);
+		}
+	}
+	
 }

@@ -16,4 +16,6 @@ public interface ModelRepository extends JpaRepository<Model, Long> {
 	
 	List<Model> findByBrandIdAndIsDeleted(long brandId, int isDeleted);
 
+	List<Model> findByIsDeletedAndBrandIdAndModelOrderByModelAsc(int isDeleted, long brandId, String model);
+
 }

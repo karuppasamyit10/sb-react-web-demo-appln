@@ -2,12 +2,10 @@ package com.example.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -35,6 +33,7 @@ import com.example.bean.VehicleSearchBean;
 import com.example.dao.CommonDao;
 import com.example.entity.Brand;
 import com.example.entity.Category1;
+import com.example.entity.Category2;
 import com.example.entity.ConditionType;
 import com.example.entity.Country;
 import com.example.entity.DealsType;
@@ -53,6 +52,7 @@ import com.example.entity.VehicleDetail;
 import com.example.entity.Year;
 import com.example.repository.BrandRepository;
 import com.example.repository.Category1Repository;
+import com.example.repository.Category2Repository;
 import com.example.repository.ConditionTypeRepository;
 import com.example.repository.CountryRepository;
 import com.example.repository.DealsTypeRepository;
@@ -131,6 +131,9 @@ public class CommonDaoImpl implements CommonDao {
 	Category1Repository category1Repository;
 	
 	@Autowired
+	Category2Repository category2Repository;
+	
+	@Autowired
 	MileageRepository mileageRepository;
 	
 	@Autowired
@@ -195,8 +198,8 @@ public class CommonDaoImpl implements CommonDao {
 		try {
 			//Vehicle Brand list
 			List<Object> BrandList = new LinkedList<>();
-			if(vehicleTypeId!=4) 
-			{
+//			if(vehicleTypeId!=4) 
+//			{
 				List<Brand> Brands= brandRepository.findByVehicleTypeIdAndIsDeletedOrderByBrandAsc(vehicleTypeId, 0);
 				for(Brand Brand : Brands) {
 					Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -205,7 +208,17 @@ public class CommonDaoImpl implements CommonDao {
 					BrandList.add(params);
 				}	
 				rootParams.put("brandList", BrandList);
-			}
+				if(vehicleTypeId!=4) 
+				{
+					List<Object> modelList = new LinkedList<>();
+					rootParams.put("modelList", modelList);
+				}
+				if(vehicleTypeId==1 || vehicleTypeId==5) 
+				{
+					List<Object> modelDetailList = new LinkedList<>();
+					rootParams.put("modelDetailList", modelDetailList);
+				}
+//			}
 			
 			//ConditionType List
 			List<Object> conditionTypeList = new LinkedList<>();
@@ -240,9 +253,40 @@ public class CommonDaoImpl implements CommonDao {
 			}		
 			rootParams.put("dealsTypeList", dealsList);
 			
+			//MembershipType list
+			List<MemberShipType> memberShipTypes = memberShipTypeRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
+			List<Object> memberShipTypeList = new LinkedList<>();
+			for(MemberShipType memberShipType : memberShipTypes) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("membershipTypeId", memberShipType.getMembershipTypeId());
+				params.put("membershipType", memberShipType.getMembershipType());
+				memberShipTypeList.add(params);
+			}		
+			rootParams.put("memberShipTypeList", memberShipTypeList);
+			
+			//Price list
+			List<Price> prices = priceRepository.findByOrderByPriceAsc();
+			List<Object> priceList = new LinkedList<>();
+			for(Price price : prices) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("price", price.getPrice());
+				priceList.add(params);
+			}		
+			rootParams.put("priceList", priceList);
+			
+			//Year list
+			List<Year> years = yearRepository.findByOrderByYearAsc();
+			List<Object> yearList = new LinkedList<>();
+			for(Year year : years) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("year", year.getYear());
+				yearList.add(params);
+			}		
+			rootParams.put("yearList", yearList);
+			
 			//EngineType list
 			List<Object> engineTypeList = new LinkedList<>();
-			if(vehicleTypeId!=4) 
+			if(vehicleTypeId ==2 || vehicleTypeId ==5) 
 			{
 				List<EngineType> engineTypes = engineTypeRepository.findByIsDeletedOrderByEngineTypeAsc(0);
 				for(EngineType engineType : engineTypes) {
@@ -266,6 +310,8 @@ public class CommonDaoImpl implements CommonDao {
 					category1List.add(params);
 				}	
 				rootParams.put("category1List", category1List);
+				List<Object> category2List = new LinkedList<>();
+				rootParams.put("category2List", category2List);
 			}
 			
 			//TruckCategory list
@@ -283,9 +329,9 @@ public class CommonDaoImpl implements CommonDao {
 			}
 				
 			// FuelType list
-			List<Object> fuelTypeList = new LinkedList<>();
 			if(vehicleTypeId == 1) 
 			{
+				List<Object> fuelTypeList = new LinkedList<>();
 				List<FuelType> fuelTypes= fuelTypeRepository.findByIsDeletedOrderByFuelTypeAsc(0);
 				for(FuelType FuelType : fuelTypes) {
 					Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -297,9 +343,9 @@ public class CommonDaoImpl implements CommonDao {
 			}
 			
 			// LoadingWeight list
-			List<Object> loadingWeightTypeList = new LinkedList<>();
 			if(vehicleTypeId == 2) 
 			{
+				List<Object> loadingWeightTypeList = new LinkedList<>();
 				List<LoadingWeightType> loadingWeightTypes= loadingWeightTypeRepository.findByIsDeletedOrderByLoadingWeightTypeAsc(0);
 				for(LoadingWeightType loadingWeightType : loadingWeightTypes) {
 					Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -309,69 +355,47 @@ public class CommonDaoImpl implements CommonDao {
 				}	
 				rootParams.put("loadingWeightTypeList", loadingWeightTypeList);
 			}
-				
-			//MembershipType list
-			List<MemberShipType> memberShipTypes = memberShipTypeRepository.findByIsDeletedOrderByMembershipTypeAsc(0);
-			List<Object> memberShipTypeList = new LinkedList<>();
-			for(MemberShipType memberShipType : memberShipTypes) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("membershipTypeId", memberShipType.getMembershipTypeId());
-				params.put("membershipType", memberShipType.getMembershipType());
-				memberShipTypeList.add(params);
-			}		
-			rootParams.put("memberShipTypeList", memberShipTypeList);	
 			
 			// Steering list
-			List<SteeringType> Steerings= steeringTypeRepository.findByIsDeletedOrderBySteeringTypeAsc(0);
-			List<Object> SteeringList = new LinkedList<>();
-			for(SteeringType Steering : Steerings) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("steeringTypeId", Steering.getSteeringTypeId());
-				params.put("steeringType", Steering.getSteeringType());
-				SteeringList.add(params);
-			}			
-			rootParams.put("steeringTypeList", SteeringList);
+			if(vehicleTypeId == 1 || vehicleTypeId == 2) 
+			{
+				List<SteeringType> Steerings= steeringTypeRepository.findByIsDeletedOrderBySteeringTypeAsc(0);
+				List<Object> SteeringList = new LinkedList<>();
+				for(SteeringType Steering : Steerings) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("steeringTypeId", Steering.getSteeringTypeId());
+					params.put("steeringType", Steering.getSteeringType());
+					SteeringList.add(params);
+				}			
+				rootParams.put("steeringTypeList", SteeringList);
+			}
 			
 			// transmission list
-			List<TransmissionType> Transmissions= transmissionTypeRepository.findByIsDeletedOrderByTransmissionTypeAsc(0);
-			List<Object> TransmissionList = new LinkedList<>();
-			for(TransmissionType Transmission : Transmissions) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("transmissionTypeId", Transmission.getTransmissionTypeId());
-				params.put("transmissionType", Transmission.getTransmissionType());
-				TransmissionList.add(params);
+			if(vehicleTypeId == 1) 
+			{
+				List<TransmissionType> Transmissions= transmissionTypeRepository.findByIsDeletedOrderByTransmissionTypeAsc(0);
+				List<Object> TransmissionList = new LinkedList<>();
+				for(TransmissionType Transmission : Transmissions) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("transmissionTypeId", Transmission.getTransmissionTypeId());
+					params.put("transmissionType", Transmission.getTransmissionType());
+					TransmissionList.add(params);
+				}
+				rootParams.put("transmissionTypeList", TransmissionList);	
 			}
-			rootParams.put("transmissionTypeList", TransmissionList);	
-			
-			//Price list
-			List<Price> prices = priceRepository.findByOrderByPriceAsc();
-			List<Object> priceList = new LinkedList<>();
-			for(Price price : prices) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("price", price.getPrice());
-				priceList.add(params);
-			}		
-			rootParams.put("priceList", priceList);
-			
-			//Year list
-			List<Year> years = yearRepository.findByOrderByYearAsc();
-			List<Object> yearList = new LinkedList<>();
-			for(Year year : years) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("year", year.getYear());
-				yearList.add(params);
-			}		
-			rootParams.put("yearList", yearList);
-			
+
 			//mileage list
-			List<Mileage> mileages = mileageRepository.findByOrderByMileageAsc();
-			List<Object> mileageList = new LinkedList<>();
-			for(Mileage mileage : mileages) {
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("mileage", mileage.getMileage());
-				mileageList.add(params);
-			}		
-			rootParams.put("mileageList", mileageList);
+			if(vehicleTypeId <4) 
+			{
+				List<Mileage> mileages = mileageRepository.findByOrderByMileageAsc();
+				List<Object> mileageList = new LinkedList<>();
+				for(Mileage mileage : mileages) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("mileage", mileage.getMileage());
+					mileageList.add(params);
+				}		
+				rootParams.put("mileageList", mileageList);
+			}
 			
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
@@ -382,9 +406,9 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public Map<?, ?> getModels(long brandId) throws Exception {
-		logger.info("::::Enter(daoImpl)==>getModels::::");
-		String methodName = "GET  MODELS";
+	public Map<?, ?> getVehicleModels(long brandId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getVehicleModels::::");
+		String methodName = "GET VEHICLE MODELS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		
 		try {
@@ -400,16 +424,41 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("modelList", modelsList);
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
-			logger.error("::::Exception(daoImpl)==>getModels::::");
+			logger.error("::::Exception(daoImpl)==>getVehicleModels::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
+		}
+	}
+	
+	@Override
+	public Map<?, ?> getVehicleCategory2(int category1Id) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getVehicleCategory2::::");
+		String methodName = "GET VEHICLE CATEGORY2";
+		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		
+		try {
+			//Category2 list
+			List<Category2> category2s = category2Repository.findByIsDeletedAndCategory1IdOrderByCategory2Asc(0, category1Id);
+			List<Object> category2List = new LinkedList<>();
+			for(Category2 category2 : category2s) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("category2Id", category2.getCategory2Id());
+				params.put("category2", category2.getCategory2());
+				category2List.add(params);
+			}			
+			rootParams.put("category2List", category2List);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getVehicleModels::::");
 			e.printStackTrace();
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
 		}
 	}
 
 	@Override
-	public Map<?, ?> getModeldetails(long modelId) throws Exception {
-		logger.info("::::Enter(daoImpl)==>getModeldetails::::");
-		String methodName = "GET  MODEL DETAILS";
+	public Map<?, ?> getVehicleModelDetails(long modelId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getVehicleModelDetails::::");
+		String methodName = "getVehicleModelDetails";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		try {
 			//ModelDetail list
@@ -424,7 +473,7 @@ public class CommonDaoImpl implements CommonDao {
 			rootParams.put("modelDetailList", modelDetailList);
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
-			logger.error("::::Exception(daoImpl)==>getModeldetails::::");
+			logger.error("::::Exception(daoImpl)==>getVehicleModelDetails::::");
 			e.printStackTrace();
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
 		}
@@ -483,32 +532,115 @@ public class CommonDaoImpl implements CommonDao {
 				Predicate brandConditionPredicate = brandExp.in(vehicleSearchBean.getVehicleTypeId());
 				listPredicate.add(brandConditionPredicate);
 			}
-			
+			//PartsType
+			if(vehicleSearchBean.getPartsType()!=null && !vehicleSearchBean.getPartsType().isEmpty())
+			{
+				Expression<String> exp = vehicleRoot.get("partsType");
+				Predicate predicate = exp.in(vehicleSearchBean.getPartsType());
+				listPredicate.add(predicate);
+			}
+			//category1
+			if(vehicleSearchBean.getCategory1()!=null && !vehicleSearchBean.getCategory1().isEmpty())
+			{
+				Expression<String> exp = vehicleRoot.get("category1");
+				Predicate predicate = exp.in(vehicleSearchBean.getCategory1());
+				listPredicate.add(predicate);
+			}
+			//Category2
+			if(vehicleSearchBean.getCategory2()!=null && !vehicleSearchBean.getCategory2().isEmpty())
+			{
+				Expression<String> exp = vehicleRoot.get("category2");
+				Predicate predicate = exp.in(vehicleSearchBean.getCategory2());
+				listPredicate.add(predicate);
+			}
+			//truckCategory1
+			if(vehicleSearchBean.getTruckCategory1()!=null && !vehicleSearchBean.getTruckCategory1().isEmpty())
+			{
+				Expression<String> exp = vehicleRoot.get("category1");
+				Predicate predicate = exp.in(vehicleSearchBean.getCategory1());
+				listPredicate.add(predicate);
+			}
+			//Brand
 			if(vehicleSearchBean.getBrands()!=null && !vehicleSearchBean.getBrands().isEmpty())
 			{
-//				Join<?, ?> userDetailJoin=vehicleRoot.join("userDetails");
 				Expression<String> brandExp = vehicleRoot.get("brand");
 				Predicate brandConditionPredicate = brandExp.in(vehicleSearchBean.getBrands());
 				listPredicate.add(brandConditionPredicate);
 			}
+			//model
 			if(vehicleSearchBean.getModels()!=null && !vehicleSearchBean.getModels().isEmpty())
 			{
-//				Join<?, ?> userDetailJoin=vehicleRoot.join("model");
 				Expression<String> moedlExp = vehicleRoot.get("model");
 				Predicate moedelConditionPredicate = moedlExp.in(vehicleSearchBean.getModels());
 				listPredicate.add(moedelConditionPredicate);
 			}
+			//model details
 			if(vehicleSearchBean.getModelDetails()!=null && !vehicleSearchBean.getModelDetails().isEmpty())
 			{
 				Expression<String> moedlDetailsExp = vehicleRoot.get("modelDetail");
 				Predicate moedelDetailConditionPredicate = moedlDetailsExp.in(vehicleSearchBean.getModelDetails());
 				listPredicate.add(moedelDetailConditionPredicate);
 			}
+			if(vehicleSearchBean.getFromYear()!=null && !vehicleSearchBean.getFromYear().isEmpty() && !vehicleSearchBean.getFromYear().equalsIgnoreCase("null")
+					&& vehicleSearchBean.getToYear()!=null && !vehicleSearchBean.getToYear().isEmpty() && !vehicleSearchBean.getToYear().equalsIgnoreCase("null"))
+			{
+//				Expression<String> yearExp = vehicleRoot.get("year");
+//				Predicate yearExpConditionPredicate = yearExp.(vehicleSearchBean.getFromYear());
+				List<Predicate> restrictions = new ArrayList<>();
+				restrictions.add(criteriaBuilder.between(vehicleRoot.<Integer>get("year"), Integer.parseInt(vehicleSearchBean.getFromYear()), 
+						Integer.parseInt(vehicleSearchBean.getToYear())));
+//				listPredicate.add(yearExpConditionPredicate);
+				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+			}
+			if(vehicleSearchBean.getFromPrice()!=null && !vehicleSearchBean.getFromPrice().isEmpty() && !vehicleSearchBean.getFromPrice().equalsIgnoreCase("null")
+					&& vehicleSearchBean.getToPrice()!=null && !vehicleSearchBean.getToPrice().isEmpty() && !vehicleSearchBean.getToPrice().equalsIgnoreCase("null"))
+			{
+				List<Predicate> restrictions = new ArrayList<>();
+				restrictions.add(criteriaBuilder.between(vehicleRoot.<Long>get("price"), Long.parseLong(vehicleSearchBean.getFromPrice()), 
+						Long.parseLong(vehicleSearchBean.getToPrice())));
+				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+			}
 			if(vehicleSearchBean.getTransmissionType()!=null && !vehicleSearchBean.getTransmissionType().isEmpty())
 			{
 				Expression<String> transmissionTypeExp = vehicleRoot.get("transmissionType");
 				Predicate transmissionTypeConditionPredicate = transmissionTypeExp.in(vehicleSearchBean.getTransmissionType());
 				listPredicate.add(transmissionTypeConditionPredicate);
+			}
+			if(vehicleSearchBean.getLoadingWeightType()!=null && !vehicleSearchBean.getLoadingWeightType().isEmpty())
+			{
+				Expression<String> steeringTypeExp = vehicleRoot.get("loadingWeight");
+				Predicate steeringTypeConditionPredicate = steeringTypeExp.in(vehicleSearchBean.getLoadingWeightType());
+				listPredicate.add(steeringTypeConditionPredicate);
+			}
+			if(vehicleSearchBean.getSeatsType()!=null && !vehicleSearchBean.getSeatsType().isEmpty())
+			{
+				Expression<String> steeringTypeExp = vehicleRoot.get("seatsType");
+				Predicate steeringTypeConditionPredicate = steeringTypeExp.in(vehicleSearchBean.getSeatsType());
+				listPredicate.add(steeringTypeConditionPredicate);
+			}
+			
+			if(vehicleSearchBean.getFromMileage()!=null && !vehicleSearchBean.getFromMileage().isEmpty() && !vehicleSearchBean.getFromMileage().equalsIgnoreCase("null")
+					&& vehicleSearchBean.getToMileage()!=null && !vehicleSearchBean.getToMileage().isEmpty() && !vehicleSearchBean.getToMileage().equalsIgnoreCase("null"))
+			{
+//				Expression<String> yearExp = vehicleRoot.get("year");
+//				Predicate yearExpConditionPredicate = yearExp.(vehicleSearchBean.getFromYear());
+				List<Predicate> restrictions = new ArrayList<>();
+				restrictions.add(criteriaBuilder.between(vehicleRoot.<Integer>get("mileage"), Integer.parseInt(vehicleSearchBean.getFromMileage()), 
+						Integer.parseInt(vehicleSearchBean.getToMileage())));
+//				listPredicate.add(yearExpConditionPredicate);
+				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+			}
+			if(vehicleSearchBean.getConditionType()!=null && !vehicleSearchBean.getConditionType().isEmpty())
+			{
+				Expression<String> fuelTypeExp = vehicleRoot.get("conditionType");
+				Predicate fuelTypeConditionPredicate = fuelTypeExp.in(vehicleSearchBean.getConditionType());
+				listPredicate.add(fuelTypeConditionPredicate);
+			}
+			if(vehicleSearchBean.getEngineType()!=null && !vehicleSearchBean.getEngineType().isEmpty())
+			{
+				Expression<String> fuelTypeExp = vehicleRoot.get("engineType");
+				Predicate fuelTypeConditionPredicate = fuelTypeExp.in(vehicleSearchBean.getEngineType());
+				listPredicate.add(fuelTypeConditionPredicate);
 			}
 			if(vehicleSearchBean.getSteeringType()!=null && !vehicleSearchBean.getSteeringType().isEmpty())
 			{
@@ -540,16 +672,17 @@ public class CommonDaoImpl implements CommonDao {
 				Predicate dealTypeConditionPredicate = dealTypeExp.in(vehicleSearchBean.getDealsType());
 				listPredicate.add(dealTypeConditionPredicate);
 			}
-			if(vehicleSearchBean.getFromYear()!=null && !vehicleSearchBean.getFromYear().isEmpty() && !vehicleSearchBean.getFromYear().equalsIgnoreCase("null"))
-			{
-//				Expression<String> yearExp = vehicleRoot.get("year");
-//				Predicate yearExpConditionPredicate = yearExp.(vehicleSearchBean.getFromYear());
-//				
-				List<Predicate> restrictions = new ArrayList<>();
-				restrictions.add(criteriaBuilder.between(vehicleRoot.<String>get("year"), vehicleSearchBean.getFromYear(), vehicleSearchBean.getToYear()));
-//				listPredicate.add(yearExpConditionPredicate);
-				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
-			}
+//			if(vehicleSearchBean.getFromYear()!=null && !vehicleSearchBean.getFromYear().isEmpty() && !vehicleSearchBean.getFromYear().equalsIgnoreCase("null")
+//					&& vehicleSearchBean.getToYear()!=null && !vehicleSearchBean.getToYear().isEmpty() && !vehicleSearchBean.getToYear().equalsIgnoreCase("null"))
+//			{
+////				Expression<String> yearExp = vehicleRoot.get("year");
+////				Predicate yearExpConditionPredicate = yearExp.(vehicleSearchBean.getFromYear());
+//				List<Predicate> restrictions = new ArrayList<>();
+//				restrictions.add(criteriaBuilder.between(vehicleRoot.<Integer>get("year"), Integer.parseInt(vehicleSearchBean.getFromYear()), 
+//						Integer.parseInt(vehicleSearchBean.getToYear())));
+////				listPredicate.add(yearExpConditionPredicate);
+//				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+//			}
 //			if(!physicianFilterBean.getExpertise().isEmpty())
 //			{
 //				Join<?, ?> expertisesJoin=physician.join("expertises");
@@ -574,11 +707,22 @@ public class CommonDaoImpl implements CommonDao {
 			TypedQuery<VehicleDetail> query = entityManager.createQuery(criteriaQuery);
 			int totalRows = query.getResultList().size();
 		    Page<VehicleDetail> vehicleDetails = new PageImpl<VehicleDetail>(query.getResultList(), pageable(vehicleSearchBean.getPageNo(), vehicleSearchBean.getItemsPerPage()), totalRows);
-			Set<Object> vehicleDetailList = new HashSet<>();
+			List<Object> vehicleDetailList = new LinkedList<Object>();
 			for(VehicleDetail vehicleDetail : vehicleDetails.getContent()) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("vehicleId", vehicleDetail.getBrand());
-				params.put("vehicleName", vehicleDetail.getModel());
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				params.put("brand", vehicleDetail.getBrand());
+				params.put("model", vehicleDetail.getModel());
+				params.put("modelDetail", vehicleDetail.getModelDetail());
+				params.put("category1", vehicleDetail.getCategory1());
+				params.put("category2", vehicleDetail.getCategory2());
+				params.put("conditionType", vehicleDetail.getConditionType());
+				params.put("country", vehicleDetail.getCountry());
+				params.put("dealerDetails", vehicleDetail.getDealerDetails());
+				params.put("dealsType", vehicleDetail.getDealsType());
+				params.put("discountedPrice", vehicleDetail.getDiscountedPrice());
+				params.put("driveTrain", vehicleDetail.getDriveTrain());
 				vehicleDetailList.add(params);
 			}    
 			    

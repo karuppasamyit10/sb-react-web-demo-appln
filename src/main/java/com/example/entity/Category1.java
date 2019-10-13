@@ -17,7 +17,7 @@ public class Category1 {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="category1Id")
+	@Column(name="category1_id")
 	private int category1Id;
 	
 	@Column(name="vehicleTypeId")

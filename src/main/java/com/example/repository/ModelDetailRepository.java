@@ -13,6 +13,7 @@ public interface ModelDetailRepository extends JpaRepository<ModelDetail, Long> 
 	List<ModelDetail> findByIsDeletedOrderByModelDetailAsc(int isDeleted);
 	
 	List<ModelDetail> findByModelDetailIdAndIsDeleted(long modelDetailId, int isDeleted);
-	
 
+	List<ModelDetail> findByIsDeletedAndModelIdAndModelDetailOrderByModelDetailAsc(int isDeleted, long modelId, String modelDetail);
+	
 }

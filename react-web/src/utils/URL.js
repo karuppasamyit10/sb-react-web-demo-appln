@@ -18,7 +18,7 @@ module.exports = {
   FORGET : 'forgetPassword',
   LOGOUT: 'api/user/logout',
   REGISTRATION: 'api/public/user/registration',
-  COOKIE : 'api/update-cookie',
+  COOKIE : 'api/public/update-cookie',
   CHANGEPASSWORD: 'changePassword',
   UPDATEPASSWORD: 'updatePassword',
   PROFILE : 'api/user/profile',
@@ -28,6 +28,7 @@ module.exports = {
   GET_VEHICLE_ALL_DETAILS : 'api/public/vehicle/all_details',
   GET_VEHICLE_MODEL : 'api/public/vehicle/models',
   GET_VEHICLE_MODEL_DETAILS : 'api/public/vehicle/model_details',
+  GET_VEHICLE_CATEGORY2S : 'api/public/vehicle/category2s',
   GET_VEHICLE_SEARCH_LIST : 'api/public/vehicle/list',
   GET_VEHICLE_DETAILS : 'api/public/vehicle/details',
 }; 

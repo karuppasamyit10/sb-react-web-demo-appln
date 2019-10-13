@@ -12,15 +12,15 @@ public class VehicleSearchBean {
 	private Set<String> brands;
 	private Set<String> category1;
 	private Set<String> category2;
-	private Set<String> condition_type;
+	private Set<String> truckCategory1;
+	private Set<String> conditionType;
 	private String country;
 	private Set<String> dealsType;
 	private Set<String> engineType;
 	private Set<String> fuelType;
 	private Set<String> loadingWeightType;
 	private Set<String> membershipType;
-	private String fromMileage;
-	private String toMileage;
+	
 	private Set<String> models;
 	private Set<String> modelDetails;
 	private Set<String> partsType;
@@ -30,10 +30,11 @@ public class VehicleSearchBean {
 	
 	private String fromYear;
 	private String toYear;
-	
 	private String fromPrice;
 	private String toPrice;
-
+	private String fromMileage;
+	private String toMileage;
+	
 	private int pageNo; 
 	private int itemsPerPage;
 	
@@ -96,17 +97,31 @@ public class VehicleSearchBean {
 	}
 
 	/**
-	 * @return the condition_type
+	 * @return the truckCategory1
 	 */
-	public Set<String> getCondition_type() {
-		return condition_type;
+	public Set<String> getTruckCategory1() {
+		return truckCategory1;
 	}
 
 	/**
-	 * @param condition_type the condition_type to set
+	 * @param truckCategory1 the truckCategory1 to set
 	 */
-	public void setCondition_type(Set<String> condition_type) {
-		this.condition_type = condition_type;
+	public void setTruckCategory1(Set<String> truckCategory1) {
+		this.truckCategory1 = truckCategory1;
+	}
+
+	/**
+	 * @return the conditionType
+	 */
+	public Set<String> getConditionType() {
+		return conditionType;
+	}
+
+	/**
+	 * @param conditionType the conditionType to set
+	 */
+	public void setConditionType(Set<String> conditionType) {
+		this.conditionType = conditionType;
 	}
 
 	/**
@@ -191,34 +206,6 @@ public class VehicleSearchBean {
 	 */
 	public void setMembershipType(Set<String> membershipType) {
 		this.membershipType = membershipType;
-	}
-
-	/**
-	 * @return the fromMileage
-	 */
-	public String getFromMileage() {
-		return fromMileage;
-	}
-
-	/**
-	 * @param fromMileage the fromMileage to set
-	 */
-	public void setFromMileage(String fromMileage) {
-		this.fromMileage = fromMileage;
-	}
-
-	/**
-	 * @return the toMileage
-	 */
-	public String getToMileage() {
-		return toMileage;
-	}
-
-	/**
-	 * @param toMileage the toMileage to set
-	 */
-	public void setToMileage(String toMileage) {
-		this.toMileage = toMileage;
 	}
 
 	/**
@@ -362,6 +349,34 @@ public class VehicleSearchBean {
 	}
 
 	/**
+	 * @return the fromMileage
+	 */
+	public String getFromMileage() {
+		return fromMileage;
+	}
+
+	/**
+	 * @param fromMileage the fromMileage to set
+	 */
+	public void setFromMileage(String fromMileage) {
+		this.fromMileage = fromMileage;
+	}
+
+	/**
+	 * @return the toMileage
+	 */
+	public String getToMileage() {
+		return toMileage;
+	}
+
+	/**
+	 * @param toMileage the toMileage to set
+	 */
+	public void setToMileage(String toMileage) {
+		this.toMileage = toMileage;
+	}
+
+	/**
 	 * @return the pageNo
 	 */
 	public int getPageNo() {
@@ -402,4 +417,5 @@ public class VehicleSearchBean {
 	public void setVehicleTypeId(long vehicleTypeId) {
 		this.vehicleTypeId = vehicleTypeId;
 	}
+
 }

@@ -1,8 +1,8 @@
 Excavator
-Loader / Dozer / Grader
+Loader/Dozer/Grader
 Concrete Machinery
 Forklift
 Paving Machinery
-Crane / Auger / Drill
+Crane/Auger/Drill
 Agricultural Machinery
 Others

@@ -1,8 +1,19 @@
-Excavator
-Loader / Dozer / Grader
-Concrete Machinery
-Forklift
-Paving Machinery
-Crane / Auger / Drill
-Agricultural Machinery
-Others
+Brake Parts
+Suspension Parts
+Steering Parts
+Transmission Parts
+Cooling Heating Parts
+Electrical Lamp Parts
+Body exhaust Parts
+Engine Parts
+Filters injection Parts
+Universal Parts
+Batteries
+Tires Wheels
+Catalog
+Tools
+Lubricants
+Exterior Accessories
+Interior Accessories
+Car Care Chemicals
+Car Security System

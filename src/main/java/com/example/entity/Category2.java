@@ -17,10 +17,10 @@ public class Category2 {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="category2Id")
+	@Column(name="category2_id")
 	private int category2Id;
 	
-	@Column(name="category1Id")
+	@Column(name="category1_id")
 	private int category1Id;
 	
 	@Column(name="category2", nullable=false)

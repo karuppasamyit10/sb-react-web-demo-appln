@@ -15,9 +15,9 @@ public interface CommonDao {
 	
 	Map<?, ?> getAllVehicleDetails(int vehicleTypeId) throws Exception;
 	
-	Map<?, ?> getModels(long brandId)throws Exception;
+	Map<?, ?> getVehicleModels(long brandId)throws Exception;
 
-	Map<?, ?> getModeldetails(long modelId) throws Exception;
+	Map<?, ?> getVehicleModelDetails(long modelId) throws Exception;
 
 	Map<?, ?> getDashboardDetails(String userAgent) throws Exception;
 	
@@ -26,6 +26,8 @@ public interface CommonDao {
 	Map<?, ?> getVehicleDetails(long vehicleId, String userAgent) throws Exception;
 
 	Map<?, ?> getCountries(long countryId) throws Exception;
+
+	Map<?, ?> getVehicleCategory2(int category1Id) throws Exception;
 
 //	Map<?, ?> getCarBrands(long carBrandId)throws Exception;
 //
