@@ -705,7 +705,7 @@ public class CommonDaoImpl implements CommonDao {
 //			criteriaQuery.isDistinct();
 			
 			List<Order> orders = new ArrayList<Order>(1);
-		    orders.add(criteriaBuilder.desc(vehicleRoot.get("vehicleId")));
+		    orders.add(criteriaBuilder.asc(vehicleRoot.get("vehicleId")));
 		    criteriaQuery.orderBy(orders);
 		     
 			TypedQuery<VehicleDetail> query = entityManager.createQuery(criteriaQuery);
@@ -721,11 +721,22 @@ public class CommonDaoImpl implements CommonDao {
 				params.put("modelDetail", vehicleDetail.getModelDetail());
 				params.put("category1", vehicleDetail.getCategory1());
 				params.put("category2", vehicleDetail.getCategory2());
-				params.put("conditionType", vehicleDetail.getConditionType());
-				params.put("country", vehicleDetail.getCountry());
-				params.put("dealerDetails", vehicleDetail.getDealerDetails());
-				params.put("dealsType", vehicleDetail.getDealsType());
+				params.put("partsType", vehicleDetail.getPartsType());
+				params.put("year", vehicleDetail.getYear());
+				params.put("price", vehicleDetail.getPrice());
 				params.put("discountedPrice", vehicleDetail.getDiscountedPrice());
+				params.put("transmissionType", vehicleDetail.getTransmissionType());
+				params.put("loadingWeight", vehicleDetail.getLoadingWeight());
+				params.put("seatsType", vehicleDetail.getSeatsType());
+				params.put("mileage", vehicleDetail.getMileage());
+				params.put("conditionType", vehicleDetail.getConditionType());
+				params.put("engineType", vehicleDetail.getEngineType());
+				params.put("steeringType", vehicleDetail.getSteeringType());
+				params.put("fuelType", vehicleDetail.getFuelType());
+				params.put("country", vehicleDetail.getCountry());
+				params.put("dealsType", vehicleDetail.getDealsType());
+				params.put("membershipType", vehicleDetail.getMembershipType());
+				params.put("dealerDetails", vehicleDetail.getDealerDetails());
 				params.put("driveTrain", vehicleDetail.getDriveTrain());
 				params.put("parentImageUrl", vehicleDetail.getParentPhotoFileName()==null || vehicleDetail.getParentPhotoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentPhotoFileName());
 				params.put("parentVideoUrl", vehicleDetail.getParentVideoFileName()==null || vehicleDetail.getParentVideoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentVideoFileName());
@@ -766,10 +777,40 @@ public class CommonDaoImpl implements CommonDao {
 		String methodName = "GET VEHICLE DETAILS";
 		try {
 			//Get VehicleDetail
-			VehicleDetail vehicleDetails = vehicleDetailRepository.findByVehicleId(vehicleId);
 			Map<String, Object> params = new LinkedHashMap<String, Object>();
-			params.put("vehicleId", vehicleDetails.getVehicleId());
-			params.put("vehicleName", vehicleDetails.getYear()+" "+vehicleDetails.getBrand()+" "+vehicleDetails.getModel());
+			VehicleDetail vehicleDetail = vehicleDetailRepository.findByVehicleId(vehicleId);
+			if(vehicleDetail!=null)
+			{
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail);
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				params.put("brand", vehicleDetail.getBrand());
+				params.put("model", vehicleDetail.getModel());
+				params.put("modelDetail", vehicleDetail.getModelDetail());
+				params.put("category1", vehicleDetail.getCategory1());
+				params.put("category2", vehicleDetail.getCategory2());
+				params.put("partsType", vehicleDetail.getPartsType());
+				params.put("year", vehicleDetail.getYear());
+				params.put("price", vehicleDetail.getPrice());
+				params.put("discountedPrice", vehicleDetail.getDiscountedPrice());
+				params.put("transmissionType", vehicleDetail.getTransmissionType());
+				params.put("loadingWeight", vehicleDetail.getLoadingWeight());
+				params.put("seatsType", vehicleDetail.getSeatsType());
+				params.put("mileage", vehicleDetail.getMileage());
+				params.put("conditionType", vehicleDetail.getConditionType());
+				params.put("engineType", vehicleDetail.getEngineType());
+				params.put("steeringType", vehicleDetail.getSteeringType());
+				params.put("fuelType", vehicleDetail.getFuelType());
+				params.put("country", vehicleDetail.getCountry());
+				params.put("dealsType", vehicleDetail.getDealsType());
+				params.put("membershipType", vehicleDetail.getMembershipType());
+				params.put("dealerDetails", vehicleDetail.getDealerDetails());
+				params.put("driveTrain", vehicleDetail.getDriveTrain());
+				params.put("parentImageUrl", vehicleDetail.getParentPhotoFileName()==null || vehicleDetail.getParentPhotoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentPhotoFileName());
+				params.put("parentVideoUrl", vehicleDetail.getParentVideoFileName()==null || vehicleDetail.getParentVideoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentVideoFileName());
+			} else {
+				return CommonUtil.wrapResultResponse(methodName, 1, "Invalid item", null);
+			}
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", params);
 		} catch (Exception e) {
 			logger.error("::::Exception(daoImpl)==>getVehicleDetails::::");
