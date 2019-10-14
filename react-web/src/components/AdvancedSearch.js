@@ -2119,11 +2119,15 @@ class AdvancedSearch extends Component {
                       return (
                         <div class="row searched_cards align-items-center">
                           <div class="col-md-3 text-center">
+<<<<<<< HEAD
                             <img
                               src={vehicle.parentImageUrl}
                               class="w-100 img-fluid"
                               alt=""
                             />
+=======
+                            <img src={vehicle.parentImageUrl==''?acura:vehicle.parentImageUrl} class="w-100 img-fluid" alt="" />
+>>>>>>> 1b34d934d1d764d8cfeba560ba4458f77840b9b5
                           </div>
                           <div
                             class="col-md-9 text-left"
