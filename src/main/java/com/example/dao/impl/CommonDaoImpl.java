@@ -715,6 +715,7 @@ public class CommonDaoImpl implements CommonDao {
 			for(VehicleDetail vehicleDetail : vehicleDetails.getContent()) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
 				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
 				params.put("brand", vehicleDetail.getBrand());
 				params.put("model", vehicleDetail.getModel());
@@ -782,7 +783,7 @@ public class CommonDaoImpl implements CommonDao {
 			if(vehicleDetail!=null)
 			{
 				params.put("vehicleId", vehicleDetail.getVehicleId());
-				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail);
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
 				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
 				params.put("brand", vehicleDetail.getBrand());
 				params.put("model", vehicleDetail.getModel());

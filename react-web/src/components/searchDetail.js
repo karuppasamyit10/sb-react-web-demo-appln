@@ -146,7 +146,8 @@ class searchDetail extends Component {
                                     <div class="carsbig">
                                         <div>
                                             <div class="imgs">
-                                            <img src={require("../assets/img/detail/big/big1.jpeg")} class="img-fluid" alt="" />
+                                            {/* <img src={require("../assets/img/detail/big/big1.jpeg")} class="img-fluid" alt="" /> */}
+                                            <img src={this.state.vehicleDetails.parentImageUrl==''?require("../assets/img/detail/big/big1.jpeg"):this.state.vehicleDetails.parentImageUrl} class="img-fluid" alt="" />
                                             </div>
                                         </div>
                                         {/* <div>

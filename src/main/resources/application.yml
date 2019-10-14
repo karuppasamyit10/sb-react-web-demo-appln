@@ -76,7 +76,7 @@ endpoints:
 spring:
   resources:
     static-locations:
-      - file:///home/ubuntu/sb-demo-app/images
+      - file:///home/ubuntu/sb-demo-app/imgs/
   profiles: dev
   application:
     name: sb-demo-appln

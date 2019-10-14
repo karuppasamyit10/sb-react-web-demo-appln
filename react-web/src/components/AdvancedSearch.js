@@ -425,6 +425,7 @@ class AdvancedSearch extends Component {
     const {
       brands,
       models,
+      vehicleType,
       // transmissionType,
       // fuelType,
       // steeringType,
@@ -432,6 +433,7 @@ class AdvancedSearch extends Component {
       membershipType
     } = this.state;
     const SearchData = new FormData();
+    SearchData.set("vehicleTypeId", vehicleType);
     SearchData.set("pageNo", offset);
     SearchData.set("", offset);
     SearchData.set("itemsPerPage", limit);
@@ -498,12 +500,12 @@ class AdvancedSearch extends Component {
   };
 
   onChangeVehicleType = (vehicleType) => {
-    this.setState({vehicleType : vehicleType})
-    this.getVehicleSearchList();
+    this.setState({vehicleType : vehicleType}, () => this.getAllMasterByvehicleTypeId());
+    this.setState({vehicleType : vehicleType}, () => this.getVehicleSearchList());
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     let {
       countryList,
       brandList,
@@ -533,7 +535,7 @@ class AdvancedSearch extends Component {
       toMileageList,
       todosPerPage
     } = this.state;
-    console.log(vehicleType, "lllllllllllllll");
+    // console.log(vehicleType, "lllllllllllllll");
     // this.getAllMasterByvehicleTypeId();
     const options = [
       { value: "chocolate", label: "Chocolate" },
@@ -628,7 +630,7 @@ class AdvancedSearch extends Component {
                 <div class="col-lg-4">
                   <div class="filters_wrap">
                     <div class="filters filter_1">
-                      <div class="head3 mb-2">Filter Results</div>
+                      {/* <div class="head3 mb-2">Filter Results</div> */}
                       {/* <ul
                       class="nav nav-pills mb-3 justify-content-center"
                       id="pills-tab"
@@ -713,37 +715,39 @@ class AdvancedSearch extends Component {
                                 })}
                             </select>
                           </div>
-                          <div class="form-group">
-                            {/* <Select
-                            value={this.state.selectedModelOptions}
-                            onChange={this.handleChangeModel}
-                            options={carModelOptions}
-                            name="carModel"
-                            isMulti={true}
-                            isSearchable={true}
-                          /> */}
-                            <select
-                              className="form-control"
-                              name="models"
-                              onChange={e => {
-                                this.handleChange(e);
-                              }}
-                              value={this.state.models}
-                            >
-                              <option>All Models</option>
-                              {this.state.modelList &&
-                                this.state.modelList.map(model => {
-                                  return (
-                                    <option
-                                      id={model.modelId}
-                                      value={model.model}
-                                    >
-                                      {model.model}
-                                    </option>
-                                  );
-                                })}
-                            </select>
-                          </div>
+                          {this.state.vehicleType!=4?
+                          <div class="form-group" >
+                          {/* <Select
+                          value={this.state.selectedModelOptions}
+                          onChange={this.handleChangeModel}
+                          options={carModelOptions}
+                          name="carModel"
+                          isMulti={true}
+                          isSearchable={true}
+                        /> */}
+                          <select
+                            className="form-control"
+                            name="models"
+                            onChange={e => {
+                              this.handleChange(e);
+                            }}
+                            value={this.state.models}
+                          >
+                            <option>All Models</option>
+                            {this.state.modelList &&
+                              this.state.modelList.map(model => {
+                                return (
+                                  <option
+                                    id={model.modelId}
+                                    value={model.model}
+                                  >
+                                    {model.model}
+                                  </option>
+                                );
+                              })}
+                          </select>
+                        </div>:""}
+                          
                           <div class="form-group">
                             <div class="row align-items-center">
                               <div class="col-5">
@@ -2148,16 +2152,20 @@ class AdvancedSearch extends Component {
                     this.state.vehicleList.map((vehicle,index) => {
                       return (
                         <div class="row searched_cards align-items-center">
-                          <div class="col-md-3 text-center">
+                          <div class="col-md-3 text-center" onClick={() => {
+                              this.vehicleDetails(vehicle.vehicleId);
+                            }}>
                             <img src={vehicle.parentImageUrl==''?acura:vehicle.parentImageUrl} class="w-100 img-fluid" alt="" />
                           </div>
                           <div
                             class="col-md-9 text-left"
                           >
                             <div class="row no-gutters align-items-center">
-                              <div class="col pr-3">
+                              <div class="col pr-3" onClick={() => {
+                              this.vehicleDetails(vehicle.vehicleId);
+                            }}>
                                 <div class="head3 bold mb-2">
-                                  {vehicle.brand}
+                                  {vehicle.vehicleName}
                                 </div>
                               </div>
                               <div class="col whishlist" style={{cursor : 'pointer'}} >
