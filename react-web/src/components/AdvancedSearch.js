@@ -57,7 +57,7 @@ class AdvancedSearch extends Component {
           : null,
       modelList: [],
       pageNo: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 5,
       total: 0,
       vehicleList: [],
       brandObject: {},
@@ -105,7 +105,11 @@ class AdvancedSearch extends Component {
       steeringType: [],
       dealsType: [],
       membershipType: [],
-      partsType: []
+      partsType: [],
+
+      limit: 5,
+      todosPerPage: 5,
+      offset: 1
     };
   }
 
@@ -128,9 +132,17 @@ class AdvancedSearch extends Component {
     this.getAllMasterByvehicleTypeId();
     if (this.state.brandId) {
       this.getVehicleModelList(this.state.brandId);
-      this.getVehicleSearchList();
     }
+    this.getVehicleSearchList();
   }
+
+  handlePageClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected + 1);
+    this.setState({ offset: offset }, () => {
+      this.getVehicleSearchList();
+    });
+  };
 
   getAllMasterByvehicleTypeId = () => {
     this.props.getVehicleMasterData(
@@ -394,7 +406,9 @@ class AdvancedSearch extends Component {
       fromPrice,
       toPrice,
       fromMileage,
-      toMileage
+      toMileage,
+      offset,
+      limit
     } = this.state;
     console.log(this.state);
     const {
@@ -407,8 +421,8 @@ class AdvancedSearch extends Component {
       membershipType
     } = this.state;
     const SearchData = new FormData();
-    SearchData.set("pageNo", pageNo);
-    SearchData.set("itemsPerPage", itemsPerPage);
+    SearchData.set("pageNo", offset);
+    SearchData.set("itemsPerPage", limit);
     SearchData.set("brands", brands ? brands : []);
     SearchData.set("models", models ? models : []);
     SearchData.set(
@@ -489,7 +503,8 @@ class AdvancedSearch extends Component {
       fromYearList,
       toYearList,
       fromPriceList,
-      toPriceList
+      toPriceList,
+      todosPerPage
     } = this.state;
     console.log(vehicleType, "lllllllllllllll");
     // this.getAllMasterByvehicleTypeId();
@@ -498,6 +513,7 @@ class AdvancedSearch extends Component {
       { value: "strawberry", label: "Strawberry" },
       { value: "vanilla", label: "Vanilla" }
     ];
+    const pageDisplayCount = Math.ceil(total / todosPerPage);
     return (
       <LoadingOverlay
         active={this.state.isLoading}
@@ -508,110 +524,73 @@ class AdvancedSearch extends Component {
         <React.Fragment>
           <section class="adv_search_wrap">
             <div class="container">
-              <div class="mt-5">
-                {/* <p class="head2">
-                Used <strong> Acura ILX</strong> for Sale in{" "}
-                <strong> Manitowish Waters,</strong> WI
-              </p> */}
+              <div class="row mt-5">
+                <div class="col-lg-6"></div>
+                <div class="col-lg-6">
+                  <ul class="nav nav-pills justify-content-end rightlinks">
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.setState({ vehicleType: 1 });
+                      }}
+                    >
+                      <a
+                        class={`nav-link ${vehicleType === 1 ? "active" : ""}`}
+                      >
+                        Cars
+                      </a>
+                    </li>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.setState({ vehicleType: 2 });
+                      }}
+                    >
+                      <a
+                        class={`nav-link ${vehicleType === 2 ? "active" : ""}`}
+                      >
+                        Truck
+                      </a>
+                    </li>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.setState({ vehicleType: 3 });
+                      }}
+                    >
+                      <a
+                        class={`nav-link ${vehicleType === 3 ? "active" : ""}`}
+                      >
+                        Bus
+                      </a>
+                    </li>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.setState({ vehicleType: 4 });
+                      }}
+                    >
+                      <a
+                        class={`nav-link ${vehicleType === 4 ? "active" : ""}`}
+                      >
+                        Equipments
+                      </a>
+                    </li>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.setState({ vehicleType: 5 });
+                      }}
+                    >
+                      <a
+                        class={`nav-link ${vehicleType === 5 ? "active" : ""}`}
+                      >
+                        Parts
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
-
-              <ul
-                class="nav nav-pills mb-3 text-right"
-                id="pills-tab"
-                role="tablist"
-              >
-                <li
-                  class="nav-item"
-                  onClick={() => {
-                    this.setState({ vehicleType: 1 });
-                  }}
-                >
-                  <a
-                    class={`nav-link ${vehicleType === 1 ? "active" : ""}`}
-                    id="pills-home-tab"
-                    data-toggle="pill"
-                    href="#pills-home"
-                    role="tab"
-                    aria-controls="pills-home"
-                    aria-selected="true"
-                  >
-                    Car
-                  </a>
-                </li>
-                <li
-                  class="nav-item"
-                  onClick={() => {
-                    this.setState({ vehicleType: 2 });
-                  }}
-                >
-                  <a
-                    class={`nav-link ${vehicleType === 2 ? "active" : ""}`}
-                    id="pills-profile-tab"
-                    data-toggle="pill"
-                    href="#pills-profile"
-                    role="tab"
-                    aria-controls="pills-profile"
-                    aria-selected="false"
-                  >
-                    Truck
-                  </a>
-                </li>
-                <li
-                  class="nav-item"
-                  onClick={() => {
-                    this.setState({ vehicleType: 3 });
-                  }}
-                >
-                  <a
-                    class={`nav-link ${vehicleType === 3 ? "active" : ""}`}
-                    id="pills-contact-tab"
-                    data-toggle="pill"
-                    href="#pills-contact"
-                    role="tab"
-                    aria-controls="pills-contact"
-                    aria-selected="false"
-                  >
-                    Bus
-                  </a>
-                </li>
-                <li
-                  class="nav-item"
-                  onClick={() => {
-                    this.setState({ vehicleType: 4 });
-                  }}
-                >
-                  <a
-                    class={`nav-link ${vehicleType === 4 ? "active" : ""}`}
-                    id="pills-contact-tab"
-                    data-toggle="pill"
-                    href="#pills-contact"
-                    role="tab"
-                    aria-controls="pills-contact"
-                    aria-selected="false"
-                  >
-                    Equipments
-                  </a>
-                </li>
-                <li
-                  class="nav-item"
-                  onClick={() => {
-                    this.setState({ vehicleType: 5 });
-                  }}
-                >
-                  <a
-                    class={`nav-link ${vehicleType === 5 ? "active" : ""}`}
-                    id="pills-contact-tab"
-                    data-toggle="pill"
-                    href="#pills-contact"
-                    role="tab"
-                    aria-controls="pills-contact"
-                    aria-selected="false"
-                  >
-                    Parts
-                  </a>
-                </li>
-              </ul>
-
               <div class="row">
                 {/* start */}
                 <div class="col-lg-4">
@@ -2097,16 +2076,54 @@ class AdvancedSearch extends Component {
                   ) : (
                     ""
                   )}
-                  <div class="totalresults text-right py-3 mt-3">
-                    {/* <span class="bold">1 - 6</span> out of{" "} */}
-                    {/* <span class="bold">6</span> listings */}
-                  </div>
+                  {pageDisplayCount > 1 ? (
+                    <div class="totalresults py-3 mt-3">
+                      <div class="row align-items-center">
+                        <div class="col-md-6">
+                          <span class="bold">
+                            {this.state.offset} - {pageDisplayCount}
+                          </span>{" "}
+                          out of <span class="bold">{pageDisplayCount}</span>{" "}
+                          listings
+                        </div>
+                        <div class="col-md-6">
+                          <ReactPaginate
+                            previousLabel={"previous"}
+                            nextLabel={"next"}
+                            breakLabel={"..."}
+                            breakClassName={"break-me"}
+                            pageCount={pageDisplayCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={
+                              "pagination justify-content-end"
+                            }
+                            subContainerClassName={"page-item"}
+                            activeClassName={"page-item active"}
+                            pageLinkClassName={"page-link"}
+                            nextLinkClassName={"page-link"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            previousClassName={"page-item"}
+                            disabledClassName={"disabled"}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   {this.state.vehicleList && this.state.vehicleList.length ? (
                     this.state.vehicleList.map(vehicle => {
                       return (
                         <div class="row searched_cards align-items-center">
                           <div class="col-md-3 text-center">
-                            <img src={vehicle.parentImageUrl} class="w-100 img-fluid" alt="" />
+                            <img
+                              src={vehicle.parentImageUrl}
+                              class="w-100 img-fluid"
+                              alt=""
+                            />
                           </div>
                           <div
                             class="col-md-9 text-left"
@@ -2122,7 +2139,7 @@ class AdvancedSearch extends Component {
                               </div>
                               <div class="col whishlist">
                                 <span>
-                                  <i class="fas fa-heart"></i>
+                                  <i class="fa fa-heart-o"></i>
                                 </span>
                               </div>
                             </div>
@@ -2187,39 +2204,54 @@ class AdvancedSearch extends Component {
                     })
                   ) : (
                     <div className="text-center">
-                      {this.state.isLoading ? (
+                      {/* {this.state.isLoading ? (
                         <Spinner color="black" />
-                      ) : (
-                        "No Data Found"
-                      )}
+                      )  */}
+                      {/* : ( */}
+                        No Data Found
+                      {/* )} */}
                     </div>
+                  )}
+                  {pageDisplayCount > 1 ? (
+                    <div class="totalresults py-3 mt-3">
+                      <div class="row align-items-center">
+                        <div class="col-md-6">
+                          <span class="bold">
+                            {this.state.offset} - {pageDisplayCount}
+                          </span>{" "}
+                          out of <span class="bold">{pageDisplayCount}</span>{" "}
+                          listings
+                        </div>
+                        <div class="col-md-6">
+                          <ReactPaginate
+                            previousLabel={"previous"}
+                            nextLabel={"next"}
+                            breakLabel={"..."}
+                            breakClassName={"break-me"}
+                            pageCount={pageDisplayCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={
+                              "pagination justify-content-end"
+                            }
+                            subContainerClassName={"page-item"}
+                            activeClassName={"page-item active"}
+                            pageLinkClassName={"page-link"}
+                            nextLinkClassName={"page-link"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            previousClassName={"page-item"}
+                            disabledClassName={"disabled"}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
                   )}
                 </div>
               </div>
-              {total > 1 ? (
-                <ReactPaginate
-                  previousLabel={"previous"}
-                  nextLabel={"next"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
-                  pageCount={10}
-                  // pageCount={total}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={"pagination justify-content-end"}
-                  subContainerClassName={"page-item"}
-                  activeClassName={"page-item active"}
-                  pageLinkClassName={"page-link"}
-                  nextLinkClassName={"page-link"}
-                  previousLinkClassName={"page-link"}
-                  nextClassName={"page-item"}
-                  previousClassName={"page-item"}
-                  disabledClassName={"disabled"}
-                />
-              ) : (
-                ""
-              )}
             </div>
           </section>
         </React.Fragment>
