@@ -100,6 +100,12 @@ public class VehicleDetail {
 	@Column(name="dealerDetails")
 	private String dealerDetails;
 	
+	@Column(name="parentPhotoFileName")
+	private String parentPhotoFileName;
+	
+	@Column(name="parentVideoFileName")
+	private String parentVideoFileName;
+	
 	@Column(name="isDeleted")
 	private int isDeleted;
 
@@ -507,6 +513,34 @@ public class VehicleDetail {
 	 */
 	public void setDealerDetails(String dealerDetails) {
 		this.dealerDetails = dealerDetails;
+	}
+
+	/**
+	 * @return the parentPhotoFileName
+	 */
+	public String getParentPhotoFileName() {
+		return parentPhotoFileName;
+	}
+
+	/**
+	 * @param parentPhotoFileName the parentPhotoFileName to set
+	 */
+	public void setParentPhotoFileName(String parentPhotoFileName) {
+		this.parentPhotoFileName = parentPhotoFileName;
+	}
+
+	/**
+	 * @return the parentVideoFileName
+	 */
+	public String getParentVideoFileName() {
+		return parentVideoFileName;
+	}
+
+	/**
+	 * @param parentVideoFileName the parentVideoFileName to set
+	 */
+	public void setParentVideoFileName(String parentVideoFileName) {
+		this.parentVideoFileName = parentVideoFileName;
 	}
 
 	/**

@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.bean.UserRegistrationBean;
 import com.example.bean.VehicleSearchBean;
+import com.example.config.CommonConfig;
 import com.example.dao.CommonDao;
 import com.example.entity.Brand;
 import com.example.entity.Category1;
@@ -144,6 +145,9 @@ public class CommonDaoImpl implements CommonDao {
 	
 	@Autowired
 	EntityManager entityManager;
+	
+	@Autowired
+	CommonConfig commonConfig;
 		
 	@Override
 	@Transactional(rollbackOn = { Exception.class})
@@ -723,6 +727,8 @@ public class CommonDaoImpl implements CommonDao {
 				params.put("dealsType", vehicleDetail.getDealsType());
 				params.put("discountedPrice", vehicleDetail.getDiscountedPrice());
 				params.put("driveTrain", vehicleDetail.getDriveTrain());
+				params.put("parentImageUrl", vehicleDetail.getParentPhotoFileName()==null || vehicleDetail.getParentPhotoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentPhotoFileName());
+				params.put("parentVideoUrl", vehicleDetail.getParentVideoFileName()==null || vehicleDetail.getParentVideoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentVideoFileName());
 				vehicleDetailList.add(params);
 			}    
 			    

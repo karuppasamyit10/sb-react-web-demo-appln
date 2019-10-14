@@ -3,6 +3,9 @@ endpoints:
     enabled: true
     sensitive: false
 spring:
+  resources:
+    static-locations:
+      - file:///D:/imgs/
   data:
     rest:
       base-path: /api
@@ -59,7 +62,7 @@ server:
 
 common:
   config:
-    host-base-url: http://localhost/
+    host-base-url: http://localhost:8181/
     from-mail: support@example.com
     https-socket-io: false
     socket-io-port: 7070
@@ -71,6 +74,9 @@ endpoints:
     enabled: true
     sensitive: false
 spring:
+  resources:
+    static-locations:
+      - file:///home/ubuntu/sb-demo-app/images
   profiles: dev
   application:
     name: sb-demo-appln
@@ -125,7 +131,7 @@ server:
 
 common:
   config:
-    host-base-url: http://localhost/
+    host-base-url: http://35.160.123.119:8181/
     from-mail: support@example.com
     https-socket-io: false
     socket-io-port: 7070

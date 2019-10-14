@@ -2106,7 +2106,7 @@ class AdvancedSearch extends Component {
                       return (
                         <div class="row searched_cards align-items-center">
                           <div class="col-md-3 text-center">
-                            <img src={acura} class="w-100 img-fluid" alt="" />
+                            <img src={vehicle.parentImageUrl} class="w-100 img-fluid" alt="" />
                           </div>
                           <div
                             class="col-md-9 text-left"
@@ -2117,7 +2117,7 @@ class AdvancedSearch extends Component {
                             <div class="row no-gutters align-items-center">
                               <div class="col pr-3">
                                 <div class="head3 bold mb-2">
-                                  {vehicle.vehicleName}
+                                  {vehicle.brand}
                                 </div>
                               </div>
                               <div class="col whishlist">
@@ -2134,7 +2134,7 @@ class AdvancedSearch extends Component {
                                       <i class="fas fa-arrow-circle-right"></i>
                                     </span>
                                   </span>{" "}
-                                  Good Deal
+                                  {vehicle.dealsType}
                                 </div>
                                 <div class="para2">$509 Below.</div>
                                 <div class="para2">Harasow IMV of $15,000</div>
