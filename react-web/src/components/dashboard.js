@@ -121,11 +121,11 @@ class Upload extends Component {
   }
 
   handleSearch = () => {
-    const { brandName, modelName, country, brandId, modelId, vehicleTypeId } = this.state;
+    const { brand, modelName, country, brandId, modelId, vehicleTypeId } = this.state;
     this.props.history.push({
       pathname: PATH.ADVANCED_SEARCH,
       state: {
-        brandName: brandName, brandId: brandId, modelId: modelId,
+        brandName: brand, brandId: brandId, modelId: modelId,
         modelName: modelName, country: country, vehicleTypeId: vehicleTypeId
       }
     })
@@ -358,11 +358,6 @@ class Upload extends Component {
                           <div class="price-filter">
                             <div class="row no-gutters align-items-center">
                               <div class="col-md-3 colgrids">
-                                <div class="form-group row align-items-center">
-                                  {/* <label class="col-sm-4 col-form-label text-center">
-                                  Price
-                                </label> */}
-                                  <div class="col-sm-8">
                                     <div class="selectdd">
                                       <span class="caret">
                                         <i
@@ -370,7 +365,7 @@ class Upload extends Component {
                                           aria-hidden="true"
                                         ></i>
                                       </span>
-                                      <select onChange={(e) => { this.onChangeFromPrice(e) }}>
+                                      <select onChange={(e) => { this.onChangeFromPrice(e) }} class="form-control">
                                         <option selected>From</option>
                                         {priceList && priceList.length ?
                                           priceList.map((price) => {
@@ -381,15 +376,9 @@ class Upload extends Component {
                                           <option>Loading...</option>}
                                       </select>
                                     </div>
-                                  </div>
-                                </div>
+                                  
                               </div>
                               <div class="col-md-3 colgrids">
-                                <div class="form-group row align-items-center">
-                                  {/* <label class="col-sm-4 col-form-label text-center">
-                                  To
-                                </label> */}
-                                  <div class="col-sm-8">
                                     <div class="selectdd">
                                       <span class="caret">
                                         <i
@@ -397,7 +386,7 @@ class Upload extends Component {
                                           aria-hidden="true"
                                         ></i>
                                       </span>
-                                      <select onChange={(e) => { this.onChangeToPrice(e) }}>
+                                      <select onChange={(e) => { this.onChangeToPrice(e) }} class="form-control">
                                         <option selected>To</option>
                                         {priceList && priceList.length ?
                                           priceList.map((price) => {
@@ -408,18 +397,7 @@ class Upload extends Component {
                                           <option>Loading...</option>}
                                       </select>
                                     </div>
-                                  </div>
-                                </div>
                               </div>
-                              {/* <div class="col-md-3 colgrids">
-                              <div class="inputtxt">
-                                <input
-                                  type="text"
-                                  value=""
-                                  placeholder="Zipcode"
-                                />
-                              </div>
-                            </div> */}
                               <div class="col-md-3 colgrids">
                                 <div class="selectdd">
                                   <span class="caret">
@@ -428,7 +406,7 @@ class Upload extends Component {
                                       aria-hidden="true"
                                     ></i>
                                   </span>
-                                  <select onChange={(e) => { this.onChangeCountry(e) }}>
+                                  <select onChange={(e) => { this.onChangeCountry(e) }} class="form-control">
                                     <option selected>Choose Country</option>
                                     {countryList && countryList.length ?
                                       countryList.map((country) => {

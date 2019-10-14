@@ -82,6 +82,7 @@ class AdvancedSearch extends Component {
       toYearList: null,
       fromPriceList: null,
       toPriceList: null,
+      toMileageList : null,
 
       //newly added for multiselect
       selectedBrandOptions: null,
@@ -155,6 +156,7 @@ class AdvancedSearch extends Component {
             this.setState({ toYearList: this.state.master.yearList });
             this.setState({ fromPriceList: this.state.master.priceList });
             this.setState({ toPriceList: this.state.master.priceList });
+            this.setState({ toMileageList: this.state.master.mileageList });
             this.setCarBrand();
             this.setTransmissionType();
             this.setFuelType();
@@ -380,7 +382,9 @@ class AdvancedSearch extends Component {
   };
 
   getVehicleModelList = brandId => {
+    this.setState({isLoading  : true});
     this.props.getVehicleModelList({ brandId: brandId }, response => {
+      this.setState({isLoading  : false});
       if (response.response_code === 0) {
         this.setState({ modelList: response.response.modelList }, () => {
           this.setCarModel();
@@ -388,6 +392,13 @@ class AdvancedSearch extends Component {
       }
     });
   };
+
+  saveFavorite = (vehicleId , index) =>{
+    let vehicleList = this.state.vehicleList;
+    vehicleList[index].isFavorite = vehicleList[index].isFavorite === 0 ? 1 : 0;
+    this.setState({vehicleList : vehicleList});
+    this.props.showNotification('Added to favourites' , 'success');
+  }
 
   getVehicleSearchList = () => {
     const {
@@ -422,6 +433,7 @@ class AdvancedSearch extends Component {
     } = this.state;
     const SearchData = new FormData();
     SearchData.set("pageNo", offset);
+    SearchData.set("", offset);
     SearchData.set("itemsPerPage", limit);
     SearchData.set("brands", brands ? brands : []);
     SearchData.set("models", models ? models : []);
@@ -445,6 +457,9 @@ class AdvancedSearch extends Component {
       this.setState({ isLoading: false });
       if (response && response.response_code === 0) {
         const { totalRecords, vehicleDetailList } = response.response;
+        vehicleDetailList.map((i)=>{
+          return i.isFavorite = 0;
+        })
         this.setState({ total: totalRecords, vehicleList: vehicleDetailList });
       }
     });
@@ -467,17 +482,28 @@ class AdvancedSearch extends Component {
       this.setState({ toYearList: filteredArray });
     }
     if (e.target.name === "fromPrice") {
-      console.log("jjjjjjjjjjjjjjjjjjjjj");
       let toPriceList = this.state.master.priceList;
       let filteredArray = toPriceList.filter(
         price => parseInt(price.price) > parseInt(e.target.value)
       );
-      console.log(filteredArray, "lllllllllllllllllllll");
       this.setState({ toPriceList: filteredArray });
+    }
+    if(e.target.name === "fromMileage"){
+      let toMileageList = this.state.master.mileageList;
+      let filteredArray = toMileageList.filter(
+        mileage => parseInt(mileage.mileage) > parseInt(e.target.value)
+      );
+      this.setState({ toMileageList: filteredArray });
     }
   };
 
+  onChangeVehicleType = (vehicleType) => {
+    this.setState({vehicleType : vehicleType})
+    this.getVehicleSearchList();
+  }
+
   render() {
+    console.log(this.props);
     let {
       countryList,
       brandList,
@@ -504,6 +530,7 @@ class AdvancedSearch extends Component {
       toYearList,
       fromPriceList,
       toPriceList,
+      toMileageList,
       todosPerPage
     } = this.state;
     console.log(vehicleType, "lllllllllllllll");
@@ -530,8 +557,9 @@ class AdvancedSearch extends Component {
                   <ul class="nav nav-pills justify-content-end rightlinks">
                     <li
                       class="nav-item"
+                      style={{cursor : 'pointer'}}
                       onClick={() => {
-                        this.setState({ vehicleType: 1 });
+                        this.onChangeVehicleType(1)
                       }}
                     >
                       <a
@@ -542,8 +570,9 @@ class AdvancedSearch extends Component {
                     </li>
                     <li
                       class="nav-item"
+                      style={{cursor : 'pointer'}}
                       onClick={() => {
-                        this.setState({ vehicleType: 2 });
+                        this.onChangeVehicleType(2)
                       }}
                     >
                       <a
@@ -554,8 +583,9 @@ class AdvancedSearch extends Component {
                     </li>
                     <li
                       class="nav-item"
+                      style={{cursor : 'pointer'}}
                       onClick={() => {
-                        this.setState({ vehicleType: 3 });
+                        this.onChangeVehicleType(3);
                       }}
                     >
                       <a
@@ -566,8 +596,9 @@ class AdvancedSearch extends Component {
                     </li>
                     <li
                       class="nav-item"
+                      style={{cursor : 'pointer'}}
                       onClick={() => {
-                        this.setState({ vehicleType: 4 });
+                        this.onChangeVehicleType(4);
                       }}
                     >
                       <a
@@ -578,8 +609,9 @@ class AdvancedSearch extends Component {
                     </li>
                     <li
                       class="nav-item"
+                      style={{cursor : 'pointer'}}
                       onClick={() => {
-                        this.setState({ vehicleType: 5 });
+                        this.onChangeVehicleType(5)
                       }}
                     >
                       <a
@@ -1305,13 +1337,11 @@ class AdvancedSearch extends Component {
                           <div class="row align-items-center">
                             <div class="col-5">
                               <select
-                                name=""
+                                name="fromMileage"
                                 id=""
                                 value={this.state.fromMileage}
                                 onChange={e => {
-                                  this.setState({
-                                    fromMileage: e.target.value
-                                  });
+                                  this.onChangeDropDown(e);
                                 }}
                                 class="form-control"
                               >
@@ -1332,19 +1362,19 @@ class AdvancedSearch extends Component {
                             <div class="col-2">to</div>
                             <div class="col-5">
                               <select
-                                name=""
+                                name="toMileage"
                                 id=""
                                 value={this.state.toMileage}
                                 onChange={e => {
-                                  this.setState({ toMileage: e.target.value });
+                                  this.onChangeDropDown(e);
                                 }}
                                 class="form-control"
                               >
                                 <option value="" selected>
                                   All Mileage
                                 </option>
-                                {mileageList && mileageList.length
-                                  ? mileageList.map(mileage => {
+                                {toMileageList && toMileageList.length
+                                  ? toMileageList.map(mileage => {
                                       return (
                                         <option value={mileage.mileage}>
                                           {mileage.mileage}
@@ -2115,25 +2145,14 @@ class AdvancedSearch extends Component {
                     ""
                   )}
                   {this.state.vehicleList && this.state.vehicleList.length ? (
-                    this.state.vehicleList.map(vehicle => {
+                    this.state.vehicleList.map((vehicle,index) => {
                       return (
                         <div class="row searched_cards align-items-center">
                           <div class="col-md-3 text-center">
-<<<<<<< HEAD
-                            <img
-                              src={vehicle.parentImageUrl}
-                              class="w-100 img-fluid"
-                              alt=""
-                            />
-=======
                             <img src={vehicle.parentImageUrl==''?acura:vehicle.parentImageUrl} class="w-100 img-fluid" alt="" />
->>>>>>> 1b34d934d1d764d8cfeba560ba4458f77840b9b5
                           </div>
                           <div
                             class="col-md-9 text-left"
-                            onClick={() => {
-                              this.vehicleDetails(vehicle.vehicleId);
-                            }}
                           >
                             <div class="row no-gutters align-items-center">
                               <div class="col pr-3">
@@ -2141,13 +2160,16 @@ class AdvancedSearch extends Component {
                                   {vehicle.brand}
                                 </div>
                               </div>
-                              <div class="col whishlist">
+                              <div class="col whishlist" style={{cursor : 'pointer'}} >
                                 <span>
-                                  <i class="fa fa-heart-o"></i>
+                                  <i class={vehicle.isFavorite ? `fa fa-heart` : `fa fa-heart-o`} onClick={()=>{this.saveFavorite(vehicle.vehicleId , index)}}></i>
                                 </span>
                               </div>
                             </div>
-                            <div class="row">
+                            <div class="row" 
+                            onClick={() => {
+                              this.vehicleDetails(vehicle.vehicleId);
+                            }}>
                               <div class="col-sm-5">
                                 <div class="head4 mb-4 text-uppercase bold">
                                   <span>
