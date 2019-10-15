@@ -52,6 +52,21 @@ export function getVehicleModelList(params, callback) {
 }
 
 
+export function getVehicleDetailedModelList(params, callback) {
+  return function (dispatch) {
+    Client.get(URL.GET_VEHICLE_MODEL_DETAILS, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====get vehicle detailed model response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====get vehicle detailed model error ===????", error);
+      });
+  };
+}
+
+
 export function getVehicleSearchList(params, callback) {
   return function (dispatch) {
     Client.post(URL.GET_VEHICLE_SEARCH_LIST, params, true)

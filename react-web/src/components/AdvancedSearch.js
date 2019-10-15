@@ -17,6 +17,7 @@ import {
   getSearchResult,
   getVehicleMasterData,
   getVehicleModelList,
+  getVehicleDetailedModelList,
   getVehicleSearchList,
   getVehicleDetails
 } from "../actions/searchAction";
@@ -82,7 +83,7 @@ class AdvancedSearch extends Component {
       toYearList: null,
       fromPriceList: null,
       toPriceList: null,
-      toMileageList : null,
+      toMileageList: null,
 
       //newly added for multiselect
       selectedBrandOptions: null,
@@ -107,6 +108,8 @@ class AdvancedSearch extends Component {
       dealsType: [],
       membershipType: [],
       partsType: [],
+      modelDetailList : [],
+      modelDetails : null,
 
       limit: 5,
       todosPerPage: 5,
@@ -116,7 +119,7 @@ class AdvancedSearch extends Component {
 
   static propTypes = {
     prop: PropTypes
-  };
+  };  
 
   componentDidMount() {
     console.log(
@@ -315,7 +318,17 @@ class AdvancedSearch extends Component {
   };
 
   handleChange = e => {
+    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
+    if (e.target.name === "models") {
+      let { modelList } = this.state;
+      let found = modelList.find(model => {
+        return model.model === e.target.value;
+      });
+      if (found) {
+        this.getVehicleDetailedModelList(found.modelId);
+      }
+    }
   };
 
   // handleChangeModel = selectedOption => {
@@ -382,9 +395,9 @@ class AdvancedSearch extends Component {
   };
 
   getVehicleModelList = brandId => {
-    this.setState({isLoading  : true});
+    this.setState({ isLoading: true });
     this.props.getVehicleModelList({ brandId: brandId }, response => {
-      this.setState({isLoading  : false});
+      this.setState({ isLoading: false });
       if (response.response_code === 0) {
         this.setState({ modelList: response.response.modelList }, () => {
           this.setCarModel();
@@ -393,12 +406,23 @@ class AdvancedSearch extends Component {
     });
   };
 
-  saveFavorite = (vehicleId , index) =>{
+  getVehicleDetailedModelList = modelId => {
+    this.setState({ isLoading: true });
+    this.props.getVehicleDetailedModelList({ modelId: modelId }, response => {
+      this.setState({ isLoading: false });
+      console.log(response);
+      if (response.response_code === 0) {
+        this.setState({ modelDetailList: response.response.modelDetailList });
+      }
+    });
+  };
+
+  saveFavorite = (vehicleId, index) => {
     let vehicleList = this.state.vehicleList;
     vehicleList[index].isFavorite = vehicleList[index].isFavorite === 0 ? 1 : 0;
-    this.setState({vehicleList : vehicleList});
-    this.props.showNotification('Added to favourites' , 'success');
-  }
+    this.setState({ vehicleList: vehicleList });
+    this.props.showNotification("Added to favourites", "success");
+  };
 
   getVehicleSearchList = () => {
     const {
@@ -419,7 +443,8 @@ class AdvancedSearch extends Component {
       fromMileage,
       toMileage,
       offset,
-      limit
+      limit,
+      modelDetails
     } = this.state;
     console.log(this.state);
     const {
@@ -439,6 +464,7 @@ class AdvancedSearch extends Component {
     SearchData.set("itemsPerPage", limit);
     SearchData.set("brands", brands ? brands : []);
     SearchData.set("models", models ? models : []);
+    SearchData.set("modelDetails", modelDetails ? modelDetails : []);
     SearchData.set(
       "transmissionType",
       transmissionType ? transmissionType : []
@@ -459,9 +485,9 @@ class AdvancedSearch extends Component {
       this.setState({ isLoading: false });
       if (response && response.response_code === 0) {
         const { totalRecords, vehicleDetailList } = response.response;
-        vehicleDetailList.map((i)=>{
-          return i.isFavorite = 0;
-        })
+        vehicleDetailList.map(i => {
+          return (i.isFavorite = 0);
+        });
         this.setState({ total: totalRecords, vehicleList: vehicleDetailList });
       }
     });
@@ -490,7 +516,7 @@ class AdvancedSearch extends Component {
       );
       this.setState({ toPriceList: filteredArray });
     }
-    if(e.target.name === "fromMileage"){
+    if (e.target.name === "fromMileage") {
       let toMileageList = this.state.master.mileageList;
       let filteredArray = toMileageList.filter(
         mileage => parseInt(mileage.mileage) > parseInt(e.target.value)
@@ -499,10 +525,14 @@ class AdvancedSearch extends Component {
     }
   };
 
-  onChangeVehicleType = (vehicleType) => {
-    this.setState({vehicleType : vehicleType}, () => this.getAllMasterByvehicleTypeId());
-    this.setState({vehicleType : vehicleType}, () => this.getVehicleSearchList());
-  }
+  onChangeVehicleType = vehicleType => {
+    this.setState({ vehicleType: vehicleType }, () =>
+      this.getAllMasterByvehicleTypeId()
+    );
+    this.setState({ vehicleType: vehicleType }, () =>
+      this.getVehicleSearchList()
+    );
+  };
 
   render() {
     // console.log(this.props);
@@ -533,7 +563,9 @@ class AdvancedSearch extends Component {
       fromPriceList,
       toPriceList,
       toMileageList,
-      todosPerPage
+      todosPerPage,
+      modelList,
+      modelDetailList
     } = this.state;
     // console.log(vehicleType, "lllllllllllllll");
     // this.getAllMasterByvehicleTypeId();
@@ -559,9 +591,9 @@ class AdvancedSearch extends Component {
                   <ul class="nav nav-pills justify-content-end rightlinks">
                     <li
                       class="nav-item"
-                      style={{cursor : 'pointer'}}
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
-                        this.onChangeVehicleType(1)
+                        this.onChangeVehicleType(1);
                       }}
                     >
                       <a
@@ -572,9 +604,9 @@ class AdvancedSearch extends Component {
                     </li>
                     <li
                       class="nav-item"
-                      style={{cursor : 'pointer'}}
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
-                        this.onChangeVehicleType(2)
+                        this.onChangeVehicleType(2);
                       }}
                     >
                       <a
@@ -585,7 +617,7 @@ class AdvancedSearch extends Component {
                     </li>
                     <li
                       class="nav-item"
-                      style={{cursor : 'pointer'}}
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         this.onChangeVehicleType(3);
                       }}
@@ -598,7 +630,7 @@ class AdvancedSearch extends Component {
                     </li>
                     <li
                       class="nav-item"
-                      style={{cursor : 'pointer'}}
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         this.onChangeVehicleType(4);
                       }}
@@ -611,9 +643,9 @@ class AdvancedSearch extends Component {
                     </li>
                     <li
                       class="nav-item"
-                      style={{cursor : 'pointer'}}
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
-                        this.onChangeVehicleType(5)
+                        this.onChangeVehicleType(5);
                       }}
                     >
                       <a
@@ -683,8 +715,9 @@ class AdvancedSearch extends Component {
                           role="tabpanel"
                           aria-labelledby="pills-bycar-tab"
                         >
-                          <div class="form-group">
-                            {/* <Select
+                          {brandList ? (
+                            <div class="form-group">
+                              {/* <Select
                             value={this.state.selectedBrandOptions}
                             onChange={this.handleChangeBrand}
                             options={carBrandOptions}
@@ -692,32 +725,38 @@ class AdvancedSearch extends Component {
                             isMulti={true}
                             isSearchable={true}
                           /> */}
-                            <select
-                              className="form-control"
-                              name="brands"
-                              id="brands"
-                              onChange={e => {
-                                this.handleChangeBrand(e);
-                              }}
-                              value={this.state.brands}
-                            >
-                              <option id="all">All Brands</option>
-                              {brandList &&
-                                brandList.map((brand, i) => {
-                                  return (
-                                    <option
-                                      id={`${i}${brand.brandId}`}
-                                      value={brand.brand}
-                                    >
-                                      {brand.brand}
-                                    </option>
-                                  );
-                                })}
-                            </select>
-                          </div>
-                          {this.state.vehicleType!=4?
-                          <div class="form-group" >
-                          {/* <Select
+                              <select
+                                className="form-control"
+                                name="brands"
+                                id="brands"
+                                disabled={
+                                  brandList && brandList.length ? false : true
+                                }
+                                onChange={e => {
+                                  this.handleChangeBrand(e);
+                                }}
+                                value={this.state.brands}
+                              >
+                                <option id="all">All Brands</option>
+                                {brandList &&
+                                  brandList.map((brand, i) => {
+                                    return (
+                                      <option
+                                        id={`${i}${brand.brandId}`}
+                                        value={brand.brand}
+                                      >
+                                        {brand.brand}
+                                      </option>
+                                    );
+                                  })}
+                              </select>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          {this.state.vehicleType != 4 && modelList ? (
+                            <div class="form-group">
+                              {/* <Select
                           value={this.state.selectedModelOptions}
                           onChange={this.handleChangeModel}
                           options={carModelOptions}
@@ -725,106 +764,138 @@ class AdvancedSearch extends Component {
                           isMulti={true}
                           isSearchable={true}
                         /> */}
-                          <select
-                            className="form-control"
-                            name="models"
-                            onChange={e => {
-                              this.handleChange(e);
-                            }}
-                            value={this.state.models}
-                          >
-                            <option>All Models</option>
-                            {this.state.modelList &&
-                              this.state.modelList.map(model => {
-                                return (
-                                  <option
-                                    id={model.modelId}
-                                    value={model.model}
-                                  >
-                                    {model.model}
-                                  </option>
-                                );
-                              })}
-                          </select>
-                        </div>:""}
-                          
-                          <div class="form-group">
-                            <div class="row align-items-center">
-                              <div class="col-5">
-                                <select
-                                  name="fromYear"
-                                  id=""
-                                  value={this.state.fromYear}
-                                  onChange={e => {
-                                    this.onChangeDropDown(e);
-                                  }}
-                                  class="form-control"
-                                >
-                                  <option value="" selected>
-                                    All Years
-                                  </option>
-                                  {fromYearList && fromYearList.length
-                                    ? fromYearList.map(year => {
-                                        return (
-                                          <option value={year.year}>
-                                            {year.year}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
-                              <div class="col-2">to</div>
-                              <div class="col-5">
-                                <select
-                                  name="toYear"
-                                  id=""
-                                  value={this.state.toYear}
-                                  onChange={e => {
-                                    this.onChangeDropDown(e);
-                                  }}
-                                  class="form-control"
-                                >
-                                  <option value="" selected>
-                                    All Years
-                                  </option>
-                                  {toYearList && toYearList.length
-                                    ? toYearList.map(year => {
-                                        return (
-                                          <option value={year.year}>
-                                            {year.year}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <select
-                              name=""
-                              id=""
-                              value={this.state.country}
-                              onChange={e => {
-                                this.setState({ country: e.target.value });
-                              }}
-                              class="form-control"
-                            >
-                              <option value="" selected>
-                                Select Country
-                              </option>
-                              {countryList && countryList.length
-                                ? countryList.map(country => {
+                              <select
+                                className="form-control"
+                                name="models"
+                                id="models"
+                                disabled={
+                                  modelList && modelList.length ? false : true
+                                }
+                                onChange={this.handleChange}
+                                value={this.state.models}
+                              >
+                                <option>All Models</option>
+                                {this.state.modelList &&
+                                  this.state.modelList.map(model => {
                                     return (
-                                      <option value={country.country}>
-                                        {country.country}
+                                      <option
+                                        id={model.modelId}
+                                        value={model.model}
+                                      >
+                                        {model.model}
                                       </option>
                                     );
-                                  })
-                                : ""}
-                            </select>
+                                  })}
+                              </select>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+
+                          <div class="form-group">
+                            <div class="row align-items-center">
+                              {fromYearList ? (
+                                <div class="col-5">
+                                  <select
+                                    name="fromYear"
+                                    id=""
+                                    disabled={
+                                      fromYearList && fromYearList.length
+                                        ? false
+                                        : true
+                                    }
+                                    value={this.state.fromYear}
+                                    onChange={e => {
+                                      this.onChangeDropDown(e);
+                                    }}
+                                    class="form-control"
+                                  >
+                                    <option value="" selected>
+                                      All Years
+                                    </option>
+                                    {fromYearList && fromYearList.length
+                                      ? fromYearList.map(year => {
+                                          return (
+                                            <option value={year.year}>
+                                              {year.year}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
+                                  </select>
+                                </div>
+                              ) : (
+                                " "
+                              )}
+                              <div class="col-2">to</div>
+                              {toYearList ? (
+                                <div class="col-5">
+                                  <select
+                                    name="toYear"
+                                    id=""
+                                    value={this.state.toYear}
+                                    disabled={
+                                      toYearList && toYearList.length
+                                        ? false
+                                        : true
+                                    }
+                                    onChange={e => {
+                                      this.onChangeDropDown(e);
+                                    }}
+                                    class="form-control"
+                                  >
+                                    <option value="" selected>
+                                      All Years
+                                    </option>
+                                    {toYearList && toYearList.length
+                                      ? toYearList.map(year => {
+                                          return (
+                                            <option value={year.year}>
+                                              {year.year}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                            </div>
                           </div>
+                          {countryList ? (
+                            <div class="form-group">
+                              <select
+                                name=""
+                                id=""
+                                disabled={
+                                  countryList && countryList.length
+                                    ? false
+                                    : true
+                                }
+                                value={this.state.country}
+                                onChange={e => {
+                                  this.setState({ country: e.target.value });
+                                }}
+                                class="form-control"
+                              >
+                                <option value="" selected>
+                                  Select Country
+                                </option>
+                                {countryList && countryList.length
+                                  ? countryList.map(country => {
+                                      return (
+                                        <option value={country.country}>
+                                          {country.country}
+                                        </option>
+                                      );
+                                    })
+                                  : ""}
+                              </select>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                           <div class="form-group">
                             <input
                               type="button"
@@ -916,49 +987,67 @@ class AdvancedSearch extends Component {
                               <div class="col-12">
                                 <label for="">Price</label>
                               </div>
-                              <div class="col-5">
-                                <select
-                                  name="fromPrice"
-                                  id="fromPrice"
-                                  value={this.state.fromPrice}
-                                  onChange={e => {
-                                    this.onChangeDropDown(e);
-                                  }}
-                                  class="form-control"
-                                >
-                                  {fromPriceList && fromPriceList.length
-                                    ? fromPriceList.map(price => {
-                                        return (
-                                          <option value={price.price}>
-                                            $ {price.price}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
+                              {fromPriceList ? (
+                                <div class="col-5">
+                                  <select
+                                    name="fromPrice"
+                                    id="fromPrice"
+                                    value={this.state.fromPrice}
+                                    disabled={
+                                      fromPriceList && fromPriceList.length
+                                        ? false
+                                        : true
+                                    }
+                                    onChange={e => {
+                                      this.onChangeDropDown(e);
+                                    }}
+                                    class="form-control"
+                                  >
+                                    {fromPriceList && fromPriceList.length
+                                      ? fromPriceList.map(price => {
+                                          return (
+                                            <option value={price.price}>
+                                              $ {price.price}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              )}
                               <div class="col-2">to</div>
-                              <div class="col-5">
-                                <select
-                                  name="toPrice"
-                                  id="toPrice"
-                                  value={this.state.toPrice}
-                                  onChange={e => {
-                                    this.onChangeDropDown(e);
-                                  }}
-                                  class="form-control"
-                                >
-                                  {toPriceList && toPriceList.length
-                                    ? toPriceList.map(price => {
-                                        return (
-                                          <option value={price.price}>
-                                            $ {price.price}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
+                              {toPriceList ? (
+                                <div class="col-5">
+                                  <select
+                                    name="toPrice"
+                                    id="toPrice"
+                                    value={this.state.toPrice}
+                                    disabled={
+                                      toPriceList && toPriceList.length
+                                        ? false
+                                        : true
+                                    }
+                                    onChange={e => {
+                                      this.onChangeDropDown(e);
+                                    }}
+                                    class="form-control"
+                                  >
+                                    {toPriceList && toPriceList.length
+                                      ? toPriceList.map(price => {
+                                          return (
+                                            <option value={price.price}>
+                                              $ {price.price}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
                           <div class="form-group">
@@ -966,27 +1055,38 @@ class AdvancedSearch extends Component {
                               <div class="col-12">
                                 <label for="">Maximum Mileage</label>
                               </div>
-                              <div class="col-6">
-                                <select
-                                  name=""
-                                  value={this.state.mileage}
-                                  id=""
-                                  onChange={e => {
-                                    this.setState({ mileage: e.target.value });
-                                  }}
-                                  class="form-control"
-                                >
-                                  {mileageList && mileageList.length
-                                    ? mileageList.map(mileage => {
-                                        return (
-                                          <option value={mileage.mileage}>
-                                            $ {mileage.mileage}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
+                              {mileageList ? (
+                                <div class="col-6">
+                                  <select
+                                    name=""
+                                    value={this.state.mileage}
+                                    id=""
+                                    disabled={
+                                      mileageList && mileageList.length
+                                        ? false
+                                        : true
+                                    }
+                                    onChange={e => {
+                                      this.setState({
+                                        mileage: e.target.value
+                                      });
+                                    }}
+                                    class="form-control"
+                                  >
+                                    {mileageList && mileageList.length
+                                      ? mileageList.map(mileage => {
+                                          return (
+                                            <option value={mileage.mileage}>
+                                              $ {mileage.mileage}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              )}
                               <div class="col-2">Miles</div>
                             </div>
                           </div>
@@ -996,8 +1096,9 @@ class AdvancedSearch extends Component {
                                 <label for="">Transmission</label>
                               </div>
                               <div class="col-12">
-                                <div class="form-group">
-                                  {/* <Select
+                                {transmissionTypeList ? (
+                                  <div class="form-group">
+                                    {/* <Select
                                   value={this.state.selectedTransmissionOptions}
                                   onChange={this.handleChangeTransmission}
                                   options={transmissionOptions}
@@ -1006,30 +1107,43 @@ class AdvancedSearch extends Component {
                                   isSearchable={true}
                                 /> */}
 
-                                  <select
-                                    className="form-control"
-                                    name="transmissionType"
-                                    onChange={e => {
-                                      this.handleChange(e);
-                                    }}
-                                    value={this.state.transmissionType}
-                                  >
-                                    <option>All Transmission</option>
-                                    {transmissionTypeList &&
-                                      transmissionTypeList.map(transmission => {
-                                        return (
-                                          <option
-                                            id={transmission.transmissionTypeId}
-                                            value={
-                                              transmission.transmissionType
-                                            }
-                                          >
-                                            {transmission.transmissionType}
-                                          </option>
-                                        );
-                                      })}
-                                  </select>
-                                </div>
+                                    <select
+                                      className="form-control"
+                                      name="transmissionType"
+                                      onChange={e => {
+                                        this.handleChange(e);
+                                      }}
+                                      disabled={
+                                        transmissionTypeList &&
+                                        transmissionTypeList.length
+                                          ? false
+                                          : true
+                                      }
+                                      value={this.state.transmissionType}
+                                    >
+                                      <option>All Transmission</option>
+                                      {transmissionTypeList &&
+                                        transmissionTypeList.map(
+                                          transmission => {
+                                            return (
+                                              <option
+                                                id={
+                                                  transmission.transmissionTypeId
+                                                }
+                                                value={
+                                                  transmission.transmissionType
+                                                }
+                                              >
+                                                {transmission.transmissionType}
+                                              </option>
+                                            );
+                                          }
+                                        )}
+                                    </select>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             </div>
                           </div>
@@ -1039,8 +1153,9 @@ class AdvancedSearch extends Component {
                                 <label for="">Fuel Type</label>
                               </div>
                               <div class="col-12">
-                                <div class="form-group">
-                                  {/* <Select
+                                {fuelTypeList ? (
+                                  <div class="form-group">
+                                    {/* <Select
                                   value={this.state.selectedFuelTypeOptions}
                                   onChange={this.handleChangeFuel}
                                   options={fuelTypeOptions}
@@ -1048,28 +1163,36 @@ class AdvancedSearch extends Component {
                                   isMulti={true}
                                   isSearchable={true}
                                 /> */}
-                                  <select
-                                    className="form-control"
-                                    name="fuelType"
-                                    onChange={e => {
-                                      this.handleChange(e);
-                                    }}
-                                    value={this.state.fuelType}
-                                  >
-                                    <option>All Fuel Type</option>
-                                    {fuelTypeList &&
-                                      fuelTypeList.map(fuelType => {
-                                        return (
-                                          <option
-                                            id={fuelType.fuelTypeId}
-                                            value={fuelType.fuelType}
-                                          >
-                                            {fuelType.fuelType}
-                                          </option>
-                                        );
-                                      })}
-                                  </select>
-                                </div>
+                                    <select
+                                      className="form-control"
+                                      name="fuelType"
+                                      disabled={
+                                        fuelTypeList && fuelTypeList.length
+                                          ? false
+                                          : true
+                                      }
+                                      onChange={e => {
+                                        this.handleChange(e);
+                                      }}
+                                      value={this.state.fuelType}
+                                    >
+                                      <option>All Fuel Type</option>
+                                      {fuelTypeList &&
+                                        fuelTypeList.map(fuelType => {
+                                          return (
+                                            <option
+                                              id={fuelType.fuelTypeId}
+                                              value={fuelType.fuelType}
+                                            >
+                                              {fuelType.fuelType}
+                                            </option>
+                                          );
+                                        })}
+                                    </select>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             </div>
                           </div>
@@ -1141,49 +1264,67 @@ class AdvancedSearch extends Component {
                               <div class="col-12">
                                 <label for="">Price</label>
                               </div>
-                              <div class="col-5">
-                                <select
-                                  name="fromPrice"
-                                  id="fromPrice"
-                                  value={this.state.fromPrice}
-                                  onChange={e => {
-                                    this.onChangeDropDown(e);
-                                  }}
-                                  class="form-control"
-                                >
-                                  {fromPriceList && fromPriceList.length
-                                    ? fromPriceList.map(price => {
-                                        return (
-                                          <option value={price.price}>
-                                            $ {price.price}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
+                              {fromPriceList ? (
+                                <div class="col-5">
+                                  <select
+                                    name="fromPrice"
+                                    id="fromPrice"
+                                    value={this.state.fromPrice}
+                                    disabled={
+                                      fromPriceList && fromPriceList.length
+                                        ? false
+                                        : true
+                                    }
+                                    onChange={e => {
+                                      this.onChangeDropDown(e);
+                                    }}
+                                    class="form-control"
+                                  >
+                                    {fromPriceList && fromPriceList.length
+                                      ? fromPriceList.map(price => {
+                                          return (
+                                            <option value={price.price}>
+                                              $ {price.price}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              )}
                               <div class="col-2">to</div>
-                              <div class="col-5">
-                                <select
-                                  name="toPrice"
-                                  id="toPrice"
-                                  value={this.state.toPrice}
-                                  onChange={e => {
-                                    this.onChangeDropDown(e);
-                                  }}
-                                  class="form-control"
-                                >
-                                  {toPriceList && toPriceList.length
-                                    ? toPriceList.map(price => {
-                                        return (
-                                          <option value={price.price}>
-                                            $ {price.price}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
+                              {toPriceList ? (
+                                <div class="col-5">
+                                  <select
+                                    name="toPrice"
+                                    id="toPrice"
+                                    value={this.state.toPrice}
+                                    disabled={
+                                      toPriceList && toPriceList.length
+                                        ? false
+                                        : true
+                                    }
+                                    onChange={e => {
+                                      this.onChangeDropDown(e);
+                                    }}
+                                    class="form-control"
+                                  >
+                                    {toPriceList && toPriceList.length
+                                      ? toPriceList.map(price => {
+                                          return (
+                                            <option value={price.price}>
+                                              $ {price.price}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
                           <div class="form-group">
@@ -1191,27 +1332,38 @@ class AdvancedSearch extends Component {
                               <div class="col-12">
                                 <label for="">Maximum Mileage</label>
                               </div>
-                              <div class="col-6">
-                                <select
-                                  name=""
-                                  id=""
-                                  value={this.state.mileage}
-                                  onChange={e => {
-                                    this.setState({ mileage: e.target.value });
-                                  }}
-                                  class="form-control"
-                                >
-                                  {mileageList && mileageList.length
-                                    ? mileageList.map(mileage => {
-                                        return (
-                                          <option value={mileage.mileage}>
-                                            $ {mileage.mileage}
-                                          </option>
-                                        );
-                                      })
-                                    : ""}
-                                </select>
-                              </div>
+                              {mileageList ? (
+                                <div class="col-6">
+                                  <select
+                                    name=""
+                                    id=""
+                                    value={this.state.mileage}
+                                    disabled={
+                                      mileageList && mileageList.length
+                                        ? false
+                                        : true
+                                    }
+                                    onChange={e => {
+                                      this.setState({
+                                        mileage: e.target.value
+                                      });
+                                    }}
+                                    class="form-control"
+                                  >
+                                    {mileageList && mileageList.length
+                                      ? mileageList.map(mileage => {
+                                          return (
+                                            <option value={mileage.mileage}>
+                                              $ {mileage.mileage}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              )}
                               <div class="col-2">Miles</div>
                             </div>
                           </div>
@@ -1221,8 +1373,9 @@ class AdvancedSearch extends Component {
                                 <label for="">Transmission</label>
                               </div>
                               <div class="col-12">
-                                <div class="form-group">
-                                  {/* <Select
+                                {transmissionTypeList ? (
+                                  <div class="form-group">
+                                    {/* <Select
                                   value={this.state.selectedTransmissionOptions}
                                   onChange={this.handleChangeTransmission}
                                   options={transmissionOptions}
@@ -1230,30 +1383,43 @@ class AdvancedSearch extends Component {
                                   isMulti={true}
                                   isSearchable={true}
                                 /> */}
-                                  <select
-                                    className="form-control"
-                                    name="transmissionType"
-                                    onChange={e => {
-                                      this.handleChange(e);
-                                    }}
-                                    value={this.state.transmissionType}
-                                  >
-                                    <option>All Transmission</option>
-                                    {transmissionTypeList &&
-                                      transmissionTypeList.map(transmission => {
-                                        return (
-                                          <option
-                                            id={transmission.transmissionTypeId}
-                                            value={
-                                              transmission.transmissionType
-                                            }
-                                          >
-                                            {transmission.transmissionType}
-                                          </option>
-                                        );
-                                      })}
-                                  </select>
-                                </div>
+                                    <select
+                                      className="form-control"
+                                      name="transmissionType"
+                                      onChange={e => {
+                                        this.handleChange(e);
+                                      }}
+                                      disabled={
+                                        transmissionTypeList &&
+                                        transmissionTypeList.length
+                                          ? false
+                                          : true
+                                      }
+                                      value={this.state.transmissionType}
+                                    >
+                                      <option>All Transmission</option>
+                                      {transmissionTypeList &&
+                                        transmissionTypeList.map(
+                                          transmission => {
+                                            return (
+                                              <option
+                                                id={
+                                                  transmission.transmissionTypeId
+                                                }
+                                                value={
+                                                  transmission.transmissionType
+                                                }
+                                              >
+                                                {transmission.transmissionType}
+                                              </option>
+                                            );
+                                          }
+                                        )}
+                                    </select>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             </div>
                           </div>
@@ -1277,49 +1443,67 @@ class AdvancedSearch extends Component {
                           <div class="col-12">
                             <label for="">Price</label>
                           </div>
-                          <div class="col-5">
-                            <select
-                              name="fromPrice"
-                              id="fromPrice"
-                              value={this.state.fromPrice}
-                              onChange={e => {
-                                this.onChangeDropDown(e);
-                              }}
-                              class="form-control"
-                            >
-                              {fromPriceList && fromPriceList.length
-                                ? fromPriceList.map(price => {
-                                    return (
-                                      <option value={price.price}>
-                                        $ {price.price}
-                                      </option>
-                                    );
-                                  })
-                                : ""}
-                            </select>
-                          </div>
+                          {fromPriceList ? (
+                            <div class="col-5">
+                              <select
+                                name="fromPrice"
+                                id="fromPrice"
+                                value={this.state.fromPrice}
+                                onChange={e => {
+                                  this.onChangeDropDown(e);
+                                }}
+                                disabled={
+                                  fromPriceList && fromPriceList.length
+                                    ? false
+                                    : true
+                                }
+                                class="form-control"
+                              >
+                                {fromPriceList && fromPriceList.length
+                                  ? fromPriceList.map(price => {
+                                      return (
+                                        <option value={price.price}>
+                                          $ {price.price}
+                                        </option>
+                                      );
+                                    })
+                                  : ""}
+                              </select>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                           <div class="col-2">to</div>
-                          <div class="col-5">
-                            <select
-                              name="toPrice"
-                              id="toPrice"
-                              value={this.state.toPrice}
-                              onChange={e => {
-                                this.onChangeDropDown(e);
-                              }}
-                              class="form-control"
-                            >
-                              {toPriceList && toPriceList.length
-                                ? toPriceList.map(price => {
-                                    return (
-                                      <option value={price.price}>
-                                        $ {price.price}
-                                      </option>
-                                    );
-                                  })
-                                : ""}
-                            </select>
-                          </div>
+                          {toPriceList ? (
+                            <div class="col-5">
+                              <select
+                                name="toPrice"
+                                id="toPrice"
+                                value={this.state.toPrice}
+                                disabled={
+                                  toPriceList && toPriceList.length
+                                    ? false
+                                    : true
+                                }
+                                onChange={e => {
+                                  this.onChangeDropDown(e);
+                                }}
+                                class="form-control"
+                              >
+                                {toPriceList && toPriceList.length
+                                  ? toPriceList.map(price => {
+                                      return (
+                                        <option value={price.price}>
+                                          $ {price.price}
+                                        </option>
+                                      );
+                                    })
+                                  : ""}
+                              </select>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
                       {/* <div class="form-group">
@@ -1339,62 +1523,81 @@ class AdvancedSearch extends Component {
                         <label for="">Mileage</label>
                         <div class="form-group">
                           <div class="row align-items-center">
-                            <div class="col-5">
-                              <select
-                                name="fromMileage"
-                                id=""
-                                value={this.state.fromMileage}
-                                onChange={e => {
-                                  this.onChangeDropDown(e);
-                                }}
-                                class="form-control"
-                              >
-                                <option value="" selected>
-                                  All Mileage
-                                </option>
-                                {mileageList && mileageList.length
-                                  ? mileageList.map(mileage => {
-                                      return (
-                                        <option value={mileage.mileage}>
-                                          {mileage.mileage}
-                                        </option>
-                                      );
-                                    })
-                                  : ""}
-                              </select>
-                            </div>
+                            {mileageList ? (
+                              <div class="col-5">
+                                <select
+                                  name="fromMileage"
+                                  id=""
+                                  value={this.state.fromMileage}
+                                  onChange={e => {
+                                    this.onChangeDropDown(e);
+                                  }}
+                                  disabled={
+                                    mileageList && mileageList.length
+                                      ? false
+                                      : true
+                                  }
+                                  class="form-control"
+                                >
+                                  <option value="" selected>
+                                    All Mileage
+                                  </option>
+                                  {mileageList && mileageList.length
+                                    ? mileageList.map(mileage => {
+                                        return (
+                                          <option value={mileage.mileage}>
+                                            {mileage.mileage}
+                                          </option>
+                                        );
+                                      })
+                                    : ""}
+                                </select>
+                              </div>
+                            ) : (
+                              ""
+                            )}
                             <div class="col-2">to</div>
-                            <div class="col-5">
-                              <select
-                                name="toMileage"
-                                id=""
-                                value={this.state.toMileage}
-                                onChange={e => {
-                                  this.onChangeDropDown(e);
-                                }}
-                                class="form-control"
-                              >
-                                <option value="" selected>
-                                  All Mileage
-                                </option>
-                                {toMileageList && toMileageList.length
-                                  ? toMileageList.map(mileage => {
-                                      return (
-                                        <option value={mileage.mileage}>
-                                          {mileage.mileage}
-                                        </option>
-                                      );
-                                    })
-                                  : ""}
-                              </select>
-                            </div>
+                            {toMileageList ? (
+                              <div class="col-5">
+                                <select
+                                  name="toMileage"
+                                  id=""
+                                  value={this.state.toMileage}
+                                  onChange={e => {
+                                    this.onChangeDropDown(e);
+                                  }}
+                                  disabled={
+                                    toMileageList && toMileageList.length
+                                      ? false
+                                      : true
+                                  }
+                                  class="form-control"
+                                >
+                                  <option value="" selected>
+                                    All Mileage
+                                  </option>
+                                  {toMileageList && toMileageList.length
+                                    ? toMileageList.map(mileage => {
+                                        return (
+                                          <option value={mileage.mileage}>
+                                            {mileage.mileage}
+                                          </option>
+                                        );
+                                      })
+                                    : ""}
+                                </select>
+                              </div>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="">Transmission</label>
-                        <div class="form-group">
-                          {/* <Select
+                        <label for="">Model details</label>
+                        {modelDetailList ? (
+                          <div class="form-group">
+                            {/* <Select
                           value={this.state.selectedTransmissionOptions}
                           onChange={this.handleChangeTransmission}
                           options={transmissionOptions}
@@ -1402,28 +1605,81 @@ class AdvancedSearch extends Component {
                           isMulti={true}
                           isSearchable={true}
                         /> */}
-                          <select
-                            className="form-control"
-                            name="transmissionType"
-                            onChange={e => {
-                              this.handleChange(e);
-                            }}
-                            value={this.state.transmissionType}
-                          >
-                            <option>All Transmission</option>
-                            {transmissionTypeList &&
-                              transmissionTypeList.map(transmission => {
-                                return (
-                                  <option
-                                    id={transmission.transmissionTypeId}
-                                    value={transmission.transmissionType}
-                                  >
-                                    {transmission.transmissionType}
-                                  </option>
-                                );
-                              })}
-                          </select>
-                        </div>
+                            <select
+                              className="form-control"
+                              name="modelDetails"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                modelDetailList &&
+                                modelDetailList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.modelDetails}
+                            >
+                              <option>All Model Details</option>
+                              {modelDetailList &&
+                                modelDetailList.map(modelDetail => {
+                                  return (
+                                    <option
+                                      id={modelDetail.modelId}
+                                      value={modelDetail.model}
+                                    >
+                                      {modelDetail.model}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <div class="form-group">
+                        <label for="">Transmission</label>
+                        {transmissionTypeList ? (
+                          <div class="form-group">
+                            {/* <Select
+                          value={this.state.selectedTransmissionOptions}
+                          onChange={this.handleChangeTransmission}
+                          options={transmissionOptions}
+                          name="transmission"
+                          isMulti={true}
+                          isSearchable={true}
+                        /> */}
+                            <select
+                              className="form-control"
+                              name="transmissionType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                transmissionTypeList &&
+                                transmissionTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.transmissionType}
+                            >
+                              <option>All Transmission</option>
+                              {transmissionTypeList &&
+                                transmissionTypeList.map(transmission => {
+                                  return (
+                                    <option
+                                      id={transmission.transmissionTypeId}
+                                      value={transmission.transmissionType}
+                                    >
+                                      {transmission.transmissionType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                       <div class="form-group">
                         <div class="row align-items-center">
@@ -1431,8 +1687,9 @@ class AdvancedSearch extends Component {
                             <label for="">Fuel Type</label>
                           </div>
                           <div class="col-12">
-                            <div class="form-group">
-                              {/* <Select
+                            {fuelTypeList ? (
+                              <div class="form-group">
+                                {/* <Select
                               value={this.state.selectedFuelTypeOptions}
                               onChange={this.handleChangeFuel}
                               options={fuelTypeOptions}
@@ -1440,35 +1697,44 @@ class AdvancedSearch extends Component {
                               isMulti={true}
                               isSearchable={true}
                             /> */}
-                              <select
-                                className="form-control"
-                                name="fuelType"
-                                onChange={e => {
-                                  this.handleChange(e);
-                                }}
-                                value={this.state.fuelType}
-                              >
-                                <option>All Fuel Type</option>
-                                {fuelTypeList &&
-                                  fuelTypeList.map(fuelType => {
-                                    return (
-                                      <option
-                                        id={fuelType.fuelTypeId}
-                                        value={fuelType.fuelType}
-                                      >
-                                        {fuelType.fuelType}
-                                      </option>
-                                    );
-                                  })}
-                              </select>
-                            </div>
+                                <select
+                                  className="form-control"
+                                  name="fuelType"
+                                  onChange={e => {
+                                    this.handleChange(e);
+                                  }}
+                                  disabled={
+                                    fuelTypeList && fuelTypeList.length
+                                      ? false
+                                      : true
+                                  }
+                                  value={this.state.fuelType}
+                                >
+                                  <option>All Fuel Type</option>
+                                  {fuelTypeList &&
+                                    fuelTypeList.map(fuelType => {
+                                      return (
+                                        <option
+                                          id={fuelType.fuelTypeId}
+                                          value={fuelType.fuelType}
+                                        >
+                                          {fuelType.fuelType}
+                                        </option>
+                                      );
+                                    })}
+                                </select>
+                              </div>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="">Steering</label>
-                        <div class="form-group">
-                          {/* <Select
+                        {steeringTypeList ? (
+                          <div class="form-group">
+                            {/* <Select
                           value={this.state.selectedSteeringOptions}
                           onChange={this.handleChangeSteering}
                           options={steeringOptions}
@@ -1477,28 +1743,36 @@ class AdvancedSearch extends Component {
                           isSearchable={true}
                         /> */}
 
-                          <select
-                            className="form-control"
-                            name="steeringType"
-                            onChange={e => {
-                              this.handleChange(e);
-                            }}
-                            value={this.state.steeringType}
-                          >
-                            <option>All Steering</option>
-                            {steeringTypeList &&
-                              steeringTypeList.map(steer => {
-                                return (
-                                  <option
-                                    id={steer.steeringTypeId}
-                                    value={steer.steeringType}
-                                  >
-                                    {steer.steeringType}
-                                  </option>
-                                );
-                              })}
-                          </select>
-                        </div>
+                            <select
+                              className="form-control"
+                              name="steeringType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                steeringTypeList && steeringTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.steeringType}
+                            >
+                              <option>All Steering</option>
+                              {steeringTypeList &&
+                                steeringTypeList.map(steer => {
+                                  return (
+                                    <option
+                                      id={steer.steeringTypeId}
+                                      value={steer.steeringType}
+                                    >
+                                      {steer.steeringType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                       {/* <div class="form-group">
                       <div class="row align-items-center justify-content-between">
@@ -1802,8 +2076,9 @@ class AdvancedSearch extends Component {
                     </div> */}
                       <div class="form-group">
                         <label for="">Deals</label>
-                        <div class="form-group">
-                          {/* <Select
+                        {dealsTypeList ? (
+                          <div class="form-group">
+                            {/* <Select
                           value={this.state.selectedDealOptions}
                           onChange={this.handleChangeDeal}
                           options={dealOptions}
@@ -1812,33 +2087,42 @@ class AdvancedSearch extends Component {
                           isSearchable={true}
                         /> */}
 
-                          <select
-                            className="form-control"
-                            name="dealsType"
-                            onChange={e => {
-                              this.handleChange(e);
-                            }}
-                            value={this.state.dealsType}
-                          >
-                            <option>All Deals</option>
-                            {dealsTypeList &&
-                              dealsTypeList.map(deal => {
-                                return (
-                                  <option
-                                    id={deal.dealsTypeId}
-                                    value={deal.dealsType}
-                                  >
-                                    {deal.dealsType}
-                                  </option>
-                                );
-                              })}
-                          </select>
-                        </div>
+                            <select
+                              className="form-control"
+                              name="dealsType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                dealsTypeList && dealsTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.dealsType}
+                            >
+                              <option>All Deals</option>
+                              {dealsTypeList &&
+                                dealsTypeList.map(deal => {
+                                  return (
+                                    <option
+                                      id={deal.dealsTypeId}
+                                      value={deal.dealsType}
+                                    >
+                                      {deal.dealsType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                       <div class="form-group">
                         <label for="">Memberships</label>
-                        <div class="form-group">
-                          {/* <Select
+                        {memberShipTypeList ? (
+                          <div class="form-group">
+                            {/* <Select
                           value={this.state.selectedMemberShipOptions}
                           onChange={this.handleChangeMembership}
                           options={memberShipOptions}
@@ -1846,28 +2130,36 @@ class AdvancedSearch extends Component {
                           isMulti={true}
                           isSearchable={true}
                         /> */}
-                          <select
-                            className="form-control"
-                            name="membershipType"
-                            onChange={e => {
-                              this.handleChange(e);
-                            }}
-                            value={this.state.membershipType}
-                          >
-                            <option>All Memberships</option>
-                            {memberShipTypeList &&
-                              memberShipTypeList.map(memberShip => {
-                                return (
-                                  <option
-                                    id={memberShip.membershipTypeId}
-                                    value={memberShip.membershipType}
-                                  >
-                                    {memberShip.membershipType}
-                                  </option>
-                                );
-                              })}
-                          </select>
-                        </div>
+                            <select
+                              className="form-control"
+                              name="membershipType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                memberShipTypeList && memberShipTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.membershipType}
+                            >
+                              <option>All Memberships</option>
+                              {memberShipTypeList &&
+                                memberShipTypeList.map(memberShip => {
+                                  return (
+                                    <option
+                                      id={memberShip.membershipTypeId}
+                                      value={memberShip.membershipType}
+                                    >
+                                      {memberShip.membershipType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                       <div class="form-group">
                         <input
@@ -2149,35 +2441,64 @@ class AdvancedSearch extends Component {
                     ""
                   )}
                   {this.state.vehicleList && this.state.vehicleList.length ? (
-                    this.state.vehicleList.map((vehicle,index) => {
+                    this.state.vehicleList.map((vehicle, index) => {
                       return (
                         <div class="row searched_cards align-items-center">
-                          <div class="col-md-3 text-center" onClick={() => {
-                              this.vehicleDetails(vehicle.vehicleId);
-                            }}>
-                            <img src={vehicle.parentImageUrl==''?acura:vehicle.parentImageUrl} class="w-100 img-fluid" alt="" />
-                          </div>
                           <div
-                            class="col-md-9 text-left"
-                          >
-                            <div class="row no-gutters align-items-center">
-                              <div class="col pr-3" onClick={() => {
+                            class="col-md-3 text-center"
+                            onClick={() => {
                               this.vehicleDetails(vehicle.vehicleId);
-                            }}>
+                            }}
+                          >
+                            <img
+                              src={
+                                vehicle.parentImageUrl == ""
+                                  ? acura
+                                  : vehicle.parentImageUrl
+                              }
+                              class="w-100 img-fluid"
+                              alt=""
+                            />
+                          </div>
+                          <div class="col-md-9 text-left">
+                            <div class="row no-gutters align-items-center">
+                              <div
+                                class="col pr-3"
+                                onClick={() => {
+                                  this.vehicleDetails(vehicle.vehicleId);
+                                }}
+                              >
                                 <div class="head3 bold mb-2">
                                   {vehicle.vehicleName}
                                 </div>
                               </div>
-                              <div class="col whishlist" style={{cursor : 'pointer'}} >
+                              <div
+                                class="col whishlist"
+                                style={{ cursor: "pointer" }}
+                              >
                                 <span>
-                                  <i class={vehicle.isFavorite ? `fa fa-heart` : `fa fa-heart-o`} onClick={()=>{this.saveFavorite(vehicle.vehicleId , index)}}></i>
+                                  <i
+                                    class={
+                                      vehicle.isFavorite
+                                        ? `fa fa-heart`
+                                        : `fa fa-heart-o`
+                                    }
+                                    onClick={() => {
+                                      this.saveFavorite(
+                                        vehicle.vehicleId,
+                                        index
+                                      );
+                                    }}
+                                  ></i>
                                 </span>
                               </div>
                             </div>
-                            <div class="row" 
-                            onClick={() => {
-                              this.vehicleDetails(vehicle.vehicleId);
-                            }}>
+                            <div
+                              class="row"
+                              onClick={() => {
+                                this.vehicleDetails(vehicle.vehicleId);
+                              }}
+                            >
                               <div class="col-sm-5">
                                 <div class="head4 mb-4 text-uppercase bold">
                                   <span>
@@ -2242,7 +2563,7 @@ class AdvancedSearch extends Component {
                         <Spinner color="black" />
                       )  */}
                       {/* : ( */}
-                        No Data Found
+                      No Data Found
                       {/* )} */}
                     </div>
                   )}
@@ -2310,6 +2631,9 @@ const mapDispatchToProps = dispatch => {
     },
     getVehicleSearchList: (params, callback) => {
       dispatch(getVehicleSearchList(params, callback));
+    },
+    getVehicleDetailedModelList: (params, callback) => {
+      dispatch(getVehicleDetailedModelList(params, callback));
     },
     getVehicleDetails: (params, callback) => {
       dispatch(getVehicleDetails(params, callback));
