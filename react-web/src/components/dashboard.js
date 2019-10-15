@@ -11,15 +11,19 @@ import PropTypes from "prop-types";
 import { AppWrapper } from "./public/AppWrapper";
 import store from "store";
 import { formatDate } from "../utils/utils";
-import { PATH } from '../utils/Constants';
+import { PATH } from "../utils/Constants";
 import Background1 from "../assets/img/home/ssangyong_img.jpeg";
 import Background2 from "../assets/img/home/hyundai_img.jpeg";
 import Background3 from "../assets/img/home/kia_img.jpeg";
-import { getDashboardDetails, getVehicleMasterData, getVehicleModelList } from '../actions/searchAction'
-import { showNotification } from '../actions/NotificationAction'
-import Cookies from 'js-cookie';
-import { Link } from 'react-router-dom';
-import LoadingOverlay from 'react-loading-overlay';
+import {
+  getDashboardDetails,
+  getVehicleMasterData,
+  getVehicleModelList
+} from "../actions/searchAction";
+import { showNotification } from "../actions/NotificationAction";
+import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
+import LoadingOverlay from "react-loading-overlay";
 
 class Upload extends Component {
   constructor(props) {
@@ -38,7 +42,11 @@ class Upload extends Component {
       brandObject: {},
       modelObject: {},
       vehicleTypeId: 1,
-      isLoading: false
+      isLoading: false,
+      fromPriceList: [],
+      toPriceList: [],
+      fromPrice: null,
+      toPrice: null
     };
   }
 
@@ -47,7 +55,7 @@ class Upload extends Component {
   };
 
   componentDidMount() {
-    document.title = "Auto Harasow | Dashboard"
+    document.title = "Auto Harasow | Dashboard";
     let cookieData = Cookies.get();
     console.log(cookieData);
     this.getDashboardDetails();
@@ -60,88 +68,129 @@ class Upload extends Component {
       console.log(response);
       this.setState({ isLoading: false });
       if (response.response_code === 0) {
-        this.setState({ dashboardDetails: response.response })
+        this.setState({ dashboardDetails: response.response });
       }
-    })
-  }
+    });
+  };
 
-  getVehicleMasterDataByVehicleTypeId = (vehicleTypeId) => {
+  getVehicleMasterDataByVehicleTypeId = vehicleTypeId => {
     this.getVehicleMasterData(vehicleTypeId);
     this.setState({ vehicleTypeId: vehicleTypeId });
-  }
+  };
 
-  onChangeCountry = (event) => {
+  onChangeCountry = event => {
     this.setState({ country: event.target.value });
-  }
+  };
 
-  onChangeFromPrice = (event) => {
+  onChangeFromPrice = event => {
     this.setState({ fromPrice: event.target.value });
-  }
+  };
 
-  onChangeToPrice = (event) => {
+  onChangeToPrice = event => {
     this.setState({ toPrice: event.target.value });
-  }
+  };
 
-  onChangeBrand = (event) => {
-    const object = JSON.parse(event.target.value)
-    console.log(object)
-    const { brandId, brand } = object
-    this.setState({ brandId: brandId, brand: brand, brandObject: object }, () => {
-      this.getVehicleModelList(this.state.brandId);
-    })
-  }
-
-
-  onChangeModel = (event) => {
-    const object = JSON.parse(event.target.value)
-    console.log(object)
-    const { modelId, modelName } = object
-    this.setState({ modelId: modelId, modelName: modelName, modelObject: object }, () => {
-      console.log(this.state.brandId, this.state.brandName, this.state.modelId, this.state.modelName)
-    })
-  }
-
-  getVehicleMasterData = (vehicleTypeId) => {
-    this.props.getVehicleMasterData({ vehicleTypeId }, (response) => {
-      if (response.response_code === 0) {
-        this.setState({ masterData: response.response })
+  onChangeBrand = event => {
+    const object = JSON.parse(event.target.value);
+    console.log(object);
+    const { brandId, brand } = object;
+    this.setState(
+      { brandId: brandId, brand: brand, brandObject: object },
+      () => {
+        this.getVehicleModelList(this.state.brandId);
       }
-    })
-  }
+    );
+  };
 
-  getVehicleModelList = (brandId) => {
+  onChangeModel = event => {
+    const object = JSON.parse(event.target.value);
+    console.log(object);
+    const { modelId, modelName } = object;
+    this.setState(
+      { modelId: modelId, modelName: modelName, modelObject: object },
+      () => {
+        console.log(
+          this.state.brandId,
+          this.state.brandName,
+          this.state.modelId,
+          this.state.modelName
+        );
+      }
+    );
+  };
+
+  getVehicleMasterData = vehicleTypeId => {
+    this.props.getVehicleMasterData({ vehicleTypeId }, response => {
+      if (response.response_code === 0) {
+        this.setState({ masterData: response.response }, () => {
+          const { priceList } = this.state.masterData;
+          this.setState({ fromPriceList: priceList, toPriceList: priceList });
+        });
+      }
+    });
+  };
+
+  getVehicleModelList = brandId => {
     this.setState({ isLoading: true });
     this.props.getVehicleModelList({ brandId: brandId }, response => {
       this.setState({ isLoading: false });
       if (response.response_code === 0) {
-        this.setState({ modelList: response.response.modelList })
+        this.setState({ modelList: response.response.modelList });
         this.setState({ modelisDisable: false });
       }
-    })
-  }
+    });
+  };
+
+  onChangeDropDown = e => {
+    this.setState({ [e.target.name]: e.target.value });
+    if (e.target.name === "fromPrice") {
+      let toPriceList = this.state.fromPriceList;
+      let filteredArray = toPriceList.filter(
+        price => parseInt(price.price) > parseInt(e.target.value)
+      );
+      this.setState({ toPriceList: filteredArray });
+    }
+  };
 
   handleSearch = () => {
-    const { brand, modelName, country, brandId, modelId, vehicleTypeId } = this.state;
+    const {
+      brand,
+      modelName,
+      country,
+      brandId,
+      modelId,
+      vehicleTypeId
+    } = this.state;
     this.props.history.push({
       pathname: PATH.ADVANCED_SEARCH,
       state: {
-        brandName: brand, brandId: brandId, modelId: modelId,
-        modelName: modelName, country: country, vehicleTypeId: vehicleTypeId
+        brandName: brand,
+        brandId: brandId,
+        modelId: modelId,
+        modelName: modelName,
+        country: country,
+        vehicleTypeId: vehicleTypeId
       }
-    })
-  }
+    });
+  };
 
   render() {
-    let { ourLastSearchList, popularNewCarsList, popularSedansList, relatedSearchList, savedRecentSearchList } = this.state.dashboardDetails
+    let {
+      ourLastSearchList,
+      popularNewCarsList,
+      popularSedansList,
+      relatedSearchList,
+      savedRecentSearchList
+    } = this.state.dashboardDetails;
+    const { fromPriceList, toPriceList } = this.state;
     let { brandList, countryList, priceList } = this.state.masterData;
-    console.log(this.state.modelList)
+    console.log(this.state.modelList);
     return (
-      <React.Fragment
-      >
+      <React.Fragment>
         <LoadingOverlay
           active={this.state.isLoading}
           spinner
-          text='Loading ...'
+          text="Loading ..."
         >
           <section class="search-filter">
             <div class="container h-100">
@@ -149,16 +198,18 @@ class Upload extends Component {
                 id="sf-content"
                 class="row no-gutters h-100 align-items-center justify-content-center hideForAni"
               >
-
                 <div class="col sfcol">
-
-
                   <div class="head1 white text-center mb-3 text-shadow">
                     Find great deals from top-rated dealers{" "}
                     <sup class="sup">TM</sup>
                   </div>
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(1) }}>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.getVehicleMasterDataByVehicleTypeId(1);
+                      }}
+                    >
                       <a
                         class="nav-link active"
                         id="usedCar-tab"
@@ -169,9 +220,14 @@ class Upload extends Component {
                         aria-selected="true"
                       >
                         Car
-                    </a>
+                      </a>
                     </li>
-                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(2) }}>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.getVehicleMasterDataByVehicleTypeId(2);
+                      }}
+                    >
                       <a
                         class="nav-link"
                         id="usedCar-tab"
@@ -182,9 +238,14 @@ class Upload extends Component {
                         aria-selected="false"
                       >
                         Truck
-                    </a>
+                      </a>
                     </li>
-                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(3) }}>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.getVehicleMasterDataByVehicleTypeId(3);
+                      }}
+                    >
                       <a
                         class="nav-link"
                         id="usedCar-tab"
@@ -195,9 +256,14 @@ class Upload extends Component {
                         aria-selected="false"
                       >
                         Bus
-                    </a>
+                      </a>
                     </li>
-                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(4) }}>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.getVehicleMasterDataByVehicleTypeId(4);
+                      }}
+                    >
                       <a
                         class="nav-link"
                         id="usedCar-tab"
@@ -208,9 +274,14 @@ class Upload extends Component {
                         aria-selected="false"
                       >
                         Equipments
-                    </a>
+                      </a>
                     </li>
-                    <li class="nav-item" onClick={() => { this.getVehicleMasterDataByVehicleTypeId(5) }}>
+                    <li
+                      class="nav-item"
+                      onClick={() => {
+                        this.getVehicleMasterDataByVehicleTypeId(5);
+                      }}
+                    >
                       <a
                         class="nav-link"
                         id="usedCar-tab"
@@ -221,7 +292,7 @@ class Upload extends Component {
                         aria-selected="false"
                       >
                         Parts
-                    </a>
+                      </a>
                     </li>
                   </ul>
                   <div class="tab-content" id="myTabContent">
@@ -243,7 +314,7 @@ class Upload extends Component {
                             aria-selected="true"
                           >
                             By Brand / Models
-                        </a>
+                          </a>
                         </li>
                         <li class="nav-item">
                           <a
@@ -256,7 +327,7 @@ class Upload extends Component {
                             aria-selected="false"
                           >
                             By Price
-                        </a>
+                          </a>
                         </li>
                       </ul>
                       <div
@@ -279,20 +350,28 @@ class Upload extends Component {
                                       aria-hidden="true"
                                     ></i>
                                   </span>
-                                  <select onChange={this.onChangeBrand} class="form-control">
+                                  <select
+                                    onChange={this.onChangeBrand}
+                                    class="form-control"
+                                  >
                                     <option value={null} selected>
                                       All Brands
-                            </option>
-                                    {brandList && brandList.length ?
-                                      brandList.map((vehicle) => {
-                                        return (
-                                          <option id={vehicle.brandId}
-                                            value={JSON.stringify({ brandId: vehicle.brandId, brand: vehicle.brand })}
-                                          >{vehicle.brand}</option>
-                                        )
-                                      }) :
-                                      ''}
-
+                                    </option>
+                                    {brandList && brandList.length
+                                      ? brandList.map(vehicle => {
+                                          return (
+                                            <option
+                                              id={vehicle.brandId}
+                                              value={JSON.stringify({
+                                                brandId: vehicle.brandId,
+                                                brand: vehicle.brand
+                                              })}
+                                            >
+                                              {vehicle.brand}
+                                            </option>
+                                          );
+                                        })
+                                      : ""}
                                   </select>
                                 </div>
                               </div>
@@ -304,14 +383,30 @@ class Upload extends Component {
                                       aria-hidden="true"
                                     ></i>
                                   </span>
-                                  <select disabled={this.state.modelisDisable} onChange={this.onChangeModel} class="form-control">
-                                    <option selecte={true} >All Models</option>
-                                    {this.state.modelList && this.state.modelList.length ?
-                                      this.state.modelList.map((model) => {
+                                  <select
+                                    disabled={this.state.modelisDisable}
+                                    onChange={this.onChangeModel}
+                                    class="form-control"
+                                  >
+                                    <option selecte={true}>All Models</option>
+                                    {this.state.modelList &&
+                                    this.state.modelList.length ? (
+                                      this.state.modelList.map(model => {
                                         return (
-                                          <option id={model.modelId} value={JSON.stringify({ modelId: model.modelId, modelName: model.model })}>{model.model}</option>
-                                        )
-                                      }) : <option>No Data Found</option>}
+                                          <option
+                                            id={model.modelId}
+                                            value={JSON.stringify({
+                                              modelId: model.modelId,
+                                              modelName: model.model
+                                            })}
+                                          >
+                                            {model.model}
+                                          </option>
+                                        );
+                                      })
+                                    ) : (
+                                      <option>No Data Found</option>
+                                    )}
                                   </select>
                                 </div>
                               </div>
@@ -323,15 +418,27 @@ class Upload extends Component {
                                       aria-hidden="true"
                                     ></i>
                                   </span>
-                                  <select onChange={(e) => { this.onChangeCountry(e) }} class="form-control">
+                                  <select
+                                    onChange={e => {
+                                      this.onChangeCountry(e);
+                                    }}
+                                    class="form-control"
+                                  >
                                     <option selected>Choose Country</option>
-                                    {countryList && countryList.length ?
-                                      countryList.map((country) => {
+                                    {countryList && countryList.length ? (
+                                      countryList.map(country => {
                                         return (
-                                          <option value={country.country} id={country.countryId}>{country.country}</option>
-                                        )
-                                      }) :
-                                      <option>Loading...</option>}
+                                          <option
+                                            value={country.country}
+                                            id={country.countryId}
+                                          >
+                                            {country.country}
+                                          </option>
+                                        );
+                                      })
+                                    ) : (
+                                      <option>Loading...</option>
+                                    )}
                                   </select>
                                 </div>
                               </div>
@@ -340,10 +447,12 @@ class Upload extends Component {
                                   <button
                                     type="button"
                                     class="btn btn-primary w-100"
-                                    onClick={() => { this.handleSearch() }}
+                                    onClick={() => {
+                                      this.handleSearch();
+                                    }}
                                   >
                                     Search
-                                </button>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -358,45 +467,38 @@ class Upload extends Component {
                           <div class="price-filter">
                             <div class="row no-gutters align-items-center">
                               <div class="col-md-3 colgrids">
-                                    <div class="selectdd">
-                                      <span class="caret">
-                                        <i
-                                          class="fa fa-angle-down"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </span>
-                                      <select onChange={(e) => { this.onChangeFromPrice(e) }} class="form-control">
-                                        <option selected>From</option>
-                                        {priceList && priceList.length ?
-                                          priceList.map((price) => {
-                                            return (
-                                              <option value={price.price} id={price.price}>{price.price}</option>
-                                            )
-                                          }) :
-                                          <option>Loading...</option>}
-                                      </select>
-                                    </div>
-                                  
-                              </div>
-                              <div class="col-md-3 colgrids">
-                                    <div class="selectdd">
-                                      <span class="caret">
-                                        <i
-                                          class="fa fa-angle-down"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </span>
-                                      <select onChange={(e) => { this.onChangeToPrice(e) }} class="form-control">
-                                        <option selected>To</option>
-                                        {priceList && priceList.length ?
-                                          priceList.map((price) => {
-                                            return (
-                                              <option value={price.price} id={price.price}>{price.price}</option>
-                                            )
-                                          }) :
-                                          <option>Loading...</option>}
-                                      </select>
-                                    </div>
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select
+                                    onChange={e => {
+                                      this.onChangeDropDown(e);
+                                    }}
+                                    value={this.state.fromPrice}
+                                    name="fromPrice"
+                                    class="form-control"
+                                  >
+                                    <option selected>From</option>
+                                    {fromPriceList && fromPriceList.length ? (
+                                      fromPriceList.map(price => {
+                                        return (
+                                          <option
+                                            value={price.price}
+                                            id={price.price}
+                                          >
+                                            {price.price}
+                                          </option>
+                                        );
+                                      })
+                                    ) : (
+                                      <option>Loading...</option>
+                                    )}
+                                  </select>
+                                </div>
                               </div>
                               <div class="col-md-3 colgrids">
                                 <div class="selectdd">
@@ -406,15 +508,61 @@ class Upload extends Component {
                                       aria-hidden="true"
                                     ></i>
                                   </span>
-                                  <select onChange={(e) => { this.onChangeCountry(e) }} class="form-control">
-                                    <option selected>Choose Country</option>
-                                    {countryList && countryList.length ?
-                                      countryList.map((country) => {
+                                  <select
+                                    onChange={e => {
+                                      this.onChangeDropDown(e);
+                                    }}
+                                    value={this.state.toPrice}
+                                    name="toPrice"
+                                    class="form-control"
+                                  >
+                                    <option selected>To</option>
+                                    {toPriceList && toPriceList.length ? (
+                                      toPriceList.map(price => {
                                         return (
-                                          <option value={country.country} id={country.countryId}>{country.country}</option>
-                                        )
-                                      }) :
-                                      <option>Loading...</option>}
+                                          <option
+                                            value={price.price}
+                                            id={price.price}
+                                          >
+                                            {price.price}
+                                          </option>
+                                        );
+                                      })
+                                    ) : (
+                                      <option>Loading...</option>
+                                    )}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3 colgrids">
+                                <div class="selectdd">
+                                  <span class="caret">
+                                    <i
+                                      class="fa fa-angle-down"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <select
+                                    onChange={e => {
+                                      this.onChangeCountry(e);
+                                    }}
+                                    class="form-control"
+                                  >
+                                    <option selected>Choose Country</option>
+                                    {countryList && countryList.length ? (
+                                      countryList.map(country => {
+                                        return (
+                                          <option
+                                            value={country.country}
+                                            id={country.countryId}
+                                          >
+                                            {country.country}
+                                          </option>
+                                        );
+                                      })
+                                    ) : (
+                                      <option>Loading...</option>
+                                    )}
                                   </select>
                                 </div>
                               </div>
@@ -423,10 +571,12 @@ class Upload extends Component {
                                   <button
                                     type="button"
                                     class="btn btn-primary w-100"
-                                    onClick={() => { this.handleSearch() }}
+                                    onClick={() => {
+                                      this.handleSearch();
+                                    }}
                                   >
                                     Search
-                                </button>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -440,7 +590,11 @@ class Upload extends Component {
                       role="tabpanel"
                       aria-labelledby="truck-tab"
                     >
-                      <ul class="nav nav-pills" id="pills-tab-two" role="tablist">
+                      <ul
+                        class="nav nav-pills"
+                        id="pills-tab-two"
+                        role="tablist"
+                      >
                         <li class="nav-item">
                           <a
                             class="nav-link active"
@@ -452,7 +606,7 @@ class Upload extends Component {
                             aria-selected="true"
                           >
                             By Make / Models
-                        </a>
+                          </a>
                         </li>
                         <li class="nav-item">
                           <a
@@ -465,7 +619,7 @@ class Upload extends Component {
                             aria-selected="false"
                           >
                             By Price
-                        </a>
+                          </a>
                         </li>
                       </ul>
                       <div
@@ -522,10 +676,12 @@ class Upload extends Component {
                                   <button
                                     type="button"
                                     class="btn btn-primary w-100"
-                                    onClick={() => { this.handleSearch() }}
+                                    onClick={() => {
+                                      this.handleSearch();
+                                    }}
                                   >
                                     Search
-                                </button>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -543,7 +699,7 @@ class Upload extends Component {
                                 <div class="form-group row align-items-center">
                                   <label class="col-sm-4 col-form-label text-center">
                                     Price
-                                </label>
+                                  </label>
                                   <div class="col-sm-8">
                                     <div class="selectdd">
                                       <span class="caret">
@@ -564,7 +720,7 @@ class Upload extends Component {
                                 <div class="form-group row align-items-center">
                                   <label class="col-sm-4 col-form-label text-center">
                                     To
-                                </label>
+                                  </label>
                                   <div class="col-sm-8">
                                     <div class="selectdd">
                                       <span class="caret">
@@ -595,10 +751,12 @@ class Upload extends Component {
                                   <button
                                     type="button"
                                     class="btn btn-primary w-100"
-                                    onClick={() => { this.handleSearch() }}
+                                    onClick={() => {
+                                      this.handleSearch();
+                                    }}
                                   >
                                     Search
-                                </button>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -628,7 +786,7 @@ class Upload extends Component {
                             aria-selected="true"
                           >
                             By Make / Models
-                        </a>
+                          </a>
                         </li>
                         <li class="nav-item">
                           <a
@@ -641,7 +799,7 @@ class Upload extends Component {
                             aria-selected="false"
                           >
                             By Price
-                        </a>
+                          </a>
                         </li>
                       </ul>
                       <div
@@ -698,10 +856,12 @@ class Upload extends Component {
                                   <button
                                     type="button"
                                     class="btn btn-primary w-100"
-                                    onClick={() => { this.handleSearch() }}
+                                    onClick={() => {
+                                      this.handleSearch();
+                                    }}
                                   >
                                     Search
-                                </button>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -719,7 +879,7 @@ class Upload extends Component {
                                 <div class="form-group row align-items-center">
                                   <label class="col-sm-4 col-form-label text-center">
                                     Price
-                                </label>
+                                  </label>
                                   <div class="col-sm-8">
                                     <div class="selectdd">
                                       <span class="caret">
@@ -740,7 +900,7 @@ class Upload extends Component {
                                 <div class="form-group row align-items-center">
                                   <label class="col-sm-4 col-form-label text-center">
                                     To
-                                </label>
+                                  </label>
                                   <div class="col-sm-8">
                                     <div class="selectdd">
                                       <span class="caret">
@@ -771,10 +931,12 @@ class Upload extends Component {
                                   <button
                                     type="button"
                                     class="btn btn-primary w-100"
-                                    onClick={() => { this.handleSearch() }}
+                                    onClick={() => {
+                                      this.handleSearch();
+                                    }}
                                   >
                                     Search
-                                </button>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -804,7 +966,7 @@ class Upload extends Component {
                             aria-selected="true"
                           >
                             By Make / Models
-                        </a>
+                          </a>
                         </li>
                         <li class="nav-item">
                           <a
@@ -817,7 +979,7 @@ class Upload extends Component {
                             aria-selected="false"
                           >
                             By Price
-                        </a>
+                          </a>
                         </li>
                       </ul>
                       <div
@@ -874,10 +1036,12 @@ class Upload extends Component {
                                   <button
                                     type="button"
                                     class="btn btn-primary w-100"
-                                    onClick={() => { this.handleSearch() }}
+                                    onClick={() => {
+                                      this.handleSearch();
+                                    }}
                                   >
                                     Search
-                                </button>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -895,7 +1059,7 @@ class Upload extends Component {
                                 <div class="form-group row align-items-center">
                                   <label class="col-sm-4 col-form-label text-center">
                                     Price
-                                </label>
+                                  </label>
                                   <div class="col-sm-8">
                                     <div class="selectdd">
                                       <span class="caret">
@@ -916,7 +1080,7 @@ class Upload extends Component {
                                 <div class="form-group row align-items-center">
                                   <label class="col-sm-4 col-form-label text-center">
                                     To
-                                </label>
+                                  </label>
                                   <div class="col-sm-8">
                                     <div class="selectdd">
                                       <span class="caret">
@@ -947,10 +1111,12 @@ class Upload extends Component {
                                   <button
                                     type="button"
                                     class="btn btn-primary w-100"
-                                    onClick={() => { this.handleSearch() }}
+                                    onClick={() => {
+                                      this.handleSearch();
+                                    }}
                                   >
                                     Search
-                                </button>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -958,7 +1124,6 @@ class Upload extends Component {
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -968,7 +1133,7 @@ class Upload extends Component {
         <section class="search-showcase spacerTop spacerBottom">
           <div class="container">
             <div class="row">
-              {ourLastSearchList && ourLastSearchList.length === 0 ?
+              {ourLastSearchList && ourLastSearchList.length === 0 ? (
                 <div class="col-md-4">
                   <div class="ss-cards">
                     <p class="head3 black">Your Last Search</p>
@@ -983,13 +1148,16 @@ class Upload extends Component {
                       </div>
                       <div class="ss-title head3 white text-shadow">
                         2010 Ssangyong Actyon
-                      <span>Sports Leather 5Seats 2WD AT</span>
+                        <span>Sports Leather 5Seats 2WD AT</span>
                       </div>
                     </div>
                   </div>
-                </div> : ""}
+                </div>
+              ) : (
+                ""
+              )}
 
-              {savedRecentSearchList && savedRecentSearchList.length === 0 ?
+              {savedRecentSearchList && savedRecentSearchList.length === 0 ? (
                 <div class="col-md-4">
                   <div class="ss-cards">
                     <p class="head3 black">Saved & Recent Searches</p>
@@ -1002,14 +1170,16 @@ class Upload extends Component {
                       ></div>
                       <div class="ss-title head3 white text-shadow">
                         2001 Hyundai Terracan
-                      <span>JX250 INTERCOOLER 4WD</span>
+                        <span>JX250 INTERCOOLER 4WD</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                : ""}
+              ) : (
+                ""
+              )}
 
-              {relatedSearchList && relatedSearchList.length === 0 ?
+              {relatedSearchList && relatedSearchList.length === 0 ? (
                 <div class="col-md-4">
                   <div class="ss-cards">
                     <p class="head3 black">Related Searches</p>
@@ -1022,12 +1192,14 @@ class Upload extends Component {
                       ></div>
                       <div class="ss-title head3 white text-shadow">
                         2004 Kia Sorento NEW
-                      <span> 4WD TLX SUNROOF A/T</span>
+                        <span> 4WD TLX SUNROOF A/T</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                : ""}
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </section>
@@ -1300,8 +1472,8 @@ class Upload extends Component {
           <div class="container">
             <div class="head2 black medium text-center">Popular New Cars</div>
             <ul class="list-group popularcars-staggering mt-3">
-              {popularNewCarsList && popularNewCarsList.length ?
-                popularNewCarsList.map((car) => {
+              {popularNewCarsList && popularNewCarsList.length ? (
+                popularNewCarsList.map(car => {
                   return (
                     <li class="list-group-item" style={{ opacity: 1 }}>
                       <Link to={PATH.SEARCH_DETAIL}>
@@ -1309,9 +1481,9 @@ class Upload extends Component {
                         <p class="para1">39,042 listings starting at $13,990</p>
                       </Link>
                     </li>
-                  )
+                  );
                 })
-                :
+              ) : (
                 <ul class="list-group popularcars-staggering mt-3">
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <Link to={PATH.SEARCH_DETAIL}>
@@ -1404,9 +1576,8 @@ class Upload extends Component {
                     </a>
                   </li>
                 </ul>
-              }
+              )}
             </ul>
-
           </div>
         </section>
 
@@ -1414,85 +1585,104 @@ class Upload extends Component {
           <div class="container">
             <div class="head2 black medium text-center">Popular Sedans</div>
             <ul class="list-group mt-3 popularcars-staggering">
-              {popularSedansList && popularSedansList.length ?
-                popularSedansList.map((sedan) => {
+              {popularSedansList && popularSedansList.length ? (
+                popularSedansList.map(sedan => {
                   return (
-                    <li class="list-group-item" style={{ opacity: 1 }} style={{ opacity: 1 }}>
+                    <li
+                      class="list-group-item"
+                      style={{ opacity: 1 }}
+                      style={{ opacity: 1 }}
+                    >
                       <Link to={PATH.SEARCH_DETAIL}>
                         <div class="head3">Used BMW 3 Series</div>
                         <p class="para1">
-                          716 Great Deals out of 18,117 listings starting at $1,500
-                  </p>
-                      </Link>                    </li>
-                  )
-                }) :
+                          716 Great Deals out of 18,117 listings starting at
+                          $1,500
+                        </p>
+                      </Link>{" "}
+                    </li>
+                  );
+                })
+              ) : (
                 <ul class="list-group mt-3 popularcars-staggering">
-                  <li class="list-group-item" style={{ opacity: 1 }} style={{ opacity: 1 }}>
+                  <li
+                    class="list-group-item"
+                    style={{ opacity: 1 }}
+                    style={{ opacity: 1 }}
+                  >
                     <Link to={PATH.SEARCH_DETAIL}>
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
-                        716 Great Deals out of 18,117 listings starting at $1,500
-                </p>
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </Link>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <Link to={PATH.SEARCH_DETAIL}>
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
-                        716 Great Deals out of 18,117 listings starting at $1,500
-                </p>
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </Link>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <a href="javascript:;">
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
-                        716 Great Deals out of 18,117 listings starting at $1,500
-                </p>
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </a>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <a href="javascript:;">
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
-                        716 Great Deals out of 18,117 listings starting at $1,500
-                </p>
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </a>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <a href="javascript:;">
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
-                        716 Great Deals out of 18,117 listings starting at $1,500
-                </p>
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </a>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <a href="javascript:;">
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
-                        716 Great Deals out of 18,117 listings starting at $1,500
-                </p>
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </a>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <a href="javascript:;">
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
-                        716 Great Deals out of 18,117 listings starting at $1,500
-                </p>
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </a>
                   </li>
                   <li class="list-group-item" style={{ opacity: 1 }}>
                     <a href="javascript:;">
                       <div class="head3">Used BMW 3 Series</div>
                       <p class="para1">
-                        716 Great Deals out of 18,117 listings starting at $1,500
-                </p>
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </a>
                   </li>
                 </ul>
-              }
+              )}
             </ul>
           </div>
         </section>
@@ -1517,6 +1707,5 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-
 
 export default AppWrapper(Upload, null, mapDispatchToProps);
