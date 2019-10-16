@@ -39,4 +39,60 @@
   border: 1px solid #ccc;
   border-radius: 10px;
 }
+
+.container_shipping .greybox .insidegreybox {
+  background: #fff;
+  padding: 10px;
+}
+
+.container_shipping .benefits .icon {
+  max-width: 120px;
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .container_shipping .col-md-3.text-right {
+    text-align: center !important;
+  }
+  .container_shipping .btn {
+    white-space: normal;
+    margin-bottom: 10px;
+  }
+}
+
+.customertxt span {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  padding: 10px;
+  display: block;
+}
+
+@media screen and (max-width: 767px) {
+  .customertxt span {
+    position: relative;
+    color: #000;
+  }
+}
+
+.gurantees.bggrey {
+  background: #F5F6F8;
+}
+
+.parts {
+  text-align: left;
+}
+
+.parts .numbers {
+  color: #2ab94f;
+  font-size: 50px;
+  max-width: 100px;
+}
+
+@media screen and (max-width: 767px) {
+  .gurantees {
+    padding: 0px 10px;
+  }
+}
 /*# sourceMappingURL=about.css.map */

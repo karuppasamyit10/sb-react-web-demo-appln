@@ -62,6 +62,12 @@
   color: #000;
 }
 
+@media screen and (max-width: 1199px) {
+  .adv_search_wrap .filters_wrap .filter_1 .nav-link {
+    font-size: 12px;
+  }
+}
+
 .adv_search_wrap .filters_wrap .filter_1 .nav-link.active {
   background: #00a0dd;
   color: #fff;
@@ -79,6 +85,12 @@
   background: #ddf6ff;
   padding: 20px;
   margin-top: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .adv_search_wrap .emailbox .btn-primary {
+    margin-top: 10px;
+  }
 }
 
 .adv_search_wrap .fair {

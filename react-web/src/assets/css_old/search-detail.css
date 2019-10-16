@@ -7,6 +7,14 @@
   border: 1px solid #ccc;
 }
 
+@media screen and (max-width: 767px) {
+  .search_detail .allresults {
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+}
+
 .search_detail .allresults:hover, .search_detail .allresults:focus {
   text-decoration: none;
   background: #00a0dd;
@@ -19,6 +27,12 @@
   width: 100%;
 }
 
+@media screen and (max-width: 767px) {
+  .search_detail .thumbs {
+    padding: 6px 0px 5px;
+  }
+}
+
 .search_detail .thumbs img {
   width: 100%;
 }
@@ -29,6 +43,12 @@
 
 .search_detail .thumbs .price span:first-child {
   font-size: 18px;
+}
+
+@media screen and (max-width: 767px) {
+  .search_detail .thumbs .price {
+    font-size: 12px;
+  }
 }
 
 .search_detail .cargallery {
@@ -45,6 +65,13 @@
 
 .search_detail .detail_right {
   padding-left: 30px;
+}
+
+@media screen and (max-width: 991px) {
+  .search_detail .detail_right {
+    padding-left: 0px;
+    margin-top: 20px;
+  }
 }
 
 .search_detail .detail_right .greatdeal {
@@ -103,6 +130,12 @@
   padding-left: 40px;
 }
 
+@media screen and (max-width: 767px) {
+  .search_detail .detailright2 {
+    padding-left: 0px;
+  }
+}
+
 .search_detail .detailright2 .sellerinfo {
   margin-top: 20px;
 }
@@ -133,5 +166,23 @@
 .slick-prev:before, .slick-next:before {
   color: #00a0dd;
   font-size: 24px;
+}
+
+@media screen and (max-width: 1199px) {
+  .allcars {
+    width: 90%;
+    margin: 0px auto;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cargallery {
+    width: 90%;
+    margin: 0px auto;
+  }
+}
+
+table td {
+  font-size: 13px;
 }
 /*# sourceMappingURL=search-detail.css.map */

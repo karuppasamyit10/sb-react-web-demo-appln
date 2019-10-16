@@ -100,3 +100,76 @@ transform-origin: center;
         }
     }
 }
+
+.plgrid{
+    border: 1px solid $grey3;
+    position: relative;
+    @include max-767{
+        margin-bottom: 20px;
+    }
+    .premium_bade{
+        @include absolute;
+        top: 0px;
+        left: 0px;
+        background: $black;
+        padding: 6px 15px;
+        color: $orange;
+        border: 1px solid $orange;
+        font-size: 12px;
+    }
+    .ratingplus{
+        @include absolute;
+        bottom: 0px;
+        right: 0px;
+        background: $black;
+        padding: 6px 10px;
+        color: $orange;
+        border: 1px solid $orange;
+        font-size: 12px;
+    }
+    .content{
+        padding: 0px 10px 10px;
+        .redprice{
+            color: $red;
+        }
+    }
+   
+}
+.rightlinks{
+    .nav-item{
+        margin: 0px 5px;
+        @include max-767{
+            margin: 0px;
+                -ms-flex-preferred-size: 0;
+                flex-basis: 0;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+                max-width: 100%;
+                padding: 0px 5px;
+            
+        }
+        .nav-link{
+            background: lighten($color: $grey, $amount: 30);
+            color: $white;
+            @include max-767{
+                font-size: 12px;
+                padding: 5px 6px;
+                text-align: center;
+            }
+        }
+        .nav-link.active{
+            background: $blue;
+            color: $white;
+        }
+    }
+    
+}
+
+.parts_grid{
+      padding: 10px;
+      margin-bottom: 30px;
+        .col-9{
+            padding-right: 15px !important;
+        }
+    
+}

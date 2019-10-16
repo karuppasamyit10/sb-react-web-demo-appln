@@ -192,3 +192,16 @@ a,button,input,textarea,select,option{
     height: 30px;
     border-bottom: 1px dotted #ccc;
 }
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: $green;
+    border-color: $green;
+}
+.page-link{
+    color: $grey;
+    &:hover,&:focus{
+        color: $grey;
+    }
+}

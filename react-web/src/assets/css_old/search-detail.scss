@@ -9,6 +9,11 @@ color: $blue;
 font-size: 16px;
 width: 100px;
 border: 1px solid #ccc;
+@include max-767{
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
 &:hover,&:focus{
     text-decoration: none;
     background: $blue;
@@ -19,6 +24,9 @@ border: 1px solid #ccc;
     border: 1px solid #000;
     padding: 10px 10px 5px;
     width: 100%;
+    @include max-767{
+        padding: 6px 0px 5px;
+    }
     img{
         width: 100%;
     }
@@ -27,6 +35,9 @@ border: 1px solid #ccc;
             font-size: 18px;
         }
         font-size: 14px;
+        @include max-767{
+            font-size: 12px;
+        }
     }
 }
 .cargallery{
@@ -42,6 +53,10 @@ border: 1px solid #ccc;
 }
 .detail_right{
     padding-left: 30px;
+    @include max-991{
+        padding-left: 0px;
+        margin-top: 20px;
+    }
     .greatdeal{
         background: $grey2;
         border: 1px solid #ccc;
@@ -93,6 +108,9 @@ border: 1px solid #ccc;
 .detailright2{
    
     padding-left: 40px;
+    @include max-767{
+        padding-left: 0px;
+    }
     .sellerinfo{
         margin-top: 20px;
         a{
@@ -121,4 +139,22 @@ border: 1px solid #ccc;
 .slick-prev:before, .slick-next:before{
     color: $blue;
     font-size: 24px;
+}
+.allcars {
+    @include max-1200{
+        width: 90%;
+        margin: 0px auto;
+    }
+}
+.cargallery{
+    @include max-991{
+        width: 90%;
+        margin: 0px auto;
+    }
+}
+
+table{
+    td{
+        font-size: 13px;
+    }
 }

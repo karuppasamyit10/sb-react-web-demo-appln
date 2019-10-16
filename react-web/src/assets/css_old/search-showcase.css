@@ -1,3 +1,9 @@
+@media screen and (max-width: 767px) {
+  .search-showcase .ss-cards {
+    margin-bottom: 20px;
+  }
+}
+
 .search-showcase .ss-cards p {
   margin-bottom: 10px;
 }

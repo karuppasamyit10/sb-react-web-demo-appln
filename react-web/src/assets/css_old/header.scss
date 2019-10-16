@@ -1,41 +1,154 @@
 @import 'partials/variables';
 @import 'partials/mixins';
+
 .navbar {
     padding: 0px;
     align-items: flex-start;
-.row.parent-row{
-    width: 100%;
-}
+  
+    .row.parent-row {
+        width: 100%;
+    }
+
     .container {
         align-items: flex-start;
         @include padding-x-none;
     }
-.logo-wrap{
-    width: 100%;
-    .navbar-brand{
-        width: 130px;
-        @include relative;
-        z-index: 1;
+
+    .logo-wrap {
+        width: 100%;
+
+        .container {
+            @include max-1200 {
+                max-width: 100%;
+                width: 100%;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            @include max-767 {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+
+        .navbar-brand {
+            width: 130px;
+            @include relative;
+            z-index: 1;
+
+            @include max-1200 {
+                padding-top: 10px;
+            }
+
+            @include max-767 {
+                width: 100px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+        }
+
+        .mobiletop {
+            @include absolute;
+            top: 25px;
+            right: 20px;
+            @include max-1200{
+                .dropdown-menu {
+                    min-width: 130px;
+                    width: 130px;
+                    left: auto;
+                    right: 0px;
+                    @include absolute;
+
+                    a {
+                        padding: 6px 10px;
+                        font-size: 14px;
+                    }
+                }
+            }
+            @include max-767 {
+                top: 15px;
+                right: 0px;
+
+                .navbar-nav {
+                    -ms-flex-direction: row;
+                    flex-direction: row;
+
+                    li {
+                        a {
+                            padding: 0px 10px;
+
+
+                        }
+
+                    }
+                }
+            }
+        }
     }
-}
+
     .menu-wrap {
         width: 100%;
         margin-top: -89px;
         background: $white;
+
+        @include max-1200 {
+            width: 350px;
+            position: fixed;
+            top: 0px;
+            left: -350px;
+            height: 100vh;
+            margin-top: 0px;
+            padding-top: 120px;
+            overflow-y: auto;
+            @include transition(all 0.3s ease-in-out);
+        }
+
+        @include max-767 {
+            width: 100%;
+            height: calc(100vh - 85px);
+            margin-top: 85px;
+            padding-top: 10px;
+            left: -100%;
+        }
+
         .menu-languages {
             background: #f5f5f5;
-            .container{
+
+            .container {
                 padding-left: 180px;
+
+                @include max-1200 {
+                    max-width: 100%;
+                    width: 100%;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                }
             }
-            .globe{
-                a{
+
+            .globe {
+                a {
                     color: $grey;
                     padding: 0px 5px;
                 }
-                
+
             }
+
+            .language_select {
+                display: none;
+
+                @include max-1200 {
+                    display: inline-block;
+                }
+            }
+
             .language-links {
                 @include ul-reset;
+
+                @include max-1200 {
+                    display: none !important;
+                }
 
                 li {
                     display: inline-block;
@@ -49,7 +162,7 @@
                         min-width: 70px;
                         text-align: center;
                         text-decoration: none;
-                        
+
 
                         &:hover,
                         &:focus {
@@ -67,10 +180,29 @@
         }
 
         .menu-main {
-            .container{
+            .container {
                 padding-left: 180px;
+
+                @include max-1200 {
+                    max-width: 100%;
+                    width: 100%;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                }
             }
+
             .navbar-nav.nav-center {
+                @include max-1200 {
+                    -ms-flex-direction: column;
+                    flex-direction: column;
+                    -ms-flex: 0 0 100%;
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                }
+
+
                 li {
                     a {
                         padding: 17px 25px 0px;
@@ -79,6 +211,7 @@
                         background: #fff;
                         font-size: 15px;
                         font-weight: 500;
+
                         &:before {
                             content: "";
                             width: 1px;
@@ -86,24 +219,36 @@
                             border-left: 1px solid #ccc;
                             @include absolute;
                             @include absolute-center(auto 0px auto auto);
+
+                            @include max-1200 {
+                                display: none;
+                            }
                         }
 
 
                     }
-                    &:last-child{
-                     a{
-                         &:before{
+
+
+                }
+
+                li.last {
+                    a {
+                        &:before {
                             display: none;
-                         }
-                     }
-                            
-                        
-                        
+                        }
                     }
+
+
+
                 }
             }
-            .navbar-nav.nav-right{
-                li{
+
+            .navbar-nav.nav-right {
+                @include max-1200 {
+                    display: none;
+                }
+
+                li {
                     a {
                         padding: 17px 8px 0px;
                         min-height: 55px;
@@ -112,18 +257,32 @@
                         color: #000;
                         font-size: 14px;
                     }
-                    .dropdown-menu{
-                        margin: -1px 0px 0px;                       
-                            a{
-                                padding: 10px 20px;
-                                min-height: 1px;
-                            }
-                       
+
+                    .dropdown-menu {
+                        margin: -1px 0px 0px;
+
+                        a {
+                            padding: 10px 20px;
+                            min-height: 1px;
+                        }
+
+                        @include max-1280() {
+                            left: auto;
+                            right: 0px;
+                        }
                     }
                 }
             }
         }
 
 
+    }
+    .menu-wrap.active{
+        @include max-1200{
+            left: 0px;
+        }
+        @include max-767{
+            left: 0%;
+        }
     }
 }

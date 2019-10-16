@@ -41,6 +41,9 @@
                 border-radius: 0px;
                 border-right: 1px solid #ccc;
                 color: $black;
+                @include max-1200{
+                    font-size: 12px;
+                }
             }
            
             .nav-link.active{
@@ -61,6 +64,11 @@
         background: lighten($color: $blue, $amount: 50);
         padding: 20px;
         margin-top: 20px;
+        @include max-767{
+            .btn-primary{
+                margin-top: 10px;
+            }
+        }
     }
     .fair{
         color: $green;

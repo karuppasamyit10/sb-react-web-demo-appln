@@ -185,4 +185,22 @@
 table td {
   font-size: 13px;
 }
+
+.partslists li a {
+  color: #000;
+}
+
+.partslists li a:hover, .partslists li a:focus {
+  color: #00a0dd;
+  text-decoration: none;
+}
+
+.quantity_btn {
+  font-size: 18px;
+  font-weight: bold;
+  width: 35px;
+  height: 38px;
+  line-height: 24px;
+  text-align: center;
+}
 /*# sourceMappingURL=search-detail.css.map */

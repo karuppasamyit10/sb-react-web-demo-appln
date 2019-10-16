@@ -158,3 +158,23 @@ table{
         font-size: 13px;
     }
 }
+
+.partslists{
+    li{
+        a{
+            color: $black;
+            &:hover,&:focus{
+                color: $blue;
+                text-decoration: none;
+            }
+        }
+    }
+}
+.quantity_btn {
+    font-size: 18px;
+    font-weight: bold;
+    width: 35px;
+    height: 38px;
+    line-height: 24px;
+    text-align: center;
+}

@@ -298,4 +298,19 @@ a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
   height: 30px;
   border-bottom: 1px dotted #ccc;
 }
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #2ab94f;
+  border-color: #2ab94f;
+}
+
+.page-link {
+  color: #666;
+}
+
+.page-link:hover, .page-link:focus {
+  color: #666;
+}
 /*# sourceMappingURL=global.css.map */

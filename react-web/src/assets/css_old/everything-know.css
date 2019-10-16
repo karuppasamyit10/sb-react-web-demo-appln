@@ -3,4 +3,18 @@
   padding-left: 50px;
   padding-right: 50px;
 }
+
+@media screen and (max-width: 1199px) {
+  .everything-know .ek-cards {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .everything-know .ek-cards {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 /*# sourceMappingURL=everything-know.css.map */

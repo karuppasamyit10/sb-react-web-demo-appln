@@ -33,7 +33,8 @@ module.exports = {
     FUEL_CONVERSION: '/about-us/what-we-do/fuel-conversion',
     CAR_ACCESSORIES: '/about-us/what-we-do/car-accessories',
     PARTS_EXPRESS: '/about-us/what-we-do/parts-express',
-    SEARCH_DETAIL: '/search-detail'
+    SEARCH_DETAIL: '/search-detail',
+    PARTS_DETAIL: '/parts-detail'
   },
 
   ACTION_TYPES: {

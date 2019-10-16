@@ -52,6 +52,7 @@ import specialServices from "./components/common/specialService";
 import containerShipping from "./components/common/containerShipping";
 import partsExpress from "./components/common/partsExpress";
 import searchDetail from "./components/searchDetail";
+import partDetail from "./components/partDetail";
 
 const CustomRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -85,6 +86,7 @@ ReactDOM.render(
         <CustomRoute exact path="/about-us/what-we-do/container-shipping" component={containerShipping} />
         <CustomRoute exact path="/about-us/what-we-do/parts-express" component={partsExpress} />
         <CustomRoute exact path="/search-detail" component={searchDetail} />
+        <CustomRoute exact path="/parts-detail" component={partDetail} />
         {/* Notification  Message*/}
         <Notification />
       </React.Fragment>

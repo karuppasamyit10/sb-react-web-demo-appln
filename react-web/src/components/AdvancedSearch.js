@@ -114,6 +114,11 @@ class AdvancedSearch extends Component {
       modelDetailList: null,
       modelDetails: null,
 
+      engineType: null,
+      loadingWeightType: null,
+      truckCategory: null,
+      conditionType: null,
+
       limit: 5,
       todosPerPage: 5,
       offset: 1
@@ -293,7 +298,12 @@ class AdvancedSearch extends Component {
     this.props.showNotification("Successfully Subscribed", "success");
   };
   searchDetails = () => {
-    this.props.history.push(PATH.SEARCH_DETAIL);
+    this.props.history.push({
+      pathname: PATH.SEARCH_DETAIL,
+      state: {
+        vehicleTypeId: this.state.vehicleType
+      }
+    });
   };
 
   // handleChangeBrand = selectedOption => {
@@ -324,7 +334,7 @@ class AdvancedSearch extends Component {
     console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
     if (e.target.name === "models") {
-      let { modelList } = this.state;
+      let { modelList } = this.state.master;
       let found = modelList.find(model => {
         return model.model === e.target.value;
       });
@@ -471,7 +481,13 @@ class AdvancedSearch extends Component {
       toMileage,
       offset,
       limit,
-      modelDetails
+      modelDetails,
+      conditionType,
+      engineType,
+      category1,
+      category2,
+      loadingWeightType,
+      truckCategory
     } = this.state;
     console.log(this.state);
     const {
@@ -506,6 +522,17 @@ class AdvancedSearch extends Component {
     SearchData.set("toPrice", toPrice ? toPrice : "");
     SearchData.set("fromMileage", fromMileage ? fromMileage : "");
     SearchData.set("toMileage", toMileage ? toMileage : "");
+
+    SearchData.set("engineType", engineType ? engineType : "");
+    SearchData.set(
+      "loadingWeightType",
+      loadingWeightType ? loadingWeightType : ""
+    );
+    SearchData.set("truckCategory", truckCategory ? truckCategory : "");
+    SearchData.set("conditionType", conditionType ? conditionType : "");
+    SearchData.set("category1", category1 ? category1 : "");
+    SearchData.set("category2", category2 ? category2 : "");
+
     this.setState({ isLoading: true });
     this.props.getVehicleSearchList(SearchData, response => {
       console.log(response);
@@ -577,6 +604,9 @@ class AdvancedSearch extends Component {
       priceList,
       yearList,
       modelList,
+      truckCategoryList,
+      loadingWeightTypeList,
+      engineTypeList,
       modelDetailList,
       conditionTypeList
     } = this.state.master;
@@ -784,6 +814,43 @@ class AdvancedSearch extends Component {
                           ) : (
                             ""
                           )}
+                          {modelList ? (
+                            <div class="form-group">
+                              {/* <Select
+                          value={this.state.selectedModelOptions}
+                          onChange={this.handleChangeModel}
+                          options={carModelOptions}
+                          name="carModel"
+                          isMulti={true}
+                          isSearchable={true}
+                        /> */}
+                              <select
+                                className="form-control"
+                                name="models"
+                                id="models"
+                                disabled={
+                                  modelList && modelList.length ? false : true
+                                }
+                                onChange={this.handleChange}
+                                value={this.state.models}
+                              >
+                                <option>All Models</option>
+                                {modelList &&
+                                  modelList.map(model => {
+                                    return (
+                                      <option
+                                        id={model.modelId}
+                                        value={model.model}
+                                      >
+                                        {model.model}
+                                      </option>
+                                    );
+                                  })}
+                              </select>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                           {category1List ? (
                             <div class="form-group">
                               {/* <Select
@@ -866,7 +933,8 @@ class AdvancedSearch extends Component {
                           ) : (
                             ""
                           )}
-                          {modelList ? (
+
+                          {truckCategoryList ? (
                             <div class="form-group">
                               {/* <Select
                           value={this.state.selectedModelOptions}
@@ -878,23 +946,25 @@ class AdvancedSearch extends Component {
                         /> */}
                               <select
                                 className="form-control"
-                                name="models"
-                                id="models"
+                                name="truckCategoryList"
+                                id="truckCategory"
                                 disabled={
-                                  modelList && modelList.length ? false : true
+                                  truckCategoryList && truckCategoryList.length
+                                    ? false
+                                    : true
                                 }
                                 onChange={this.handleChange}
-                                value={this.state.models}
+                                value={this.state.truckCategory}
                               >
-                                <option>All Models</option>
-                                {this.state.modelList &&
-                                  this.state.modelList.map(model => {
+                                <option>All Truck Category</option>
+                                {truckCategoryList &&
+                                  truckCategoryList.map(category1 => {
                                     return (
                                       <option
-                                        id={model.modelId}
-                                        value={model.model}
+                                        id={category1.category1Id}
+                                        value={category1.category1}
                                       >
-                                        {model.model}
+                                        {category1.category1}
                                       </option>
                                     );
                                   })}
@@ -1897,6 +1967,99 @@ class AdvancedSearch extends Component {
                       ) : (
                         ""
                       )}
+                      {loadingWeightTypeList ? (
+                        <div class="form-group">
+                          <label for="">Steering</label>
+
+                          <div class="form-group">
+                            {/* <Select
+                          value={this.state.selectedSteeringOptions}
+                          onChange={this.handleChangeSteering}
+                          options={steeringOptions}
+                          name="steering"
+                          isMulti={true}
+                          isSearchable={true}
+                        /> */}
+
+                            <select
+                              className="form-control"
+                              name="loadingWeightType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                loadingWeightTypeList &&
+                                loadingWeightTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.loadingWeightType}
+                            >
+                              <option>All Loading Weight Type</option>
+                              {loadingWeightTypeList &&
+                                loadingWeightTypeList.map(loadingWeightType => {
+                                  return (
+                                    <option
+                                      id={loadingWeightType.loadingWeightTypeId}
+                                      value={
+                                        loadingWeightType.loadingWeightType
+                                      }
+                                    >
+                                      {loadingWeightType.loadingWeightType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {engineTypeList ? (
+                        <div class="form-group">
+                          <label for="">Engine Type</label>
+
+                          <div class="form-group">
+                            {/* <Select
+                          value={this.state.selectedSteeringOptions}
+                          onChange={this.handleChangeSteering}
+                          options={steeringOptions}
+                          name="steering"
+                          isMulti={true}
+                          isSearchable={true}
+                        /> */}
+
+                            <select
+                              className="form-control"
+                              name="engineType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                engineTypeList && engineTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.engineType}
+                            >
+                              <option>All Engine Type</option>
+                              {engineTypeList &&
+                                engineTypeList.map(engineType => {
+                                  return (
+                                    <option
+                                      id={engineType.engineTypeId}
+                                      value={engineType.engineType}
+                                    >
+                                      {engineType.engineType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                       {/* <div class="form-group">
                       <div class="row align-items-center justify-content-between">
                         <div class="col-6">
@@ -2524,6 +2687,93 @@ class AdvancedSearch extends Component {
                 </div>
                 {/* end */}
                 <div class="col-lg-8">
+                  {this.state.vehicleType === 5 ? (
+                    <div class="premiumlist">
+                      <div class="head3 text-uppercase bold border-bottom py-3">
+                        premium list
+                      </div>
+                      <div class="row mt-4 mb-4">
+                        <div class="col-md-4">
+                          <div class="plgrid">
+                            <div class="position-relative">
+                              <img
+                                src={require("../assets/img/about/image2.png")}
+                                class="img-fluid w-100"
+                                alt=""
+                              />
+                              <div class="premium_bade">Premium</div>
+                              <div class="ratingplus">37+</div>
+                            </div>
+                            <div class="content">
+                              <div class="head4 bold mt-2">
+                                2020 Harasow Excavator Inspection
+                              </div>
+                              <p class="para1 mt-2">
+                                Item details are only provided to overseas
+                                buyers and Domestic Sellers with membership
+                              </p>
+                              <div class="text-right redprice head3 bold">
+                                USD *,***
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="plgrid">
+                            <div class="position-relative">
+                              <img
+                                src={require("../assets/img/about/image2.png")}
+                                class="img-fluid w-100"
+                                alt=""
+                              />
+                              <div class="premium_bade">Premium</div>
+                              <div class="ratingplus">37+</div>
+                            </div>
+                            <div class="content">
+                              <div class="head4 bold mt-2">
+                                2020 Harasow Excavator Inspection
+                              </div>
+                              <p class="para1 mt-2">
+                                Item details are only provided to overseas
+                                buyers and Domestic Sellers with membership
+                              </p>
+                              <div class="text-right redprice head3 bold">
+                                USD *,***
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="plgrid">
+                            <div class="position-relative">
+                              <img
+                                src={require("../assets/img/about/image2.png")}
+                                class="img-fluid w-100"
+                                alt=""
+                              />
+                              <div class="premium_bade">Premium</div>
+                              <div class="ratingplus">37+</div>
+                            </div>
+                            <div class="content">
+                              <div class="head4 bold mt-2">
+                                2020 Harasow Excavator Inspection
+                              </div>
+                              <p class="para1 mt-2">
+                                Item details are only provided to overseas
+                                buyers and Domestic Sellers with membership
+                              </p>
+                              <div class="text-right redprice head3 bold">
+                                USD *,***
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
                   <div class="resultbox">
                     <div class="row align-items-center justify-content-between">
                       <div class="col-md-8">
@@ -2609,7 +2859,9 @@ class AdvancedSearch extends Component {
                   ) : (
                     ""
                   )}
-                  {this.state.vehicleList && this.state.vehicleList.length ? (
+                  {this.state.vehicleType !== 5 &&
+                  this.state.vehicleList &&
+                  this.state.vehicleList.length ? (
                     this.state.vehicleList.map((vehicle, index) => {
                       return (
                         <div class="row searched_cards align-items-center">
@@ -2726,6 +2978,356 @@ class AdvancedSearch extends Component {
                         </div>
                       );
                     })
+                  ) : this.state.vehicleType === 5 ? (
+                    <div class="row">
+                      <div class="col-12 ">
+                        <div class="head2 text-center">Search by Category</div>
+                        <div class="row mt-3">
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-6">
+                            <div class="parts_grid shadow">
+                              <div class="head3">Engine Parts</div>
+                              <div class="row mt-2 no-gutters">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <select name="" id="" class="form-control">
+                                      <option selected value="">
+                                        Select Category
+                                      </option>
+                                      <option value="0">Loading...</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-12 text-right">
+                                  <button
+                                    class="btn btn-primary"
+                                    onClick={() => {
+                                      this.props.history.push(
+                                        PATH.PARTS_DETAIL
+                                      );
+                                    }}
+                                  >
+                                    Go
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row no-gutters">
+                                <div class="col-12 text-center">
+                                  <img
+                                    src={require("../assets/img/engine.png")}
+                                    class="img-fluid mx-auto"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   ) : (
                     <div className="text-center">
                       {/* {this.state.isLoading ? (

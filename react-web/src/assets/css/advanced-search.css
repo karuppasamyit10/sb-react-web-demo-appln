@@ -130,4 +130,89 @@
   font-size: 18px;
   max-width: 30px;
 }
+
+.plgrid {
+  border: 1px solid #ddd;
+  position: relative;
+}
+
+@media screen and (max-width: 767px) {
+  .plgrid {
+    margin-bottom: 20px;
+  }
+}
+
+.plgrid .premium_bade {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: #000;
+  padding: 6px 15px;
+  color: orange;
+  border: 1px solid orange;
+  font-size: 12px;
+}
+
+.plgrid .ratingplus {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background: #000;
+  padding: 6px 10px;
+  color: orange;
+  border: 1px solid orange;
+  font-size: 12px;
+}
+
+.plgrid .content {
+  padding: 0px 10px 10px;
+}
+
+.plgrid .content .redprice {
+  color: #D10023;
+}
+
+.rightlinks .nav-item {
+  margin: 0px 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .rightlinks .nav-item {
+    margin: 0px;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    -webkit-box-flex: 1;
+            flex-grow: 1;
+    max-width: 100%;
+    padding: 0px 5px;
+  }
+}
+
+.rightlinks .nav-item .nav-link {
+  background: #b3b3b3;
+  color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+  .rightlinks .nav-item .nav-link {
+    font-size: 12px;
+    padding: 5px 6px;
+    text-align: center;
+  }
+}
+
+.rightlinks .nav-item .nav-link.active {
+  background: #00a0dd;
+  color: #fff;
+}
+
+.parts_grid {
+  padding: 10px;
+  margin-bottom: 30px;
+}
+
+.parts_grid .col-9 {
+  padding-right: 15px !important;
+}
 /*# sourceMappingURL=advanced-search.css.map */
