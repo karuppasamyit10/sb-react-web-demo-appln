@@ -109,3 +109,17 @@ export function getVehicleMasterData(params, callback) {
       });
   };
 }
+
+export function getCategory2(params, callback) {
+  return function (dispatch) {
+    Client.get(URL.GET_VEHICLE_CATEGORY2S, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====get category2 response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====get category2 response===????", error);
+      });
+  };
+} 
