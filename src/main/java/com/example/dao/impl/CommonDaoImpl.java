@@ -572,14 +572,14 @@ public class CommonDaoImpl implements CommonDao {
 				listPredicate.add(brandConditionPredicate);
 			}
 			//model
-			if(vehicleSearchBean.getModels()!=null && !vehicleSearchBean.getModels().isEmpty())
+			if(vehicleSearchBean.getModels()!=null && !vehicleSearchBean.getModels().isEmpty() && !vehicleSearchBean.getModels().get(0).contains("All"))
 			{
 				Expression<String> moedlExp = vehicleRoot.get("model");
 				Predicate moedelConditionPredicate = moedlExp.in(vehicleSearchBean.getModels());
 				listPredicate.add(moedelConditionPredicate);
 			}
 			//model details
-			if(vehicleSearchBean.getModelDetails()!=null && !vehicleSearchBean.getModelDetails().isEmpty())
+			if(vehicleSearchBean.getModelDetails()!=null && !vehicleSearchBean.getModelDetails().isEmpty() && !vehicleSearchBean.getModels().get(0).contains("All"))
 			{
 				Expression<String> moedlDetailsExp = vehicleRoot.get("modelDetail");
 				Predicate moedelDetailConditionPredicate = moedlDetailsExp.in(vehicleSearchBean.getModelDetails());
@@ -590,19 +590,30 @@ public class CommonDaoImpl implements CommonDao {
 			{
 //				Expression<String> yearExp = vehicleRoot.get("year");
 //				Predicate yearExpConditionPredicate = yearExp.(vehicleSearchBean.getFromYear());
+//				List<Predicate> restrictions = new ArrayList<>();
+//				restrictions.add(criteriaBuilder.between(vehicleRoot.get("year"), vehicleSearchBean.getToYear(), 
+//						vehicleSearchBean.getFromYear()));
+////				listPredicate.add(yearExpConditionPredicate);
+//				criteriaQuery.select(vehicleRoot).where(criteriaBuilder.between(vehicleRoot.<Integer>get("year"), Integer.parseInt(vehicleSearchBean.getToYear()), 
+//						Integer.parseInt(vehicleSearchBean.getFromYear())));
+//				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+//				listPredicate.addAll(restrictions);
+//				criteriaQuery.select(vehicleRoot).where(criteriaBuilder.between(vehicleRoot.<String>get("year"), vehicleSearchBean.getToYear(), 
+//						vehicleSearchBean.getFromYear()));
 				List<Predicate> restrictions = new ArrayList<>();
-				restrictions.add(criteriaBuilder.between(vehicleRoot.<Integer>get("year"), Integer.parseInt(vehicleSearchBean.getFromYear()), 
+				restrictions.add(criteriaBuilder.between(vehicleRoot.get("year"), Integer.parseInt(vehicleSearchBean.getFromYear()), 
 						Integer.parseInt(vehicleSearchBean.getToYear())));
-//				listPredicate.add(yearExpConditionPredicate);
-				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+//				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+				listPredicate.addAll(restrictions);
 			}
 			if(vehicleSearchBean.getFromPrice()!=null && !vehicleSearchBean.getFromPrice().isEmpty() && !vehicleSearchBean.getFromPrice().equalsIgnoreCase("null")
 					&& vehicleSearchBean.getToPrice()!=null && !vehicleSearchBean.getToPrice().isEmpty() && !vehicleSearchBean.getToPrice().equalsIgnoreCase("null"))
 			{
 				List<Predicate> restrictions = new ArrayList<>();
-				restrictions.add(criteriaBuilder.between(vehicleRoot.<Long>get("price"), Long.parseLong(vehicleSearchBean.getFromPrice()), 
+				restrictions.add(criteriaBuilder.between(vehicleRoot.get("price"), Long.parseLong(vehicleSearchBean.getFromPrice()), 
 						Long.parseLong(vehicleSearchBean.getToPrice())));
-				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+//				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+				listPredicate.addAll(restrictions);
 			}
 			if(vehicleSearchBean.getTransmissionType()!=null && !vehicleSearchBean.getTransmissionType().isEmpty())
 			{
@@ -629,30 +640,31 @@ public class CommonDaoImpl implements CommonDao {
 //				Expression<String> yearExp = vehicleRoot.get("year");
 //				Predicate yearExpConditionPredicate = yearExp.(vehicleSearchBean.getFromYear());
 				List<Predicate> restrictions = new ArrayList<>();
-				restrictions.add(criteriaBuilder.between(vehicleRoot.<Integer>get("mileage"), Integer.parseInt(vehicleSearchBean.getFromMileage()), 
-						Integer.parseInt(vehicleSearchBean.getToMileage())));
+				restrictions.add(criteriaBuilder.between(vehicleRoot.get("mileage"), Long.parseLong(vehicleSearchBean.getFromMileage()), 
+						Long.parseLong(vehicleSearchBean.getToMileage())));
 //				listPredicate.add(yearExpConditionPredicate);
-				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+//				criteriaQuery.where(restrictions.toArray(new Predicate[restrictions.size()]));
+				listPredicate.addAll(restrictions);
 			}
-			if(vehicleSearchBean.getConditionType()!=null && !vehicleSearchBean.getConditionType().isEmpty())
+			if(vehicleSearchBean.getConditionType()!=null && !vehicleSearchBean.getConditionType().isEmpty() && !vehicleSearchBean.getConditionType().get(0).contains("All"))
 			{
 				Expression<String> fuelTypeExp = vehicleRoot.get("conditionType");
 				Predicate fuelTypeConditionPredicate = fuelTypeExp.in(vehicleSearchBean.getConditionType());
 				listPredicate.add(fuelTypeConditionPredicate);
 			}
-			if(vehicleSearchBean.getEngineType()!=null && !vehicleSearchBean.getEngineType().isEmpty())
+			if(vehicleSearchBean.getEngineType()!=null && !vehicleSearchBean.getEngineType().isEmpty() && !vehicleSearchBean.getEngineType().get(0).contains("All"))
 			{
 				Expression<String> fuelTypeExp = vehicleRoot.get("engineType");
 				Predicate fuelTypeConditionPredicate = fuelTypeExp.in(vehicleSearchBean.getEngineType());
 				listPredicate.add(fuelTypeConditionPredicate);
 			}
-			if(vehicleSearchBean.getSteeringType()!=null && !vehicleSearchBean.getSteeringType().isEmpty())
+			if(vehicleSearchBean.getSteeringType()!=null && !vehicleSearchBean.getSteeringType().isEmpty() && !vehicleSearchBean.getSteeringType().get(0).contains("All"))
 			{
 				Expression<String> steeringTypeExp = vehicleRoot.get("steeringType");
 				Predicate steeringTypeConditionPredicate = steeringTypeExp.in(vehicleSearchBean.getSteeringType());
 				listPredicate.add(steeringTypeConditionPredicate);
 			}
-			if(vehicleSearchBean.getFuelType()!=null && !vehicleSearchBean.getFuelType().isEmpty())
+			if(vehicleSearchBean.getFuelType()!=null && !vehicleSearchBean.getFuelType().isEmpty() && !vehicleSearchBean.getFuelType().get(0).contains("All"))
 			{
 				Expression<String> fuelTypeExp = vehicleRoot.get("fuelType");
 				Predicate fuelTypeConditionPredicate = fuelTypeExp.in(vehicleSearchBean.getFuelType());
@@ -664,15 +676,15 @@ public class CommonDaoImpl implements CommonDao {
 				Predicate countryConditionPredicate = countryExp.in(vehicleSearchBean.getCountry());
 				listPredicate.add(countryConditionPredicate);
 			}
-			if(vehicleSearchBean.getMembershipType()!=null && !vehicleSearchBean.getMembershipType().isEmpty())
+			if(vehicleSearchBean.getMembershipType()!=null && !vehicleSearchBean.getMembershipType().isEmpty() && !vehicleSearchBean.getMembershipType().get(0).contains("All"))
 			{
-				Expression<String> membershipExp = vehicleRoot.get("membership");
+				Expression<String> membershipExp = vehicleRoot.get("membershipType");
 				Predicate membershipConditionPredicate = membershipExp.in(vehicleSearchBean.getMembershipType());
 				listPredicate.add(membershipConditionPredicate);
 			}
-			if(vehicleSearchBean.getDealsType()!=null && !vehicleSearchBean.getDealsType().isEmpty())
+			if(vehicleSearchBean.getDealsType()!=null && !vehicleSearchBean.getDealsType().isEmpty() && !vehicleSearchBean.getDealsType().get(0).contains("All"))
 			{
-				Expression<String> dealTypeExp = vehicleRoot.get("dealType");
+				Expression<String> dealTypeExp = vehicleRoot.get("dealsType");
 				Predicate dealTypeConditionPredicate = dealTypeExp.in(vehicleSearchBean.getDealsType());
 				listPredicate.add(dealTypeConditionPredicate);
 			}
