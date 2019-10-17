@@ -712,19 +712,21 @@ public class CommonDaoImpl implements CommonDao {
 				allPredicate=criteriaBuilder.and(listPredicate.toArray(new Predicate[0]));
 				criteriaQuery.where(allPredicate);
 			} 
-			criteriaQuery.distinct(true);	
+//			criteriaQuery.distinct(true);	
 //			allPredicate=criteriaBuilder.and(listPredicate.toArray(new Predicate[0]));
 //			criteriaQuery.isDistinct();
 			
-			List<Order> orders = new ArrayList<Order>(1);
+			List<Order> orders = new ArrayList<Order>();
 		    orders.add(criteriaBuilder.asc(vehicleRoot.get("vehicleId")));
 		    criteriaQuery.orderBy(orders);
 		     
 			TypedQuery<VehicleDetail> query = entityManager.createQuery(criteriaQuery);
 			int totalRows = query.getResultList().size();
-		    Page<VehicleDetail> vehicleDetails = new PageImpl<VehicleDetail>(query.getResultList(), pageable(vehicleSearchBean.getPageNo(), vehicleSearchBean.getItemsPerPage()), totalRows);
+			query.setFirstResult(vehicleSearchBean.getPageNo()==1|| vehicleSearchBean.getPageNo()==0 ?0:(vehicleSearchBean.getPageNo()-1)*vehicleSearchBean.getItemsPerPage());
+			query.setMaxResults(vehicleSearchBean.getItemsPerPage());
+//		    Page<VehicleDetail> vehicleDetails = new PageImpl<VehicleDetail>(query.getResultList(), pageable(vehicleSearchBean.getPageNo(), vehicleSearchBean.getItemsPerPage()), totalRows);
 			List<Object> vehicleDetailList = new LinkedList<Object>();
-			for(VehicleDetail vehicleDetail : vehicleDetails.getContent()) {
+			for(VehicleDetail vehicleDetail : query.getResultList()) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("vehicleId", vehicleDetail.getVehicleId());
 				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
@@ -771,8 +773,9 @@ public class CommonDaoImpl implements CommonDao {
 //				vehicleDetailList.add(params);
 //			}
 			
+			rootParams.put("totalRecords", totalRows);
+			rootParams.put("total", vehicleDetailList.size());
 			rootParams.put("vehicleDetailList", vehicleDetailList);
-			rootParams.put("totalRecords", vehicleDetails.getTotalElements());
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
 			logger.error("::::Exception(daoImpl)==>getVehicleList::::");

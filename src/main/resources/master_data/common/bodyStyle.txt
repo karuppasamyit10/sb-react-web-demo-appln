@@ -1,0 +1,9 @@
+Sedan
+SUV / Crossover
+Hatchback
+Convertible
+Van
+Minivan
+Pickup Truck
+Coupe
+Wagon
