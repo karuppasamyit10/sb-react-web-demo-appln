@@ -422,6 +422,8 @@ class Upload extends Component {
                                     onChange={e => {
                                       this.onChangeCountry(e);
                                     }}
+                                    name="country"
+                                    value={this.state.country}
                                     class="form-control"
                                   >
                                     <option selected>Choose Country</option>

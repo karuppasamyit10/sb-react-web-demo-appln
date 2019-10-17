@@ -111,6 +111,7 @@ class AdvancedSearch extends Component {
       dealsType: [],
       membershipType: [],
       partsType: [],
+
       modelDetailList: null,
       modelDetails: null,
 
@@ -320,12 +321,12 @@ class AdvancedSearch extends Component {
 
   handleChangeBrand = e => {
     this.setState({ brands: e.target.value });
-    let { brandList } = this.state.master;
+    let { brandList, modelList } = this.state.master;
 
     let found = brandList.find(car => {
       return car.brand === e.target.value;
     });
-    if (found) {
+    if (found && modelList) {
       this.getVehicleModelList(found.brandId);
     }
   };
@@ -488,7 +489,7 @@ class AdvancedSearch extends Component {
       category2,
       loadingWeightType,
       truckCategory,
-      country 
+      country
     } = this.state;
     console.log(this.state);
     const {
@@ -588,6 +589,29 @@ class AdvancedSearch extends Component {
     this.setState({ vehicleType: vehicleType }, () =>
       this.getVehicleSearchList()
     );
+    this.setState({
+      brands: null,
+      models: null,
+      modelDetails: null,
+      transmissionType: null,
+      steeringType: null,
+      fuelType: null,
+      dealsType: null,
+      membershipType: null,
+      fromYear: null,
+      toYear: null,
+      fromPrice: null,
+      toPrice: null,
+      fromMileage: null,
+      toMileage: null,
+      engineType: null,
+      loadingWeightType: null,
+      truckCategory: null,
+      conditionType: null,
+      category1: null,
+      category2: null,
+      country: ""
+    });
   };
 
   render() {
@@ -627,9 +651,10 @@ class AdvancedSearch extends Component {
       fromPriceList,
       toPriceList,
       toMileageList,
-      todosPerPage
+      todosPerPage,
+      country
     } = this.state;
-    // console.log(vehicleType, "lllllllllllllll");
+    console.log(this.state.country, "lllllllllllllll");
     // this.getAllMasterByvehicleTypeId();
     const options = [
       { value: "chocolate", label: "Chocolate" },
@@ -906,8 +931,8 @@ class AdvancedSearch extends Component {
                           /> */}
                               <select
                                 className="form-control"
-                                name="brands"
-                                id="brands"
+                                name="category2"
+                                id="category2"
                                 disabled={
                                   category2List && category2List.length
                                     ? false
@@ -1051,15 +1076,15 @@ class AdvancedSearch extends Component {
                             <div class="form-group">
                               <select
                                 name="country"
-                                id=""
+                                id="country"
                                 disabled={
                                   countryList && countryList.length
                                     ? false
                                     : true
                                 }
-                                value={this.state.country}
+                                value={country}
                                 onChange={e => {
-                                  this.setState({ country: e.target.value });
+                                  this.onChangeDropDown(e);
                                 }}
                                 class="form-control"
                               >
@@ -1187,6 +1212,7 @@ class AdvancedSearch extends Component {
                                     }}
                                     class="form-control"
                                   >
+                                    <option value="">From Price</option>
                                     {fromPriceList && fromPriceList.length
                                       ? fromPriceList.map(price => {
                                           return (
@@ -1218,6 +1244,7 @@ class AdvancedSearch extends Component {
                                     }}
                                     class="form-control"
                                   >
+                                    <option value="">To Price</option>
                                     {toPriceList && toPriceList.length
                                       ? toPriceList.map(price => {
                                           return (
@@ -1650,6 +1677,7 @@ class AdvancedSearch extends Component {
                                 }
                                 class="form-control"
                               >
+                                <option value="">From Price</option>
                                 {fromPriceList && fromPriceList.length
                                   ? fromPriceList.map(price => {
                                       return (
@@ -1679,6 +1707,7 @@ class AdvancedSearch extends Component {
                                   }}
                                   class="form-control"
                                 >
+                                  <option value="">To Price</option>
                                   {toPriceList && toPriceList.length
                                     ? toPriceList.map(price => {
                                         return (
