@@ -1,6 +1,6 @@
 package com.example.bean;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Karuppasamy Mariappan
@@ -9,24 +9,24 @@ import java.util.Set;
 public class VehicleSearchBean {
 
 	private String search;
-	private Set<String> brands;
-	private Set<String> category1;
-	private Set<String> category2;
-	private Set<String> truckCategory1;
-	private Set<String> conditionType;
+	private List<String> brands;
+	private List<String> category1;
+	private List<String> category2;
+	private List<String> truckCategory1;
+	private List<String> conditionType;
 	private String country;
-	private Set<String> dealsType;
-	private Set<String> engineType;
-	private Set<String> fuelType;
-	private Set<String> loadingWeightType;
-	private Set<String> membershipType;
+	private List<String> dealsType;
+	private List<String> engineType;
+	private List<String> fuelType;
+	private List<String> loadingWeightType;
+	private List<String> membershipType;
 	
-	private Set<String> models;
-	private Set<String> modelDetails;
-	private Set<String> partsType;
-	private Set<String> seatsType;
-	private Set<String> steeringType;
-	private Set<String> transmissionType;
+	private List<String> models;
+	private List<String> modelDetails;
+	private List<String> partsType;
+	private List<String> seatsType;
+	private List<String> steeringType;
+	private List<String> transmissionType;
 	
 	private String fromYear;
 	private String toYear;
@@ -57,70 +57,70 @@ public class VehicleSearchBean {
 	/**
 	 * @return the brands
 	 */
-	public Set<String> getBrands() {
+	public List<String> getBrands() {
 		return brands;
 	}
 
 	/**
 	 * @param brands the brands to set
 	 */
-	public void setBrands(Set<String> brands) {
+	public void setBrands(List<String> brands) {
 		this.brands = brands;
 	}
 
 	/**
 	 * @return the category1
 	 */
-	public Set<String> getCategory1() {
+	public List<String> getCategory1() {
 		return category1;
 	}
 
 	/**
 	 * @param category1 the category1 to set
 	 */
-	public void setCategory1(Set<String> category1) {
+	public void setCategory1(List<String> category1) {
 		this.category1 = category1;
 	}
 
 	/**
 	 * @return the category2
 	 */
-	public Set<String> getCategory2() {
+	public List<String> getCategory2() {
 		return category2;
 	}
 
 	/**
 	 * @param category2 the category2 to set
 	 */
-	public void setCategory2(Set<String> category2) {
+	public void setCategory2(List<String> category2) {
 		this.category2 = category2;
 	}
 
 	/**
 	 * @return the truckCategory1
 	 */
-	public Set<String> getTruckCategory1() {
+	public List<String> getTruckCategory1() {
 		return truckCategory1;
 	}
 
 	/**
 	 * @param truckCategory1 the truckCategory1 to set
 	 */
-	public void setTruckCategory1(Set<String> truckCategory1) {
+	public void setTruckCategory1(List<String> truckCategory1) {
 		this.truckCategory1 = truckCategory1;
 	}
 
 	/**
 	 * @return the conditionType
 	 */
-	public Set<String> getConditionType() {
+	public List<String> getConditionType() {
 		return conditionType;
 	}
 
 	/**
 	 * @param conditionType the conditionType to set
 	 */
-	public void setConditionType(Set<String> conditionType) {
+	public void setConditionType(List<String> conditionType) {
 		this.conditionType = conditionType;
 	}
 
@@ -141,154 +141,154 @@ public class VehicleSearchBean {
 	/**
 	 * @return the dealsType
 	 */
-	public Set<String> getDealsType() {
+	public List<String> getDealsType() {
 		return dealsType;
 	}
 
 	/**
 	 * @param dealsType the dealsType to set
 	 */
-	public void setDealsType(Set<String> dealsType) {
+	public void setDealsType(List<String> dealsType) {
 		this.dealsType = dealsType;
 	}
 
 	/**
 	 * @return the engineType
 	 */
-	public Set<String> getEngineType() {
+	public List<String> getEngineType() {
 		return engineType;
 	}
 
 	/**
 	 * @param engineType the engineType to set
 	 */
-	public void setEngineType(Set<String> engineType) {
+	public void setEngineType(List<String> engineType) {
 		this.engineType = engineType;
 	}
 
 	/**
 	 * @return the fuelType
 	 */
-	public Set<String> getFuelType() {
+	public List<String> getFuelType() {
 		return fuelType;
 	}
 
 	/**
 	 * @param fuelType the fuelType to set
 	 */
-	public void setFuelType(Set<String> fuelType) {
+	public void setFuelType(List<String> fuelType) {
 		this.fuelType = fuelType;
 	}
 
 	/**
 	 * @return the loadingWeightType
 	 */
-	public Set<String> getLoadingWeightType() {
+	public List<String> getLoadingWeightType() {
 		return loadingWeightType;
 	}
 
 	/**
 	 * @param loadingWeightType the loadingWeightType to set
 	 */
-	public void setLoadingWeightType(Set<String> loadingWeightType) {
+	public void setLoadingWeightType(List<String> loadingWeightType) {
 		this.loadingWeightType = loadingWeightType;
 	}
 
 	/**
 	 * @return the membershipType
 	 */
-	public Set<String> getMembershipType() {
+	public List<String> getMembershipType() {
 		return membershipType;
 	}
 
 	/**
 	 * @param membershipType the membershipType to set
 	 */
-	public void setMembershipType(Set<String> membershipType) {
+	public void setMembershipType(List<String> membershipType) {
 		this.membershipType = membershipType;
 	}
 
 	/**
 	 * @return the models
 	 */
-	public Set<String> getModels() {
+	public List<String> getModels() {
 		return models;
 	}
 
 	/**
 	 * @param models the models to set
 	 */
-	public void setModels(Set<String> models) {
+	public void setModels(List<String> models) {
 		this.models = models;
 	}
 
 	/**
 	 * @return the modelDetails
 	 */
-	public Set<String> getModelDetails() {
+	public List<String> getModelDetails() {
 		return modelDetails;
 	}
 
 	/**
 	 * @param modelDetails the modelDetails to set
 	 */
-	public void setModelDetails(Set<String> modelDetails) {
+	public void setModelDetails(List<String> modelDetails) {
 		this.modelDetails = modelDetails;
 	}
 
 	/**
 	 * @return the partsType
 	 */
-	public Set<String> getPartsType() {
+	public List<String> getPartsType() {
 		return partsType;
 	}
 
 	/**
 	 * @param partsType the partsType to set
 	 */
-	public void setPartsType(Set<String> partsType) {
+	public void setPartsType(List<String> partsType) {
 		this.partsType = partsType;
 	}
 
 	/**
 	 * @return the seatsType
 	 */
-	public Set<String> getSeatsType() {
+	public List<String> getSeatsType() {
 		return seatsType;
 	}
 
 	/**
 	 * @param seatsType the seatsType to set
 	 */
-	public void setSeatsType(Set<String> seatsType) {
+	public void setSeatsType(List<String> seatsType) {
 		this.seatsType = seatsType;
 	}
 
 	/**
 	 * @return the steeringType
 	 */
-	public Set<String> getSteeringType() {
+	public List<String> getSteeringType() {
 		return steeringType;
 	}
 
 	/**
 	 * @param steeringType the steeringType to set
 	 */
-	public void setSteeringType(Set<String> steeringType) {
+	public void setSteeringType(List<String> steeringType) {
 		this.steeringType = steeringType;
 	}
 
 	/**
 	 * @return the transmissionType
 	 */
-	public Set<String> getTransmissionType() {
+	public List<String> getTransmissionType() {
 		return transmissionType;
 	}
 
 	/**
 	 * @param transmissionType the transmissionType to set
 	 */
-	public void setTransmissionType(Set<String> transmissionType) {
+	public void setTransmissionType(List<String> transmissionType) {
 		this.transmissionType = transmissionType;
 	}
 

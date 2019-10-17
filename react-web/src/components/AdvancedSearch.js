@@ -534,7 +534,6 @@ class AdvancedSearch extends Component {
     SearchData.set("conditionType", conditionType ? conditionType : "");
     SearchData.set("category1", category1 ? category1 : "");
     SearchData.set("category2", category2 ? category2 : "");
-    SearchData.set("country", country ? country : "");
 
     this.setState({ isLoading: true });
     this.props.getVehicleSearchList(SearchData, response => {
