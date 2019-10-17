@@ -487,7 +487,8 @@ class AdvancedSearch extends Component {
       category1,
       category2,
       loadingWeightType,
-      truckCategory
+      truckCategory,
+      country 
     } = this.state;
     console.log(this.state);
     const {
@@ -532,6 +533,7 @@ class AdvancedSearch extends Component {
     SearchData.set("conditionType", conditionType ? conditionType : "");
     SearchData.set("category1", category1 ? category1 : "");
     SearchData.set("category2", category2 ? category2 : "");
+    SearchData.set("country", country ? country : "");
 
     this.setState({ isLoading: true });
     this.props.getVehicleSearchList(SearchData, response => {
@@ -1048,7 +1050,7 @@ class AdvancedSearch extends Component {
                           {countryList ? (
                             <div class="form-group">
                               <select
-                                name=""
+                                name="country"
                                 id=""
                                 disabled={
                                   countryList && countryList.length
