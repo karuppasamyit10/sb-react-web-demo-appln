@@ -651,6 +651,7 @@ class AdvancedSearch extends Component {
       toPriceList,
       toMileageList,
       todosPerPage,
+      vehicleList,
       country
     } = this.state;
     console.log(this.state.country, "lllllllllllllll");
@@ -3013,348 +3014,65 @@ class AdvancedSearch extends Component {
                       <div class="col-12 ">
                         <div class="head2 text-center">Search by Category</div>
                         <div class="row mt-3">
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
+                          {vehicleList && vehicleList.length ? (
+                            vehicleList.map(vehicle => {
+                              return (
+                                <div class="col-lg-4 col-md-6">
+                                  <div class="parts_grid shadow">
+                                    <div class="head3">Engine Parts</div>
+                                    <div class="row mt-2 no-gutters">
+                                      <div class="col-12">
+                                        <div class="form-group">
+                                          <select
+                                            name=""
+                                            id=""
+                                            class="form-control"
+                                          >
+                                            <option selected value="">
+                                              Select Category
+                                            </option>
+                                            <option value="0">
+                                              Loading...
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-12 text-right">
+                                        <button
+                                          class="btn btn-primary"
+                                          onClick={() => {
+                                            this.props.history.push(
+                                              PATH.PARTS_DETAIL
+                                            );
+                                          }}
+                                        >
+                                          Go
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div class="row no-gutters">
+                                      <div class="col-12 text-center">
+                                        <img
+                                          src={vehicle.parentImageUrl ? vehicle.parentImageUrl : require("../assets/img/engine.png")}
+                                          class="img-fluid mx-auto"
+                                          alt=""
+                                        />
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
+                              );
+                            })
+                          ) : (
+                            <div className="text-center">
+                              {/* {this.state.isLoading ? (
+                            <Spinner color="black" />
+                          )  */}
+                              {/* : ( */}
+                              No Data Found
+                              {/* )} */}
                             </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="parts_grid shadow">
-                              <div class="head3">Engine Parts</div>
-                              <div class="row mt-2 no-gutters">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <select name="" id="" class="form-control">
-                                      <option selected value="">
-                                        Select Category
-                                      </option>
-                                      <option value="0">Loading...</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                  <button
-                                    class="btn btn-primary"
-                                    onClick={() => {
-                                      this.props.history.push(
-                                        PATH.PARTS_DETAIL
-                                      );
-                                    }}
-                                  >
-                                    Go
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="row no-gutters">
-                                <div class="col-12 text-center">
-                                  <img
-                                    src={require("../assets/img/engine.png")}
-                                    class="img-fluid mx-auto"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          )}
                         </div>
                       </div>
                     </div>
