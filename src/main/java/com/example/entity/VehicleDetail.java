@@ -19,6 +19,9 @@ public class VehicleDetail {
 	@Column(name="vehicleTypeId")
 	private int vehicleTypeId;
 	
+	@Column(name="bodyStyleType")
+	private String bodyStyleType;
+	
 	@Column(name="brand")
 	private String brand;
 	
@@ -557,4 +560,17 @@ public class VehicleDetail {
 		this.isDeleted = isDeleted;
 	}
 
+	/**
+	 * @return the bodyStyleType
+	 */
+	public String getBodyStyleType() {
+		return bodyStyleType;
+	}
+
+	/**
+	 * @param bodyStyleType the bodyStyleType to set
+	 */
+	public void setBodyStyleType(String bodyStyleType) {
+		this.bodyStyleType = bodyStyleType;
+	}
 }

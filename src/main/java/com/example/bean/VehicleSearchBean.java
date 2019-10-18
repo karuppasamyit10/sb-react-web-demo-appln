@@ -10,6 +10,7 @@ public class VehicleSearchBean {
 
 	private String search;
 	private List<String> brands;
+	private List<String> bodyStyleType;
 	private List<String> category1;
 	private List<String> category2;
 	private List<String> truckCategory1;
@@ -66,6 +67,20 @@ public class VehicleSearchBean {
 	 */
 	public void setBrands(List<String> brands) {
 		this.brands = brands;
+	}
+
+	/**
+	 * @return the bodyStyleType
+	 */
+	public List<String> getBodyStyleType() {
+		return bodyStyleType;
+	}
+
+	/**
+	 * @param bodyStyleType the bodyStyleType to set
+	 */
+	public void setBodyStyleType(List<String> bodyStyleType) {
+		this.bodyStyleType = bodyStyleType;
 	}
 
 	/**
@@ -417,5 +432,4 @@ public class VehicleSearchBean {
 	public void setVehicleTypeId(long vehicleTypeId) {
 		this.vehicleTypeId = vehicleTypeId;
 	}
-
 }

@@ -20,8 +20,6 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,6 +30,7 @@ import com.example.bean.UserRegistrationBean;
 import com.example.bean.VehicleSearchBean;
 import com.example.config.CommonConfig;
 import com.example.dao.CommonDao;
+import com.example.entity.BodyStyleType;
 import com.example.entity.Brand;
 import com.example.entity.Category1;
 import com.example.entity.Category2;
@@ -51,6 +50,7 @@ import com.example.entity.TransmissionType;
 import com.example.entity.User;
 import com.example.entity.VehicleDetail;
 import com.example.entity.Year;
+import com.example.repository.BodyStyleTypeRepository;
 import com.example.repository.BrandRepository;
 import com.example.repository.Category1Repository;
 import com.example.repository.Category2Repository;
@@ -148,6 +148,9 @@ public class CommonDaoImpl implements CommonDao {
 	
 	@Autowired
 	CommonConfig commonConfig;
+	
+	@Autowired
+	BodyStyleTypeRepository bodyStyleTypeRepository;
 		
 	@Override
 	@Transactional(rollbackOn = { Exception.class})
@@ -201,17 +204,17 @@ public class CommonDaoImpl implements CommonDao {
 		
 		try {
 			//Vehicle Brand list
-			List<Object> BrandList = new LinkedList<>();
+			List<Object> brandList = new LinkedList<>();
 //			if(vehicleTypeId!=4) 
 //			{
-				List<Brand> Brands= brandRepository.findByVehicleTypeIdAndIsDeletedOrderByBrandAsc(vehicleTypeId, 0);
-				for(Brand Brand : Brands) {
+				List<Brand> brands= brandRepository.findByVehicleTypeIdAndIsDeletedOrderByBrandAsc(vehicleTypeId, 0);
+				for(Brand brand : brands) {
 					Map<String, Object> params = new LinkedHashMap<String, Object>();
-					params.put("brandId", Brand.getBrandId());
-					params.put("brand", Brand.getBrand());
-					BrandList.add(params);
+					params.put("brandId", brand.getBrandId());
+					params.put("brand", brand.getBrand());
+					brandList.add(params);
 				}	
-				rootParams.put("brandList", BrandList);
+				rootParams.put("brandList", brandList);
 				if(vehicleTypeId!=4) 
 				{
 					List<Object> modelList = new LinkedList<>();
@@ -223,6 +226,20 @@ public class CommonDaoImpl implements CommonDao {
 					rootParams.put("modelDetailList", modelDetailList);
 				}
 //			}
+				
+			//Body StyleType list
+			List<Object> bodyStyleTypeList = new LinkedList<>();
+			if(vehicleTypeId!=4) 
+			{
+				List<BodyStyleType> bodyStyleTypes= bodyStyleTypeRepository.findByIsDeletedOrderByBodyStyleTypeAsc(0);
+				for(BodyStyleType bodyStyleType : bodyStyleTypes) {
+					Map<String, Object> params = new LinkedHashMap<String, Object>();
+					params.put("bodyStyleTypeId", bodyStyleType.getBodyStyleTypeId());
+					params.put("bodyStyleType", bodyStyleType.getBodyStyleType());
+					bodyStyleTypeList.add(params);
+				}	
+				rootParams.put("bodyStyleTypeList", bodyStyleTypeList);
+			}
 			
 			//ConditionType List
 			List<Object> conditionTypeList = new LinkedList<>();
@@ -543,6 +560,13 @@ public class CommonDaoImpl implements CommonDao {
 				Predicate predicate = exp.in(vehicleSearchBean.getPartsType());
 				listPredicate.add(predicate);
 			}
+			//BodyStyleType
+			if(vehicleSearchBean.getBodyStyleType()!=null && !vehicleSearchBean.getBodyStyleType().isEmpty())
+			{
+				Expression<String> exp = vehicleRoot.get("bodyStyleType");
+				Predicate predicate = exp.in(vehicleSearchBean.getBodyStyleType());
+				listPredicate.add(predicate);
+			}
 			//category1
 			if(vehicleSearchBean.getCategory1()!=null && !vehicleSearchBean.getCategory1().isEmpty())
 			{
@@ -731,6 +755,7 @@ public class CommonDaoImpl implements CommonDao {
 				params.put("vehicleId", vehicleDetail.getVehicleId());
 				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
 				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				params.put("bodyStyleType", vehicleDetail.getBodyStyleType());
 				params.put("brand", vehicleDetail.getBrand());
 				params.put("model", vehicleDetail.getModel());
 				params.put("modelDetail", vehicleDetail.getModelDetail());
@@ -801,6 +826,7 @@ public class CommonDaoImpl implements CommonDao {
 				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
 				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
 				params.put("brand", vehicleDetail.getBrand());
+				params.put("bodyStyleType", vehicleDetail.getBodyStyleType());
 				params.put("model", vehicleDetail.getModel());
 				params.put("modelDetail", vehicleDetail.getModelDetail());
 				params.put("category1", vehicleDetail.getCategory1());
