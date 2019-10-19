@@ -4,7 +4,7 @@ import { AppWrapper } from "../public/AppWrapper";
 import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
 
-class seller extends Component {
+class community extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,7 +15,7 @@ class seller extends Component {
   };
 
   componentDidMount() {
-    document.title = "Auto Harasow | Seller";
+    document.title = "Auto Harasow | Community";
     window.scrollTo({
       top: 0,
       behavior: "smooth"
@@ -33,7 +33,7 @@ class seller extends Component {
                   <Link to={PATH.DASHBOARD}>Home</Link>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                  Seller
+                  Community
                 </li>
               </ol>
             </nav>
@@ -41,7 +41,7 @@ class seller extends Component {
         </section>
         <section class="about_wrap">
           <div class="container">
-            <div class="head1 medium">Seller</div>
+            <div class="head1 medium">Community</div>
             <div class="row">
               <div class="col-md-12">
                 <div class="whatwedo">
@@ -247,70 +247,6 @@ class seller extends Component {
             <div class="spacer1"></div>
             <hr />
             <div class="spacer1"></div>
-            <div class="row no-gutters">
-              <div class="col-lg-12">
-                <div class="card-deck">
-                  <div class="card">
-                    <img
-                      src={require("../../assets/img/On-demand-car-rental.jpg")}
-                      class="card-img-top"
-                      alt="..."
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title">Unknown Content</h5>
-                      <p class="card-text">
-                        Lorem ipsum is simply dummy text of printing and
-                        typesetting industry.
-                      </p>
-                      <div class="mt-3">
-                        <a href="javascript:;" class="btn btn-primary">
-                          Read More
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <img
-                      src={require("../../assets/img/On-demand-car-rental.jpg")}
-                      class="card-img-top"
-                      alt="..."
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title">Success Stories</h5>
-                      <p class="card-text">
-                        Lorem ipsum is simply dummy text of printing and
-                        typesetting industry.
-                      </p>
-                      <div class="mt-3">
-                        <a href="javascript:;" class="btn btn-primary">
-                          Read More
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <img
-                      src={require("../../assets/img/CustomerCare.jpg")}
-                      class="card-img-top"
-                      alt="..."
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title">Contact our Transport Staff</h5>
-                      <p class="card-text">
-                        Remember there is a team who will take care of your
-                        transport.
-                      </p>
-                      <div class="mt-3">
-                        <a href="javascript:;" class="btn btn-primary">
-                          Contact
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="spacer1"></div>
           </div>
         </section>
       </React.Fragment>
@@ -318,4 +254,4 @@ class seller extends Component {
   }
 }
 
-export default AppWrapper(seller, null, null);
+export default AppWrapper(community, null, null);

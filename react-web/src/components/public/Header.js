@@ -215,9 +215,9 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.COMMUNITY}>
                           Community
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                     <ul class="navbar-nav nav-right">

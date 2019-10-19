@@ -58,6 +58,7 @@ import transportSchedule from "./components/common/transportSchedule";
 import savedSearch from "./components/common/savedSearch";
 import partner from "./components/common/partner";
 import seller from "./components/common/seller";
+import community from "./components/common/community";
 
 const CustomRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -133,6 +134,7 @@ ReactDOM.render(
         <CustomRoute exact path="/saved/search" component={savedSearch} />
         <CustomRoute exact path="/partner" component={partner} />
         <CustomRoute exact path="/seller" component={seller} />
+        <CustomRoute exact path="/community" component={community} />
         {/* Notification  Message*/}
         <Notification />
       </React.Fragment>

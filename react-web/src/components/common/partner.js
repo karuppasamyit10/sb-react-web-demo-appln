@@ -88,7 +88,7 @@ class partner extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 1</div>
+                  <div class="head2 mt-3">Market Expansion Services</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -113,7 +113,7 @@ class partner extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 2</div>
+                  <div class="head2 mt-3">DKSH in brief</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -138,7 +138,7 @@ class partner extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 3</div>
+                  <div class="head2 mt-3">Our Business Units</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -166,7 +166,7 @@ class partner extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 4</div>
+                  <div class="head2 mt-3">Our vision and strategy</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -194,7 +194,7 @@ class partner extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 5</div>
+                  <div class="head2 mt-3">Locations</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -222,7 +222,7 @@ class partner extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 6</div>
+                  <div class="head2 mt-3">Our awards</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -248,8 +248,27 @@ class partner extends Component {
             <hr />
             <div class="spacer1"></div>
             <div class="row no-gutters">
-              <div class="col-lg-8">
+              <div class="col-lg-12">
                 <div class="card-deck">
+                  <div class="card">
+                    <img
+                      src={require("../../assets/img/On-demand-car-rental.jpg")}
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">Unknown Content</h5>
+                      <p class="card-text">
+                        Lorem ipsum is simply dummy text of printing and
+                        typesetting industry.
+                      </p>
+                      <div class="mt-3">
+                        <a href="javascript:;" class="btn btn-primary">
+                          Read More
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                   <div class="card">
                     <img
                       src={require("../../assets/img/On-demand-car-rental.jpg")}
@@ -291,6 +310,7 @@ class partner extends Component {
                 </div>
               </div>
             </div>
+            <div class="spacer1"></div>
           </div>
         </section>
       </React.Fragment>

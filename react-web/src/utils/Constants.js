@@ -39,7 +39,8 @@ module.exports = {
     transport_schedule: "/transport/schedule",
     SAVED_SEARCH: "/saved/search",
     PARTNER: "/partner",
-    SELLER: "/seller"
+    SELLER: "/seller",
+    COMMUNITY: "/community"
   },
 
   ACTION_TYPES: {
