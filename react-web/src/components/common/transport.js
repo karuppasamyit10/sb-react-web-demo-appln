@@ -22,6 +22,10 @@ class transport extends Component {
     });
   }
 
+  handleTransportSchedule = () => {
+    this.props.history.push(PATH.transport_schedule);
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -82,7 +86,13 @@ class transport extends Component {
             <div class="spacer1"></div>
             <div class="row">
               <div class="col-lg-4 col-md-6">
-                <div class="aboutgrid">
+                <div
+                  class="aboutgrid"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    this.handleTransportSchedule();
+                  }}
+                >
                   <img
                     src={require("../../assets/img/about/image1.png")}
                     class="img-fluid w-100"
@@ -106,7 +116,13 @@ class transport extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-6">
+              <div
+                class="col-lg-4 col-md-6"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  this.handleTransportSchedule();
+                }}
+              >
                 <div class="aboutgrid">
                   <img
                     src={require("../../assets/img/about/image2.png")}
@@ -131,7 +147,13 @@ class transport extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-6">
+              <div
+                class="col-lg-4 col-md-6"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  this.handleTransportSchedule();
+                }}
+              >
                 <div class="aboutgrid">
                   <img
                     src={require("../../assets/img/about/image3.png")}
