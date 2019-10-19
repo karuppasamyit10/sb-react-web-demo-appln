@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.entity.BodyStyleType;
 import com.example.entity.Brand;
 import com.example.entity.Category1;
 import com.example.entity.Category2;
@@ -44,6 +45,7 @@ import com.example.entity.TransmissionType;
 import com.example.entity.User;
 import com.example.entity.VehicleType;
 import com.example.entity.Year;
+import com.example.repository.BodyStyleTypeRepository;
 import com.example.repository.BrandRepository;
 import com.example.repository.Category1Repository;
 import com.example.repository.Category2Repository;
@@ -140,6 +142,9 @@ public class AdminController {
 	
 	@Autowired
 	YearRepository yearRepository;
+	
+	@Autowired
+	BodyStyleTypeRepository bodyStyleTypeRepository;
 	
 	@Autowired
 	VehicleTypeRepository vehicleTypeRepository;
@@ -659,6 +664,34 @@ public class AdminController {
 				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
 				        e.printStackTrace();
 				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in year", null);
+				    }
+				}
+				
+				// Add BodyStyleType
+				List<BodyStyleType> bodyStyleTypes = bodyStyleTypeRepository.findByIsDeletedOrderByBodyStyleTypeAsc(0);
+				if(bodyStyleTypes.isEmpty())
+				{
+					bodyStyleTypes = new LinkedList<BodyStyleType>();
+					try
+				    {
+				    	File file = ResourceUtils.getFile("classpath:master_data/common/year.txt");
+				    	if(file.exists()) 
+				    	{
+				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+							String st;
+							while ((st = br.readLine()) != null)
+							{
+								BodyStyleType bodyStyleType = new BodyStyleType();
+								bodyStyleType.setBodyStyleType(st.trim());
+								bodyStyleTypes.add(bodyStyleType);
+							}
+							bodyStyleTypeRepository.save(bodyStyleTypes);
+							br.close();
+				    	}
+				    } catch (Exception e) {
+				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
+				        e.printStackTrace();
+				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in BodyStyleType", null);
 				    }
 				}
 			} 

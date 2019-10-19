@@ -23,7 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.bean.UserRegistrationBean;
 import com.example.bean.VehicleSearchBean;
 import com.example.dao.CommonDao;
+import com.example.entity.UserCookies;
+import com.example.repository.UserCookiesRepository;
 import com.example.util.CommonUtil;
+
+import eu.bitwalker.useragentutils.UserAgent;
 
 
 /**
@@ -39,9 +43,15 @@ public class CommonController {
 	@Autowired
 	private CommonDao commonDao;
 	
+	@Autowired
+	private CommonUtil commonUtil;
+	
+	@Autowired
+	private  UserCookiesRepository userCookiesRepository;
+	
 	@GetMapping("/update-cookie")
-	public String getOrSetCookie(HttpServletResponse response, HttpServletRequest request) {
-		logger.info("Controller==>Enter==>getOrSetCookie<==");
+	public String UpdateCookies(HttpServletResponse response, HttpServletRequest request) {
+		logger.info("Controller==>Enter==>UpdateCookies<==");
 		Cookie[] cookies = request.getCookies();
 		
 	    if (cookies != null) {
@@ -50,9 +60,20 @@ public class CommonController {
 	    		 return "Success";
 	    	}     	 
 	    } 
-	    
+		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+		System.out.println(request.getRemoteAddr());
+		System.out.println(userAgent.getBrowser().getName() + " " + userAgent.getBrowserVersion().getVersion());
+		UserCookies userCookies = userCookiesRepository.findFirstByOrderByCookieUserIdDesc();
+		if(userCookies == null){
+			userCookies = new UserCookies();
+			userCookies.setCookieUserId(10000);
+			userCookies.setBrowserName(userAgent.getBrowser().getName());
+			userCookies.setBrowserVersion(userAgent.getBrowserVersion().getVersion());
+			userCookies.setUserId(0);
+			userCookies = userCookiesRepository.save(userCookies);
+		}
     	// create a cookie
-	    Cookie cookie = new Cookie("cookie_user_id", "1000");
+	    Cookie cookie = new Cookie("cookie_user_id", String.valueOf(userCookies.getCookieUserId()));
 //		    cookie.setPath("/welcomeUser");
 	    cookie.setComment("cookie_user_id");
 	    cookie.setVersion(1);
@@ -194,11 +215,14 @@ public class CommonController {
 	//Get vehicle homePage
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard", produces = "application/json")
 	@ResponseBody
-	public Map<?, ?> getDashboardDetails(@RequestHeader(value="User-Agent", defaultValue="new") String userAgent) throws Exception {
+	public Map<?, ?> getDashboardDetails(@RequestHeader(value="User-Agent", defaultValue="new") String usesrAgent, HttpServletRequest request) throws Exception {
 		logger.info("Controller==>Enter==>getDashboardDetails<==");
 		String methodName = "GET DASHBOARD DETAILS";
+		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+		System.out.println(request.getRemoteAddr());
+		System.out.println(userAgent.getBrowser().getName() + " " + userAgent.getBrowserVersion());
 		try { 
-			return commonDao.getDashboardDetails(userAgent);
+			return commonDao.getDashboardDetails(usesrAgent);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>getDashboardDetails<==");

@@ -175,6 +175,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.freemarker/freemarker
 	compile group: 'org.freemarker', name: 'freemarker', version: '2.3.23'
 	
+	// https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils
+	compile group: 'eu.bitwalker', name: 'UserAgentUtils', version: '1.21'
+	
 	// zuul router 
 	//compile('org.springframework.cloud:spring-cloud-starter-zuul:1.0.6.RELEASE')
 	

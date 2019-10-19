@@ -15,9 +15,9 @@ spring:
 #    static-locations:
 #      - file:/home/concertcare/auto-harasow/sb-demo-appln/react-web-app/web-src/build/
   datasource:
-    url: jdbc:mysql://localdocker:3306/sb-demo-appln_final?createDatabaseIfNotExist=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull  
+    url: jdbc:mysql://localhost:3306/sb-demo-appln_final?createDatabaseIfNotExist=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull  
     username: root
-    password: root
+    password: 
     test-while-idle: true
     test-on-borrow: true
     validation-query: SELECT 1
