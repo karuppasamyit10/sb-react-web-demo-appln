@@ -32,11 +32,12 @@ class AdvancedSearch extends Component {
     this.state = {
       userDetails: {},
       master: {},
+      isFirst: 0,
       isSubscribed: false,
       vehicleType:
         this.props.location.state && this.props.location.state.vehicleTypeId
           ? this.props.location.state.vehicleTypeId
-          : null,
+          : 1,
       brandId:
         this.props.location.state && this.props.location.state.brandId
           ? this.props.location.state.brandId
@@ -142,11 +143,8 @@ class AdvancedSearch extends Component {
     this.props.getSearchResult(params, response => {
       console.log(response);
     });
-    this.getAllMasterByvehicleTypeId();
-    if (this.state.brandId) {
-      this.getVehicleModelList(this.state.brandId);
-    }
     this.getVehicleSearchList();
+    this.getAllMasterByvehicleTypeId();
   }
 
   handlePageClick = data => {
@@ -210,7 +208,7 @@ class AdvancedSearch extends Component {
     }
   };
   setCarModel = () => {
-    let { modelList } = this.state;
+    let { modelList } = this.state.master;
     let carModelOptions = [];
     if (modelList && modelList.length) {
       modelList.forEach(car => {
@@ -436,6 +434,7 @@ class AdvancedSearch extends Component {
         let master = this.state.master;
         master.modelList = response.response.modelList;
         this.setState({ master: master }, () => {
+          console.log(this.state.master);
           this.setCarModel();
         });
       }
@@ -456,10 +455,18 @@ class AdvancedSearch extends Component {
   };
 
   saveFavorite = (vehicleId, index) => {
-    let vehicleList = this.state.vehicleList;
-    vehicleList[index].isFavorite = vehicleList[index].isFavorite === 0 ? 1 : 0;
-    this.setState({ vehicleList: vehicleList });
-    this.props.showNotification("Added to favourites", "success");
+    let userSession = store.get("userSession");
+    if (userSession) {
+      let vehicleList = this.state.vehicleList;
+      vehicleList[index].isFavorite =
+        vehicleList[index].isFavorite === 0 ? 1 : 0;
+      this.setState({ vehicleList: vehicleList });
+      this.props.showNotification("Added to favourites", "success");
+    } else {
+      this.props.history.push(PATH.SIGIN);
+      let redirectPage = PATH.ADVANCED_SEARCH;
+      store.set("redirectPage", redirectPage);
+    }
   };
 
   getVehicleSearchList = () => {
@@ -547,6 +554,10 @@ class AdvancedSearch extends Component {
         });
         this.setState({ total: totalRecords, vehicleList: vehicleDetailList });
       }
+      if (this.state.brandId && this.state.isFirst === 0) {
+        this.getVehicleModelList(this.state.brandId);
+        this.setState({ isFirst: 1 });
+      }
     });
   };
 
@@ -590,26 +601,26 @@ class AdvancedSearch extends Component {
       this.getVehicleSearchList()
     );
     this.setState({
-      brands: null,
-      models: null,
-      modelDetails: null,
-      transmissionType: null,
-      steeringType: null,
-      fuelType: null,
-      dealsType: null,
-      membershipType: null,
-      fromYear: null,
-      toYear: null,
-      fromPrice: null,
-      toPrice: null,
-      fromMileage: null,
-      toMileage: null,
-      engineType: null,
-      loadingWeightType: null,
-      truckCategory: null,
-      conditionType: null,
-      category1: null,
-      category2: null,
+      brands: "",
+      models: "",
+      modelDetails: "",
+      transmissionType: "",
+      steeringType: "",
+      fuelType: "",
+      dealsType: "",
+      membershipType: "",
+      fromYear: "",
+      toYear: "",
+      fromPrice: "",
+      toPrice: "",
+      fromMileage: "",
+      toMileage: "",
+      engineType: "",
+      loadingWeightType: "",
+      truckCategory: "",
+      conditionType: "",
+      category1: "",
+      category2: "",
       country: ""
     });
   };
@@ -825,7 +836,9 @@ class AdvancedSearch extends Component {
                                 }}
                                 value={this.state.brands}
                               >
-                                <option id="all">All Brands</option>
+                                <option id="all" value="">
+                                  All Brands
+                                </option>
                                 {brandList &&
                                   brandList.map((brand, i) => {
                                     return (
@@ -862,7 +875,7 @@ class AdvancedSearch extends Component {
                                 onChange={this.handleChange}
                                 value={this.state.models}
                               >
-                                <option>All Models</option>
+                                <option value="">All Models</option>
                                 {modelList &&
                                   modelList.map(model => {
                                     return (
@@ -903,7 +916,9 @@ class AdvancedSearch extends Component {
                                 }}
                                 value={this.state.category1}
                               >
-                                <option id="all">All Category1</option>
+                                <option id="all" value="">
+                                  All Category1
+                                </option>
                                 {category1List &&
                                   category1List.map((category1, i) => {
                                     return (
@@ -944,7 +959,9 @@ class AdvancedSearch extends Component {
                                 }}
                                 value={this.state.category2}
                               >
-                                <option id="all">All Category2</option>
+                                <option id="all" value="">
+                                  All Category2
+                                </option>
                                 {category2List &&
                                   category2List.map((category2, i) => {
                                     return (
@@ -984,7 +1001,7 @@ class AdvancedSearch extends Component {
                                 onChange={this.handleChange}
                                 value={this.state.truckCategory}
                               >
-                                <option>All Truck Category</option>
+                                <option value="">All Truck Category</option>
                                 {truckCategoryList &&
                                   truckCategoryList.map(category1 => {
                                     return (
@@ -3054,7 +3071,11 @@ class AdvancedSearch extends Component {
                                     <div class="row no-gutters">
                                       <div class="col-12 text-center">
                                         <img
-                                          src={vehicle.parentImageUrl ? vehicle.parentImageUrl : require("../assets/img/engine.png")}
+                                          src={
+                                            vehicle.parentImageUrl
+                                              ? vehicle.parentImageUrl
+                                              : require("../assets/img/engine.png")
+                                          }
                                           class="img-fluid mx-auto"
                                           alt=""
                                         />
@@ -3128,6 +3149,27 @@ class AdvancedSearch extends Component {
                 </div>
               </div>
             </div>
+
+            <div class="modal fade show" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          Modal body..
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
           </section>
         </React.Fragment>
       </LoadingOverlay>

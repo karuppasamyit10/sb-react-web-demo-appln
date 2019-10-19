@@ -13,8 +13,8 @@ class login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "ram",
-      password: "123",
+      userName: "",
+      password: "",
       error: {
         userName: "",
         password: ""
@@ -27,7 +27,7 @@ class login extends Component {
   }
 
   componentDidMount() {
-    document.title = "Auto Harasow | Login"
+    document.title = "Auto Harasow | Login";
   }
 
   handleOnChange = e => {
@@ -88,7 +88,12 @@ class login extends Component {
       if (!result) {
         this.props.showNotification("username or password wrong", "error");
       } else {
-        this.props.history.push(PATH.DASHBOARD);
+        let redirectPage = store.get("redirectPage");
+        if (redirectPage) {
+          this.props.history.push(redirectPage);
+        } else {
+          this.props.history.push(PATH.DASHBOARD);
+        }
       }
     });
   };
@@ -236,9 +241,9 @@ class login extends Component {
                       </div>
                     </button>
                     <Link to={PATH.REGISTRATION}>
-                    <button type="button" class="btn btn-secondary btn-lg">
-                      Sign Up
-                    </button>
+                      <button type="button" class="btn btn-secondary btn-lg">
+                        Sign Up
+                      </button>
                     </Link>
                   </div>
                 </div>

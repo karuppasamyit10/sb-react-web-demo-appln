@@ -91,32 +91,30 @@ class Upload extends Component {
   };
 
   onChangeBrand = event => {
-    const object = JSON.parse(event.target.value);
-    console.log(object);
-    const { brandId, brand } = object;
-    this.setState(
-      { brandId: brandId, brand: brand, brandObject: object },
-      () => {
-        this.getVehicleModelList(this.state.brandId);
-      }
-    );
+    let found = this.state.masterData.brandList.find(brand => {
+      return brand.brand === event.target.value;
+    });
+    let brandId = null;
+    if (found) {
+      brandId = found.brandId;
+    }
+    this.setState({ brand: event.target.value, brandId: brandId });
+    if (brandId) {
+      this.getVehicleModelList(brandId);
+    }
   };
 
   onChangeModel = event => {
-    const object = JSON.parse(event.target.value);
-    console.log(object);
-    const { modelId, modelName } = object;
-    this.setState(
-      { modelId: modelId, modelName: modelName, modelObject: object },
-      () => {
-        console.log(
-          this.state.brandId,
-          this.state.brandName,
-          this.state.modelId,
-          this.state.modelName
-        );
-      }
-    );
+    let found = this.state.modelList.find(model => {
+      return model.model === event.target.value;
+    });
+    let modelId = null;
+    if (found) {
+      modelId = found.modelId;
+    }
+    this.setState({ modelName: event.target.value, modelId: modelId }, () => {
+      console.log(this.state.modelName);
+    });
   };
 
   getVehicleMasterData = vehicleTypeId => {
@@ -353,6 +351,7 @@ class Upload extends Component {
                                   <select
                                     onChange={this.onChangeBrand}
                                     class="form-control"
+                                    value={this.state.brandName}
                                   >
                                     <option value={null} selected>
                                       All Brands
@@ -362,10 +361,7 @@ class Upload extends Component {
                                           return (
                                             <option
                                               id={vehicle.brandId}
-                                              value={JSON.stringify({
-                                                brandId: vehicle.brandId,
-                                                brand: vehicle.brand
-                                              })}
+                                              value={vehicle.brand}
                                             >
                                               {vehicle.brand}
                                             </option>
@@ -375,41 +371,44 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
-                                    <i
-                                      class="fa fa-angle-down"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </span>
-                                  <select
-                                    disabled={this.state.modelisDisable}
-                                    onChange={this.onChangeModel}
-                                    class="form-control"
-                                  >
-                                    <option selecte={true}>All Models</option>
-                                    {this.state.modelList &&
-                                    this.state.modelList.length ? (
-                                      this.state.modelList.map(model => {
-                                        return (
-                                          <option
-                                            id={model.modelId}
-                                            value={JSON.stringify({
-                                              modelId: model.modelId,
-                                              modelName: model.model
-                                            })}
-                                          >
-                                            {model.model}
-                                          </option>
-                                        );
-                                      })
-                                    ) : (
-                                      <option>No Data Found</option>
-                                    )}
-                                  </select>
+                              {this.state.vehicleTypeId !== 4 ? (
+                                <div class="col-md-3 colgrids">
+                                  <div class="selectdd">
+                                    <span class="caret">
+                                      <i
+                                        class="fa fa-angle-down"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </span>
+                                    <select
+                                      disabled={this.state.modelisDisable}
+                                      onChange={this.onChangeModel}
+                                      class="form-control"
+                                      name="modelName"
+                                      value={this.state.modelName}
+                                    >
+                                      <option selecte={true}>All Models</option>
+                                      {this.state.modelList &&
+                                      this.state.modelList.length ? (
+                                        this.state.modelList.map(model => {
+                                          return (
+                                            <option
+                                              id={model.modelId}
+                                              value={model.model}
+                                            >
+                                              {model.model}
+                                            </option>
+                                          );
+                                        })
+                                      ) : (
+                                        <option>No Data Found</option>
+                                      )}
+                                    </select>
+                                  </div>
                                 </div>
-                              </div>
+                              ) : (
+                                ""
+                              )}
                               <div class="col-md-3 colgrids">
                                 <div class="selectdd">
                                   <span class="caret">
