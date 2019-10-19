@@ -20,7 +20,7 @@ class Header extends Component {
     super(props);
     this.state = {
       token: null,
-      open : false
+      open: false
     };
   }
 
@@ -109,9 +109,13 @@ class Header extends Component {
                   <div class="hamburger_wrap d-inline-flex">
                     <button
                       id="hamburg"
-                      class={`hamburger hamburger--collapse ${this.state.open ? 'is-active' : ''}`}
+                      class={`hamburger hamburger--collapse ${
+                        this.state.open ? "is-active" : ""
+                      }`}
                       type="button"
-                      onClick={()=>{this.setState({open : !this.state.open})}}
+                      onClick={() => {
+                        this.setState({ open: !this.state.open });
+                      }}
                     >
                       <span class="hamburger-box">
                         <span class="hamburger-inner"></span>
@@ -121,7 +125,7 @@ class Header extends Component {
                 </div>
               </div>
             </div>
-            <div class={`menu-wrap col-12 ${this.state.open ? 'active' : ''}`}>
+            <div class={`menu-wrap col-12 ${this.state.open ? "active" : ""}`}>
               <div class="menu-languages">
                 <div class="container">
                   <span class="d-inline-block globe">
@@ -178,7 +182,7 @@ class Header extends Component {
                     <option value="8">日本語</option>
                     <option value="9">中文</option>
                     <option value="10">한국어</option>
-                </select>
+                  </select>
                 </div>
               </div>
               <div class="menu-main">
@@ -191,14 +195,14 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.HOW_TO_ORDER}>
                           How to Order
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.transport}>
                           Transport
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="#">
@@ -249,12 +253,13 @@ class Header extends Component {
                           My Account
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                          <a
+                          <Link
                             class="dropdown-item"
                             style={{ cursor: "pointer" }}
+                            to={PATH.SAVED_SEARCH}
                           >
                             Saved Searches
-                          </a>
+                          </Link>
                           <a
                             class="dropdown-item"
                             style={{ cursor: "pointer" }}

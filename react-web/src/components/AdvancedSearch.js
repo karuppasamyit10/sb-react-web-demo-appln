@@ -8,9 +8,9 @@ import Select from "react-select";
 import { connect } from "react-redux";
 import store from "store";
 import { Link } from "react-router-dom";
-import Background1 from "../assets/img/search/ssangyong.jpg";
-import Background2 from "../assets/img/search/hyundai.jpg";
-import Background3 from "../assets/img/search/kia2.jpg";
+// import Background1 from "../assets/img/search/ssangyong.jpg";
+// import Background2 from "../assets/img/search/hyundai.jpg";
+// import Background3 from "../assets/img/search/kia2.jpg";
 import { PATH } from "../utils/Constants";
 import ReactPaginate from "react-paginate";
 import {

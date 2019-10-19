@@ -12,9 +12,9 @@ import { AppWrapper } from "./public/AppWrapper";
 import store from "store";
 import { formatDate } from "../utils/utils";
 import { PATH } from "../utils/Constants";
-import Background1 from "../assets/img/home/ssangyong_img.jpeg";
-import Background2 from "../assets/img/home/hyundai_img.jpeg";
-import Background3 from "../assets/img/home/kia_img.jpeg";
+import Background1 from "../assets/img/ssangyong.jpg";
+import Background2 from "../assets/img/hyundai.jpg";
+import Background3 from "../assets/img/kia.jpg";
 import {
   getDashboardDetails,
   getVehicleMasterData,
