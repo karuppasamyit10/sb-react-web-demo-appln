@@ -205,14 +205,14 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.PARTNER}>
                           Partner
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.SELLER}>
                           Seller
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="#">

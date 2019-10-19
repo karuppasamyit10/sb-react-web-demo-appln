@@ -37,7 +37,9 @@ module.exports = {
     PARTS_DETAIL: "/parts-detail",
     transport: "/transport",
     transport_schedule: "/transport/schedule",
-    SAVED_SEARCH: "/saved/search"
+    SAVED_SEARCH: "/saved/search",
+    PARTNER: "/partner",
+    SELLER: "/seller"
   },
 
   ACTION_TYPES: {
