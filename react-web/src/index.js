@@ -32,7 +32,7 @@ import "jquery";
 import "bootstrap";
 
 import "font-awesome/css/font-awesome.min.css";
-import login from "./components/common/login";
+import login from "./components/common/loginContainer";
 import dashboard from "./components/dashboard";
 import registration from "./components/common/registration";
 import Notification from "./components/common/Notification";

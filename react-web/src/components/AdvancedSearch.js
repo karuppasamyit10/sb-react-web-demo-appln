@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 // import Background3 from "../assets/img/search/kia2.jpg";
 import { PATH } from "../utils/Constants";
 import ReactPaginate from "react-paginate";
+import Login from '../components/common/login'
 import {
   getSearchResult,
   getVehicleMasterData,
@@ -59,9 +60,6 @@ class AdvancedSearch extends Component {
           ? this.props.location.state.country
           : null,
       modelList: null,
-      pageNo: 1,
-      itemsPerPage: 5,
-      total: 0,
       vehicleList: [],
       category1: null,
       category2: null,
@@ -123,7 +121,11 @@ class AdvancedSearch extends Component {
 
       limit: 5,
       todosPerPage: 5,
-      offset: 1
+      offset: 1,
+      isModelOpen: 0,
+      pageNo: 1,
+      itemsPerPage: 5,
+      total: 0,
     };
   }
 
@@ -132,12 +134,6 @@ class AdvancedSearch extends Component {
   };
 
   componentDidMount() {
-    console.log(
-      this.state.brands,
-      this.state.models,
-      this.state.country,
-      "llllllllllllllllllllllllllll"
-    );
     document.title = "Auto Harasow | Advanced Search";
     let params = {};
     this.props.getSearchResult(params, response => {
@@ -292,6 +288,16 @@ class AdvancedSearch extends Component {
     }
   };
 
+  modelClose = () => {
+    document.body.classList.remove('modal-open');
+    this.setState({ isModelOpen: false });
+  }
+
+  modelOpen = () => {
+    document.body.classList.add('modal-open');
+    this.setState({ isModelOpen: true });
+  }
+
   subscribe = () => {
     this.setState({ isSubscribed: true });
     this.props.showNotification("Successfully Subscribed", "success");
@@ -423,7 +429,7 @@ class AdvancedSearch extends Component {
     const object = JSON.parse(event.target.value);
     console.log(object);
     const { modelId, model } = object;
-    this.setState({ modelId: modelId, model: model }, () => {});
+    this.setState({ modelId: modelId, model: model }, () => { });
   };
 
   getVehicleModelList = brandId => {
@@ -463,9 +469,10 @@ class AdvancedSearch extends Component {
       this.setState({ vehicleList: vehicleList });
       this.props.showNotification("Added to favourites", "success");
     } else {
-      this.props.history.push(PATH.SIGIN);
-      let redirectPage = PATH.ADVANCED_SEARCH;
-      store.set("redirectPage", redirectPage);
+      // this.props.history.push(PATH.SIGIN);
+      // let redirectPage = PATH.ADVANCED_SEARCH;
+      // store.set("redirectPage", redirectPage);
+      this.modelOpen();
     }
   };
 
@@ -621,7 +628,14 @@ class AdvancedSearch extends Component {
       conditionType: "",
       category1: "",
       category2: "",
-      country: ""
+      country: "",
+      limit: 5,
+      todosPerPage: 5,
+      offset: 1,
+      isModelOpen: 0,
+      pageNo: 1,
+      itemsPerPage: 5,
+      total: 0,
     });
   };
 
@@ -853,8 +867,8 @@ class AdvancedSearch extends Component {
                               </select>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           {modelList ? (
                             <div class="form-group">
                               {/* <Select
@@ -890,8 +904,8 @@ class AdvancedSearch extends Component {
                               </select>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           {category1List ? (
                             <div class="form-group">
                               {/* <Select
@@ -933,8 +947,8 @@ class AdvancedSearch extends Component {
                               </select>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           {category2List ? (
                             <div class="form-group">
                               {/* <Select
@@ -976,8 +990,8 @@ class AdvancedSearch extends Component {
                               </select>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
 
                           {truckCategoryList ? (
                             <div class="form-group">
@@ -1016,8 +1030,8 @@ class AdvancedSearch extends Component {
                               </select>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
 
                           <div class="form-group">
                             <div class="row align-items-center">
@@ -1042,18 +1056,18 @@ class AdvancedSearch extends Component {
                                     </option>
                                     {fromYearList && fromYearList.length
                                       ? fromYearList.map(year => {
-                                          return (
-                                            <option value={year.year}>
-                                              {year.year}
-                                            </option>
-                                          );
-                                        })
+                                        return (
+                                          <option value={year.year}>
+                                            {year.year}
+                                          </option>
+                                        );
+                                      })
                                       : ""}
                                   </select>
                                 </div>
                               ) : (
-                                " "
-                              )}
+                                  " "
+                                )}
                               <div class="col-2">to</div>
                               {toYearList ? (
                                 <div class="col-5">
@@ -1076,18 +1090,18 @@ class AdvancedSearch extends Component {
                                     </option>
                                     {toYearList && toYearList.length
                                       ? toYearList.map(year => {
-                                          return (
-                                            <option value={year.year}>
-                                              {year.year}
-                                            </option>
-                                          );
-                                        })
+                                        return (
+                                          <option value={year.year}>
+                                            {year.year}
+                                          </option>
+                                        );
+                                      })
                                       : ""}
                                   </select>
                                 </div>
                               ) : (
-                                ""
-                              )}
+                                  ""
+                                )}
                             </div>
                           </div>
                           {countryList ? (
@@ -1111,18 +1125,18 @@ class AdvancedSearch extends Component {
                                 </option>
                                 {countryList && countryList.length
                                   ? countryList.map(country => {
-                                      return (
-                                        <option value={country.country}>
-                                          {country.country}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={country.country}>
+                                        {country.country}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           <div class="form-group">
                             <input
                               type="button"
@@ -1233,18 +1247,18 @@ class AdvancedSearch extends Component {
                                     <option value="">From Price</option>
                                     {fromPriceList && fromPriceList.length
                                       ? fromPriceList.map(price => {
-                                          return (
-                                            <option value={price.price}>
-                                              $ {price.price}
-                                            </option>
-                                          );
-                                        })
+                                        return (
+                                          <option value={price.price}>
+                                            $ {price.price}
+                                          </option>
+                                        );
+                                      })
                                       : ""}
                                   </select>
                                 </div>
                               ) : (
-                                ""
-                              )}
+                                  ""
+                                )}
                               <div class="col-2">to</div>
                               {toPriceList ? (
                                 <div class="col-5">
@@ -1265,18 +1279,18 @@ class AdvancedSearch extends Component {
                                     <option value="">To Price</option>
                                     {toPriceList && toPriceList.length
                                       ? toPriceList.map(price => {
-                                          return (
-                                            <option value={price.price}>
-                                              $ {price.price}
-                                            </option>
-                                          );
-                                        })
+                                        return (
+                                          <option value={price.price}>
+                                            $ {price.price}
+                                          </option>
+                                        );
+                                      })
                                       : ""}
                                   </select>
                                 </div>
                               ) : (
-                                ""
-                              )}
+                                  ""
+                                )}
                             </div>
                           </div>
                           <div class="form-group">
@@ -1304,18 +1318,18 @@ class AdvancedSearch extends Component {
                                   >
                                     {mileageList && mileageList.length
                                       ? mileageList.map(mileage => {
-                                          return (
-                                            <option value={mileage.mileage}>
-                                              $ {mileage.mileage}
-                                            </option>
-                                          );
-                                        })
+                                        return (
+                                          <option value={mileage.mileage}>
+                                            $ {mileage.mileage}
+                                          </option>
+                                        );
+                                      })
                                       : ""}
                                   </select>
                                 </div>
                               ) : (
-                                ""
-                              )}
+                                  ""
+                                )}
                               <div class="col-2">Miles</div>
                             </div>
                           </div>
@@ -1345,7 +1359,7 @@ class AdvancedSearch extends Component {
                                       }}
                                       disabled={
                                         transmissionTypeList &&
-                                        transmissionTypeList.length
+                                          transmissionTypeList.length
                                           ? false
                                           : true
                                       }
@@ -1376,8 +1390,8 @@ class AdvancedSearch extends Component {
                               </div>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           {fuelTypeList ? (
                             <div class="form-group">
                               <div class="row align-items-center">
@@ -1425,8 +1439,8 @@ class AdvancedSearch extends Component {
                               </div>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           <div class="form-group">
                             <input
                               type="button"
@@ -1514,12 +1528,12 @@ class AdvancedSearch extends Component {
                                   >
                                     {fromPriceList && fromPriceList.length
                                       ? fromPriceList.map(price => {
-                                          return (
-                                            <option value={price.price}>
-                                              $ {price.price}
-                                            </option>
-                                          );
-                                        })
+                                        return (
+                                          <option value={price.price}>
+                                            $ {price.price}
+                                          </option>
+                                        );
+                                      })
                                       : ""}
                                   </select>
                                 </div>
@@ -1543,23 +1557,23 @@ class AdvancedSearch extends Component {
                                     >
                                       {toPriceList && toPriceList.length
                                         ? toPriceList.map(price => {
-                                            return (
-                                              <option value={price.price}>
-                                                $ {price.price}
-                                              </option>
-                                            );
-                                          })
+                                          return (
+                                            <option value={price.price}>
+                                              $ {price.price}
+                                            </option>
+                                          );
+                                        })
                                         : ""}
                                     </select>
                                   </div>
                                 ) : (
-                                  ""
-                                )}
+                                    ""
+                                  )}
                               </div>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           {mileageList ? (
                             <div class="form-group">
                               <div class="row align-items-center">
@@ -1586,12 +1600,12 @@ class AdvancedSearch extends Component {
                                   >
                                     {mileageList && mileageList.length
                                       ? mileageList.map(mileage => {
-                                          return (
-                                            <option value={mileage.mileage}>
-                                              $ {mileage.mileage}
-                                            </option>
-                                          );
-                                        })
+                                        return (
+                                          <option value={mileage.mileage}>
+                                            $ {mileage.mileage}
+                                          </option>
+                                        );
+                                      })
                                       : ""}
                                   </select>
                                 </div>
@@ -1600,8 +1614,8 @@ class AdvancedSearch extends Component {
                               </div>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           {transmissionTypeList ? (
                             <div class="form-group">
                               <div class="row align-items-center">
@@ -1626,7 +1640,7 @@ class AdvancedSearch extends Component {
                                       }}
                                       disabled={
                                         transmissionTypeList &&
-                                        transmissionTypeList.length
+                                          transmissionTypeList.length
                                           ? false
                                           : true
                                       }
@@ -1656,8 +1670,8 @@ class AdvancedSearch extends Component {
                               </div>
                             </div>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                           <div class="form-group">
                             <input
                               type="button"
@@ -1698,12 +1712,12 @@ class AdvancedSearch extends Component {
                                 <option value="">From Price</option>
                                 {fromPriceList && fromPriceList.length
                                   ? fromPriceList.map(price => {
-                                      return (
-                                        <option value={price.price}>
-                                          $ {price.price}
-                                        </option>
-                                      );
-                                    })
+                                    return (
+                                      <option value={price.price}>
+                                        $ {price.price}
+                                      </option>
+                                    );
+                                  })
                                   : ""}
                               </select>
                             </div>
@@ -1728,23 +1742,23 @@ class AdvancedSearch extends Component {
                                   <option value="">To Price</option>
                                   {toPriceList && toPriceList.length
                                     ? toPriceList.map(price => {
-                                        return (
-                                          <option value={price.price}>
-                                            $ {price.price}
-                                          </option>
-                                        );
-                                      })
+                                      return (
+                                        <option value={price.price}>
+                                          $ {price.price}
+                                        </option>
+                                      );
+                                    })
                                     : ""}
                                 </select>
                               </div>
                             ) : (
-                              ""
-                            )}
+                                ""
+                              )}
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {/* <div class="form-group">
                       <label for="">Financing</label>
                       <div class="form-check">
@@ -1783,12 +1797,12 @@ class AdvancedSearch extends Component {
                                   </option>
                                   {mileageList && mileageList.length
                                     ? mileageList.map(mileage => {
-                                        return (
-                                          <option value={mileage.mileage}>
-                                            {mileage.mileage}
-                                          </option>
-                                        );
-                                      })
+                                      return (
+                                        <option value={mileage.mileage}>
+                                          {mileage.mileage}
+                                        </option>
+                                      );
+                                    })
                                     : ""}
                                 </select>
                               </div>
@@ -1815,24 +1829,24 @@ class AdvancedSearch extends Component {
                                     </option>
                                     {toMileageList && toMileageList.length
                                       ? toMileageList.map(mileage => {
-                                          return (
-                                            <option value={mileage.mileage}>
-                                              {mileage.mileage}
-                                            </option>
-                                          );
-                                        })
+                                        return (
+                                          <option value={mileage.mileage}>
+                                            {mileage.mileage}
+                                          </option>
+                                        );
+                                      })
                                       : ""}
                                   </select>
                                 </div>
                               ) : (
-                                ""
-                              )}
+                                  ""
+                                )}
                             </div>
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {modelDetailList ? (
                         <div class="form-group">
                           <label for="">Model details</label>
@@ -1875,8 +1889,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {transmissionTypeList ? (
                         <div class="form-group">
                           <label for="">Transmission</label>
@@ -1898,7 +1912,7 @@ class AdvancedSearch extends Component {
                               }}
                               disabled={
                                 transmissionTypeList &&
-                                transmissionTypeList.length
+                                  transmissionTypeList.length
                                   ? false
                                   : true
                               }
@@ -1920,8 +1934,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {fuelTypeList ? (
                         <div class="form-group">
                           <div class="row align-items-center">
@@ -1969,8 +1983,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {steeringTypeList ? (
                         <div class="form-group">
                           <label for="">Steering</label>
@@ -2014,8 +2028,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {loadingWeightTypeList ? (
                         <div class="form-group">
                           <label for="">Steering</label>
@@ -2038,7 +2052,7 @@ class AdvancedSearch extends Component {
                               }}
                               disabled={
                                 loadingWeightTypeList &&
-                                loadingWeightTypeList.length
+                                  loadingWeightTypeList.length
                                   ? false
                                   : true
                               }
@@ -2062,8 +2076,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {engineTypeList ? (
                         <div class="form-group">
                           <label for="">Engine Type</label>
@@ -2107,8 +2121,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {/* <div class="form-group">
                       <div class="row align-items-center justify-content-between">
                         <div class="col-6">
@@ -2451,8 +2465,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {dealsTypeList ? (
                         <div class="form-group">
                           <label for="">Deals</label>
@@ -2496,8 +2510,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {memberShipTypeList ? (
                         <div class="form-group">
                           <label for="">Memberships</label>
@@ -2540,8 +2554,8 @@ class AdvancedSearch extends Component {
                           </div>
                         </div>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       <div class="form-group">
                         <input
                           type="button"
@@ -2820,8 +2834,8 @@ class AdvancedSearch extends Component {
                       </div>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   <div class="resultbox">
                     <div class="row align-items-center justify-content-between">
@@ -2868,8 +2882,8 @@ class AdvancedSearch extends Component {
                       </div>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {pageDisplayCount > 1 ? (
                     <div class="totalresults py-3 mt-3">
                       <div class="row align-items-center">
@@ -2906,208 +2920,208 @@ class AdvancedSearch extends Component {
                       </div>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {this.state.vehicleType !== 5 &&
-                  this.state.vehicleList &&
-                  this.state.vehicleList.length ? (
-                    this.state.vehicleList.map((vehicle, index) => {
-                      return (
-                        <div class="row searched_cards align-items-center">
-                          <div
-                            class="col-md-3 text-center"
-                            onClick={() => {
-                              this.vehicleDetails(vehicle.vehicleId);
-                            }}
-                          >
-                            <img
-                              src={
-                                vehicle.parentImageUrl == ""
-                                  ? acura
-                                  : vehicle.parentImageUrl
-                              }
-                              class="w-100 img-fluid"
-                              alt=""
-                            />
-                          </div>
-                          <div class="col-md-9 text-left">
-                            <div class="row no-gutters align-items-center">
-                              <div
-                                class="col pr-3"
-                                onClick={() => {
-                                  this.vehicleDetails(vehicle.vehicleId);
-                                }}
-                              >
-                                <div class="head3 bold mb-2">
-                                  {vehicle.vehicleName}
-                                </div>
-                              </div>
-                              <div
-                                class="col whishlist"
-                                style={{ cursor: "pointer" }}
-                              >
-                                <span>
-                                  <i
-                                    class={
-                                      vehicle.isFavorite
-                                        ? `fa fa-heart`
-                                        : `fa fa-heart-o`
-                                    }
-                                    onClick={() => {
-                                      this.saveFavorite(
-                                        vehicle.vehicleId,
-                                        index
-                                      );
-                                    }}
-                                  ></i>
-                                </span>
-                              </div>
-                            </div>
+                    this.state.vehicleList &&
+                    this.state.vehicleList.length ? (
+                      this.state.vehicleList.map((vehicle, index) => {
+                        return (
+                          <div class="row searched_cards align-items-center">
                             <div
-                              class="row"
+                              class="col-md-3 text-center"
                               onClick={() => {
                                 this.vehicleDetails(vehicle.vehicleId);
                               }}
                             >
-                              <div class="col-sm-5">
-                                <div class="head4 mb-4 text-uppercase bold">
-                                  <span>
-                                    <span class="fair">
-                                      <i class="fas fa-arrow-circle-right"></i>
-                                    </span>
-                                  </span>{" "}
-                                  {vehicle.dealsType}
+                              <img
+                                src={
+                                  vehicle.parentImageUrl == ""
+                                    ? acura
+                                    : vehicle.parentImageUrl
+                                }
+                                class="w-100 img-fluid"
+                                alt=""
+                              />
+                            </div>
+                            <div class="col-md-9 text-left">
+                              <div class="row no-gutters align-items-center">
+                                <div
+                                  class="col pr-3"
+                                  onClick={() => {
+                                    this.vehicleDetails(vehicle.vehicleId);
+                                  }}
+                                >
+                                  <div class="head3 bold mb-2">
+                                    {vehicle.vehicleName}
+                                  </div>
                                 </div>
-                                <div class="para2">$509 Below.</div>
-                                <div class="para2">Harasow IMV of $15,000</div>
+                                <div
+                                  class="col whishlist"
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <span>
+                                    <i
+                                      class={
+                                        vehicle.isFavorite
+                                          ? `fa fa-heart`
+                                          : `fa fa-heart-o`
+                                      }
+                                      onClick={() => {
+                                        this.saveFavorite(
+                                          vehicle.vehicleId,
+                                          index
+                                        );
+                                      }}
+                                    ></i>
+                                  </span>
+                                </div>
                               </div>
-                              <div class="col-sm-7">
-                                <table class="para1">
-                                  <tbody>
-                                    <tr>
-                                      <td class="medium">Price:</td>
-                                      <td>
-                                        $15,000{" "}
-                                        <a
-                                          class="blue small"
-                                          href="javascript:;"
-                                        >
-                                          $286/mo est.
+                              <div
+                                class="row"
+                                onClick={() => {
+                                  this.vehicleDetails(vehicle.vehicleId);
+                                }}
+                              >
+                                <div class="col-sm-5">
+                                  <div class="head4 mb-4 text-uppercase bold">
+                                    <span>
+                                      <span class="fair">
+                                        <i class="fas fa-arrow-circle-right"></i>
+                                      </span>
+                                    </span>{" "}
+                                    {vehicle.dealsType}
+                                  </div>
+                                  <div class="para2">$509 Below.</div>
+                                  <div class="para2">Harasow IMV of $15,000</div>
+                                </div>
+                                <div class="col-sm-7">
+                                  <table class="para1">
+                                    <tbody>
+                                      <tr>
+                                        <td class="medium">Price:</td>
+                                        <td>
+                                          $15,000{" "}
+                                          <a
+                                            class="blue small"
+                                            href="javascript:;"
+                                          >
+                                            $286/mo est.
                                         </a>
-                                        <div class="blue">
-                                          Includes $338 delivery.
+                                          <div class="blue">
+                                            Includes $338 delivery.
                                         </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="medium">Mileage:</td>
-                                      <td>62,150 mi</td>
-                                    </tr>
-                                    <tr>
-                                      <td class="medium">Location:</td>
-                                      <td>Highland, IN 338 mi</td>
-                                    </tr>
-                                    <tr>
-                                      <td class="medium">Dealer rating:</td>
-                                      <td>
-                                        <span class="Ratings">
-                                          <i class="fas fa-star cg-star"></i>
-                                          <i class="fas fa-star cg-star"></i>
-                                          <i class="fas fa-star cg-star"></i>
-                                          <i class="fas fa-star cg-star"></i>
-                                          <i class="fas fa-star cg-star empty"></i>
-                                        </span>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td class="medium">Mileage:</td>
+                                        <td>62,150 mi</td>
+                                      </tr>
+                                      <tr>
+                                        <td class="medium">Location:</td>
+                                        <td>Highland, IN 338 mi</td>
+                                      </tr>
+                                      <tr>
+                                        <td class="medium">Dealer rating:</td>
+                                        <td>
+                                          <span class="Ratings">
+                                            <i class="fas fa-star cg-star"></i>
+                                            <i class="fas fa-star cg-star"></i>
+                                            <i class="fas fa-star cg-star"></i>
+                                            <i class="fas fa-star cg-star"></i>
+                                            <i class="fas fa-star cg-star empty"></i>
+                                          </span>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })
-                  ) : this.state.vehicleType === 5 ? (
-                    <div class="row">
-                      <div class="col-12 ">
-                        <div class="head2 text-center">Search by Category</div>
-                        <div class="row mt-3">
-                          {vehicleList && vehicleList.length ? (
-                            vehicleList.map(vehicle => {
-                              return (
-                                <div class="col-lg-4 col-md-6">
-                                  <div class="parts_grid shadow">
-                                    <div class="head3">Engine Parts</div>
-                                    <div class="row mt-2 no-gutters">
-                                      <div class="col-12">
-                                        <div class="form-group">
-                                          <select
-                                            name=""
-                                            id=""
-                                            class="form-control"
+                        );
+                      })
+                    ) : this.state.vehicleType === 5 ? (
+                      <div class="row">
+                        <div class="col-12 ">
+                          <div class="head2 text-center">Search by Category</div>
+                          <div class="row mt-3">
+                            {vehicleList && vehicleList.length ? (
+                              vehicleList.map(vehicle => {
+                                return (
+                                  <div class="col-lg-4 col-md-6">
+                                    <div class="parts_grid shadow">
+                                      <div class="head3">Engine Parts</div>
+                                      <div class="row mt-2 no-gutters">
+                                        <div class="col-12">
+                                          <div class="form-group">
+                                            <select
+                                              name=""
+                                              id=""
+                                              class="form-control"
+                                            >
+                                              <option selected value="">
+                                                Select Category
+                                            </option>
+                                              <option value="0">
+                                                Loading...
+                                            </option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                        <div class="col-12 text-right">
+                                          <button
+                                            class="btn btn-primary"
+                                            onClick={() => {
+                                              this.props.history.push(
+                                                PATH.PARTS_DETAIL
+                                              );
+                                            }}
                                           >
-                                            <option selected value="">
-                                              Select Category
-                                            </option>
-                                            <option value="0">
-                                              Loading...
-                                            </option>
-                                          </select>
+                                            Go
+                                        </button>
                                         </div>
                                       </div>
-                                      <div class="col-12 text-right">
-                                        <button
-                                          class="btn btn-primary"
-                                          onClick={() => {
-                                            this.props.history.push(
-                                              PATH.PARTS_DETAIL
-                                            );
-                                          }}
-                                        >
-                                          Go
-                                        </button>
-                                      </div>
-                                    </div>
-                                    <div class="row no-gutters">
-                                      <div class="col-12 text-center">
-                                        <img
-                                          src={
-                                            vehicle.parentImageUrl
-                                              ? vehicle.parentImageUrl
-                                              : require("../assets/img/engine.png")
-                                          }
-                                          class="img-fluid mx-auto"
-                                          alt=""
-                                        />
+                                      <div class="row no-gutters">
+                                        <div class="col-12 text-center">
+                                          <img
+                                            src={
+                                              vehicle.parentImageUrl
+                                                ? vehicle.parentImageUrl
+                                                : require("../assets/img/engine.png")
+                                            }
+                                            class="img-fluid mx-auto"
+                                            alt=""
+                                          />
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            })
-                          ) : (
-                            <div className="text-center">
-                              {/* {this.state.isLoading ? (
+                                );
+                              })
+                            ) : (
+                                <div className="text-center">
+                                  {/* {this.state.isLoading ? (
                             <Spinner color="black" />
                           )  */}
-                              {/* : ( */}
-                              No Data Found
+                                  {/* : ( */}
+                                  No Data Found
                               {/* )} */}
-                            </div>
-                          )}
+                                </div>
+                              )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="text-center">
-                      {/* {this.state.isLoading ? (
+                    ) : (
+                        <div className="text-center">
+                          {/* {this.state.isLoading ? (
                         <Spinner color="black" />
                       )  */}
-                      {/* : ( */}
-                      No Data Found
+                          {/* : ( */}
+                          No Data Found
                       {/* )} */}
-                    </div>
-                  )}
+                        </div>
+                      )}
                   {pageDisplayCount > 1 ? (
                     <div class="totalresults py-3 mt-3">
                       <div class="row align-items-center">
@@ -3144,32 +3158,30 @@ class AdvancedSearch extends Component {
                       </div>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </div>
               </div>
             </div>
-
-            <div class="modal fade show" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-      
-        <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <div class="modal-body">
-          Modal body..
-        </div>
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
+            <div class="modal fade bd-example-modal-lg show" style={{ display: this.state.isModelOpen ? 'block' : 'none' }} tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={() => {
+                      this.modelClose()
+                    }}>
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div className="container-fluid p-3">
+                      <Login needRedirection={false} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
         </React.Fragment>
       </LoadingOverlay>
