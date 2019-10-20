@@ -674,7 +674,7 @@ public class AdminController {
 					bodyStyleTypes = new LinkedList<BodyStyleType>();
 					try
 				    {
-				    	File file = ResourceUtils.getFile("classpath:master_data/common/year.txt");
+				    	File file = ResourceUtils.getFile("classpath:master_data/common/bodyStyleType.txt");
 				    	if(file.exists()) 
 				    	{
 				    		BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));

@@ -42,10 +42,7 @@ public class CommonController {
 	
 	@Autowired
 	private CommonDao commonDao;
-	
-	@Autowired
-	private CommonUtil commonUtil;
-	
+		
 	@Autowired
 	private  UserCookiesRepository userCookiesRepository;
 	
@@ -173,23 +170,14 @@ public class CommonController {
 		}
 	}
 	
-	//Get vehicle list 
+	//POST vehicle list 
 	@RequestMapping(method = RequestMethod.POST, value = "/vehicle/list", produces = "application/json")
 	@ResponseBody
-	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, @RequestHeader(value="User-Agent", defaultValue="new") String userAgent, 
-			 HttpServletRequest request) throws Exception {
+	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, HttpServletRequest request) throws Exception {
 		logger.info("Controller==>Enter==>getVehicleList<==");
 		String methodName = "GET VEHICLE LIST";
-		logger.info("Controller==>Enter==>getOrSetCookie<==");
-		Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	    	Stream<Cookie> cookieObj = Arrays.stream(cookies).filter(c -> c.getName().equalsIgnoreCase("cookie_user_id"));
-	    	if (cookieObj != null) {
-	    		cookieObj.forEach(c-> { System.out.println(c.getName()+"-"+c.getValue()); });
-	    	}    
-	    } 
 		try { 
-			return commonDao.getVehicleList(vehicleSearchBean,userAgent);
+			return commonDao.getVehicleList(vehicleSearchBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>getVehicleList<==");
@@ -211,25 +199,7 @@ public class CommonController {
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getVehicleDetails", null);
 		}
 	}
-	
-	//Get vehicle homePage
-	@RequestMapping(method = RequestMethod.GET, value = "/dashboard", produces = "application/json")
-	@ResponseBody
-	public Map<?, ?> getDashboardDetails(@RequestHeader(value="User-Agent", defaultValue="new") String usesrAgent, HttpServletRequest request) throws Exception {
-		logger.info("Controller==>Enter==>getDashboardDetails<==");
-		String methodName = "GET DASHBOARD DETAILS";
-		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-		System.out.println(request.getRemoteAddr());
-		System.out.println(userAgent.getBrowser().getName() + " " + userAgent.getBrowserVersion());
-		try { 
-			return commonDao.getDashboardDetails(usesrAgent);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info("Controller==>Exception==>getDashboardDetails<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getDashboardDetails", null);
-		}
-	}
-	
+		
 	@RequestMapping(method = RequestMethod.GET, value = "/country", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> getCountries(@RequestParam(required=false, defaultValue="0") long countryId) throws Exception {
@@ -243,8 +213,103 @@ public class CommonController {
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getCountries", null);
 		}
 	}
-//
-//	//Get Car Brand
+	
+	//POST add vehicleId into savedmysearches
+	@RequestMapping(method = RequestMethod.POST, value ="/add/savedmysearches", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> addSavedMySearches(VehicleSearchBean vehicleSearchBean, HttpServletRequest request) throws Exception {
+		logger.info("Controller==>Enter==>addSavedMySearches<==");
+		String methodName = "ADD SAVED MY SEARCHES";
+		
+		try {
+			long userId = CommonUtil.getUserId();
+			if(userId<=0)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 1, "Wrong user details", null);
+			}
+			if(vehicleSearchBean.getVehicleId()<=0)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 2, "Wrong vehicle details", null);
+			}
+			long cookieUserId = CommonUtil.getCookieUserId(request);
+			return commonDao.addSavedMySearches(vehicleSearchBean.getVehicleId(), userId, cookieUserId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>addSavedMySearches<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller addSavedMySearches", null);
+		}
+	}
+	
+	//DELETE delete vehicle id into savedmysearches
+	@RequestMapping(method = RequestMethod.DELETE, value ="/delete/savedmysearches", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> deleteSavedMySearches(VehicleSearchBean vehicleSearchBean, HttpServletRequest request) throws Exception {
+		logger.info("Controller==>Enter==>deleteSavedMySearches<==");
+		String methodName = "DELETE SAVED MY SEARCHES";
+		try {
+			long userId = CommonUtil.getUserId();
+			long cookieUserId = CommonUtil.getCookieUserId(request);
+			if(userId<=0)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 1, "Wrong user details", null);
+			}
+			if(vehicleSearchBean.getSavedSearchId()<=0)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 2, "Wrong saved search details", null);
+			}
+			return commonDao.deleteSavedMySearches(vehicleSearchBean.getSavedSearchId(), userId, cookieUserId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>addSavedMySearches<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller deleteSavedMySearches", null);
+		}
+	}
+
+	
+	//GET get all saved searches list by userId
+	@RequestMapping(method = RequestMethod.GET, value ="/getAll/savedmysearches", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getAllSavedMySearches(VehicleSearchBean vehicleSearchBean, HttpServletRequest request) throws Exception {
+		logger.info("Controller==>Enter==>getAllSavedMySearches<==");
+		String methodName = "GET ALL SAVED MY SEARCHES";
+		try {
+			long userId = CommonUtil.getUserId();
+			long cookieUserId = CommonUtil.getCookieUserId(request);
+			if(userId<=0)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 1, "Wrong user details", null);
+			}
+			return commonDao.getAllSavedMySearches(vehicleSearchBean.getSavedSearchId(), userId, cookieUserId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>getAllSavedMySearches<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getAllSavedMySearches", null);
+		}
+	}
+	
+	//Get dashboard lists
+	@RequestMapping(method = RequestMethod.GET, value = "/dashboard", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getDashboardDetails(HttpServletRequest request) throws Exception {
+		logger.info("Controller==>Enter==>getDashboardDetails<==");
+		String methodName = "GET DASHBOARD DETAILS";
+		System.out.println(request.getRemoteAddr());
+		try { 
+			long userId = CommonUtil.getUserId();
+			long cookieUserId = CommonUtil.getCookieUserId(request);
+			if(userId<=0)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 1, "Wrong user details", null);
+			}
+			return commonDao.getDashboardDetails(userId, cookieUserId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>getDashboardDetails<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getDashboardDetails", null);
+		}
+	}
+		
+	//	//Get Car Brand
 //	@RequestMapping(method = RequestMethod.GET, value = "/car/brand", produces = "application/json")
 //	@ResponseBody
 //	public Map<?, ?> getCarBrands(@RequestParam(required=false, defaultValue="0") long carBrandId) throws Exception {

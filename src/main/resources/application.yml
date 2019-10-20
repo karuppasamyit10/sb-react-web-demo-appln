@@ -5,7 +5,7 @@ endpoints:
 spring:
   resources:
     static-locations:
-      - file:///D:/imgs/
+      - file:///D:/Karuppu/imgs/
   data:
     rest:
       base-path: /api

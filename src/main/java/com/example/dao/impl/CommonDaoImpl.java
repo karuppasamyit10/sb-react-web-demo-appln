@@ -45,6 +45,7 @@ import com.example.entity.Mileage;
 import com.example.entity.Model;
 import com.example.entity.ModelDetail;
 import com.example.entity.Price;
+import com.example.entity.SavedMySearch;
 import com.example.entity.SteeringType;
 import com.example.entity.TransmissionType;
 import com.example.entity.User;
@@ -65,6 +66,7 @@ import com.example.repository.MileageRepository;
 import com.example.repository.ModelDetailRepository;
 import com.example.repository.ModelRepository;
 import com.example.repository.PriceRepository;
+import com.example.repository.SavedMySearchRepository;
 import com.example.repository.SteeringTypeRepository;
 import com.example.repository.TransmissionTypeRepository;
 import com.example.repository.UserRepository;
@@ -151,6 +153,9 @@ public class CommonDaoImpl implements CommonDao {
 	
 	@Autowired
 	BodyStyleTypeRepository bodyStyleTypeRepository;
+	
+	@Autowired
+	SavedMySearchRepository savedMySearchRepository;
 		
 	@Override
 	@Transactional(rollbackOn = { Exception.class})
@@ -504,7 +509,7 @@ public class CommonDaoImpl implements CommonDao {
 	 * @see com.example.dao.CommonDao#getDashboardDetails(java.lang.String)
 	 */
 	@Override
-	public Map<?, ?> getDashboardDetails(String userAgent) throws Exception {
+	public Map<?, ?> getDashboardDetails(long userId, long cookieUserId) throws Exception {
 		logger.info("::::Enter(daoImpl)==>getDashboardDetails::::");
 		String methodName = "GET DASHBOARD DETAILS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
@@ -514,11 +519,62 @@ public class CommonDaoImpl implements CommonDao {
 			List<Object> relatedSearchList = new LinkedList<>();
 			List<Object> popularNewsList = new LinkedList<>();
 			List<Object> popularSedansList = new LinkedList<>();
-			rootParams.put("ourLastSearchList", ourLastSearchList);
+			
+			List<VehicleDetail> popularNewCars11 = vehicleDetailRepository.findByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeleted(1, "New", 0);
+			for(VehicleDetail vehicleDetail: popularNewCars11)
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				ourLastSearchList.add(params);
+			}
+			rootParams.put("ourLastSearchList", ourLastSearchList);	
+			
+			List<VehicleDetail> popularNewCars12 = vehicleDetailRepository.findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(1, "Sedan", 0);
+			for(VehicleDetail vehicleDetail: popularNewCars12)
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				savedRecentSearchList.add(params);
+			}
 			rootParams.put("savedRecentSearchList", savedRecentSearchList);
+			
+			List<VehicleDetail> popularNewCars13 = vehicleDetailRepository.findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(1, "Sedan", 0);
+			for(VehicleDetail vehicleDetail: popularNewCars13)
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				popularNewsList.add(params);
+			}
 			rootParams.put("relatedSearchList", relatedSearchList);
+			
+			List<VehicleDetail> popularNewCars = vehicleDetailRepository.findByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeleted(1, "New", 0);
+			for(VehicleDetail vehicleDetail: popularNewCars)
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				popularNewsList.add(params);
+			}
 			rootParams.put("popularNewsList", popularNewsList);
+			
+			List<VehicleDetail> popularSedanCars = vehicleDetailRepository.findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(1, "Sedan", 0);
+			for(VehicleDetail vehicleDetail: popularSedanCars)
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				popularSedansList.add(params);
+			}
 			rootParams.put("popularSedansList", popularSedansList);
+			
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {
 			logger.error("::::Exception(daoImpl)==>getModeldetails::::");
@@ -531,7 +587,7 @@ public class CommonDaoImpl implements CommonDao {
 	 * @see com.example.dao.CommonDao#getVehicleList(com.example.bean.VehicleSearchBean, java.lang.String)
 	 */
 	@Override
-	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, String userAgent) throws Exception {
+	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean) throws Exception {
 		logger.info("::::Enter(daoImpl)==>getVehicleList::::");
 		String methodName = "GET VEHICLE LIST";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
@@ -860,7 +916,112 @@ public class CommonDaoImpl implements CommonDao {
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
 		}
 	}
-
+	
+	@Override
+	public Map<?, ?> addSavedMySearches(long vehicleId, long userId, long cookieUserId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>addSavedMySearches::::");
+		String methodName = "ADD SAVED MY SEARCHES";
+		try {
+			//Get VehicleDetail
+			
+			VehicleDetail vehicleDetail = vehicleDetailRepository.findByVehicleId(vehicleId);
+			if(vehicleDetail==null)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 1, "Vehicle details does not exists", null);
+			}
+			SavedMySearch savedMySearch = savedMySearchRepository.findByVehicleIdAndUserIdAndIsDeleted(vehicleId, userId, 0);
+			if(savedMySearch!=null)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 2, "Already added into saved searches", null);
+			}
+			Date createdDate = userRepository.getUTC_DateTime();
+			
+			savedMySearch = new SavedMySearch();
+			savedMySearch.setCookieUserId(cookieUserId);
+			savedMySearch.setUserId(userId);
+			savedMySearch.setVehicleId(vehicleId);
+			savedMySearch.setCreatedDate(createdDate);
+			savedMySearch = savedMySearchRepository.save(savedMySearch);
+			
+			Map<String, Object> params = new LinkedHashMap<String, Object>();
+			params.put("savedSearchId", savedMySearch.getSavedSearchId());
+			params.put("vehicleId", vehicleDetail.getVehicleId());
+			params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
+			params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", params);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>addSavedMySearches::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured in addSavedMySearches", null);
+		}
+	}
+	
+	@Override
+	public Map<?, ?> getAllSavedMySearches(long savedSearchId, long userId, long cookieUserId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>getAllSavedMySearches::::");
+		String methodName = "GET ALL SAVED MY SEARCHES";
+		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		try {
+			List<Object> savedSearchList = new LinkedList<Object>();
+			List<SavedMySearch> savedMySearches = savedMySearchRepository.findByUserIdAndIsDeleted(userId, 0);
+			if(savedMySearches==null || savedMySearches.isEmpty())
+			{
+				rootParams.put("savedSearchList", savedSearchList);
+				return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
+			}
+			for(SavedMySearch savedMySearch: savedMySearches){
+				VehicleDetail vehicleDetail = vehicleDetailRepository.findByVehicleId(savedMySearch.getVehicleId());
+				if(vehicleDetail==null)
+				{
+					return CommonUtil.wrapResultResponse(methodName, 2, "Vehicle details does not exists", null);
+				}
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("savedSearchId", savedMySearch.getSavedSearchId());
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				savedSearchList.add(params);
+			}
+			rootParams.put("savedSearchList", savedSearchList);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getAllSavedMySearches::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured in getAllSavedMySearches", null);
+		}
+	}
+	
+	@Override
+	public Map<?, ?> deleteSavedMySearches(long savedSearchId, long userId, long cookieUserId) throws Exception {
+		logger.info("::::Enter(daoImpl)==>deleteSavedMySearches::::");
+		String methodName = "DELETE SAVED MY SEARCHES";
+		try {
+			SavedMySearch savedMySearch = savedMySearchRepository.findBySavedSearchIdAndUserId(savedSearchId, userId);
+			if(savedMySearch==null)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 2, "Wrong saved searches details", null);
+			}
+			if(savedMySearch!=null && savedMySearch.getIsDeleted()==1)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 2, "Already deleted", null);
+			}
+			VehicleDetail vehicleDetail = vehicleDetailRepository.findByVehicleId(savedMySearch.getVehicleId());
+			if(vehicleDetail==null)
+			{
+				return CommonUtil.wrapResultResponse(methodName, 2, "Vehicle details does not exists", null);
+			}
+			
+			Date createdDate = userRepository.getUTC_DateTime();
+			savedMySearch.setIsDeleted(1);
+			savedMySearch.setUpdatedDate(createdDate);
+			savedMySearch = savedMySearchRepository.save(savedMySearch);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>deleteSavedMySearches::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured in deleteSavedMySearches", null);
+		}
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.example.dao.CommonDao#getAllCountries()

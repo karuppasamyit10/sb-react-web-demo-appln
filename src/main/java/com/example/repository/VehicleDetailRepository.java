@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.domain.Page;
@@ -21,4 +22,8 @@ public interface VehicleDetailRepository extends JpaRepository<VehicleDetail, Lo
 	
 	VehicleDetail findByVehicleId(long vehicleId);
 	
+	List<VehicleDetail> findByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeleted(long vehicleTypeId, String conditionType, int isDeleted);
+	
+	List<VehicleDetail> findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(long vehicleTypeId, String bodyStyleTyped, int isDeleted);
+		
 }
