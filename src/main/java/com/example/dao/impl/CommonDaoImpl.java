@@ -39,6 +39,7 @@ import com.example.entity.Country;
 import com.example.entity.DealsType;
 import com.example.entity.EngineType;
 import com.example.entity.FuelType;
+import com.example.entity.Language;
 import com.example.entity.LoadingWeightType;
 import com.example.entity.MemberShipType;
 import com.example.entity.Mileage;
@@ -60,6 +61,7 @@ import com.example.repository.CountryRepository;
 import com.example.repository.DealsTypeRepository;
 import com.example.repository.EngineTypeRepository;
 import com.example.repository.FuelTypeRepository;
+import com.example.repository.LanguageRepository;
 import com.example.repository.LoadingWeightTypeRepository;
 import com.example.repository.MemberShipTypeRepository;
 import com.example.repository.MileageRepository;
@@ -156,6 +158,9 @@ public class CommonDaoImpl implements CommonDao {
 	
 	@Autowired
 	SavedMySearchRepository savedMySearchRepository;
+	
+	@Autowired
+	LanguageRepository languageRepository;
 		
 	@Override
 	@Transactional(rollbackOn = { Exception.class})
@@ -514,11 +519,23 @@ public class CommonDaoImpl implements CommonDao {
 		String methodName = "GET DASHBOARD DETAILS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		try {
+			List<Object> languageList = new LinkedList<>();
 			List<Object> ourLastSearchList = new LinkedList<>();
 			List<Object> savedRecentSearchList = new LinkedList<>();
 			List<Object> relatedSearchList = new LinkedList<>();
 			List<Object> popularNewsList = new LinkedList<>();
 			List<Object> popularSedansList = new LinkedList<>();
+
+			List<Language> languages = languageRepository.findByIsDeletedOrderByLanguageAsc(0);
+			for(Language language: languages)
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("languageId", language.getLanguageId());
+				params.put("language", language.getLanguage());
+				params.put("languageCode", language.getLanguageCode());
+				languageList.add(params);
+			}
+			rootParams.put("languageList", languageList);	
 			
 			List<VehicleDetail> popularNewCars11 = vehicleDetailRepository.findByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeleted(1, "New", 0);
 			for(VehicleDetail vehicleDetail: popularNewCars11)

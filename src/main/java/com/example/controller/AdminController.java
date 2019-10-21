@@ -32,6 +32,7 @@ import com.example.entity.Country;
 import com.example.entity.DealsType;
 import com.example.entity.EngineType;
 import com.example.entity.FuelType;
+import com.example.entity.Language;
 import com.example.entity.LoadingWeightType;
 import com.example.entity.MemberShipType;
 import com.example.entity.Mileage;
@@ -54,6 +55,7 @@ import com.example.repository.CountryRepository;
 import com.example.repository.DealsTypeRepository;
 import com.example.repository.EngineTypeRepository;
 import com.example.repository.FuelTypeRepository;
+import com.example.repository.LanguageRepository;
 import com.example.repository.LoadingWeightTypeRepository;
 import com.example.repository.MemberShipTypeRepository;
 import com.example.repository.MileageRepository;
@@ -148,6 +150,9 @@ public class AdminController {
 	
 	@Autowired
 	VehicleTypeRepository vehicleTypeRepository;
+	
+	@Autowired
+	LanguageRepository languageRepository;
 
 	@PostConstruct
 	public void addSuperAdminUserAccount() throws Exception {
@@ -175,6 +180,36 @@ public class AdminController {
 			//Add common master Data
 			if(masterDataField.equalsIgnoreCase("common")) 
 			{
+				//Add Language
+				List<Language> languages= languageRepository.findByIsDeletedOrderByLanguageAsc(0);
+				if(languages.isEmpty())
+				{
+					languages = new LinkedList<Language>();
+					try
+				    {
+				    	File vehicleFile = ResourceUtils.getFile("classpath:master_data/common/languages.txt");
+				    	if(vehicleFile.exists()) 
+				    	{
+				    		BufferedReader br = new BufferedReader(new FileReader(vehicleFile.getAbsoluteFile()));
+							String st;
+							while ((st = br.readLine()) != null)
+							{
+								Language language = new Language();
+								language.setLanguage(st.trim().split(" ")[0]);
+								language.setLanguageCode(st.trim().split(" ")[1]);
+								language.setIsDeleted(0);
+								languages.add(language);
+							}
+							languageRepository.save(languages);
+							br.close();
+				    	}
+				    } catch (Exception e) {
+				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
+				        e.printStackTrace();
+				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in languages", null);
+				    }
+				}
+				
 				//Add vehicletype
 				Set<VehicleType> vehicleTypes = vehicleTypeRepository.findByIsDeletedOrderByVehicleTypeAsc(0);
 				if(vehicleTypes.isEmpty())
@@ -200,7 +235,7 @@ public class AdminController {
 				    } catch (Exception e) {
 				        logger.info("Controller==>Exception==>dumpMasterDatabyNotePad -  file reading<=="+e);
 				        e.printStackTrace();
-				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in deals", null);
+				        return CommonUtil.wrapResultResponse(methodName, 1, "Error Occured in vehicleType", null);
 				    }
 				}
 				

@@ -1,0 +1,11 @@
+English EN
+Español ES
+Français FR
+العربية AR
+ქართული BR
+Kiswahili KI
+русский PY
+Português PO
+日本語 LA
+中文 CH
+>한국어 MA
