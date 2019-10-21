@@ -1,8 +1,6 @@
 package com.example.controller;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -50,33 +48,22 @@ public class CommonController {
 	public String UpdateCookies(HttpServletResponse response, HttpServletRequest request) {
 		logger.info("Controller==>Enter==>UpdateCookies<==");
 		long userId = CommonUtil.getUserId();
-		Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	    	Stream<Cookie> cookieObj = Arrays.stream(cookies).filter(c -> c.getName().equalsIgnoreCase("cookie_user_id"));
-	    	if (cookieObj != null) {
-	    		 return "Success";
-	    	}     	 
-	    } 
+		long cookieUserId = CommonUtil.getCookieUserId(request);
 		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
 		System.out.println(request.getRemoteAddr());
 		System.out.println(userAgent.getBrowser().getName() + " " + userAgent.getBrowserVersion().getVersion());
-		UserCookies userCookies = userCookiesRepository.findFirstByOrderByCookieUserIdDesc();
-		if(userCookies == null){
-			userCookies = new UserCookies();
-			userCookies.setBrowserName(userAgent.getBrowser().getName());
-			userCookies.setBrowserVersion(userAgent.getBrowserVersion().getVersion());
-			userCookies.setRemoteAddr(request.getRemoteAddr());
-			userCookies.setUserId(0);
-			userCookies = userCookiesRepository.save(userCookies);
-		}
-		userCookies = userCookiesRepository.findByBrowserNameAndBrowserVersionAndRemoteAddr(userAgent.getBrowser().getName(), userAgent.getBrowserVersion().getVersion(), request.getRemoteAddr());
+		//UserCookies userCookies = userCookiesRepository.findFirstByOrderByCookieUserIdDesc();
+		UserCookies userCookies = userCookiesRepository.findByBrowserNameAndBrowserVersionAndRemoteAddrAndCookieUserId(userAgent.getBrowser().getName(), userAgent.getBrowserVersion().getVersion(),
+				request.getRemoteHost(),cookieUserId);
 		if(userCookies == null){
 			userCookies = new UserCookies();
 			userCookies.setBrowserName(userAgent.getBrowser().getName());
 			userCookies.setBrowserVersion(userAgent.getBrowserVersion().getVersion());
 			userCookies.setUserId(userId);
+			userCookies.setRemoteAddr(request.getRemoteHost());
 			userCookies = userCookiesRepository.save(userCookies);
-		}
+		} 
+		
     	// create a cookie
 	    Cookie cookie = new Cookie("cookie_user_id", String.valueOf(userCookies.getCookieUserId()));
 //		    cookie.setPath("/welcomeUser");

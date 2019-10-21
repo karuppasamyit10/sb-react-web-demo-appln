@@ -457,7 +457,7 @@ class registration extends Component {
                         {this.state.countryList && this.state.countryList.length ?
                           this.state.countryList.map((countryList) => {
                             return (
-                              <option value={countryList.countryId}>{countryList.countryName}</option>
+                              <option value={countryList.countryId}>{countryList.country}</option>
                             )
                           }) : <option value="">Loading...</option>}
 

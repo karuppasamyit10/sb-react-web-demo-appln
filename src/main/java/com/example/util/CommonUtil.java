@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.mail.internet.MimeMessage;
@@ -214,9 +215,12 @@ public class CommonUtil {
 		    if (cookies != null) {
 		    	Stream<Cookie> cookieObj = Arrays.stream(cookies).filter(c -> c.getName().equalsIgnoreCase("cookie_user_id"));
 		    	if (cookieObj != null) {
-		    		cookieObj.forEach(c-> { System.out.println(c.getName()+"-"+c.getValue()); 
-	//		    		cookieUserId = Long.parseLong(c.getValue());
-		    		});
+//		    		cookieObj.forEach(c-> { System.out.println(c.getName()+"-"+c.getValue()); 
+		    		for (Cookie cookie: cookieObj.collect(Collectors.toList()))
+		    		{
+		    			return Long.parseLong(cookie.getValue());
+		    		}
+//		    		});
 		    	}    
 		    } 
 		}

@@ -323,7 +323,7 @@ public class CommonDaoImpl implements CommonDao {
 				for(EngineType engineType : engineTypes) {
 					Map<String, Object> params = new LinkedHashMap<String, Object>();
 					params.put("engineTypeId", engineType.getEngineTypeId());
-					params.put("enginetype", engineType.getEngineType());
+					params.put("engineType", engineType.getEngineType());
 					engineTypeList.add(params);
 				}	
 				rootParams.put("engineTypeList", engineTypeList);
