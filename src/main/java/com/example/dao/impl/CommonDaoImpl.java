@@ -537,8 +537,8 @@ public class CommonDaoImpl implements CommonDao {
 			}
 			rootParams.put("languageList", languageList);	
 			
-			List<VehicleDetail> popularNewCars11 = vehicleDetailRepository.findByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeleted(1, "New", 0);
-			for(VehicleDetail vehicleDetail: popularNewCars11)
+			List<VehicleDetail> ourLastSearch = vehicleDetailRepository.findTopByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(1, "New", 0);
+			for(VehicleDetail vehicleDetail: ourLastSearch)
 			{
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("vehicleId", vehicleDetail.getVehicleId());
@@ -548,8 +548,8 @@ public class CommonDaoImpl implements CommonDao {
 			}
 			rootParams.put("ourLastSearchList", ourLastSearchList);	
 			
-			List<VehicleDetail> popularNewCars12 = vehicleDetailRepository.findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(1, "Sedan", 0);
-			for(VehicleDetail vehicleDetail: popularNewCars12)
+			List<VehicleDetail> savedRecentSearch = vehicleDetailRepository.findTopByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(1, "Sedan", 0);
+			for(VehicleDetail vehicleDetail: savedRecentSearch)
 			{
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("vehicleId", vehicleDetail.getVehicleId());
@@ -559,8 +559,8 @@ public class CommonDaoImpl implements CommonDao {
 			}
 			rootParams.put("savedRecentSearchList", savedRecentSearchList);
 			
-			List<VehicleDetail> popularNewCars13 = vehicleDetailRepository.findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(1, "Sedan", 0);
-			for(VehicleDetail vehicleDetail: popularNewCars13)
+			List<VehicleDetail> relatedSearch = vehicleDetailRepository.findTopByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(1, "Sedan", 0);
+			for(VehicleDetail vehicleDetail: relatedSearch)
 			{
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
 				params.put("vehicleId", vehicleDetail.getVehicleId());

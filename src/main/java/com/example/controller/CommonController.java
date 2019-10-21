@@ -49,8 +49,8 @@ public class CommonController {
 	@GetMapping("/update-cookie")
 	public String UpdateCookies(HttpServletResponse response, HttpServletRequest request) {
 		logger.info("Controller==>Enter==>UpdateCookies<==");
+		long userId = CommonUtil.getUserId();
 		Cookie[] cookies = request.getCookies();
-		
 	    if (cookies != null) {
 	    	Stream<Cookie> cookieObj = Arrays.stream(cookies).filter(c -> c.getName().equalsIgnoreCase("cookie_user_id"));
 	    	if (cookieObj != null) {
@@ -63,10 +63,18 @@ public class CommonController {
 		UserCookies userCookies = userCookiesRepository.findFirstByOrderByCookieUserIdDesc();
 		if(userCookies == null){
 			userCookies = new UserCookies();
-			userCookies.setCookieUserId(10000);
 			userCookies.setBrowserName(userAgent.getBrowser().getName());
 			userCookies.setBrowserVersion(userAgent.getBrowserVersion().getVersion());
+			userCookies.setRemoteAddr(request.getRemoteAddr());
 			userCookies.setUserId(0);
+			userCookies = userCookiesRepository.save(userCookies);
+		}
+		userCookies = userCookiesRepository.findByBrowserNameAndBrowserVersionAndRemoteAddr(userAgent.getBrowser().getName(), userAgent.getBrowserVersion().getVersion(), request.getRemoteAddr());
+		if(userCookies == null){
+			userCookies = new UserCookies();
+			userCookies.setBrowserName(userAgent.getBrowser().getName());
+			userCookies.setBrowserVersion(userAgent.getBrowserVersion().getVersion());
+			userCookies.setUserId(userId);
 			userCookies = userCookiesRepository.save(userCookies);
 		}
     	// create a cookie

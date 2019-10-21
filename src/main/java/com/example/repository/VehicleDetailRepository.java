@@ -24,6 +24,11 @@ public interface VehicleDetailRepository extends JpaRepository<VehicleDetail, Lo
 	
 	List<VehicleDetail> findByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeleted(long vehicleTypeId, String conditionType, int isDeleted);
 	
+	List<VehicleDetail> findTopByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(long vehicleTypeId, String conditionType, int isDeleted);
+	
 	List<VehicleDetail> findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(long vehicleTypeId, String bodyStyleTyped, int isDeleted);
+	
+	List<VehicleDetail> findTopByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(long vehicleTypeId, String bodyStyleTyped, int isDeleted);
+	
 		
 }

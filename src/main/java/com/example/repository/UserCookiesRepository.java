@@ -9,4 +9,6 @@ import com.example.entity.UserCookies;
 public interface UserCookiesRepository extends JpaRepository<UserCookies, Long> {
 	
 	UserCookies findFirstByOrderByCookieUserIdDesc();
+	
+	UserCookies findByBrowserNameAndBrowserVersionAndRemoteAddr(String browserName, String browserVersion, String remoteAddr);
 }
