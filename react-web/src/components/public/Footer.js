@@ -71,11 +71,14 @@ class Footer extends Component {
                 <div class="col-md-3">
                   <ul class="flinks">
                     <li>Contact</li>
+                      <li>
+                        <Link to={PATH.CONTACT_US}>Contact Us</Link>
+                      </li>
+                      <li>
+                        <Link to={PATH.MEDIA}>Media</Link>
+                      </li>
                     <li>
                       <a href="javascript:;">(XXX) XXX - XXXX</a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">Contact Us</a>
                     </li>
                   </ul>
                 </div>

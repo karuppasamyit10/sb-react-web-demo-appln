@@ -98,7 +98,7 @@ class transport extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 1</div>
+                  <div class="head2 mt-3">Transport Schedule</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -129,7 +129,7 @@ class transport extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 2</div>
+                  <div class="head2 mt-3">AUTO harasow Transport</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -160,7 +160,7 @@ class transport extends Component {
                     class="img-fluid w-100"
                     alt=""
                   />
-                  <div class="head2 mt-3">Story 3</div>
+                  <div class="head2 mt-3">Container Shipping</div>
                   <p class="para1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Placeat, doloribus quam quis qui odit tempore ea
@@ -181,7 +181,7 @@ class transport extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-6">
+              {/* <div class="col-lg-4 col-md-6">
                 <div class="aboutgrid">
                   <img
                     src={require("../../assets/img/about/image1.png")}
@@ -264,14 +264,33 @@ class transport extends Component {
                     </a>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div>*/}
+            </div> 
             <div class="spacer1"></div>
             <hr />
             <div class="spacer1"></div>
             <div class="row no-gutters">
-              <div class="col-lg-8">
+              <div class="col-lg-12">
                 <div class="card-deck">
+                <div class="card">
+                    <img
+                      src={require("../../assets/img/Magazine.jpg")}
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">Magazine</h5>
+                      <p class="card-text">
+                        Lorem ipsum is simply dummy text of printing and
+                        typesetting industry.
+                      </p>
+                      <div class="mt-3">
+                        <a href="javascript:;" class="btn btn-primary">
+                          Read More
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                   <div class="card">
                     <img
                       src={require("../../assets/img/On-demand-car-rental.jpg")}

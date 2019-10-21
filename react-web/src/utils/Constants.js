@@ -23,6 +23,8 @@ module.exports = {
     SEARCH: "/dashboard/search",
     ADVANCED_SEARCH: "/dashboard/advanced-search",
     ABOUT_US: "/about-us",
+    CONTACT_US: "/contact-us",
+    MEDIA: "/media",
     WHAT_WE_DO: "/about-us/what-we-do",
     WHO_WE_ARE: "/about-us/who-we-are",
     HOW_WE_WORK: "/about-us/how-we-work",
