@@ -12,5 +12,5 @@ public interface MileageRepository extends JpaRepository<Mileage, Long> {
 
 	List<Mileage> findByOrderByMileageAsc();
 	
-	List<Mileage> findByMileageId(long mileageId);
+	List<Mileage> findByMileageId(int mileageId);
 }

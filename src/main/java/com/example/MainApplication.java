@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -25,8 +24,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
-import com.example.config.CommonConfig;
-
 /**
  * @author Karuppasamy Mariappan
  * @created 23-Aug-2019
@@ -40,9 +37,6 @@ import com.example.config.CommonConfig;
 public class MainApplication  extends SpringBootServletInitializer  {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainApplication.class);
-	
-	@Autowired
-	private CommonConfig commonConfig;
 	
 	/* (non-Javadoc)
 	 * @see org.springframework.boot.web.support.SpringBootServletInitializer#configure(org.springframework.boot.builder.SpringApplicationBuilder)

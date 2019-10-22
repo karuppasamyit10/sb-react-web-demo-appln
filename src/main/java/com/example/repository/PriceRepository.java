@@ -12,5 +12,5 @@ public interface PriceRepository extends JpaRepository<Price, Long> {
 
 	List<Price> findByOrderByPriceAsc();
 	
-	List<Price> findByPriceId(long priceId);
+	List<Price> findByPriceId(int priceId);
 }

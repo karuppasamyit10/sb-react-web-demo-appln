@@ -12,5 +12,5 @@ public interface YearRepository extends JpaRepository<Year, Long> {
 
 	List<Year> findByOrderByYearAsc();
 	
-	List<Year> findByYearId(long yearId);
+	List<Year> findByYearId(int yearId);
 }
