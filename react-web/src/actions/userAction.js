@@ -25,7 +25,7 @@ export function logInUser(username, password, callBack) {
     myLog("input", config);
     axiosCommon(config)
       .then(response => {
-        myLog("====logInUser response===::::", response);
+        console.log("====logInUser response===::::", response);
         let t = new Date();
         const expiryTime = t.setSeconds(t.getSeconds() + 100000);
         const expiryObj = { expiry_time: expiryTime };
@@ -42,15 +42,17 @@ export function logInUser(username, password, callBack) {
             Client.tokenExpires(response.data.expires_in)
           );
         }
-        callBack(response.data);
+
         dispatch({
           type: ACTION_TYPES.LOGIN_USER,
           payload: response.data
         });
+        callBack(response.data);
+        console.log("====test===::::", response);
       })
       .catch(error => {
         console.log(error);
-        myLog("====logInUser error===????", error);
+        console.log("====logInUser error===????", error);
         callBack(false);
       });
   };

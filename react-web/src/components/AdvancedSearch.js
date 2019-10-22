@@ -21,7 +21,9 @@ import {
   getVehicleDetailedModelList,
   getVehicleSearchList,
   getVehicleDetails,
-  getCategory2
+  getCategory2,
+  addToSavedSearch,
+  deleteSavedSearch
 } from "../actions/searchAction";
 import acura from "../assets/img/acura.jpeg";
 import LoadingOverlay from "react-loading-overlay";
@@ -460,12 +462,21 @@ class AdvancedSearch extends Component {
     });
   };
 
+  addToSavedSearch = (vehicleId) => {
+    this.props.addToSavedSearch({ vehicleId: vehicleId }, (response) => {
+      console.log(response)
+    })
+  }
+
   saveFavorite = (vehicleId, index) => {
     let userSession = store.get("userSession");
     if (userSession) {
       let vehicleList = this.state.vehicleList;
       vehicleList[index].isFavorite =
         vehicleList[index].isFavorite === 0 ? 1 : 0;
+      if (vehicleList[index].isFavorite) {
+        this.addToSavedSearch(vehicleId)
+      }
       this.setState({ vehicleList: vehicleList });
       this.props.showNotification("Added to favourites", "success");
     } else {
@@ -3211,6 +3222,9 @@ const mapDispatchToProps = dispatch => {
     },
     getVehicleDetails: (params, callback) => {
       dispatch(getVehicleDetails(params, callback));
+    },
+    addToSavedSearch: (params, callback) => {
+      dispatch(addToSavedSearch(params, callback));
     },
     getCategory2: (params, callback) => {
       dispatch(getCategory2(params, callback));

@@ -144,7 +144,7 @@ class loginContainer extends Component {
               </div>
             </div>
             <div class="col-md-9 form-wrap">
-              <Login needRedirection={true} />
+              <Login needRedirection={true} {...this.props}/>
             </div>
           </div>
         </div>

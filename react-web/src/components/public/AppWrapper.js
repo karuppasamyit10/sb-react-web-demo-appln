@@ -30,7 +30,7 @@ export const AppWrapper = (Content, ...propsMapping) => {
       return (
         <React.Fragment>
           <div class="">
-            <Header prop={this.props}/>
+            <Header {...this.props}/>
               {/* <Sidebar prop={this.props}/> */}
               <Content {...this.props} />
               <Footer />

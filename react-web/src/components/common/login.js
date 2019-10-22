@@ -84,6 +84,7 @@ class login extends Component {
   loginFunctions = (userName, password) => {
     this.props.logInUser(userName, password, result => {
       console.log(result);
+      console.log(this.props)
       this.setState({ isdisable: false });
       if (!result) {
         this.props.showNotification("username or password wrong", "error");

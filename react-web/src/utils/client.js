@@ -278,6 +278,55 @@ export default class Client {
     });
   }
 
+  static delete(url, data, isAccessToken) {
+    return new Promise(function(success, failed) {
+      const config = {
+        method: "DELETE",
+        url,
+        data,
+        headers: Client.httpHeader(isAccessToken)
+      };
+      myLog("DELETE ::::: Input", config);
+      axiosCommonInstance(config)
+        .then(response => {
+          try {
+            if (
+              response.status === Constants.HTTP_CODE.AUTHENTICATION_FAILURE ||
+              response.status === Constants.HTTP_CODE.REQUIRED_MISSING
+            ) {
+              throw Object({
+                name: response.status,
+                message: Constants.VALIDATION_MSG.AUTH_FAILED
+              });
+            }
+            if (response.status === Constants.HTTP_CODE.SUCCESS) {
+              try {
+                return response.data;
+              } catch (e) {
+                throw Object({
+                  name: response.status,
+                  message: Constants.VALIDATION_MSG.REQ_FAILED
+                });
+              }
+            }
+          } catch (e) {
+            throw Object({
+              name: response.status,
+              message: Constants.VALIDATION_MSG.REQ_FAILED
+            });
+          }
+        })
+        .then(response => {
+          myLog("POST ::::::: response", response);
+          success(response);
+        })
+        .catch(err => {
+          myLog("POST ::::::: err", err);
+          failed(err);
+        });
+    });
+  }
+
   static put(url, data, isAccessToken) {
     return new Promise(function(success, failed) {
       const config = {

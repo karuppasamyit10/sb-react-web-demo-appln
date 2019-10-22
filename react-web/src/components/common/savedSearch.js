@@ -3,11 +3,15 @@ import PropTypes from "prop-types";
 import { AppWrapper } from "../public/AppWrapper";
 import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
+import { showNotification } from "../../actions/NotificationAction";
+import { getSavedSearchList, deleteSavedSearch } from '../../actions/searchAction';
 
 class savedSearch extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      savedSearchList: []
+    };
   }
 
   static propTypes = {
@@ -20,6 +24,16 @@ class savedSearch extends Component {
       top: 0,
       behavior: "smooth"
     });
+    this.getSavedSearchList();
+  }
+
+  getSavedSearchList = () => {
+    this.props.getSavedSearchList({}, (response) => {
+      console.log(response)
+      if (response && response.response_code === 0) {
+        this.setState({ savedSearchList: response.response.savedSearchList })
+      }
+    })
   }
 
   render() {
@@ -251,4 +265,15 @@ class savedSearch extends Component {
   }
 }
 
-export default AppWrapper(savedSearch, null, null);
+const mapDispatchToProps = dispatch => {
+  return {
+    getSavedSearchList: (params, callback) => {
+      dispatch(getSavedSearchList(params, callback));
+    },
+    showNotification: (message, type) => {
+      dispatch(showNotification(message, type));
+    }
+  };
+};
+
+export default AppWrapper(savedSearch, null, mapDispatchToProps);

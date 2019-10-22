@@ -122,4 +122,46 @@ export function getCategory2(params, callback) {
         myLog("====get category2 response===????", error);
       });
   };
-} 
+}
+
+export function getSavedSearchList(params, callback) {
+  return function (dispatch) {
+    Client.get(URL.GET_SAVED_SEARCH, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====get saved search list response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====get saved search list response===????", error);
+      });
+  };
+}
+
+export function addToSavedSearch(params, callback) {
+  return function (dispatch) {
+    Client.post(URL.ADD_TO_SAVED_SEARCH, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====add to saved search response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====add to saved search response===????", error);
+      });
+  };
+}
+
+export function deleteSavedSearch(params, callback) {
+  return function (dispatch) {
+    Client.delete(URL.DELETE_SAVED_SEARCH, params, true)
+      .then(response => {
+        console.log(response);
+        myLog("====delete saved search response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====delete saved search response===????", error);
+      });
+  };
+}

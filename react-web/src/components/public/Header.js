@@ -33,12 +33,12 @@ class Header extends Component {
   handleSignOut = () => {
     this.props.logout(response => {
       console.log(response);
-      this.props.prop.history.push("/");
+      this.props.history.push("/");
     });
   };
 
   handleSignIn = () => {
-    this.props.prop.history.push(PATH.SIGIN);
+    this.props.history.push(PATH.SIGIN);
   };
 
   render() {
@@ -58,7 +58,7 @@ class Header extends Component {
                     style={{ cursor: "pointer" }}
                     alt=""
                     onClick={() => {
-                      this.props.prop.history.push(PATH.DASHBOARD);
+                      this.props.history.push(PATH.DASHBOARD);
                     }}
                   />
                 </a>
