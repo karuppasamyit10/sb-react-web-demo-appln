@@ -94,6 +94,9 @@ class login extends Component {
         if (needRedirection) {
           this.props.history.push(PATH.DASHBOARD);
         }
+        else if (this.props && this.props.modelClose) {
+          this.props.modelClose()
+        }
         // if (redirectPage) {
         //   this.props.history.push(redirectPage);
         // } else {

@@ -3187,7 +3187,7 @@ class AdvancedSearch extends Component {
                   </div>
                   <div class="modal-body">
                     <div className="container-fluid p-3">
-                      <Login needRedirection={false} />
+                      <Login needRedirection={false} modelClose={this.modelClose}/>
                     </div>
                   </div>
                 </div>

@@ -10,7 +10,14 @@ class savedSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      savedSearchList: []
+      savedSearchList: [],
+      limit: 5,
+      todosPerPage: 5,
+      offset: 1,
+      isModelOpen: 0,
+      pageNo: 1,
+      itemsPerPage: 5,
+      total: 0,
     };
   }
 

@@ -33,8 +33,10 @@ class Header extends Component {
   handleSignOut = () => {
     this.props.logout(response => {
       console.log(response);
-      this.props.history.push("/");
     });
+    this.setState({ token: null })
+    store.clearAll();
+    this.props.history.push("/");
   };
 
   handleSignIn = () => {
@@ -111,7 +113,7 @@ class Header extends Component {
                       id="hamburg"
                       class={`hamburger hamburger--collapse ${
                         this.state.open ? "is-active" : ""
-                      }`}
+                        }`}
                       type="button"
                       onClick={() => {
                         this.setState({ open: !this.state.open });
@@ -291,15 +293,15 @@ class Header extends Component {
                                 logout
                               </span>
                             ) : (
-                              <span
-                                onClick={() => {
-                                  this.handleSignIn();
-                                }}
-                              >
-                                {" "}
-                                signin{" "}
-                              </span>
-                            )}{" "}
+                                <span
+                                  onClick={() => {
+                                    this.handleSignIn();
+                                  }}
+                                >
+                                  {" "}
+                                  signin{" "}
+                                </span>
+                              )}{" "}
                           </a>
                         </div>
                       </li>

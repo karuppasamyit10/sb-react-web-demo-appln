@@ -301,9 +301,9 @@ class partner extends Component {
                         transport.
                       </p>
                       <div class="mt-3">
-                        <a href="javascript:;" class="btn btn-primary">
+                        <Link to={PATH.PARTNER_SUB_DESCRIPTION} class="btn btn-primary">
                           Contact
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
