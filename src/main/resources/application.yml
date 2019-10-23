@@ -76,15 +76,15 @@ endpoints:
 spring:
   resources:
     static-locations:
-      - file:///home/ubuntu/sb-demo-app/imgs/
+      - file:///home/ubuntu/auto_harasow/imgs/
   profiles: dev
   application:
-    name: sb-demo-appln
+    name: auto_harasow
 #  resources:
 #    static-locations:
 #      - file:/home/concertcare/auto-harasow/sb-demo-appln/react-web-app/web-src/build/
   datasource:
-    url: jdbc:mysql://localhost:3306/sb-demo-appln_final?createDatabaseIfNotExist=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull  
+    url: jdbc:mysql://localhost:3306/auto_harasow?createDatabaseIfNotExist=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull  
     username: root
     password: root
     test-while-idle: true
@@ -118,7 +118,7 @@ spring:
   freemarker:
     check-template-location: false   
 server:
-  port: 8181
+  port: 8080
   contextPath: /
   error:
     whitelabel:
@@ -131,7 +131,7 @@ server:
 
 common:
   config:
-    host-base-url: http://35.160.123.119:8181/
+    host-base-url: http://13.232.232.145:8080/
     from-mail: support@example.com
     https-socket-io: false
     socket-io-port: 7070

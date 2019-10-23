@@ -88,7 +88,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: "com.moowork.node"
 
 jar {
-    baseName = 'sb-demo-appln'
+    baseName = 'auto_harasow'
     version =  ''
 }
 
