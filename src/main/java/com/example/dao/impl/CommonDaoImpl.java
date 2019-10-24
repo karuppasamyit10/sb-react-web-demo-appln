@@ -604,7 +604,7 @@ public class CommonDaoImpl implements CommonDao {
 	 * @see com.example.dao.CommonDao#getVehicleList(com.example.bean.VehicleSearchBean, java.lang.String)
 	 */
 	@Override
-	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean) throws Exception {
+	public Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, long userId, long cookieUserId) throws Exception {
 		logger.info("::::Enter(daoImpl)==>getVehicleList::::");
 		String methodName = "GET VEHICLE LIST";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
@@ -825,6 +825,17 @@ public class CommonDaoImpl implements CommonDao {
 			List<Object> vehicleDetailList = new LinkedList<Object>();
 			for(VehicleDetail vehicleDetail : query.getResultList()) {
 				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				
+				params.put("savedSearchId", 0);
+				params.put("isFavorite", false);
+				if(userId>0){
+					SavedMySearch savedMySearch = savedMySearchRepository.findByVehicleIdAndUserIdAndIsDeleted(vehicleDetail.getVehicleId(), userId, 0);
+					if(savedMySearch!=null)
+					{
+						params.put("savedSearchId", savedMySearch.getSavedSearchId());
+						params.put("isFavorite", true);
+					}
+				}
 				params.put("vehicleId", vehicleDetail.getVehicleId());
 				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
 				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
@@ -980,7 +991,7 @@ public class CommonDaoImpl implements CommonDao {
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		try {
 			List<Object> savedSearchList = new LinkedList<Object>();
-			List<SavedMySearch> savedMySearches = savedMySearchRepository.findByUserIdAndIsDeleted(userId, 0);
+			List<SavedMySearch> savedMySearches = savedMySearchRepository.findByUserIdAndIsDeletedOrderByCreatedDateDesc(userId, 0);
 			if(savedMySearches==null || savedMySearches.isEmpty())
 			{
 				rootParams.put("savedSearchList", savedSearchList);

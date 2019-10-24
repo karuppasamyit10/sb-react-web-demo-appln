@@ -14,6 +14,6 @@ public interface SavedMySearchRepository extends JpaRepository<SavedMySearch, Lo
 	
 	SavedMySearch findBySavedSearchIdAndUserId(long savedSearchId, long userId);
 	
-	List<SavedMySearch> findByUserIdAndIsDeleted(long userId, int isDeleted);
+	List<SavedMySearch> findByUserIdAndIsDeletedOrderByCreatedDateDesc(long userId, int isDeleted);
 	
 }

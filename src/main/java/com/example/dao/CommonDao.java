@@ -19,7 +19,7 @@ public interface CommonDao {
 
 	Map<?, ?> getVehicleModelDetails(long modelId) throws Exception;
 
-	Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean) throws Exception;
+	Map<?, ?> getVehicleList(VehicleSearchBean vehicleSearchBean, long userId, long cookieUserId) throws Exception;
 
 	Map<?, ?> getVehicleDetails(long vehicleId, String userAgent) throws Exception;
 

@@ -172,7 +172,9 @@ public class CommonController {
 		logger.info("Controller==>Enter==>getVehicleList<==");
 		String methodName = "GET VEHICLE LIST";
 		try { 
-			return commonDao.getVehicleList(vehicleSearchBean);
+			long userId = CommonUtil.getUserId();
+			long cookieUserId = CommonUtil.getCookieUserId(request);
+			return commonDao.getVehicleList(vehicleSearchBean, userId, cookieUserId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>getVehicleList<==");
@@ -210,9 +212,9 @@ public class CommonController {
 	}
 	
 	//POST add vehicleId into savedmysearches
-	@RequestMapping(method = RequestMethod.POST, value ="/add/savedmysearches", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value ="/add/savedmysearches", produces = "application/json", consumes="application/json")
 	@ResponseBody
-	public Map<?, ?> addSavedMySearches(VehicleSearchBean vehicleSearchBean, HttpServletRequest request) throws Exception {
+	public Map<?, ?> addSavedMySearches(@RequestBody VehicleSearchBean vehicleSearchBean, HttpServletRequest request) throws Exception {
 		logger.info("Controller==>Enter==>addSavedMySearches<==");
 		String methodName = "ADD SAVED MY SEARCHES";
 		

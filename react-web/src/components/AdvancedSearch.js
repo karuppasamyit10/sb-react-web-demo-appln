@@ -468,17 +468,33 @@ class AdvancedSearch extends Component {
     })
   }
 
-  saveFavorite = (vehicleId, index) => {
+  deleteSavedSearch = (savedSearchId) => {
+    this.props.deleteSavedSearch({ savedSearchId: savedSearchId }, (response) => {
+      console.log(response)
+    })
+  }
+
+  saveFavorite = (isFavorite, savedSearchId, vehicleId,  index) => {
+    console.log(isFavorite);
+    console.log(savedSearchId);
+    console.log(vehicleId);
     let userSession = store.get("userSession");
     if (userSession) {
       let vehicleList = this.state.vehicleList;
-      vehicleList[index].isFavorite =
-        vehicleList[index].isFavorite === 0 ? 1 : 0;
-      if (vehicleList[index].isFavorite) {
-        this.addToSavedSearch(vehicleId)
+      // vehicleList[index].isFavorite =
+      //   vehicleList[index].isFavorite === 0 ? 1 : 0;
+      if (!isFavorite) {
+        this.addToSavedSearch(vehicleId);
+        this.setState({ vehicleList: vehicleList });
+        this.props.showNotification("Added to favourites", "success");
+        vehicleList[index].isFavorite = true;
+      } else {
+        this.deleteSavedSearch(savedSearchId);
+        this.setState({ vehicleList: vehicleList });
+        vehicleList[index].isFavorite = false;
+        this.props.showNotification("Removed to favourites", "success");
       }
-      this.setState({ vehicleList: vehicleList });
-      this.props.showNotification("Added to favourites", "success");
+      
     } else {
       // this.props.history.push(PATH.SIGIN);
       // let redirectPage = PATH.ADVANCED_SEARCH;
@@ -567,9 +583,9 @@ class AdvancedSearch extends Component {
       this.setState({ isLoading: false });
       if (response && response.response_code === 0) {
         const { totalRecords, vehicleDetailList } = response.response;
-        vehicleDetailList.map(i => {
-          return (i.isFavorite = 0);
-        });
+        // vehicleDetailList.map(i => {
+        //   return (i.isFavorite = 0);
+        // });
         this.setState({ total: totalRecords, vehicleList: vehicleDetailList });
       }
       if (this.state.brandId && this.state.isFirst === 0) {
@@ -2979,7 +2995,7 @@ class AdvancedSearch extends Component {
                                           : `fa fa-heart-o`
                                       }
                                       onClick={() => {
-                                        this.saveFavorite(
+                                        this.saveFavorite(vehicle.isFavorite,vehicle.savedSearchId,
                                           vehicle.vehicleId,
                                           index
                                         );
@@ -3225,6 +3241,9 @@ const mapDispatchToProps = dispatch => {
     },
     addToSavedSearch: (params, callback) => {
       dispatch(addToSavedSearch(params, callback));
+    },
+    deleteSavedSearch: (params, callback) => {
+      dispatch(deleteSavedSearch(params, callback));
     },
     getCategory2: (params, callback) => {
       dispatch(getCategory2(params, callback));

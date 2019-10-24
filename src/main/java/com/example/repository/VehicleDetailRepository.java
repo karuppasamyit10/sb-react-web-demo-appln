@@ -22,13 +22,13 @@ public interface VehicleDetailRepository extends JpaRepository<VehicleDetail, Lo
 	
 	VehicleDetail findByVehicleId(long vehicleId);
 	
-	List<VehicleDetail> findByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeleted(long vehicleTypeId, String conditionType, int isDeleted);
+	List<VehicleDetail> findByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeleted(int vehicleTypeId, String conditionType, int isDeleted);
 	
-	List<VehicleDetail> findTopByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(long vehicleTypeId, String conditionType, int isDeleted);
+	List<VehicleDetail> findTopByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(int vehicleTypeId, String conditionType, int isDeleted);
 	
-	List<VehicleDetail> findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(long vehicleTypeId, String bodyStyleTyped, int isDeleted);
+	List<VehicleDetail> findByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeleted(int vehicleTypeId, String bodyStyleTyped, int isDeleted);
 	
-	List<VehicleDetail> findTopByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(long vehicleTypeId, String bodyStyleTyped, int isDeleted);
+	List<VehicleDetail> findTopByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(int vehicleTypeId, String bodyStyleTyped, int isDeleted);
 	
 		
 }
