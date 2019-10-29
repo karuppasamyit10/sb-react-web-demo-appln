@@ -24,7 +24,7 @@ export function getSearchResult(params, callback) {
 
 export function getDashboardDetails(params, callback) {
   return function (dispatch) {
-    Client.get(URL.GET_DASHBOARD_DATA, params, true)
+    Client.get(URL.GET_DASHBOARD_DATA, params, false)
       .then(response => {
         console.log(response);
         myLog("====get dashboard response===::::", response);
@@ -98,7 +98,7 @@ export function getVehicleDetails(params, callback) {
 
 export function getVehicleMasterData(params, callback) {
   return function (dispatch) {
-    Client.get(URL.GET_VEHICLE_ALL_DETAILS, params, true)
+    Client.get(URL.GET_VEHICLE_ALL_DETAILS, params, false)
       .then(response => {
         console.log(response);
         myLog("====car master response===::::", response);

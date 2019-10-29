@@ -79,7 +79,7 @@ export function logout(callback) {
 export function registerCookie(callback) {
   Client.get(URL.COOKIE, null, true)
     .then(response => {
-      console.log(response,'cooooooooooooooookie')
+      console.log(response, "cooooooooooooooookie");
       myLog("====register cookie response===::::", response);
       callback(response);
     })
@@ -99,6 +99,23 @@ export function userRegistration(object, callback) {
         myLog("====registration error===????", error);
       });
   };
+}
+
+export function getCommonDetails(callback) {
+  Client.get(URL.COMMON, null, false)
+    .then(response => {
+      console.log(response, "comon");
+      if (response && response.response_code === 0) {
+        let userSession = store.get("userSession");
+        userSession.common = response.response;
+        store.set("userSession", userSession);
+      }
+      myLog("====get common response===::::", response);
+      callback(response);
+    })
+    .catch(error => {
+      myLog("====get common error response===????", error);
+    });
 }
 
 export function changeUploadStaus(value) {

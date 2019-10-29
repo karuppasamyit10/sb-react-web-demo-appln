@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import stores from "./stores";
-import { PATH } from './utils/Constants'
+import { PATH } from "./utils/Constants";
 
 // import "./assets/css/style.css";
 // import "./assets/css/dev.css";
@@ -46,7 +46,7 @@ import whoWeAre from "./components/common/whoWeAre";
 import howWeWork from "./components/common/howWeWork";
 import howToOrder from "./components/common/howToOrder";
 import howToUseHgs from "./components/common/howToUseHgs";
-import { cookiePresent } from "./utils/AthuService";
+import { cookiePresent, commonDetailsPresent } from "./utils/AthuService";
 import PropTypes from "prop-types";
 import aboutUs from "./components/common/aboutUs";
 import specialServices from "./components/common/specialService";
@@ -69,7 +69,9 @@ import community from "./components/common/community";
 const CustomRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props => cookiePresent() && <Component {...props} />}
+    render={props =>
+      cookiePresent() && commonDetailsPresent() && <Component {...props} />
+    }
   />
 );
 
@@ -139,12 +141,32 @@ ReactDOM.render(
         />
         <CustomRoute exact path="/saved/search" component={savedSearch} />
         <CustomRoute exact path="/partner" component={partner} />
-        <CustomRoute exact path={PATH.PARTNER_CONTACT} component={partnerContact} />
-        <CustomRoute exact path={PATH.PARTNER_COUNTRY} component={partnerCountries} />
-        <CustomRoute exact path={PATH.PARTNER_SUB_DESCRIPTION} component={partnerSubDescription} />
+        <CustomRoute
+          exact
+          path={PATH.PARTNER_CONTACT}
+          component={partnerContact}
+        />
+        <CustomRoute
+          exact
+          path={PATH.PARTNER_COUNTRY}
+          component={partnerCountries}
+        />
+        <CustomRoute
+          exact
+          path={PATH.PARTNER_SUB_DESCRIPTION}
+          component={partnerSubDescription}
+        />
         <CustomRoute exact path="/seller" component={seller} />
-        <CustomRoute exact path="/seller/harasow-seller" component={harasowSeller} />
-        <CustomRoute exact path="/transport/harasow-transport" component={harasowTransport} />
+        <CustomRoute
+          exact
+          path="/seller/harasow-seller"
+          component={harasowSeller}
+        />
+        <CustomRoute
+          exact
+          path="/transport/harasow-transport"
+          component={harasowTransport}
+        />
         <CustomRoute exact path="/community" component={community} />
         {/* Notification  Message*/}
         <Notification />

@@ -20,7 +20,8 @@ class Header extends Component {
     super(props);
     this.state = {
       token: null,
-      open: false
+      open: false,
+      languageCode : "EN"
     };
   }
 
@@ -34,7 +35,7 @@ class Header extends Component {
     this.props.logout(response => {
       console.log(response);
     });
-    this.setState({ token: null })
+    this.setState({ token: null });
     store.clearAll();
     this.props.history.push("/");
   };
@@ -44,6 +45,9 @@ class Header extends Component {
   };
 
   render() {
+    let userSession = store.get("userSession");
+    let { common } = userSession;
+    let { languageList } = common;
     return (
       <header class="header">
         <nav
@@ -113,7 +117,7 @@ class Header extends Component {
                       id="hamburg"
                       class={`hamburger hamburger--collapse ${
                         this.state.open ? "is-active" : ""
-                        }`}
+                      }`}
                       type="button"
                       onClick={() => {
                         this.setState({ open: !this.state.open });
@@ -136,41 +140,25 @@ class Header extends Component {
                     </a>
                   </span>
                   <ul class="language-links d-inline-block">
-                    <li>
-                      <a href="javascript:;" class="active">
-                        English
-                      </a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">Español</a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">Français</a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">العربية</a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">ქართული</a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">Kiswahili</a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">русский</a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">Português </a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">日本語</a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">中文 </a>
-                    </li>
-                    <li>
-                      <a href="javascript:;">한국어</a>
-                    </li>
+                    {languageList && languageList.length
+                      ? languageList.map((language, i) => {
+                          return (
+                            <li>
+                              <a
+                                href="javascript:;"
+                                class={
+                                  this.state.languageCode ===
+                                  language.languageCode
+                                    ? "active"
+                                    : ""
+                                }
+                              >
+                                {language.language}
+                              </a>
+                            </li>
+                          );
+                        })
+                      : ""}
                   </ul>
                   <select class="language_select">
                     <option value="0">English</option>
@@ -293,15 +281,15 @@ class Header extends Component {
                                 logout
                               </span>
                             ) : (
-                                <span
-                                  onClick={() => {
-                                    this.handleSignIn();
-                                  }}
-                                >
-                                  {" "}
-                                  signin{" "}
-                                </span>
-                              )}{" "}
+                              <span
+                                onClick={() => {
+                                  this.handleSignIn();
+                                }}
+                              >
+                                {" "}
+                                signin{" "}
+                              </span>
+                            )}{" "}
                           </a>
                         </div>
                       </li>

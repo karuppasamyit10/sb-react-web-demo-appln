@@ -4,7 +4,10 @@ import { AppWrapper } from "../public/AppWrapper";
 import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
 import { showNotification } from "../../actions/NotificationAction";
-import { getSavedSearchList, deleteSavedSearch } from '../../actions/searchAction';
+import {
+  getSavedSearchList,
+  deleteSavedSearch
+} from "../../actions/searchAction";
 
 class savedSearch extends Component {
   constructor(props) {
@@ -17,7 +20,7 @@ class savedSearch extends Component {
       isModelOpen: 0,
       pageNo: 1,
       itemsPerPage: 5,
-      total: 0,
+      total: 0
     };
   }
 
@@ -35,15 +38,45 @@ class savedSearch extends Component {
   }
 
   getSavedSearchList = () => {
-    this.props.getSavedSearchList({}, (response) => {
-      console.log(response)
+    this.props.getSavedSearchList({}, response => {
+      console.log(response);
       if (response && response.response_code === 0) {
-        this.setState({ savedSearchList: response.response.savedSearchList })
+        this.setState({ savedSearchList: response.response.savedSearchList });
       }
-    })
-  }
+    });
+  };
+
+  deleteSavedSearch = (vehicleId, savedSearchId) => {
+    let formData = new FormData();
+    formData.append("vehicleId", vehicleId);
+    formData.append("savedSearchId", savedSearchId);
+    let data = {
+      vehicleId: vehicleId,
+      savedSearchId: savedSearchId
+    }
+    this.props.deleteSavedSearch(data, response => {
+      console.log(response);
+      if(response && response.response_code === 0){
+        this.props.showNotification("deleted successfully","success");
+        this.getSavedSearchList();
+      }
+      else{
+        this.props.showNotification(response.response_message,'error');
+      }
+    });
+  };
+
+  searchDetails = (vehicleId) => {
+    this.props.history.push({
+      pathname: PATH.SEARCH_DETAIL,
+      state: {
+        vehicleId: vehicleId
+      }
+    });
+  };
 
   render() {
+    const { savedSearchList } = this.state;
     return (
       <React.Fragment>
         <section class="breadcrumb_wrap">
@@ -120,144 +153,54 @@ class savedSearch extends Component {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Used Acura MDX</td>
-                            <td>
-                              357 Great Deals out of 7,942 listings starting at
-                              $1,100
-                            </td>
-                            <td>USD 970</td>
-                            <td>
-                              <div
-                                class="btn-group"
-                                role="group"
-                                aria-label="Basic example"
-                              >
-                                <button type="button" class="btn btn-primary">
-                                  Edit
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Used Acura MDX</td>
-                            <td>
-                              357 Great Deals out of 7,942 listings starting at
-                              $1,100
-                            </td>
-                            <td>USD 970</td>
-                            <td>
-                              <div
-                                class="btn-group"
-                                role="group"
-                                aria-label="Basic example"
-                              >
-                                <button type="button" class="btn btn-primary">
-                                  Edit
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Used Acura MDX</td>
-                            <td>
-                              357 Great Deals out of 7,942 listings starting at
-                              $1,100
-                            </td>
-                            <td>USD 970</td>
-                            <td>
-                              <div
-                                class="btn-group"
-                                role="group"
-                                aria-label="Basic example"
-                              >
-                                <button type="button" class="btn btn-primary">
-                                  Edit
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Used Acura MDX</td>
-                            <td>
-                              357 Great Deals out of 7,942 listings starting at
-                              $1,100
-                            </td>
-                            <td>USD 970</td>
-                            <td>
-                              <div
-                                class="btn-group"
-                                role="group"
-                                aria-label="Basic example"
-                              >
-                                <button type="button" class="btn btn-primary">
-                                  Edit
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Used Acura MDX</td>
-                            <td>
-                              357 Great Deals out of 7,942 listings starting at
-                              $1,100
-                            </td>
-                            <td>USD 970</td>
-                            <td>
-                              <div
-                                class="btn-group"
-                                role="group"
-                                aria-label="Basic example"
-                              >
-                                <button type="button" class="btn btn-primary">
-                                  Edit
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Used Acura MDX</td>
-                            <td>
-                              357 Great Deals out of 7,942 listings starting at
-                              $1,100
-                            </td>
-                            <td>USD 970</td>
-                            <td>
-                              <div
-                                class="btn-group"
-                                role="group"
-                                aria-label="Basic example"
-                              >
-                                <button type="button" class="btn btn-primary">
-                                  Edit
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
+                          {savedSearchList && savedSearchList.length
+                            ? savedSearchList.map((list, index) => {
+                                return (
+                                  <tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>
+                                      {list.vehicleName ? list.vehicleName : ""}
+                                    </td>
+                                    <td>
+                                      357 Great Deals out of 7,942 listings
+                                      starting at $1,100
+                                    </td>
+                                    <td>USD 970</td>
+                                    <td>
+                                      <div
+                                        class="btn-group"
+                                        role="group"
+                                        aria-label="Basic example"
+                                      >
+                                        <button
+                                          type="button"
+                                          class="btn btn-primary"
+                                          onClick={()=>{
+                                            this.searchDetails(list.vehicleId)
+                                          }}
+                                        >
+                                          View
+                                        </button>
+                                        <button
+                                          type="button"
+                                          class="btn btn-danger"
+                                          onClick={() => {
+                                            this.deleteSavedSearch(
+                                              list.vehicleId,
+                                              list.savedSearchId
+                                            );
+                                          }}
+                                        >
+                                          Delete
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                );
+                              })
+                            : <tr className="text-center">
+                              <td colspan="12">No items found</td>
+                            </tr>}
                         </tbody>
                       </table>
                     </div>
@@ -276,6 +219,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getSavedSearchList: (params, callback) => {
       dispatch(getSavedSearchList(params, callback));
+    },
+    deleteSavedSearch: (params, callback) => {
+      dispatch(deleteSavedSearch(params, callback));
     },
     showNotification: (message, type) => {
       dispatch(showNotification(message, type));

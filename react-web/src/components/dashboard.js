@@ -172,10 +172,19 @@ class Upload extends Component {
     });
   };
 
+  searchDetails = vehicleId => {
+    this.props.history.push({
+      pathname: PATH.SEARCH_DETAIL,
+      state: {
+        vehicleId: vehicleId
+      }
+    });
+  };
+
   render() {
     let {
       ourLastSearchList,
-      popularNewCarsList,
+      popularNewsList,
       popularSedansList,
       relatedSearchList,
       savedRecentSearchList
@@ -1473,14 +1482,18 @@ class Upload extends Component {
           <div class="container">
             <div class="head2 black medium text-center">Popular New Cars</div>
             <ul class="list-group popularcars-staggering mt-3">
-              {popularNewCarsList && popularNewCarsList.length ? (
-                popularNewCarsList.map(car => {
+              {popularNewsList && popularNewsList.length ? (
+                popularNewsList.map(vehicle => {
                   return (
-                    <li class="list-group-item" style={{ opacity: 1 }}>
-                      <Link to={PATH.SEARCH_DETAIL}>
-                        <div class="head3">New Buick Encore</div>
-                        <p class="para1">39,042 listings starting at $13,990</p>
-                      </Link>
+                    <li
+                      class="list-group-item"
+                      style={{ opacity: 1 }}
+                      onClick={() => {
+                        this.searchDetails(vehicle.vehicleId);
+                      }}
+                    >
+                      <div class="head3">{vehicle.vehicleName}</div>
+                      <p class="para1">39,042 listings starting at $13,990</p>
                     </li>
                   );
                 })
@@ -1587,20 +1600,18 @@ class Upload extends Component {
             <div class="head2 black medium text-center">Popular Sedans</div>
             <ul class="list-group mt-3 popularcars-staggering">
               {popularSedansList && popularSedansList.length ? (
-                popularSedansList.map(sedan => {
+                popularSedansList.map(vehicle => {
                   return (
                     <li
                       class="list-group-item"
                       style={{ opacity: 1 }}
-                      style={{ opacity: 1 }}
+                      onClick={() => this.searchDetails(vehicle.vehicleId)}
                     >
-                      <Link to={PATH.SEARCH_DETAIL}>
-                        <div class="head3">Used BMW 3 Series</div>
-                        <p class="para1">
-                          716 Great Deals out of 18,117 listings starting at
-                          $1,500
-                        </p>
-                      </Link>{" "}
+                      <div class="head3">{vehicle.vehicleName}</div>
+                      <p class="para1">
+                        716 Great Deals out of 18,117 listings starting at
+                        $1,500
+                      </p>
                     </li>
                   );
                 })

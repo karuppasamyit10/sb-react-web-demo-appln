@@ -1,4 +1,4 @@
-import { logout , registerCookie } from '../actions/userAction';
+import { logout , registerCookie , getCommonDetails} from '../actions/userAction';
 // import { myLog } from './Utility';
 import store from 'store';  
 import {networkChanged} from '../actions/networkAction';
@@ -8,6 +8,14 @@ export let userTokenRenewalTimer;
 
 export const cookiePresent = () =>{
   registerCookie();
+  return true;
+}
+
+export const commonDetailsPresent = () =>{
+  let userSession = store.get("userSession");
+  if(userSession && !userSession.common){
+    getCommonDetails()
+  }
   return true;
 }
 
