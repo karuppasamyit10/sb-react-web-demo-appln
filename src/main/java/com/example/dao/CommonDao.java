@@ -11,6 +11,9 @@ import com.example.bean.VehicleSearchBean;
  */
 public interface CommonDao {
 
+	
+	Map<?, ?> getAllCommonDetails() throws Exception;
+	
 	Map<?, ?> userRegistration(UserRegistrationBean userRegistrationBean, String userAgent) throws Exception;
 	
 	Map<?, ?> getAllVehicleDetails(int vehicleTypeId) throws Exception;
@@ -31,7 +34,7 @@ public interface CommonDao {
 
 	Map<?, ?> deleteSavedMySearches(long savedSearchId, long userId, long cookieUserId) throws Exception;
 
-	Map<?, ?> getAllSavedMySearches(long savedSearchId, long userId, long cookieUserId) throws Exception;
+	Map<?, ?> getAllSavedMySearches(VehicleSearchBean vehicleSearchBean) throws Exception;
 
 	Map<?, ?> getDashboardDetails(long userId, long cookieUserId) throws Exception;
 

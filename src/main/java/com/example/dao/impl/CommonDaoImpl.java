@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -204,6 +205,45 @@ public class CommonDaoImpl implements CommonDao {
 			e.printStackTrace();
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
 		}
+	}
+	
+	@Override
+	public Map<?, ?> getAllCommonDetails() throws Exception {
+		logger.info("::::Enter(daoImpl)==>getAllCommonDetails::::");
+		String methodName = "GET ALL COMMON DETAILS";
+		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		try 
+		{
+			List<Object> countriesList = new LinkedList<>();
+			List<Object> languageList = new LinkedList<>();
+			List<Language> languages = languageRepository.findByIsDeletedOrderByLanguageAsc(0);
+			for(Language language: languages)
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("languageId", language.getLanguageId());
+				params.put("language", language.getLanguage());
+				params.put("languageCode", language.getLanguageCode());
+				languageList.add(params);
+			}
+			rootParams.put("languageList", languageList);	
+			
+			List<Country> countries= null;
+			countries= countryRepository.findByIsDeletedOrderByCountryAsc(0);
+			for(Country country : countries) {
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("countryId", country.getCountryId());
+				params.put("country", country.getCountry());
+				countriesList.add(params);
+			}			
+			rootParams.put("countryList", countriesList);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
+		} catch (Exception e) {
+			logger.error("::::Exception(daoImpl)==>getAllCommonDetails::::");
+			e.printStackTrace();
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured", null);
+		}
+		
+		
 	}
 
 	@Override
@@ -519,24 +559,12 @@ public class CommonDaoImpl implements CommonDao {
 		String methodName = "GET DASHBOARD DETAILS";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
 		try {
-			List<Object> languageList = new LinkedList<>();
 			List<Object> ourLastSearchList = new LinkedList<>();
 			List<Object> savedRecentSearchList = new LinkedList<>();
 			List<Object> relatedSearchList = new LinkedList<>();
 			List<Object> popularNewsList = new LinkedList<>();
 			List<Object> popularSedansList = new LinkedList<>();
-
-			List<Language> languages = languageRepository.findByIsDeletedOrderByLanguageAsc(0);
-			for(Language language: languages)
-			{
-				Map<String, Object> params = new LinkedHashMap<String, Object>();
-				params.put("languageId", language.getLanguageId());
-				params.put("language", language.getLanguage());
-				params.put("languageCode", language.getLanguageCode());
-				languageList.add(params);
-			}
-			rootParams.put("languageList", languageList);	
-			
+		
 			List<VehicleDetail> ourLastSearch = vehicleDetailRepository.findTopByVehicleTypeIdAndConditionTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(1, "New", 0);
 			for(VehicleDetail vehicleDetail: ourLastSearch)
 			{
@@ -985,16 +1013,25 @@ public class CommonDaoImpl implements CommonDao {
 	}
 	
 	@Override
-	public Map<?, ?> getAllSavedMySearches(long savedSearchId, long userId, long cookieUserId) throws Exception {
+	public Map<?, ?> getAllSavedMySearches(VehicleSearchBean vehicleSearchBean) throws Exception {
 		logger.info("::::Enter(daoImpl)==>getAllSavedMySearches::::");
 		String methodName = "GET ALL SAVED MY SEARCHES";
 		Map<String, Object> rootParams = new LinkedHashMap<String, Object>();
+		int totalRecords = 0;
 		try {
+			if(vehicleSearchBean.getPageNo()==0){
+				vehicleSearchBean.setPageNo(1);
+			}
+			if(vehicleSearchBean.getItemsPerPage()==0){
+				vehicleSearchBean.setItemsPerPage(10);
+			}
 			List<Object> savedSearchList = new LinkedList<Object>();
-			List<SavedMySearch> savedMySearches = savedMySearchRepository.findByUserIdAndIsDeletedOrderByCreatedDateDesc(userId, 0);
-			if(savedMySearches==null || savedMySearches.isEmpty())
+			Page<SavedMySearch> savedMySearches = savedMySearchRepository.findByUserIdAndIsDeletedOrderByCreatedDateDesc(vehicleSearchBean.getUserId(), 0, 
+					pageable(vehicleSearchBean.getPageNo(), vehicleSearchBean.getItemsPerPage()));
+			if(savedMySearches==null || savedMySearches.getContent().isEmpty())
 			{
 				rootParams.put("savedSearchList", savedSearchList);
+				rootParams.put("totalRecords", totalRecords);
 				return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 			}
 			for(SavedMySearch savedMySearch: savedMySearches){
@@ -1010,6 +1047,7 @@ public class CommonDaoImpl implements CommonDao {
 				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
 				savedSearchList.add(params);
 			}
+			rootParams.put("totalRecords", totalRecords);
 			rootParams.put("savedSearchList", savedSearchList);
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", rootParams);
 		} catch (Exception e) {

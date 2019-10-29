@@ -2,9 +2,6 @@ package com.example;
 
 
 import java.io.IOException;
-import java.util.TimeZone;
-
-import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +19,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 /**
  * @author Karuppasamy Mariappan
@@ -32,7 +28,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
-@EnableResourceServer
 @EnableJpaRepositories({"com.example.repository"})
 public class MainApplication  extends SpringBootServletInitializer  {
 	
@@ -90,8 +85,8 @@ public class MainApplication  extends SpringBootServletInitializer  {
 	/**
 	 * start the server with UTC as default timezone
 	 */
-	@PostConstruct
-	void setDefauls(){
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+//	@PostConstruct
+//	void setDefauls(){
+//		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+//	}
 }

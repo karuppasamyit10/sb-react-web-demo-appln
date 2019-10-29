@@ -74,6 +74,20 @@ public class CommonController {
 	    return "Success";
 	}
 	
+	//Get Common data for all pages
+	@RequestMapping(method = RequestMethod.GET, value = "/common", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getAllCommonDetails() throws Exception {
+		logger.info("Controller==>Enter==>getAllCommonDetails<==");
+		String methodName = "GET ALL COMMON DETAILS";
+		try { 
+			return commonDao.getAllCommonDetails();
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>getAllCommonDetails<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getAllCommonDetails", null);
+		}
+	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/user/registration", produces = "application/json", consumes = "application/json")
 	@ResponseBody
@@ -240,7 +254,7 @@ public class CommonController {
 	//DELETE delete vehicle id into savedmysearches
 	@RequestMapping(method = RequestMethod.DELETE, value ="/delete/savedmysearches", produces = "application/json")
 	@ResponseBody
-	public Map<?, ?> deleteSavedMySearches(VehicleSearchBean vehicleSearchBean, HttpServletRequest request) throws Exception {
+	public Map<?, ?> deleteSavedMySearches(@RequestParam(value="savedSearchId", defaultValue="0") long savedSearchId, HttpServletRequest request) throws Exception {
 		logger.info("Controller==>Enter==>deleteSavedMySearches<==");
 		String methodName = "DELETE SAVED MY SEARCHES";
 		try {
@@ -250,11 +264,11 @@ public class CommonController {
 			{
 				return CommonUtil.wrapResultResponse(methodName, 1, "Wrong user details", null);
 			}
-			if(vehicleSearchBean.getSavedSearchId()<=0)
+			if(savedSearchId==0)
 			{
 				return CommonUtil.wrapResultResponse(methodName, 2, "Wrong saved search details", null);
 			}
-			return commonDao.deleteSavedMySearches(vehicleSearchBean.getSavedSearchId(), userId, cookieUserId);
+			return commonDao.deleteSavedMySearches(savedSearchId, userId, cookieUserId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>addSavedMySearches<==");
@@ -276,7 +290,9 @@ public class CommonController {
 			{
 				return CommonUtil.wrapResultResponse(methodName, 1, "Wrong user details", null);
 			}
-			return commonDao.getAllSavedMySearches(vehicleSearchBean.getSavedSearchId(), userId, cookieUserId);
+			vehicleSearchBean.setCookieUserId(cookieUserId);
+			vehicleSearchBean.setUserId(userId);
+			return commonDao.getAllSavedMySearches(vehicleSearchBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>getAllSavedMySearches<==");
@@ -294,10 +310,10 @@ public class CommonController {
 		try { 
 			long userId = CommonUtil.getUserId();
 			long cookieUserId = CommonUtil.getCookieUserId(request);
-			if(userId<=0)
-			{
-				return CommonUtil.wrapResultResponse(methodName, 1, "Wrong user details", null);
-			}
+//			if(userId<=0)
+//			{
+//				return CommonUtil.wrapResultResponse(methodName, 1, "Wrong user details", null);
+//			}
 			return commonDao.getDashboardDetails(userId, cookieUserId);
 		} catch (Exception e) {
 			e.printStackTrace();

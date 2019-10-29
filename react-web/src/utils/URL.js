@@ -26,6 +26,7 @@ module.exports = {
   LOGOUT: 'api/user/logout',
   REGISTRATION: 'api/public/user/registration',
   COOKIE: 'api/public/update-cookie',
+  COMMON: 'api/public/common',
   CHANGEPASSWORD: 'changePassword',
   UPDATEPASSWORD: 'updatePassword',
   PROFILE: 'api/user/profile',

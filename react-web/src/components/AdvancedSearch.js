@@ -469,7 +469,9 @@ class AdvancedSearch extends Component {
   }
 
   deleteSavedSearch = (savedSearchId) => {
-    this.props.deleteSavedSearch({ savedSearchId: savedSearchId }, (response) => {
+    // let params  = new FormData();
+    // params.append("savedSearchId",savedSearchId)
+    this.props.deleteSavedSearch({savedSearchId}, (response) => {
       console.log(response)
     })
   }

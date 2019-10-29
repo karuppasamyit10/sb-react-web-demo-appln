@@ -283,7 +283,7 @@ export default class Client {
       const config = {
         method: "DELETE",
         url,
-        data,
+        params : data,
         headers: Client.httpHeader(isAccessToken)
       };
       myLog("DELETE ::::: Input", config);

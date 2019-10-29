@@ -1,7 +1,7 @@
 package com.example.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ public interface SavedMySearchRepository extends JpaRepository<SavedMySearch, Lo
 	
 	SavedMySearch findBySavedSearchIdAndUserId(long savedSearchId, long userId);
 	
-	List<SavedMySearch> findByUserIdAndIsDeletedOrderByCreatedDateDesc(long userId, int isDeleted);
+	Page<SavedMySearch> findByUserIdAndIsDeletedOrderByCreatedDateDesc(long userId, int isDeleted, Pageable pageable);
 	
 }
