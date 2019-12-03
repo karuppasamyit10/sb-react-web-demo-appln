@@ -5,6 +5,8 @@ import { formatDate } from "../utils/utils";
 import { Spinner } from "react-activity";
 import "react-activity/dist/react-activity.css";
 import { connect } from "react-redux";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 import store from "store";
 import { Link } from "react-router-dom";
 import Background1 from "../assets/img/search/ssangyong.jpg";
@@ -160,82 +162,96 @@ class searchDetail extends Component {
               <div class="col-lg-7">
                 <div class="cargallery">
                   <div class="carsbig">
-                    <div>
+                    <Carousel>
                       <div class="imgs">
-                        {/* <img src={require("../assets/img/detail/big/big1.jpeg")} class="img-fluid" alt="" /> */}
+                        <iframe
+                          class="frameVideo"
+                          src="https://www.youtube.com/embed/V7OY0tQ_PeA"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div class="imgs zoomit">
                         <img
-                          src={
-                            this.state.vehicleDetails.parentImageUrl == ""
-                              ? require("../assets/img/detail/big/big1.jpeg")
-                              : this.state.vehicleDetails.parentImageUrl
-                          }
+                          src={require("../assets/img/detail/big/big2.jpeg")}
                           class="img-fluid"
                           alt=""
                         />
+                        <div class="clickdrag">
+                          <i class="fas fa-mouse"></i> Click and drag to zoom
+                          image
+                        </div>
                       </div>
-                    </div>
-                    {/* <div>
-                                            <div class="imgs">
-                                            <img src={require("../assets/img/detail/big/big2.jpeg")} class="img-fluid" alt="" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="imgs">
-                                            <img src={require("../assets/img/detail/big/big3.jpeg")} class="img-fluid" alt="" />
-
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="imgs">
-                                            <img src={require("../assets/img/detail/big/big4.jpeg")} class="img-fluid" alt="" />
-
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="imgs">
-                                            <img src={require("../assets/img/detail/big/big5.jpeg")} class="img-fluid" alt="" />
-
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="imgs">
-                                            <img src={require("../assets/img/detail/big/big6.jpeg")} class="img-fluid" alt="" />
-
-                                            </div>
-                                        </div> */}
+                      <div class="imgs zoomit">
+                        <img
+                          src={require("../assets/img/detail/big/big3.jpeg")}
+                          class="img-fluid"
+                          alt=""
+                        />
+                        <div class="clickdrag">
+                          <i class="fas fa-mouse"></i> Click and drag to zoom
+                          image
+                        </div>
+                      </div>
+                      <div class="imgs zoomit">
+                        <img
+                          src={require("../assets/img/detail/big/big4.jpeg")}
+                          class="img-fluid"
+                          alt=""
+                        />
+                        <div class="clickdrag">
+                          <i class="fas fa-mouse"></i> Click and drag to zoom
+                          image
+                        </div>
+                      </div>
+                      <div class="imgs zoomit">
+                        <img
+                          src={require("../assets/img/detail/big/big6.jpeg")}
+                          class="img-fluid"
+                          alt=""
+                        />
+                        <div class="clickdrag">
+                          <i class="fas fa-mouse"></i> Click and drag to zoom
+                          image
+                        </div>
+                      </div>
+                      <div class="imgs zoomit">
+                        <img
+                          src={require("../assets/img/detail/big/big3.jpeg")}
+                          class="img-fluid"
+                          alt=""
+                        />
+                        <div class="clickdrag">
+                          <i class="fas fa-mouse"></i> Click and drag to zoom
+                          image
+                        </div>
+                      </div>
+                      <div class="imgs zoomit">
+                        <img
+                          src={require("../assets/img/detail/big/big5.jpeg")}
+                          class="img-fluid"
+                          alt=""
+                        />
+                        <div class="clickdrag">
+                          <i class="fas fa-mouse"></i> Click and drag to zoom
+                          image
+                        </div>
+                      </div>
+                      <div class="imgs zoomit">
+                        <img
+                          src={require("../assets/img/detail/big/big6.jpeg")}
+                          class="img-fluid"
+                          alt=""
+                        />
+                        <div class="clickdrag">
+                          <i class="fas fa-mouse"></i> Click and drag to zoom
+                          image
+                        </div>
+                      </div>
+                    </Carousel>
+                    <div></div>
                   </div>
-                  {/* <div class="carssmall">
-                                        <div>
-                                            <a href="javascript:;" class="d-block">
-                                            <img src={require("../assets/img/detail/big/big1.jpeg")} class="img-fluid" alt="" />
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="javascript:;" class="d-block">
-                                            <img src={require("../assets/img/detail/big/big2.jpeg")} class="img-fluid" alt="" />
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="javascript:;" class="d-block">
-                                            <img src={require("../assets/img/detail/big/big3.jpeg")} class="img-fluid" alt="" />
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="javascript:;" class="d-block">
-                                            <img src={require("../assets/img/detail/big/big4.jpeg")} class="img-fluid" alt="" />
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="javascript:;" class="d-block">
-                                            <img src={require("../assets/img/detail/big/big5.jpeg")} class="img-fluid" alt="" />
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="javascript:;" class="d-block">
-                                            <img src={require("../assets/img/detail/big/big6.jpeg")} class="img-fluid" alt="" />
-                                            </a>
-                                        </div>
-                                    </div> */}
                 </div>
               </div>
               <div class="col-lg-5">

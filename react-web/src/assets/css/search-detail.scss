@@ -178,3 +178,37 @@ table{
     line-height: 24px;
     text-align: center;
 }
+
+.frameVideo{
+    width: 100%;
+    height: 497px;
+    @include max-1200{
+        height: 397px;
+    }
+    @include max-991{
+        height: 494px;
+    }
+    @include max-767{
+        height: 220px;
+    }
+}
+.imgs{
+
+    div{
+        width: 100%;
+        height: 100%;
+    }
+    .clickdrag{
+        color: #fff;
+        font-size: 12px;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 100%;
+        text-align: right;
+        z-index: 11111;
+        background: #000;
+        height: auto;
+        padding-right: 10px;
+    }
+}

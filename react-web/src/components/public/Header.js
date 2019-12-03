@@ -21,7 +21,7 @@ class Header extends Component {
     this.state = {
       token: null,
       open: false,
-      languageCode : "EN"
+      languageCode: "EN"
     };
   }
 
@@ -46,8 +46,9 @@ class Header extends Component {
 
   render() {
     let userSession = store.get("userSession");
-    let { common } = userSession;
-    let { languageList } = common;
+    let common = userSession && userSession.common ? userSession.common : null;
+    let languageList =
+      common && common.languageList ? common.languageList : null;
     return (
       <header class="header">
         <nav
@@ -313,7 +314,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Header);
+export default connect(null, mapDispatchToProps)(Header);
