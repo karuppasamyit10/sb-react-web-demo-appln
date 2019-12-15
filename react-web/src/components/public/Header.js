@@ -100,7 +100,7 @@ class Header extends Component {
   };
 
   handleSignIn = () => {
-    this.props.prop.history.push(PATH.SIGIN);
+    this.props.history.push(PATH.SIGIN);
     console.log(this.items);
   };
 
@@ -281,34 +281,34 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.HOW_TO_ORDER}>
                           {/* {this.setState.Menu2} */}
                           {t("How to Order.1")}
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.transport}>
                           {/* {this.setState.Menu3} */}
                           {t("Transport.1")}
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.PARTNER}>
                           {/* {this.setState.Menu4} */}
                           {t("Partner.1")}
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.SELLER}>
                           {/* {this.setState.Menu5} */}
                           {t("Seller.1")}
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.COMMUNITY}>
                           {/* {this.setState.Menu6} */}
                           {t("Community.1")}
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                     <ul class="navbar-nav nav-right">
