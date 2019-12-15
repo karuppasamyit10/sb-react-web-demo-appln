@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -82,95 +82,101 @@ CustomRoute.propTypes = {
 ReactDOM.render(
   <Provider store={stores}>
     <Router>
-      <React.Fragment>
-        <CustomRoute exact path="/signin" component={login} />
-        <CustomRoute exact path="/registration" component={registration} />
-        <CustomRoute exact path="/" component={dashboard} />
-        <CustomRoute exact path="/dashboard/search" component={search} />
-        <CustomRoute
-          exact
-          path="/dashboard/advanced-search"
-          component={AdvancedSearch}
-        />
-        <CustomRoute exact path="/about-us" component={aboutUs} />
-        <CustomRoute exact path="/about-us/what-we-do" component={whatWeDo} />
-        <CustomRoute
-          exact
-          path="/about-us/what-we-do/fuel-conversion"
-          component={fuelConversion}
-        />
-        <CustomRoute
-          exact
-          path="/about-us/what-we-do/car-accessories"
-          component={carAccessories}
-        />
-        <CustomRoute exact path="/about-us/who-we-are" component={whoWeAre} />
-        <CustomRoute exact path="/about-us/how-we-work" component={howWeWork} />
-        <CustomRoute
-          exact
-          path="/about-us/how-we-work/special-services"
-          component={specialServices}
-        />
-        <CustomRoute
-          exact
-          path="/about-us/how-to-order"
-          component={howToOrder}
-        />
-        <CustomRoute
-          exact
-          path="/about-us/how-to-order/how-to-use-hgs"
-          component={howToUseHgs}
-        />
-        <CustomRoute
-          exact
-          path="/about-us/what-we-do/container-shipping"
-          component={containerShipping}
-        />
-        <CustomRoute
-          exact
-          path="/about-us/what-we-do/parts-express"
-          component={partsExpress}
-        />
-        <CustomRoute exact path="/search-detail" component={searchDetail} />
-        <CustomRoute exact path="/parts-detail" component={partDetail} />
-        <CustomRoute exact path="/transport" component={transport} />
-        <CustomRoute
-          exact
-          path="/transport/schedule"
-          component={transportSchedule}
-        />
-        <CustomRoute exact path="/saved/search" component={savedSearch} />
-        <CustomRoute exact path="/partner" component={partner} />
-        <CustomRoute
-          exact
-          path={PATH.PARTNER_CONTACT}
-          component={partnerContact}
-        />
-        <CustomRoute
-          exact
-          path={PATH.PARTNER_COUNTRY}
-          component={partnerCountries}
-        />
-        <CustomRoute
-          exact
-          path={PATH.PARTNER_SUB_DESCRIPTION}
-          component={partnerSubDescription}
-        />
-        <CustomRoute exact path="/seller" component={seller} />
-        <CustomRoute
-          exact
-          path="/seller/harasow-seller"
-          component={harasowSeller}
-        />
-        <CustomRoute
-          exact
-          path="/transport/harasow-transport"
-          component={harasowTransport}
-        />
-        <CustomRoute exact path="/community" component={community} />
-        {/* Notification  Message*/}
-        <Notification />
-      </React.Fragment>
+      <Suspense fallback={(<div className="text-center">Loading .....</div>)}>
+        <React.Fragment>
+          <CustomRoute exact path="/signin" component={login} />
+          <CustomRoute exact path="/registration" component={registration} />
+          <CustomRoute exact path="/" component={dashboard} />
+          <CustomRoute exact path="/dashboard/search" component={search} />
+          <CustomRoute
+            exact
+            path="/dashboard/advanced-search"
+            component={AdvancedSearch}
+          />
+          <CustomRoute exact path="/about-us" component={aboutUs} />
+          <CustomRoute exact path="/about-us/what-we-do" component={whatWeDo} />
+          <CustomRoute
+            exact
+            path="/about-us/what-we-do/fuel-conversion"
+            component={fuelConversion}
+          />
+          <CustomRoute
+            exact
+            path="/about-us/what-we-do/car-accessories"
+            component={carAccessories}
+          />
+          <CustomRoute exact path="/about-us/who-we-are" component={whoWeAre} />
+          <CustomRoute
+            exact
+            path="/about-us/how-we-work"
+            component={howWeWork}
+          />
+          <CustomRoute
+            exact
+            path="/about-us/how-we-work/special-services"
+            component={specialServices}
+          />
+          <CustomRoute
+            exact
+            path="/about-us/how-to-order"
+            component={howToOrder}
+          />
+          <CustomRoute
+            exact
+            path="/about-us/how-to-order/how-to-use-hgs"
+            component={howToUseHgs}
+          />
+          <CustomRoute
+            exact
+            path="/about-us/what-we-do/container-shipping"
+            component={containerShipping}
+          />
+          <CustomRoute
+            exact
+            path="/about-us/what-we-do/parts-express"
+            component={partsExpress}
+          />
+          <CustomRoute exact path="/search-detail" component={searchDetail} />
+          <CustomRoute exact path="/parts-detail" component={partDetail} />
+          <CustomRoute exact path="/transport" component={transport} />
+          <CustomRoute
+            exact
+            path="/transport/schedule"
+            component={transportSchedule}
+          />
+          <CustomRoute exact path="/saved/search" component={savedSearch} />
+          <CustomRoute exact path="/partner" component={partner} />
+          <CustomRoute
+            exact
+            path={PATH.PARTNER_CONTACT}
+            component={partnerContact}
+          />
+          <CustomRoute
+            exact
+            path={PATH.PARTNER_COUNTRY}
+            component={partnerCountries}
+          />
+          <CustomRoute
+            exact
+            path={PATH.PARTNER_SUB_DESCRIPTION}
+            component={partnerSubDescription}
+          />
+          <CustomRoute exact path="/seller" component={seller} />
+          <CustomRoute
+            exact
+            path="/seller/harasow-seller"
+            component={harasowSeller}
+          />
+          <CustomRoute
+            exact
+            path="/transport/harasow-transport"
+            component={harasowTransport}
+          />
+          <CustomRoute exact path="/community" component={community} />
+          {/* Notification  Message*/}
+          <Notification />
+        </React.Fragment>
+      </Suspense>
     </Router>
   </Provider>,
   document.getElementById("root")

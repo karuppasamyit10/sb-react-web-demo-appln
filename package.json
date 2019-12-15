@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "i18next": "^19.0.2",
+    "i18next-browser-languagedetector": "^4.0.1",
+    "i18next-xhr-backend": "^3.2.2",
+    "react-i18next": "^11.2.6",
     "react-image-slider": "^0.1.0",
     "react-paginate": "^6.3.0",
     "react-responsive-carousel": "^3.1.51"

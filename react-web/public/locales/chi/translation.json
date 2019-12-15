@@ -1,0 +1,41 @@
+{
+  "Car Shop": {
+    "1": "Car Shop"
+  },
+  "How to Order": {
+    "1": "React"
+  },
+  "Transport": {
+    "1": "Transport"
+  },
+  "Partner": {
+    "1": "Partner"
+  },
+  "Seller": {
+    "1": "Partner"
+  },
+  "Community": {
+    "1": "Community"
+  },
+  "Research": {
+    "1": "Research"
+  },
+  "Advertise": {
+    "1": "Advertise"
+  },
+  "Saved Searches": {
+    "1": "Saved Searches"
+  },
+  "Saved Listings": {
+    "1": "Saved Listings"
+  },
+  "Financing": {
+    "1": "Financing"
+  },
+  "Inbox": {
+    "1": "Inbox"
+  },
+  "logout": {
+    "1": "logout"
+  }
+}

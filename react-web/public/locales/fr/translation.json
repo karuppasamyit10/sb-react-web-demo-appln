@@ -1,0 +1,50 @@
+{
+  "Car Shop": {
+    "1": "magasin de voiture"
+  },
+  "How to Order": {
+    "1": "Comment commander"
+  },
+  "Transport": {
+    "1": "Transport"
+  },
+  "Partner": {
+    "1": "Partenaire"
+  },
+  "Seller": {
+    "1": "Vendeur"
+  },
+  "Community": {
+    "1": "Communauté"
+  },
+  "Research": {
+    "1": "Recherche"
+  },
+  "Advertise": {
+    "1": "Afficher"
+  },
+  "My Account": {
+    "1": "Mon compte"
+  },
+  "Saved Searches": {
+    "1": "Recherches sauvegardées"
+  },
+  "Saved Listings": {
+    "1": "Listes enregistrées"
+  },
+  "Financing": {
+    "1": "Le financement"
+  },
+  "Inbox": {
+    "1": "Boîte de réception"
+  },
+  "logout": {
+    "1": "Connectez - Out"
+  },
+  "signin": {
+    "1": "se connecter"
+  },
+  "Find great deals from top-rated dealers": {
+    "1": "Trouvez les meilleures offres des meilleurs revendeurs"
+  }
+}

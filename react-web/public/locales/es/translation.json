@@ -1,0 +1,50 @@
+{
+  "Car Shop": {
+    "1": "Tienda de Autos"
+  },
+  "How to Order": {
+    "1": "Como ordenar"
+  },
+  "Transport": {
+    "1": "Transporte"
+  },
+  "Partner": {
+    "1": "Compañero"
+  },
+  "Seller": {
+    "1": "Vendedor"
+  },
+  "Community": {
+    "1": "Comunidad"
+  },
+  "Research": {
+    "1": "Investigación"
+  },
+  "Advertise": {
+    "1": "Anunciar"
+  },
+  "My Account": {
+    "1": "Mi cuenta"
+  },
+  "Saved Searches": {
+    "1": "Búsquedas guardadas"
+  },
+  "Saved Listings": {
+    "1": "Listados guardados"
+  },
+  "Financing": {
+    "1": "Financiación"
+  },
+  "Inbox": {
+    "1": "bandeja de entrada"
+  },
+  "logout": {
+    "1": "cerrar sesión"
+  },
+  "signin": {
+    "1": "registrarse"
+  },
+  "Find great deals from top-rated dealers": {
+    "1": "Encuentra grandes ofertas de los mejores distribuidores"
+  }
+}

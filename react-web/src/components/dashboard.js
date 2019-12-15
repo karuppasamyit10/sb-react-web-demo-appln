@@ -24,6 +24,8 @@ import { showNotification } from "../actions/NotificationAction";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay";
+import "./public/i18nxt";
+import { useTranslation, withTranslation } from "react-i18next";
 
 class Upload extends Component {
   constructor(props) {
@@ -182,6 +184,8 @@ class Upload extends Component {
   };
 
   render() {
+    const { t } = this.props;
+
     let {
       ourLastSearchList,
       popularNewsList,
@@ -207,7 +211,7 @@ class Upload extends Component {
               >
                 <div class="col sfcol">
                   <div class="head1 white text-center mb-3 text-shadow">
-                    Find great deals from top-rated dealers{" "}
+                    {t("Find great deals from top-rated dealers.1")}
                     <sup class="sup">TM</sup>
                   </div>
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -1719,5 +1723,6 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
+const translate = withTranslation()(Upload);
 
-export default AppWrapper(Upload, null, mapDispatchToProps);
+export default AppWrapper(translate, null, mapDispatchToProps);
