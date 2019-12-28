@@ -30,6 +30,11 @@ module.exports = {
     HOW_WE_WORK: "/about-us/how-we-work",
     HOW_TO_ORDER: "/about-us/how-to-order",
     HOW_TO_USE_HGS: "/about-us/how-to-order/how-to-use-hgs",
+
+    PAYMENT: "/about-us/how-to-order/payment",
+    FAQ: "/about-us/how-to-order/faq",
+    CONTACT_STAFF: "/about-us/how-to-order/contact-staff",
+
     SPECIAL_SERVICES: "/about-us/how-we-work/special-services",
     SHIPPING: "/about-us/what-we-do/container-shipping",
     FUEL_CONVERSION: "/about-us/what-we-do/fuel-conversion",
@@ -45,6 +50,7 @@ module.exports = {
     PARTNER_COUNTRY: "/partner/country",
     PARTNER_SUB_DESCRIPTION: "/partner/sub-description",
     SELLER: "/seller",
+    HARASOW_SELLER: "/seller/harasow-seller",
     COMMUNITY: "/community"
   },
 

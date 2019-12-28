@@ -97,12 +97,15 @@ class seller extends Component {
                     voluptas.
                   </p>
                   <div class="readmore">
-                    <a href="what-we-do.html" class="btn btn-link para1 medium">
+                    <Link
+                      to={PATH.HARASOW_SELLER}
+                      class="btn btn-link para1 medium"
+                    >
                       <span class="d-inline-block align-middle">
                         <i class="fas fa-caret-right"></i>
                       </span>
                       <span class="d-inline-block align-middle">Read More</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -122,12 +125,15 @@ class seller extends Component {
                     voluptas.
                   </p>
                   <div class="readmore">
-                    <a href="who-we-are.html" class="btn btn-link para1 medium">
+                    <Link
+                      to={PATH.HARASOW_SELLER}
+                      class="btn btn-link para1 medium"
+                    >
                       <span class="d-inline-block align-middle">
                         <i class="fas fa-caret-right"></i>
                       </span>
                       <span class="d-inline-block align-middle">Read More</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -147,15 +153,15 @@ class seller extends Component {
                     voluptas.
                   </p>
                   <div class="readmore">
-                    <a
-                      href="how-we-work.html"
+                    <Link
+                      to={PATH.HARASOW_SELLER}
                       class="btn btn-link para1 medium"
                     >
                       <span class="d-inline-block align-middle">
                         <i class="fas fa-caret-right"></i>
                       </span>
                       <span class="d-inline-block align-middle">Read More</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -175,15 +181,15 @@ class seller extends Component {
                     voluptas.
                   </p>
                   <div class="readmore">
-                    <a
-                      href="how-to-order.html"
+                    <Link
+                      to={PATH.HARASOW_SELLER}
                       class="btn btn-link para1 medium"
                     >
                       <span class="d-inline-block align-middle">
                         <i class="fas fa-caret-right"></i>
                       </span>
                       <span class="d-inline-block align-middle">Read More</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -203,15 +209,15 @@ class seller extends Component {
                     voluptas.
                   </p>
                   <div class="readmore">
-                    <a
-                      href="how-to-order.html"
+                    <Link
+                      to={PATH.HARASOW_SELLER}
                       class="btn btn-link para1 medium"
                     >
                       <span class="d-inline-block align-middle">
                         <i class="fas fa-caret-right"></i>
                       </span>
                       <span class="d-inline-block align-middle">Read More</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -231,15 +237,15 @@ class seller extends Component {
                     voluptas.
                   </p>
                   <div class="readmore">
-                    <a
-                      href="how-to-order.html"
+                    <Link
+                      to={PATH.HARASOW_SELLER}
                       class="btn btn-link para1 medium"
                     >
                       <span class="d-inline-block align-middle">
                         <i class="fas fa-caret-right"></i>
                       </span>
                       <span class="d-inline-block align-middle">Read More</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

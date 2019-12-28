@@ -15,7 +15,7 @@ class howToUseHgs extends Component {
   };
 
   componentDidMount() {
-    document.title = "Auto Harasow | How To Use Hgs";
+    document.title = "Auto Harasow | Contact Staff";
   }
 
   render() {
@@ -35,7 +35,7 @@ class howToUseHgs extends Component {
                   <Link to={PATH.HOW_TO_ORDER}>How to order</Link>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                  How to use H.G.S
+                  Contact Staff
                 </li>
               </ol>
             </nav>
@@ -51,7 +51,7 @@ class howToUseHgs extends Component {
                     Buy It Safely
                   </div>
                   <ul class="sllinks medium">
-                    <li class="active">
+                    <li>
                       <Link to={PATH.HOW_TO_USE_HGS}>
                         How to use H.G.S.
                         <span>
@@ -75,7 +75,7 @@ class howToUseHgs extends Component {
                         </span>
                       </Link>
                     </li>
-                    <li>
+                    <li class="active">
                       <Link to={PATH.CONTACT_STAFF}>
                         Contact our staff
                         <span>
@@ -86,6 +86,7 @@ class howToUseHgs extends Component {
                   </ul>
                 </div>
               </div>
+
               <div class="col-md-9">
                 <div class="head1 medium">Buy It Safely</div>
                 <div class="row mt-5">
@@ -94,10 +95,10 @@ class howToUseHgs extends Component {
                       What is “Buy it Safely!”(B.I.S) ?
                     </div>
                     <p class="para1">
-                      “Buy it Safely!” is Autowini's Safe Payment & Shipping
-                      Service whereby Autowini acts as a third party between the
+                      “Buy it Safely!” is harasow's Safe Payment & Shipping
+                      Service whereby harasow acts as a third party between the
                       buyer and seller in order to make the purchase 100% safe
-                      and easy for the buyer. Autowini keeps your money, ships
+                      and easy for the buyer. harasow keeps your money, ships
                       the item on time and takes care of your online transaction
                       throughout the whole process safely all at a low cost!
                     </p>
@@ -112,11 +113,26 @@ class howToUseHgs extends Component {
                       class="img-fluid"
                       alt=""
                     />
-                    <p class="head3 bold">How to Use H.G.S.</p>
+                    <p class="head3 bold">Contact our staff</p>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-md-12">
+                    <div class="head3 bold">
+                      Remember there is a team who will take care of your
+                      transaction.
+                    </div>
                     <p class="para1">
-                      We deliver our items on time with an all-in-one order
-                      tracking system.
+                      Do you have any questions? Contact our customer support
+                      staff for any help.
                     </p>
+                    <div class="greybox">
+                      <ul class="head3 medium">
+                        <li>Office Hours : 9 AM - 7 PM</li>
+                        <li>Korean Local Time : 2019-09-23 01:27:14</li>
+                        <li class="red">We are Out of Service.</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
 
@@ -126,8 +142,9 @@ class howToUseHgs extends Component {
                     <div class="head2 medium">Need Help?</div>
                     <div class="greybox mt-4">
                       <p class="para1">
-                        If you have any further questions, contact us at any
-                        time! We are here to support you.
+                        Please write the “Item number” and detailed questions so
+                        that we can serve you better. We will make online
+                        trading more reliable and convenient for you.
                       </p>
                       <p class="para1">Email : bis@harasow.com</p>
                     </div>

@@ -66,6 +66,10 @@ import harasowSeller from "./components/common/harasowSeller";
 import harasowTransport from "./components/common/harasowTransport";
 import community from "./components/common/community";
 
+import payment from "./components/common/payment";
+import faq from "./components/common/faq";
+import contactStaff from "./components/common/contactStaff";
+
 const CustomRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -125,6 +129,21 @@ ReactDOM.render(
             exact
             path="/about-us/how-to-order/how-to-use-hgs"
             component={howToUseHgs}
+          />
+           <CustomRoute
+            exact
+            path="/about-us/how-to-order/payment"
+            component={payment}
+          />
+           <CustomRoute
+            exact
+            path="/about-us/how-to-order/faq"
+            component={faq}
+          />
+           <CustomRoute
+            exact
+            path="/about-us/how-to-order/contact-staff"
+            component={contactStaff}
           />
           <CustomRoute
             exact

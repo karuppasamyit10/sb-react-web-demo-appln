@@ -107,7 +107,7 @@ class transport extends Component {
                     voluptas.
                   </p>
                   <div class="readmore">
-                    <a href="what-we-do.html" class="btn btn-link para1 medium">
+                    <a class="btn btn-link para1 medium">
                       <span class="d-inline-block align-middle">
                         <i class="fas fa-caret-right"></i>
                       </span>
@@ -138,7 +138,7 @@ class transport extends Component {
                     voluptas.
                   </p>
                   <div class="readmore">
-                    <a href="who-we-are.html" class="btn btn-link para1 medium">
+                    <a class="btn btn-link para1 medium">
                       <span class="d-inline-block align-middle">
                         <i class="fas fa-caret-right"></i>
                       </span>
@@ -170,7 +170,6 @@ class transport extends Component {
                   </p>
                   <div class="readmore">
                     <a
-                      href="how-we-work.html"
                       class="btn btn-link para1 medium"
                     >
                       <span class="d-inline-block align-middle">
