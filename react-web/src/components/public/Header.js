@@ -318,9 +318,9 @@ class Header extends Component {
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <Link class="nav-link" to={PATH.ADVERTISE}>
                           {t("Advertise.1")}
-                        </a>
+                        </Link>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="#">

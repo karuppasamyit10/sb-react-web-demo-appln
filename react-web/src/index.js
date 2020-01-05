@@ -70,6 +70,8 @@ import payment from "./components/common/payment";
 import faq from "./components/common/faq";
 import contactStaff from "./components/common/contactStaff";
 import magazine from "./components/common/magazine";
+import advertise from "./components/common/advertise";
+
 
 const CustomRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -87,11 +89,11 @@ CustomRoute.propTypes = {
 ReactDOM.render(
   <Provider store={stores}>
     <Router>
-      <Suspense fallback={(<div className="text-center">Loading .....</div>)}>
+      <Suspense fallback={<div className="text-center">Loading .....</div>}>
         <React.Fragment>
+          <CustomRoute exact path="/" component={dashboard} />
           <CustomRoute exact path="/signin" component={login} />
           <CustomRoute exact path="/registration" component={registration} />
-          <CustomRoute exact path="/" component={dashboard} />
           <CustomRoute exact path="/dashboard/search" component={search} />
           <CustomRoute
             exact
@@ -132,17 +134,17 @@ ReactDOM.render(
             path="/about-us/how-to-order/how-to-use-hgs"
             component={howToUseHgs}
           />
-           <CustomRoute
+          <CustomRoute
             exact
             path="/about-us/how-to-order/payment"
             component={payment}
           />
-           <CustomRoute
+          <CustomRoute
             exact
             path="/about-us/how-to-order/faq"
             component={faq}
           />
-           <CustomRoute
+          <CustomRoute
             exact
             path="/about-us/how-to-order/contact-staff"
             component={contactStaff}
@@ -167,6 +169,7 @@ ReactDOM.render(
           />
           <CustomRoute exact path="/saved/search" component={savedSearch} />
           <CustomRoute exact path="/partner" component={partner} />
+          <CustomRoute exact path="/advertise" component={advertise} />
           <CustomRoute
             exact
             path={PATH.PARTNER_CONTACT}

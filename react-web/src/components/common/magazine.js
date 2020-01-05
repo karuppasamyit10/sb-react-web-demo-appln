@@ -33,7 +33,7 @@ class magazine extends Component {
                   <Link to={PATH.DASHBOARD}>Home</Link>
                 </li>
                 <li class="breadcrumb-item">
-                  <Link to={PATH.DASHBOARD}>Community</Link>
+                  <Link to={PATH.COMMUNITY}>Community</Link>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
                   Magazine
