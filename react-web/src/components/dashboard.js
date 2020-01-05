@@ -1490,7 +1490,7 @@ class Upload extends Component {
                 popularNewsList.map(vehicle => {
                   return (
                     <li
-                      class="list-group-item"
+                      class="list-group-item" key={vehicle.vehicleId}
                       style={{ opacity: 1 }}
                       onClick={() => {
                         this.searchDetails(vehicle.vehicleId);

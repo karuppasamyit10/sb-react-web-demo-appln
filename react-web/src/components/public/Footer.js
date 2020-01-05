@@ -61,7 +61,8 @@ class Footer extends Component {
                       <Link to={PATH.ABOUT_US}>About Us</Link>
                     </li>
                     <li>
-                      <a href="javascript:;">Harasow Production</a>
+                      {/* <a href="javascript:;">Harasow Production</a> */}
+                      <Link to={PATH.MAGZINE}>Magazine </Link>
                     </li>
                     <li>
                       <a href="javascript:;">FAQ</a>

@@ -69,6 +69,7 @@ import community from "./components/common/community";
 import payment from "./components/common/payment";
 import faq from "./components/common/faq";
 import contactStaff from "./components/common/contactStaff";
+import magazine from "./components/common/magazine";
 
 const CustomRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -98,6 +99,7 @@ ReactDOM.render(
             component={AdvancedSearch}
           />
           <CustomRoute exact path="/about-us" component={aboutUs} />
+          <CustomRoute exact path="/magazine" component={magazine} />
           <CustomRoute exact path="/about-us/what-we-do" component={whatWeDo} />
           <CustomRoute
             exact
