@@ -71,6 +71,8 @@ import faq from "./components/common/faq";
 import contactStaff from "./components/common/contactStaff";
 import magazine from "./components/common/magazine";
 import advertise from "./components/common/advertise";
+import membershipFee from "./components/common/membershipFee";
+import registeredItems from "./components/common/registeredItems";
 
 
 const CustomRoute = ({ component: Component, ...rest }) => (
@@ -112,6 +114,16 @@ ReactDOM.render(
             exact
             path="/about-us/what-we-do/car-accessories"
             component={carAccessories}
+          />
+           <CustomRoute
+            exact
+            path="/about-us/what-we-do/container-shipping/membership-fee"
+            component={membershipFee}
+          />
+           <CustomRoute
+            exact
+            path="/about-us/what-we-do/container-shipping/registered-items"
+            component={registeredItems}
           />
           <CustomRoute exact path="/about-us/who-we-are" component={whoWeAre} />
           <CustomRoute
