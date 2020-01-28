@@ -15,7 +15,11 @@ class membershipFee extends Component {
   };
 
   componentDidMount() {
-    document.title = "Auto Harasow | Membership Fee";
+    document.title = "Koreaautonet | Membership Fee";
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+  });
   }
 
   render() {
@@ -58,28 +62,22 @@ class membershipFee extends Component {
                   <div class="slhead text-center medium head3">Sell</div>
                   <ul class="sllinks medium">
                     <li>
-                      <a href="javascript:;">
-                        Place an AD
-                        <span>
+                      <Link to={PATH.REGISTEREDITEMS}>Place an AD<span>
                           <i class="fas fa-chevron-right"></i>
                         </span>
-                      </a>
+                      </Link>
                     </li>
                     <li class="active">
-                      <a href="membership-fee.html">
-                        Membership Fee
-                        <span>
+                      <Link to={PATH.MEMBERSHIPFEE}>Membership Fee<span>
                           <i class="fas fa-chevron-right"></i>
                         </span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="register-items.html">
-                        Register items
-                        <span>
+                      <Link to={PATH.REGISTEREDITEMS}>Register items<span>
                           <i class="fas fa-chevron-right"></i>
                         </span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -101,7 +99,7 @@ class membershipFee extends Component {
                         <div class="small mt-2">1 Step</div>
                         <div class="head3 bold mt-2">Application</div>
                         <p class="para1 mt-2">
-                          Apply Autowini’s memebership service you want to use.
+                          Apply Koreaautonet’s memebership service you want to use.
                         </p>
                       </div>
                     </div>
@@ -117,7 +115,7 @@ class membershipFee extends Component {
                         <div class="small mt-2">2 Step</div>
                         <div class="head3 bold mt-2">Consultation</div>
                         <p class="para1 mt-2">
-                          Autowini’s staff will contact you by email or mobile.
+                          Koreaautonet’s staff will contact you by email or mobile.
                         </p>
                       </div>
                     </div>
@@ -149,7 +147,7 @@ class membershipFee extends Component {
                         <div class="small mt-2">4 Step</div>
                         <div class="head3 bold mt-2">Complete</div>
                         <p class="para1 mt-2">
-                          Start to advertise with Autowini & reach the global
+                          Start to advertise with Koreaautonet & reach the global
                           market!
                         </p>
                       </div>
@@ -159,9 +157,9 @@ class membershipFee extends Component {
                 <div class="dotspacer"></div>
                 <div class="row mt-4">
                   <div class="col-12">
-                    <div class="head2 medium">Autowini Membership Service</div>
+                    <div class="head2 medium">Koreaautonet Membership Service</div>
                     <p class="para1 mt-3">
-                      Autowini Membership service requires a 1 year commitment.
+                      Koreaautonet Membership service requires a 1 year commitment.
                     </p>
                     <div class="table-responsive membershiptable">
                       <table class="table table-bordered text-center addColors">
@@ -269,7 +267,7 @@ class membershipFee extends Component {
                 <div class="row mt-4">
                   <div class="col-12">
                     <div class="head2 medium">
-                      Autowini Exclusive Member Benefits
+                      Koreaautonet Exclusive Member Benefits
                     </div>
                     <div class="table-responsive membershiptable">
                       <table class="table table-bordered text-center">
@@ -343,7 +341,7 @@ class membershipFee extends Component {
                             <td class="superBg">O</td>
                           </tr>
                           <tr>
-                            <th scope="row">Photo by Autowini</th>
+                            <th scope="row">Photo by Koreaautonet</th>
                             <td class="power10Bg">O</td>
                             <td class="expertBg">O</td>
                             <td class="superBg">O</td>
@@ -368,7 +366,7 @@ class membershipFee extends Component {
                 <div class="row mt-4">
                   <div class="col-12">
                     <div class="head2 medium">
-                      Autowini Prime Member Benefits
+                      Koreaautonet Prime Member Benefits
                     </div>
                     <div class="table-responsive membershiptable">
                       <table class="table table-bordered text-center">
@@ -418,7 +416,7 @@ class membershipFee extends Component {
                             <td class="superBg">O</td>
                           </tr>
                           <tr>
-                            <th scope="row">Photo by Autowini</th>
+                            <th scope="row">Photo by Koreaautonet</th>
                             <td class="power10Bg">O</td>
                             <td class="expertBg">O</td>
                             <td class="superBg">O</td>
@@ -562,7 +560,7 @@ class membershipFee extends Component {
                   <div class="col-12">
                     <div class="head2 medium">Contact Us</div>
                     <div class="greybox mt-4">
-                      <p class="para1">Email : help@harasow.com</p>
+                      <p class="para1">Email : help@Koreaautonet.com</p>
                       <p class="para1">Tel. : +82-2-576-5533</p>
                       <p class="para1">Fax. : +82-2-576-5599</p>
                       <p class="para1">

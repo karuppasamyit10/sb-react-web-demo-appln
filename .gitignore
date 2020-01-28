@@ -35,7 +35,5 @@ src/main/resources/static/
 react-web/node_modules/
 react-web/build/
 react-web/package-lock.json
-react-web/node_modules/
-react-web/yarn.lock
 react-web/yarn.lock
 src/main/resources/static/index.html
