@@ -15,7 +15,11 @@ class registeredItems extends Component {
   };
 
   componentDidMount() {
-    document.title = "Auto Harasow | Registered Items";
+    document.title = "koreaautonet | Registered Items";
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+  });
   }
 
   render() {
@@ -57,26 +61,20 @@ class registeredItems extends Component {
                 <div class="sidelinks">
                   <div class="slhead text-center medium head3">Sell</div>
                   <ul class="sllinks medium">
-                    <li>
-                      <a href="#">
-                        Place an AD
-                        <span>
+                  <li>
+                      <Link to={PATH.REGISTEREDITEMS}>Place an AD<span>
                           <i class="fas fa-chevron-right"></i>
                         </span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <Link to={PATH.MEMBERSHIP}>
-                        Membership Fee
-                        <span>
+                      <Link to={PATH.MEMBERSHIPFEE}>Membership Fee<span>
                           <i class="fas fa-chevron-right"></i>
                         </span>
                       </Link>
                     </li>
                     <li class="active">
-                      <Link to={PATH.REGISTEREDITEMS}>
-                        Register items
-                        <span>
+                      <Link to={PATH.REGISTEREDITEMS}>Register items<span>
                           <i class="fas fa-chevron-right"></i>
                         </span>
                       </Link>
@@ -91,11 +89,8 @@ class registeredItems extends Component {
                   <p class="para1">Please select the category of item.</p>
                   <div class="row no-gutters mt-4">
                     <div class="col-md">
-                      <a
-                        href="javascript:;"
-                        class="vehiclegrid d-block text-center"
-                      >
-                        <div class="row no-gutters align-items-center position-relative h-100">
+                    <Link to={PATH.MEMBERSHIPFEE} class="vehiclegrid d-block text-center">
+                      <div class="row no-gutters align-items-center position-relative h-100">
                           <div class="col-12">
                             <div class="img">
                               <img
@@ -107,18 +102,15 @@ class registeredItems extends Component {
                             <div class="para1 mt-3">Car</div>
                           </div>
                         </div>
-                      </a>
+                    </Link>
                     </div>
                     <div class="col-md">
-                      <a
-                        href="javascript:;"
-                        class="vehiclegrid d-block text-center"
-                      >
+                    <Link to={PATH.MEMBERSHIPFEE} class="vehiclegrid d-block text-center">
                         <div class="row no-gutters align-items-center position-relative h-100">
                           <div class="col-12">
                             <div class="img">
                               <img
-                                src={require("../../assets/img/sell/img_cars.png")}
+                                src={require("../../assets/img/sell/img_trucks.png")}
                                 class="img-fluid"
                                 alt=""
                               />
@@ -128,18 +120,15 @@ class registeredItems extends Component {
                             </div>
                           </div>
                         </div>
-                      </a>
+                      </Link>
                     </div>
                     <div class="col-md">
-                      <a
-                        href="javascript:;"
-                        class="vehiclegrid d-block text-center"
-                      >
+                    <Link to={PATH.MEMBERSHIPFEE} class="vehiclegrid d-block text-center">
                         <div class="row no-gutters align-items-center position-relative h-100">
                           <div class="col-12">
                             <div class="img">
                               <img
-                                src={require("../../assets/img/sell/img_cars.png")}
+                                src={require("../../assets/img/sell/img_buses.png")}
                                 class="img-fluid"
                                 alt=""
                               />
@@ -147,18 +136,15 @@ class registeredItems extends Component {
                             <div class="para1 mt-3">Bus</div>
                           </div>
                         </div>
-                      </a>
+                      </Link>
                     </div>
                     <div class="col-md">
-                      <a
-                        href="javascript:;"
-                        class="vehiclegrid d-block text-center"
-                      >
+                    <Link to={PATH.MEMBERSHIPFEE} class="vehiclegrid d-block text-center">
                         <div class="row no-gutters align-items-center position-relative h-100">
                           <div class="col-12">
                             <div class="img">
                               <img
-                                src={require("../../assets/img/sell/img_cars.png")}
+                                src={require("../../assets/img/sell/img_equipment.png")}
                                 class="img-fluid"
                                 alt=""
                               />
@@ -166,18 +152,15 @@ class registeredItems extends Component {
                             <div class="para1 mt-3">Equipment / Part</div>
                           </div>
                         </div>
-                      </a>
+                      </Link>
                     </div>
                     <div class="col-md">
-                      <a
-                        href="javascript:;"
-                        class="vehiclegrid d-block text-center"
-                      >
+                    <Link to={PATH.MEMBERSHIPFEE} class="vehiclegrid d-block text-center">
                         <div class="row no-gutters align-items-center position-relative h-100">
                           <div class="col-12">
                             <div class="img">
                               <img
-                                src={require("../../assets/img/sell/img_cars.png")}
+                                src={require("../../assets/img/sell/img_parts.png")}
                                 class="img-fluid"
                                 alt=""
                               />
@@ -185,7 +168,7 @@ class registeredItems extends Component {
                             <div class="para1 mt-3">Parts / Accessories</div>
                           </div>
                         </div>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -196,7 +179,7 @@ class registeredItems extends Component {
                   <div class="col-12">
                     <div class="head2 medium">Contact Us</div>
                     <div class="greybox mt-4">
-                      <p class="para1">Email : help@harasow.com</p>
+                      <p class="para1">Email : help@koreaautonet.com</p>
                       <p class="para1">Tel. : +82-2-576-5533</p>
                       <p class="para1">Fax. : +82-2-576-5599</p>
                       <p class="para1">

@@ -85,12 +85,14 @@ class Footer extends Component {
                 </div>
                 <div class="col-md-3">
                   <ul class="flinks">
-                    <li>Company</li>
                     <li>
-                      <a href="javascript:;">Terms of Use</a>
+                      <Link to={PATH.MEMBERSHIPFEE}>Sell</Link>
                     </li>
                     <li>
-                      <a href="javascript:;">Privacy Policy</a>
+                      <Link to={PATH.REGISTEREDITEMS}>Place an AD</Link>
+                    </li>
+                    <li>
+                      <Link to={PATH.MEMBERSHIPFEE}>Membership Fee</Link>
                     </li>
                   </ul>
                 </div>

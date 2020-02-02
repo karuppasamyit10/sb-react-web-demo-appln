@@ -120,12 +120,12 @@ ReactDOM.render(
           />
            <CustomRoute
             exact
-            path="/about-us/what-we-do/container-shipping/membership-fee"
+            path="/membership-fee"
             component={membershipFee}
           />
            <CustomRoute
             exact
-            path="/about-us/what-we-do/container-shipping/registered-items"
+            path="/registered-items"
             component={registeredItems}
           />
           <CustomRoute exact path="/about-us/who-we-are" component={whoWeAre} />
