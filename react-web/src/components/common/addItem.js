@@ -42,22 +42,34 @@ class addItem extends Component {
     const reader = new FileReader();
     const file = e.target.files[0];
 
-    reader.onloadend = () => {
-      files.push(reader.result);
-      input_object.files = files;
-      this.setState(
-        {
-          input_object: input_object
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
-    };
+    files.push(file);
+    input_object.files = files;
+    this.setState(
+      {
+        input_object: input_object
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
 
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+
+    // reader.onloadend = () => {
+    //   files.push(reader.result);
+    //   input_object.files = files;
+    //   this.setState(
+    //     {
+    //       input_object: input_object
+    //     },
+    //     () => {
+    //       console.log(this.state);
+    //     }
+    //   );
+    // };
+
+    // if (file) {
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   handleOnChange = e => {
