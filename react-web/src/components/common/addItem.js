@@ -9,6 +9,7 @@ import { getVehicleMasterData } from "../../actions/searchAction";
 import { showNotification } from "../../actions/NotificationAction";
 import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
+import { productRegistration } from "../../actions/userAction";
 
 class addItem extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class addItem extends Component {
 
   componentDidMount() {
     document.title = "Auto Harasow | Add New Item";
-    this.getVehicleMasterData();
+    // this.getVehicleMasterData();
   }
 
   getVehicleMasterData = () => {
@@ -82,11 +83,15 @@ class addItem extends Component {
     e.preventDefault();
     const item = this.state.input_object;
     let formData = this.getFormData(item);
-    //When logging a formData object with just console.log(formData) it always returns empty, 
+    //When logging a formData object with just console.log(formData) it always returns empty,
     //as you can't log formData.
     for (var key of formData.entries()) {
       console.log(key[0] + ", " + key[1]);
     }
+
+    this.props.productRegistration(formData,(response)=>{
+      console.log(response);
+    })
   };
 
   render() {
@@ -429,17 +434,8 @@ addItem.propTypes = {};
 
 const mapDispatchToProps = dispatch => {
   return {
-    logInUser: (username, password, callback) => {
-      dispatch(logInUser(username, password, callback));
-    },
-    registration: (inputObject, callback) => {
-      dispatch(userRegistration(inputObject, callback));
-    },
-    getVehicleMasterData: (params, callback) => {
-      dispatch(getVehicleMasterData(params, callback));
-    },
-    showNotification: (message, type) => {
-      dispatch(showNotification(message, type));
+    productRegistration: (params, callback) => {
+      dispatch(productRegistration(params, callback));
     }
   };
 };

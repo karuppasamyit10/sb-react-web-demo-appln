@@ -25,6 +25,7 @@ module.exports = {
   FORGET: 'forgetPassword',
   LOGOUT: 'api/user/logout',
   REGISTRATION: 'api/public/user/registration',
+  PRODUCT_REGISTRATION: "api/public/product/add",
   COOKIE: 'api/public/update-cookie',
   COMMON: 'api/public/common',
   CHANGEPASSWORD: 'changePassword',

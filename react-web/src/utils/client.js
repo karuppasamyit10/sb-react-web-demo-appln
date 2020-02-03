@@ -80,16 +80,16 @@ export const axiosCommon = axios.create({
 // );
 
 export default class Client {
-  static httpHeader(isAccessToken) {
+  static httpHeader(isAccessToken, contentType) {
     let d = new Date();
     let headers = {};
     headers = {
-      "Content-Type": "application/json",
+      "Content-Type": contentType ? contentType : "application/json",
       offset: d.getTimezoneOffset()
     };
     if (isAccessToken) {
       headers = {
-        "Content-Type": "application/json",
+        "Content-Type": contentType ? contentType : "application/json",
         offset: d.getTimezoneOffset(),
         Authorization:
           typeof store.get("userSession") === "object"
@@ -236,6 +236,55 @@ export default class Client {
         url,
         data,
         headers: Client.httpHeader(isAccessToken)
+      };
+      myLog("POST ::::: Input", config);
+      axiosCommonInstance(config)
+        .then(response => {
+          try {
+            if (
+              response.status === Constants.HTTP_CODE.AUTHENTICATION_FAILURE ||
+              response.status === Constants.HTTP_CODE.REQUIRED_MISSING
+            ) {
+              throw Object({
+                name: response.status,
+                message: Constants.VALIDATION_MSG.AUTH_FAILED
+              });
+            }
+            if (response.status === Constants.HTTP_CODE.SUCCESS) {
+              try {
+                return response.data;
+              } catch (e) {
+                throw Object({
+                  name: response.status,
+                  message: Constants.VALIDATION_MSG.REQ_FAILED
+                });
+              }
+            }
+          } catch (e) {
+            throw Object({
+              name: response.status,
+              message: Constants.VALIDATION_MSG.REQ_FAILED
+            });
+          }
+        })
+        .then(response => {
+          myLog("POST ::::::: response", response);
+          success(response);
+        })
+        .catch(err => {
+          myLog("POST ::::::: err", err);
+          failed(err);
+        });
+    });
+  }
+
+  static formDataPost(url, data, isAccessToken) {
+    return new Promise(function(success, failed) {
+      const config = {
+        method: "POST",
+        url,
+        data,
+        headers: Client.httpHeader(isAccessToken,"multipart/form-data")
       };
       myLog("POST ::::: Input", config);
       axiosCommonInstance(config)

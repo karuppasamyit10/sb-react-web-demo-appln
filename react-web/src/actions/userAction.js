@@ -101,6 +101,19 @@ export function userRegistration(object, callback) {
   };
 }
 
+export function productRegistration(object, callback) {
+  return function(dispatch) {
+    Client.formDataPost(URL.PRODUCT_REGISTRATION, object, true)
+      .then(response => {
+        myLog("====registration response===::::", response);
+        callback(response);
+      })
+      .catch(error => {
+        myLog("====registration error===????", error);
+      });
+  };
+}
+
 export function getCommonDetails(callback) {
   Client.get(URL.COMMON, null, false)
     .then(response => {
