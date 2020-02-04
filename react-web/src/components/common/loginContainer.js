@@ -117,28 +117,28 @@ class loginContainer extends Component {
                     </Link>
                   </li>
                   <li class="active">
-                    <a href="sign-in.html">
+                    <Link to={PATH.SIGIN}>
                       Sign In{" "}
                       <span>
                         <i class="fas fa-chevron-right"></i>
                       </span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="register.html">
+                    <Link to={PATH.REGISTRATION}>
                       ID Search
                       <span>
                         <i class="fas fa-chevron-right"></i>
                       </span>
-                    </a>
+                      </Link>
                   </li>
                   <li>
-                    <a href="register.html">
+                    <Link to={PATH.REGISTRATION}>
                       Password Search
                       <span>
                         <i class="fas fa-chevron-right"></i>
                       </span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

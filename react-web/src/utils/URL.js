@@ -1,7 +1,7 @@
 let BASE_URL = '';
 let isDevelopment = true
 if (window.location.hostname === 'localhost' && window.location.port === '3000') {
-  BASE_URL = 'http://35.160.123.119:8181/'
+  BASE_URL = 'http://localhost:8181/'
   isDevelopment = true
 } else if (window.location.hostname === 'localhost' && window.location.port === '4000') {
   BASE_URL = 'http://localhost:8181/'
@@ -25,7 +25,7 @@ module.exports = {
   FORGET: 'forgetPassword',
   LOGOUT: 'api/user/logout',
   REGISTRATION: 'api/public/user/registration',
-  PRODUCT_REGISTRATION: "api/public/product/add",
+  PRODUCT_REGISTRATION: "api/seller/add/product",
   COOKIE: 'api/public/update-cookie',
   COMMON: 'api/public/common',
   CHANGEPASSWORD: 'changePassword',

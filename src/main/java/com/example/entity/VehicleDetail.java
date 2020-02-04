@@ -16,6 +16,12 @@ public class VehicleDetail {
 	@Column(name="vehicleId")
 	private long vehicleId;
 	
+	@Column(name="userId")
+	private long userId;
+	
+	@Column(name="approvedStatus")
+	private int approvedStatus;
+	
 	@Column(name="vehicleTypeId")
 	private int vehicleTypeId;
 	
@@ -572,5 +578,33 @@ public class VehicleDetail {
 	 */
 	public void setBodyStyleType(String bodyStyleType) {
 		this.bodyStyleType = bodyStyleType;
+	}
+
+	/**
+	 * @return the userId
+	 */
+	public long getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @return the approvedStatus
+	 */
+	public int getApprovedStatus() {
+		return approvedStatus;
+	}
+
+	/**
+	 * @param approvedStatus the approvedStatus to set
+	 */
+	public void setApprovedStatus(int approvedStatus) {
+		this.approvedStatus = approvedStatus;
 	}
 }

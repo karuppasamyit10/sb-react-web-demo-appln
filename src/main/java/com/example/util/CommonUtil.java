@@ -78,7 +78,7 @@ public class CommonUtil {
 		response.put("response_message", "");
 		response.put("response", "");
 		if(reponseCode == 99 ) {
-			response.put("response_message", "Something went wrong");
+			response.put("response_message", responseMessage==null || responseMessage.isEmpty() ?"Something went wrong": responseMessage);
 		}
 		else {
 			if(StringUtils.hasText(responseMessage) && !responseMessage.equals("")) {

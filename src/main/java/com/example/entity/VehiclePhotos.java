@@ -28,6 +28,9 @@ public class VehiclePhotos {
 	@Column(name="filePath")
 	private String filePath;
 	
+	@Column(name="approved")
+	private int approved;
+	
 	@Column(name="isDeleted")
 	private int isDeleted;
 
@@ -115,5 +118,17 @@ public class VehiclePhotos {
 		this.isDeleted = isDeleted;
 	}
 
-	
+	/**
+	 * @return the approved
+	 */
+	public int getApproved() {
+		return approved;
+	}
+
+	/**
+	 * @param approved the approved to set
+	 */
+	public void setApproved(int approved) {
+		this.approved = approved;
+	}	
 }
