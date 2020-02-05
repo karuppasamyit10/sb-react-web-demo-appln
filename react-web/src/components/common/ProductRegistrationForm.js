@@ -19,12 +19,13 @@ class ProductRegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo :store.get("userSession"),
+      userInfo: store.get("userSession"),
       isdisable: false,
       input_object: {
         files: [],
-        vehicleTypeId: 1,
+        vehicleTypeId: 1
       },
+      preview: [],
       master: {}
     };
   }
@@ -67,6 +68,7 @@ class ProductRegistrationForm extends Component {
 
   handleImageRead = e => {
     e.preventDefault();
+    let preview = this.state.preview;
     let input_object = this.state.input_object;
     let files = input_object.files ? input_object.files : [];
     const reader = new FileReader();
@@ -83,23 +85,26 @@ class ProductRegistrationForm extends Component {
       }
     );
 
-    // reader.onloadend = () => {
-    //   files.push(reader.result);
-    //   input_object.files = files;
-    //   this.setState(
-    //     {
-    //       input_object: input_object
-    //     },
-    //     () => {
-    //       console.log(this.state);
-    //     }
-    //   );
-    // };
+    reader.onloadend = () => {
+      preview.push(reader.result);
+      this.setState({
+        preview: preview
+      });
+    };
 
-    // if (file) {
-    //   reader.readAsDataURL(file);
-    // }
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
+  removePhoto = (index) => {
+    let preview = this.state.preview ? this.state.preview : [];
+    let input_object = this.state.input_object;
+    let files = input_object.files ? input_object.files : []; 
+    files.splice(index,1);
+    preview.splice(index,1);
+    input_object.files = files;
+    this.setState({preview, input_object});
+  }
 
   handleOnChange = e => {
     let { target } = e;
@@ -132,10 +137,10 @@ class ProductRegistrationForm extends Component {
 
     this.props.productRegistration(formData, response => {
       console.log(response.response.response_code);
-      if(response && response.response_code === 0){
-        this.props.showNotification(response.response_message,'success')
-      }else{
-        this.props.showNotification(response.response_message,'error')
+      if (response && response.response_code === 0) {
+        this.props.showNotification(response.response_message, "success");
+      } else {
+        this.props.showNotification(response.response_message, "error");
       }
     });
   };
@@ -264,638 +269,641 @@ class ProductRegistrationForm extends Component {
       conditionTypeList
     } = this.state.master;
     return (
-      <section class="">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 form-wrap">
-              <h1 class="form-header">ADD NEW ITEM</h1>
-              <p class="lead">
-                Joinfree at Harasow, the No.1 Trading Platform for Korean Used
-                Cars.
-              </p>
-            </div>
-            <form class="row col-md-12">
+      <React.Fragment>
+        <section class="container_shipping">
+          <div class="container">
+            <div class="row">
               <div class="col-md-3">
-                <div class="col-lg-12">
-                  <div class="form-group align-items-center">
-                    <label class="bold form-left">Type</label>
-                    <div class="form-right">
-                      <select
-                        class="form-control"
-                        name="type"
-                        disabled
-                        value={this.state.input_object.vehicleTypeId}
-                        onChange={e => {
-                          this.handleOnChange(e);
-                        }}
-                      >
-                        <option value="1">Car</option>
-                        <option value="2">Truck</option>
-                        <option value="3">Equipment</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group align-items-center">
-                    <label class="bold form-left">Brand</label>
-                    {brandList ? (
-                      <div class="form-group">
-                        {/* <Select
-                            value={this.state.selectedBrandOptions}
-                            onChange={this.handleChangeBrand}
-                            options={carBrandOptions}
-                            name="carBrand"
-                            isMulti={true}
-                            isSearchable={true}
-                          /> */}
-                        <select
-                          className="form-control"
-                          name="brand"
-                          id="brand"
-                          disabled={
-                            brandList && brandList.length ? false : true
-                          }
-                          onChange={e => {
-                            this.handleChangeBrand(e);
-                          }}
-                          value={this.state.brands}
-                        >
-                          <option id="all" value="">
-                            All Brands
-                          </option>
-                          {brandList &&
-                            brandList.map((brand, i) => {
-                              return (
-                                <option
-                                  id={`${i}${brand.brandId}`}
-                                  value={brand.brand}
-                                >
-                                  {brand.brand}
-                                </option>
-                              );
-                            })}
-                        </select>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div class="form-group align-items-center">
-                    <label class="bold form-left">Country</label>
-                    {countryList ? (
-                      <div class="form-group">
-                        <select
-                          name="country"
-                          id="country"
-                          disabled={
-                            countryList && countryList.length ? false : true
-                          }
-                          value={this.state.country}
-                          onChange={e => {
-                            this.onChangeDropDown(e);
-                          }}
-                          class="form-control"
-                        >
-                          <option value="" selected>
-                            Select Country
-                          </option>
-                          {countryList && countryList.length
-                            ? countryList.map(country => {
-                                return (
-                                  <option value={country.country}>
-                                    {country.country}
-                                  </option>
-                                );
-                              })
-                            : ""}
-                        </select>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div class="form-group align-items-center">
-                    <label class="bold form-left">Transmission Type</label>
-                    {transmissionTypeList ? (
-                      <div class="form-group">
-                        <select
-                          className="form-control"
-                          name="transmission"
-                          onChange={e => {
-                            this.handleChange(e);
-                          }}
-                          disabled={
-                            transmissionTypeList && transmissionTypeList.length
-                              ? false
-                              : true
-                          }
-                          value={this.state.transmissionType}
-                        >
-                          <option>All Transmission</option>
-                          {transmissionTypeList &&
-                            transmissionTypeList.map(transmission => {
-                              return (
-                                <option
-                                  id={transmission.transmissionTypeId}
-                                  value={transmission.transmissionType}
-                                >
-                                  {transmission.transmissionType}
-                                </option>
-                              );
-                            })}
-                        </select>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-
-                  <div class="form-group align-items-center">
-                    <label class="bold form-left">Deals</label>
-                    <select
-                      className="form-control"
-                      name="dealsType"
-                      onChange={e => {
-                        this.handleChange(e);
-                      }}
-                      disabled={
-                        dealsTypeList && dealsTypeList.length ? false : true
-                      }
-                      value={this.state.dealsType}
-                    >
-                      <option>All Deals</option>
-                      {dealsTypeList &&
-                        dealsTypeList.map(deal => {
-                          return (
-                            <option
-                              id={deal.dealsTypeId}
-                              value={deal.dealsType}
-                            >
-                              {deal.dealsType}
-                            </option>
-                          );
-                        })}
-                    </select>
-                  </div>
-
-                  <div class="form-group align-items-center">
-                    <label class="bold form-left">Condition Type</label>
-                    {conditionTypeList ? (
-                      <div class="form-right">
-                        <select
-                          className="form-control"
-                          name="conditionType"
-                          onChange={e => {
-                            this.handleChange(e);
-                          }}
-                          disabled={
-                            conditionTypeList && conditionTypeList.length
-                              ? false
-                              : true
-                          }
-                          value={this.state.conditionType}
-                        >
-                          <option>All Condition</option>
-                          {conditionTypeList &&
-                            conditionTypeList.map(conditionType => {
-                              return (
-                                <option
-                                  id={conditionType.conditionTypeId}
-                                  value={conditionType.conditionType}
-                                >
-                                  {conditionType.conditionType}
-                                </option>
-                              );
-                            })}
-                        </select>
-                      </div>
-                    ) : (
-                      " "
-                    )}
-                  </div>
-
-                  <div class="form-group align-items-center">
-                    <label class="bold form-left">Location</label>
-                    <div class="form-right">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                        name="location"
-                        onChange={e => {
-                          this.handleOnChange(e);
-                        }}
-                      />
-                    </div>
-                  </div>
+                <div class="sidelinks">
+                  <div class="slhead text-center medium head3">Sell</div>
+                  <ul class="sllinks medium">
+                    <li>
+                      <a href="javascript:;">
+                        Place an AD
+                        <span>
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="membership-fee.html">
+                        Membership Fee
+                        <span>
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="active">
+                      <a href="register-items.html">
+                        Register items
+                        <span>
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                      </a>
+                      <ul class="sidebarsubmenu">
+                        <li class="active">
+                          <a href="register-form.html">Car</a>
+                        </li>
+                        <li>
+                          <a href="register-form.html">
+                            Trucks / Special vehicle
+                          </a>
+                        </li>
+                        <li>
+                          <a href="register-form.html">Bus</a>
+                        </li>
+                        <li>
+                          <a href="register-form.html">Equipment / Part</a>
+                        </li>
+                        <li>
+                          <a href="register-form.html">Parts / Accessories</a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
                 </div>
               </div>
+              <div class="col-md-9">
+                <div class="head1 medium">Register Card Details</div>
 
-              <div class="col-md-3">
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Name</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="name"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                  </div>
-                </div>
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Model</label>
-                  {modelList ? (
-                    <div class="form-group">
-                      {/* <Select
-                          value={this.state.selectedModelOptions}
-                          onChange={this.handleChangeModel}
-                          options={carModelOptions}
-                          name="carModel"
-                          isMulti={true}
-                          isSearchable={true}
-                        /> */}
-                      <select
-                        className="form-control"
-                        name="model"
-                        id="model"
-                        disabled={modelList && modelList.length ? false : true}
-                        onChange={this.handleChange}
-                        value={this.state.models}
-                      >
-                        <option value="">All Models</option>
-                        {modelList &&
-                          modelList.map(model => {
-                            return (
-                              <option id={model.modelId} value={model.model}>
-                                {model.model}
+                <div class="registerbox mt-5">
+                  <p class="para1">Please fill out the form.</p>
+                  <div class="row rbform no-gutters mt-4">
+                    <div class="col-12">
+                      <div class="row mb-4 ">
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-grop">
+                            <label class="label bold">Select Brand</label>
+                            <select
+                              className="form-control"
+                              name="brand"
+                              id="brand"
+                              disabled={
+                                brandList && brandList.length ? false : true
+                              }
+                              onChange={e => {
+                                this.handleChangeBrand(e);
+                              }}
+                              value={this.state.brands}
+                            >
+                              <option id="all" value="">
+                                All Brands
                               </option>
-                            );
-                          })}
-                      </select>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Price</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="price"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                  </div>
-                </div>
-                {fuelTypeList ? (
-                  <div class="form-group">
-                    <div class="row align-items-center">
-                      <div class="col-12">
-                        <label for="">Fuel Type</label>
+                              {brandList &&
+                                brandList.map((brand, i) => {
+                                  return (
+                                    <option
+                                      id={`${i}${brand.brandId}`}
+                                      value={brand.brand}
+                                    >
+                                      {brand.brand}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-grop">
+                            <label class="label bold">Select Model</label>
+                            <select
+                              className="form-control"
+                              name="model"
+                              id="model"
+                              disabled={
+                                modelList && modelList.length ? false : true
+                              }
+                              onChange={this.handleChange}
+                              value={this.state.models}
+                            >
+                              <option value="">All Models</option>
+                              {modelList &&
+                                modelList.map(model => {
+                                  return (
+                                    <option
+                                      id={model.modelId}
+                                      value={model.model}
+                                    >
+                                      {model.model}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-grop">
+                            <label class="label bold">
+                              Select Model Details
+                            </label>
+                            <select
+                              className="form-control"
+                              name="modelDetail"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                modelDetailList && modelDetailList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.modelDetails}
+                            >
+                              <option>All Model Details</option>
+                              {modelDetailList &&
+                                modelDetailList.map(modelDetail => {
+                                  return (
+                                    <option
+                                      id={modelDetail.modelId}
+                                      value={modelDetail.model}
+                                    >
+                                      {modelDetail.model}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
                       </div>
-                      <div class="col-12">
-                        <div class="form-group">
-                          {/* <Select
-                                  value={this.state.selectedFuelTypeOptions}
-                                  onChange={this.handleChangeFuel}
-                                  options={fuelTypeOptions}
-                                  name="transmission"
-                                  isMulti={true}
-                                  isSearchable={true}
-                                /> */}
-                          <select
-                            className="form-control"
-                            name="fuelType"
-                            disabled={
-                              fuelTypeList && fuelTypeList.length ? false : true
-                            }
-                            onChange={e => {
-                              this.handleChange(e);
-                            }}
-                            value={this.state.fuelType}
-                          >
-                            <option>All Fuel Type</option>
-                            {fuelTypeList &&
-                              fuelTypeList.map(fuelType => {
-                                return (
-                                  <option
-                                    id={fuelType.fuelTypeId}
-                                    value={fuelType.fuelType}
-                                  >
-                                    {fuelType.fuelType}
-                                  </option>
-                                );
-                              })}
-                          </select>
+
+                      <div class="row mb-4">
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-grop">
+                            <label class="label bold">Title</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="name"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-grop">
+                            <label class="label bold">Description</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="description"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-grop">
+                            <label class="label bold">Price</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="price"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Country</label>
+                            <select
+                              name="country"
+                              id="country"
+                              disabled={
+                                countryList && countryList.length ? false : true
+                              }
+                              value={this.state.country}
+                              onChange={e => {
+                                this.onChangeDropDown(e);
+                              }}
+                              class="form-control"
+                            >
+                              <option value="" selected>
+                                Select Country
+                              </option>
+                              {countryList && countryList.length
+                                ? countryList.map(country => {
+                                    return (
+                                      <option value={country.country}>
+                                        {country.country}
+                                      </option>
+                                    );
+                                  })
+                                : ""}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Year</label>
+                            <select
+                              class="form-control"
+                              name="year"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            >
+                              <option value="2020">2020</option>
+                              <option value="2019">2019</option>
+                              <option value="2018">2018</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Mileage</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="mileage"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Transmission Type</label>
+                            <select
+                              className="form-control"
+                              name="transmission"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                transmissionTypeList &&
+                                transmissionTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.transmissionType}
+                            >
+                              <option>All Transmission</option>
+                              {transmissionTypeList &&
+                                transmissionTypeList.map(transmission => {
+                                  return (
+                                    <option
+                                      id={transmission.transmissionTypeId}
+                                      value={transmission.transmissionType}
+                                    >
+                                      {transmission.transmissionType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Fuel Type</label>
+                            <select
+                              className="form-control"
+                              name="fuelType"
+                              disabled={
+                                fuelTypeList && fuelTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              value={this.state.fuelType}
+                            >
+                              <option>All Fuel Type</option>
+                              {fuelTypeList &&
+                                fuelTypeList.map(fuelType => {
+                                  return (
+                                    <option
+                                      id={fuelType.fuelTypeId}
+                                      value={fuelType.fuelType}
+                                    >
+                                      {fuelType.fuelType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Steering Type</label>
+                            <select
+                              className="form-control"
+                              name="steeringType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                steeringTypeList && steeringTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.steeringType}
+                            >
+                              <option>All Steering</option>
+                              {steeringTypeList &&
+                                steeringTypeList.map(steer => {
+                                  return (
+                                    <option
+                                      id={steer.steeringTypeId}
+                                      value={steer.steeringType}
+                                    >
+                                      {steer.steeringType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Condition Type</label>
+                            <select
+                              className="form-control"
+                              name="conditionType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                conditionTypeList && conditionTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.conditionType}
+                            >
+                              <option>All Condition</option>
+                              {conditionTypeList &&
+                                conditionTypeList.map(conditionType => {
+                                  return (
+                                    <option
+                                      id={conditionType.conditionTypeId}
+                                      value={conditionType.conditionType}
+                                    >
+                                      {conditionType.conditionType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Deals</label>
+                            <select
+                              className="form-control"
+                              name="dealsType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                dealsTypeList && dealsTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.dealsType}
+                            >
+                              <option>All Deals</option>
+                              {dealsTypeList &&
+                                dealsTypeList.map(deal => {
+                                  return (
+                                    <option
+                                      id={deal.dealsTypeId}
+                                      value={deal.dealsType}
+                                    >
+                                      {deal.dealsType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Memberships</label>
+                            <select
+                              className="form-control"
+                              name="membershipType"
+                              onChange={e => {
+                                this.handleChange(e);
+                              }}
+                              disabled={
+                                memberShipTypeList && memberShipTypeList.length
+                                  ? false
+                                  : true
+                              }
+                              value={this.state.membershipType}
+                            >
+                              <option>All Memberships</option>
+                              {memberShipTypeList &&
+                                memberShipTypeList.map(memberShip => {
+                                  return (
+                                    <option
+                                      id={memberShip.membershipTypeId}
+                                      value={memberShip.membershipType}
+                                    >
+                                      {memberShip.membershipType}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Interior Color</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="interiorcolor"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />{" "}
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Exterior Color</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="exteriorcolor"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Location</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="location"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Engine Type</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="engineType"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                          <div class="form-group">
+                            <label class="label bold">Seat Type</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              name="seatsType"
+                              onChange={e => {
+                                this.handleOnChange(e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-12">
+                          <div class="form-grop">
+                            <label class="label bold">File Upload</label>
+                            <div class="custom-file">
+                              <input
+                                type="file"
+                                class="custom-file-input"
+                                id="customFile"
+                                name="image"
+                                onChange={e => {
+                                  this.handleOnChange(e);
+                                }}
+                              />
+                              <label class="custom-file-label" for="customFile">
+                                Choose file
+                              </label>
+                            </div>
+                          </div>
+                          <div class="imgpreview row no-gutters">
+                            {this.state.preview && this.state.preview.length
+                              ? this.state.preview.map((item,index) => {
+                                  return (
+                                    <div class="prevfile col">
+                                      <a href="javascript:;" class="removefile" onClick={()=>{this.removePhoto(index)}}>
+                                        <i class="fas fa-times-circle"></i>
+                                      </a>
+                                      <img
+                                        src={item}
+                                        class="img-fluid"
+                                        alt=""
+                                      />
+                                    </div>
+                                  );
+                                })
+                              : " "}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-12">
+                          <div class="form-grop">
+                            <label class="label bold">Details</label>
+                            <textarea
+                              name=""
+                              id=""
+                              rows="5"
+                              class="form-control"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-lg-4 col-md-6">
+                          <div class="form-grop">
+                            <input
+                              type="submit"
+                              value="Submit"
+                              class="btn btn-primary btn-block"
+                              onClick={(e)=>{this.submit(e)}}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                          <div class="form-grop">
+                            <input
+                              type="submit"
+                              value="Cancel"
+                              class="btn btn-secondary btn-block"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )}
-
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Memberships</label>
-                  <select
-                    className="form-control"
-                    name="membershipType"
-                    onChange={e => {
-                      this.handleChange(e);
-                    }}
-                    disabled={
-                      memberShipTypeList && memberShipTypeList.length
-                        ? false
-                        : true
-                    }
-                    value={this.state.membershipType}
-                  >
-                    <option>All Memberships</option>
-                    {memberShipTypeList &&
-                      memberShipTypeList.map(memberShip => {
-                        return (
-                          <option
-                            id={memberShip.membershipTypeId}
-                            value={memberShip.membershipType}
-                          >
-                            {memberShip.membershipType}
-                          </option>
-                        );
-                      })}
-                  </select>
-                </div>
-
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Interior color</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="interiorcolor"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Engine Type</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="engineType"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {engineTypeList ? (
-                  <div class="form-group">
-                    <label for="">Engine Type</label>
-
-                    <div class="form-group">
-                      {/* <Select
-                          value={this.state.selectedSteeringOptions}
-                          onChange={this.handleChangeSteering}
-                          options={steeringOptions}
-                          name="steering"
-                          isMulti={true}
-                          isSearchable={true}
-                        /> */}
-
-                      <select
-                        className="form-control"
-                        name="engineType"
-                        onChange={e => {
-                          this.handleChange(e);
-                        }}
-                        disabled={
-                          engineTypeList && engineTypeList.length ? false : true
-                        }
-                        value={this.state.engineType}
-                      >
-                        <option>All Engine Type</option>
-                        {engineTypeList &&
-                          engineTypeList.map(engineType => {
-                            return (
-                              <option
-                                id={engineType.engineTypeId}
-                                value={engineType.engineType}
-                              >
-                                {engineType.engineType}
-                              </option>
-                            );
-                          })}
-                      </select>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-
-              <div class="col-md-3">
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Description</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="description"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                  </div>
-                </div>
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Model Details</label>
-                  <select
-                    className="form-control"
-                    name="modelDetail"
-                    onChange={e => {
-                      this.handleChange(e);
-                    }}
-                    disabled={
-                      modelDetailList && modelDetailList.length ? false : true
-                    }
-                    value={this.state.modelDetails}
-                  >
-                    <option>All Model Details</option>
-                    {modelDetailList &&
-                      modelDetailList.map(modelDetail => {
-                        return (
-                          <option
-                            id={modelDetail.modelId}
-                            value={modelDetail.model}
-                          >
-                            {modelDetail.model}
-                          </option>
-                        );
-                      })}
-                  </select>
-                </div>
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Year</label>
-                  <div class="form-right">
-                    <select
-                      class="form-control"
-                      name="year"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    >
-                      <option value="2020">2020</option>
-                      <option value="2019">2019</option>
-                      <option value="2018">2018</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Mileage</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="mileage"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                  </div>
-                </div>
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Steering Type</label>
-                  <div class="form-right">
-                    <select
-                      className="form-control"
-                      name="steeringType"
-                      onChange={e => {
-                        this.handleChange(e);
-                      }}
-                      disabled={
-                        steeringTypeList && steeringTypeList.length
-                          ? false
-                          : true
-                      }
-                      value={this.state.steeringType}
-                    >
-                      <option>All Steering</option>
-                      {steeringTypeList &&
-                        steeringTypeList.map(steer => {
-                          return (
-                            <option
-                              id={steer.steeringTypeId}
-                              value={steer.steeringType}
-                            >
-                              {steer.steeringType}
-                            </option>
-                          );
-                        })}
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Exterior Color</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="exteriorcolor"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Seat Type</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="seatsType"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                  </div>
                 </div>
               </div>
-
-              <div class="col-md-3">
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Image</label>
-                  <div class="form-right">
-                    <input
-                      type="file"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="image"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
-                    <div className="mt-5">
-                      <img
-                        src={
-                          this.state.input_object.files[0]
-                            ? this.state.input_object.files[0]
-                            : ""
-                        }
-                        style={{ height: "50%", width: "50%" }}
-                      ></img>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-3 mb-5 ml-3">
-                <button
-                  className="btn btn-primary text-center"
-                  onClick={e => {
-                    this.submit(e);
-                  }}
-                >
-                  submit
-                </button>
-                <button className="btn btn-primary text-center ml-2">
-                  Cancel
-                </button>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </React.Fragment>
     );
   }
 }
@@ -918,7 +926,7 @@ const mapDispatchToProps = dispatch => {
     },
     showNotification: (message, type) => {
       dispatch(showNotification(message, type));
-    },
+    }
   };
 };
 

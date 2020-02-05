@@ -423,4 +423,141 @@ a:focus, button:focus, input:focus, textarea:focus, select:focus, option:focus {
   background: #fff;
   color: #000;
 }
+
+.shipbanner {
+  width: 100%;
+  min-height: 200px;
+  background: url("../img/bg_shippingSchedule.png") no-repeat top center;
+  background-size: cover;
+  padding: 30px 30px;
+}
+
+.shipbanner .para1 {
+  margin-top: 15px;
+}
+
+.shipbanner .para2 {
+  color: #ddd;
+  margin-top: 20px;
+}
+
+.ship_filter {
+  background: #F5F6F8;
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+
+@media screen and (max-width: 767px) {
+  .ship_filter .btn-wrap {
+    margin-top: 20px;
+  }
+}
+
+.switch_shipping .nav-item {
+  padding: 0px 10px;
+}
+
+.switch_shipping .nav-link {
+  border: 1px solid #ccc;
+  color: #000;
+}
+
+.switch_shipping .nav-link.active {
+  border: 1px solid #00a0dd;
+  color: #fff;
+  background-color: #00a0dd;
+}
+
+.photogrids .photobox {
+  margin-bottom: 30px;
+}
+
+.photogrids .photobox a {
+  border: 1px solid #ccc;
+  color: #666;
+}
+
+.photogrids .photobox a:hover, .photogrids .photobox a:focus {
+  text-decoration: none;
+}
+
+.photogrids .photobox a .caption {
+  padding: 15px;
+}
+
+.sidelinks .sllinks li .sidebarsubmenu {
+  padding-left: 0px;
+  margin-left: 0px;
+  background: #F5F6F8;
+  border: 1px solid #666;
+  border-top: 0px;
+}
+
+.sidelinks .sllinks li .sidebarsubmenu li a {
+  border: 0px;
+  color: #666;
+}
+
+.sidelinks .sllinks li .sidebarsubmenu li.active a {
+  background: #6bde89;
+  color: #fff;
+}
+
+.imgpreview {
+  margin-top: 20px;
+}
+
+.imgpreview .prevfile {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid #666;
+  text-align: center;
+  position: relative;
+  max-width: 200px;
+  margin: 0px 10px;
+}
+
+.imgpreview .prevfile .removefile {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 20px;
+  color: #fff;
+  background: #666;
+  line-height: 23px;
+  display: block;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+}
+
+.rbform {
+  height: 700px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 20px;
+}
+
+/* width */
+.rbform::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.rbform::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.rbform::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.rbform::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 /*# sourceMappingURL=global.css.map */
