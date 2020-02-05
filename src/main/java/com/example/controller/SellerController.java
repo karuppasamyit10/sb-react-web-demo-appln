@@ -3,6 +3,7 @@ package com.example.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -123,6 +124,44 @@ public class SellerController {
 				} 
 			}
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("Controller==>Exception==>sellerAddProduct<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller sellerAddProduct - "+e.getMessage(), null);
+	    }
+    }
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/add/images", produces = "application/json")
+    public @ResponseBody Map<String, Object> addIMages(MultipartHttpServletRequest request, 
+    	   HttpServletRequest httpServletRequest){
+		String methodName = "ADD IMAGES";
+		try{
+			Map<String, Object> params = new LinkedHashMap<String, Object>();
+			Map<String, MultipartFile> fileMap = request.getFileMap();
+			String baseFilePath = null;
+			for(MultipartFile mFile : fileMap.values()) 
+			{
+				System.out.println("getOriginalFilename"+FilenameUtils.getName(mFile.getOriginalFilename()));				
+				String fileName = FilenameUtils.getName(mFile.getOriginalFilename()).replaceAll("[-+^#:,%\\& ]","");
+				String fileNameWithOutExt = FilenameUtils.removeExtension(fileName);
+				String fileExt = FilenameUtils.getExtension(fileName);
+				long currentTime = System.currentTimeMillis();
+				fileName= fileNameWithOutExt +"_"+currentTime+"."+fileExt;
+				String fileBasePath= currentTime+"/";
+				String dir = commonConfig.getStaticLocations()+fileBasePath;				
+	            File tempDir = new File(dir);
+	            if(!tempDir.exists()){
+	            	tempDir.mkdirs();
+	            }
+	        	File file = new File(tempDir,fileName);
+	        	byte[] bytes = mFile.getBytes();
+	            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));
+	            stream.write(bytes);
+	            stream.close();
+	        	baseFilePath = fileBasePath+fileName;
+			} 
+			params.put("imagePath", commonConfig.getHostBaseUrl()+baseFilePath);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", params);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>sellerAddProduct<==");
