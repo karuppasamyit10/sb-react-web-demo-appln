@@ -1,3 +1,4 @@
+BASIC
 VIP
 GOLD
 Silver

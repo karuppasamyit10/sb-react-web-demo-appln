@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao {
 	@Transactional(rollbackOn = { Exception.class})
 	public Map<?, ?> userLogout(long userId, String userAgent) throws Exception {
 		logger.info("::::Enter(daoImpl)==>userRegistration::::");
-		String methodName = "USER REGISTRATION";
+		String methodName = "USER LOGOUT";
 		User userObj = null;
 		
 		try {

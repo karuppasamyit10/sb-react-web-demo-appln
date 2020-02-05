@@ -101,26 +101,26 @@ class loginContainer extends Component {
 
   render() {
     return (
-      <section class="register-wrap spacerTop">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="sidelinks">
-                <div class="slhead text-center medium head3">Sign In</div>
-                <ul class="sllinks medium">
+      <section className="register-wrap spacerTop">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3">
+              <div className="sidelinks">
+                <div className="slhead text-center medium head3">Sign In</div>
+                <ul className="sllinks medium">
                   <li>
                     <Link to={PATH.REGISTRATION}>
                       Register ID{" "}
                       <span>
-                        <i class="fas fa-chevron-right"></i>
+                        <i className="fas fa-chevron-right"></i>
                       </span>
                     </Link>
                   </li>
-                  <li class="active">
+                  <li className="active">
                     <Link to={PATH.SIGIN}>
                       Sign In{" "}
                       <span>
-                        <i class="fas fa-chevron-right"></i>
+                        <i className="fas fa-chevron-right"></i>
                       </span>
                     </Link>
                   </li>
@@ -128,7 +128,7 @@ class loginContainer extends Component {
                     <Link to={PATH.REGISTRATION}>
                       ID Search
                       <span>
-                        <i class="fas fa-chevron-right"></i>
+                        <i className="fas fa-chevron-right"></i>
                       </span>
                       </Link>
                   </li>
@@ -136,14 +136,14 @@ class loginContainer extends Component {
                     <Link to={PATH.REGISTRATION}>
                       Password Search
                       <span>
-                        <i class="fas fa-chevron-right"></i>
+                        <i className="fas fa-chevron-right"></i>
                       </span>
                     </Link>
                   </li>
                 </ul>
               </div>
             </div>
-            <div class="col-md-9 form-wrap">
+            <div className="col-md-9 form-wrap">
               <Login needRedirection={true} {...this.props}/>
             </div>
           </div>

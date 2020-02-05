@@ -203,26 +203,26 @@ class Upload extends Component {
           spinner
           text="Loading ..."
         >
-          <section class="search-filter">
-            <div class="container h-100">
+          <section className="search-filter">
+            <div className="container h-100">
               <div
                 id="sf-content"
-                class="row no-gutters h-100 align-items-center justify-content-center hideForAni"
+                className="row no-gutters h-100 align-items-center justify-content-center hideForAni"
               >
-                <div class="col sfcol">
-                  <div class="head1 white text-center mb-3 text-shadow">
+                <div className="col sfcol">
+                  <div className="head1 white text-center mb-3 text-shadow">
                     {t("Find great deals from top-rated dealers.1")}
-                    <sup class="sup">TM</sup>
+                    <sup className="sup">TM</sup>
                   </div>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li
-                      class="nav-item"
+                      className="nav-item"
                       onClick={() => {
                         this.getVehicleMasterDataByVehicleTypeId(1);
                       }}
                     >
                       <a
-                        class="nav-link active"
+                        className="nav-link active"
                         id="usedCar-tab"
                         data-toggle="tab"
                         href="#usedCar"
@@ -234,13 +234,13 @@ class Upload extends Component {
                       </a>
                     </li>
                     <li
-                      class="nav-item"
+                      className="nav-item"
                       onClick={() => {
                         this.getVehicleMasterDataByVehicleTypeId(2);
                       }}
                     >
                       <a
-                        class="nav-link"
+                        className="nav-link"
                         id="usedCar-tab"
                         data-toggle="tab"
                         href="#usedCar"
@@ -252,13 +252,13 @@ class Upload extends Component {
                       </a>
                     </li>
                     <li
-                      class="nav-item"
+                      className="nav-item"
                       onClick={() => {
                         this.getVehicleMasterDataByVehicleTypeId(3);
                       }}
                     >
                       <a
-                        class="nav-link"
+                        className="nav-link"
                         id="usedCar-tab"
                         data-toggle="tab"
                         href="#usedCar"
@@ -270,13 +270,13 @@ class Upload extends Component {
                       </a>
                     </li>
                     <li
-                      class="nav-item"
+                      className="nav-item"
                       onClick={() => {
                         this.getVehicleMasterDataByVehicleTypeId(4);
                       }}
                     >
                       <a
-                        class="nav-link"
+                        className="nav-link"
                         id="usedCar-tab"
                         data-toggle="tab"
                         href="#usedCar"
@@ -288,13 +288,13 @@ class Upload extends Component {
                       </a>
                     </li>
                     <li
-                      class="nav-item"
+                      className="nav-item"
                       onClick={() => {
                         this.getVehicleMasterDataByVehicleTypeId(5);
                       }}
                     >
                       <a
-                        class="nav-link"
+                        className="nav-link"
                         id="usedCar-tab"
                         data-toggle="tab"
                         href="#usedCar"
@@ -306,17 +306,17 @@ class Upload extends Component {
                       </a>
                     </li>
                   </ul>
-                  <div class="tab-content" id="myTabContent">
+                  <div className="tab-content" id="myTabContent">
                     <div
-                      class="tab-pane fade show active"
+                      className="tab-pane fade show active"
                       id="usedCar"
                       role="tabpanel"
                       aria-labelledby="usedCar-tab"
                     >
-                      <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                        <li class="nav-item">
+                      <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                        <li className="nav-item">
                           <a
-                            class="nav-link active"
+                            className="nav-link active"
                             id="by-models-tab"
                             data-toggle="pill"
                             href="#by-models"
@@ -327,9 +327,9 @@ class Upload extends Component {
                             By Brand / Models
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link"
+                            className="nav-link"
                             id="by-price-tab"
                             data-toggle="pill"
                             href="#by-price"
@@ -342,28 +342,28 @@ class Upload extends Component {
                         </li>
                       </ul>
                       <div
-                        class="tab-content pills-tabContent"
+                        className="tab-content pills-tabContent"
                         id="pills-tabContent"
                       >
                         <div
-                          class="tab-pane fade show active"
+                          className="tab-pane fade show active"
                           id="by-models"
                           role="tabpanel"
                           aria-labelledby="by-models-tab"
                         >
-                          <div class="model-filter">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                          <div className="model-filter">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
                                   <select
                                     onChange={this.onChangeBrand}
-                                    class="form-control"
+                                    className="form-control"
                                     value={this.state.brandName}
                                   >
                                     <option value={null} selected>
@@ -385,18 +385,18 @@ class Upload extends Component {
                                 </div>
                               </div>
                               {this.state.vehicleTypeId !== 4 ? (
-                                <div class="col-md-3 colgrids">
-                                  <div class="selectdd">
-                                    <span class="caret">
+                                <div className="col-md-3 colgrids">
+                                  <div className="selectdd">
+                                    <span className="caret">
                                       <i
-                                        class="fa fa-angle-down"
+                                        className="fa fa-angle-down"
                                         aria-hidden="true"
                                       ></i>
                                     </span>
                                     <select
                                       disabled={this.state.modelisDisable}
                                       onChange={this.onChangeModel}
-                                      class="form-control"
+                                      className="form-control"
                                       name="modelName"
                                       value={this.state.modelName}
                                     >
@@ -422,11 +422,11 @@ class Upload extends Component {
                               ) : (
                                 ""
                               )}
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -436,7 +436,7 @@ class Upload extends Component {
                                     }}
                                     name="country"
                                     value={this.state.country}
-                                    class="form-control"
+                                    className="form-control"
                                   >
                                     <option selected>Choose Country</option>
                                     {countryList && countryList.length ? (
@@ -456,11 +456,11 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="btn-wrap">
+                              <div className="col-md-3 colgrids">
+                                <div className="btn-wrap">
                                   <button
                                     type="button"
-                                    class="btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     onClick={() => {
                                       this.handleSearch();
                                     }}
@@ -473,18 +473,18 @@ class Upload extends Component {
                           </div>
                         </div>
                         <div
-                          class="tab-pane fade"
+                          className="tab-pane fade"
                           id="by-price"
                           role="tabpanel"
                           aria-labelledby="by-price-tab"
                         >
-                          <div class="price-filter">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                          <div className="price-filter">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -494,7 +494,7 @@ class Upload extends Component {
                                     }}
                                     value={this.state.fromPrice}
                                     name="fromPrice"
-                                    class="form-control"
+                                    className="form-control"
                                   >
                                     <option selected>From</option>
                                     {fromPriceList && fromPriceList.length ? (
@@ -514,11 +514,11 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -528,7 +528,7 @@ class Upload extends Component {
                                     }}
                                     value={this.state.toPrice}
                                     name="toPrice"
-                                    class="form-control"
+                                    className="form-control"
                                   >
                                     <option selected>To</option>
                                     {toPriceList && toPriceList.length ? (
@@ -548,11 +548,11 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -560,7 +560,7 @@ class Upload extends Component {
                                     onChange={e => {
                                       this.onChangeCountry(e);
                                     }}
-                                    class="form-control"
+                                    className="form-control"
                                   >
                                     <option selected>Choose Country</option>
                                     {countryList && countryList.length ? (
@@ -580,11 +580,11 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="btn-wrap">
+                              <div className="col-md-3 colgrids">
+                                <div className="btn-wrap">
                                   <button
                                     type="button"
-                                    class="btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     onClick={() => {
                                       this.handleSearch();
                                     }}
@@ -599,19 +599,19 @@ class Upload extends Component {
                       </div>
                     </div>
                     <div
-                      class="tab-pane fade"
+                      className="tab-pane fade"
                       id="truck"
                       role="tabpanel"
                       aria-labelledby="truck-tab"
                     >
                       <ul
-                        class="nav nav-pills"
+                        className="nav nav-pills"
                         id="pills-tab-two"
                         role="tablist"
                       >
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link active"
+                            className="nav-link active"
                             id="by-models-tab-two"
                             data-toggle="pill"
                             href="#by-models-two"
@@ -622,9 +622,9 @@ class Upload extends Component {
                             By Make / Models
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link"
+                            className="nav-link"
                             id="by-price-tab-two"
                             data-toggle="pill"
                             href="#by-price-two"
@@ -637,22 +637,22 @@ class Upload extends Component {
                         </li>
                       </ul>
                       <div
-                        class="tab-content pills-tabContent"
+                        className="tab-content pills-tabContent"
                         id="pills-tabContent-two"
                       >
                         <div
-                          class="tab-pane fade show active"
+                          className="tab-pane fade show active"
                           id="by-models-two"
                           role="tabpanel"
                           aria-labelledby="by-models-tab-two"
                         >
-                          <div class="model-filter">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                          <div className="model-filter">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -662,11 +662,11 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -676,8 +676,8 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="inputtxt">
+                              <div className="col-md-3 colgrids">
+                                <div className="inputtxt">
                                   <input
                                     type="text"
                                     value=""
@@ -685,11 +685,11 @@ class Upload extends Component {
                                   />
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="btn-wrap">
+                              <div className="col-md-3 colgrids">
+                                <div className="btn-wrap">
                                   <button
                                     type="button"
-                                    class="btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     onClick={() => {
                                       this.handleSearch();
                                     }}
@@ -702,23 +702,23 @@ class Upload extends Component {
                           </div>
                         </div>
                         <div
-                          class="tab-pane fade"
+                          className="tab-pane fade"
                           id="by-price-two"
                           role="tabpanel"
                           aria-labelledby="by-price-tab-two"
                         >
-                          <div class="price-filter">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-md-3 colgrids">
-                                <div class="form-group row align-items-center">
-                                  <label class="col-sm-4 col-form-label text-center">
+                          <div className="price-filter">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="form-group row align-items-center">
+                                  <label className="col-sm-4 col-form-label text-center">
                                     Price
                                   </label>
-                                  <div class="col-sm-8">
-                                    <div class="selectdd">
-                                      <span class="caret">
+                                  <div className="col-sm-8">
+                                    <div className="selectdd">
+                                      <span className="caret">
                                         <i
-                                          class="fa fa-angle-down"
+                                          className="fa fa-angle-down"
                                           aria-hidden="true"
                                         ></i>
                                       </span>
@@ -730,16 +730,16 @@ class Upload extends Component {
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="form-group row align-items-center">
-                                  <label class="col-sm-4 col-form-label text-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="form-group row align-items-center">
+                                  <label className="col-sm-4 col-form-label text-center">
                                     To
                                   </label>
-                                  <div class="col-sm-8">
-                                    <div class="selectdd">
-                                      <span class="caret">
+                                  <div className="col-sm-8">
+                                    <div className="selectdd">
+                                      <span className="caret">
                                         <i
-                                          class="fa fa-angle-down"
+                                          className="fa fa-angle-down"
                                           aria-hidden="true"
                                         ></i>
                                       </span>
@@ -751,8 +751,8 @@ class Upload extends Component {
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="inputtxt">
+                              <div className="col-md-3 colgrids">
+                                <div className="inputtxt">
                                   <input
                                     type="text"
                                     value=""
@@ -760,11 +760,11 @@ class Upload extends Component {
                                   />
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="btn-wrap">
+                              <div className="col-md-3 colgrids">
+                                <div className="btn-wrap">
                                   <button
                                     type="button"
-                                    class="btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     onClick={() => {
                                       this.handleSearch();
                                     }}
@@ -779,19 +779,19 @@ class Upload extends Component {
                       </div>
                     </div>
                     <div
-                      class="tab-pane fade"
+                      className="tab-pane fade"
                       id="bus"
                       role="tabpanel"
                       aria-labelledby="bus-tab"
                     >
                       <ul
-                        class="nav nav-pills"
+                        className="nav nav-pills"
                         id="pills-tab-three"
                         role="tablist"
                       >
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link active"
+                            className="nav-link active"
                             id="by-models-tab-three"
                             data-toggle="pill"
                             href="#by-models-three"
@@ -802,9 +802,9 @@ class Upload extends Component {
                             By Make / Models
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link"
+                            className="nav-link"
                             id="by-price-tab-three"
                             data-toggle="pill"
                             href="#by-price-three"
@@ -817,22 +817,22 @@ class Upload extends Component {
                         </li>
                       </ul>
                       <div
-                        class="tab-content pills-tabContent"
+                        className="tab-content pills-tabContent"
                         id="pills-tabContent-three"
                       >
                         <div
-                          class="tab-pane fade show active"
+                          className="tab-pane fade show active"
                           id="by-models-three"
                           role="tabpanel"
                           aria-labelledby="by-models-tab-three"
                         >
-                          <div class="model-filter">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                          <div className="model-filter">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -842,11 +842,11 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -856,8 +856,8 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="inputtxt">
+                              <div className="col-md-3 colgrids">
+                                <div className="inputtxt">
                                   <input
                                     type="text"
                                     value=""
@@ -865,11 +865,11 @@ class Upload extends Component {
                                   />
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="btn-wrap">
+                              <div className="col-md-3 colgrids">
+                                <div className="btn-wrap">
                                   <button
                                     type="button"
-                                    class="btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     onClick={() => {
                                       this.handleSearch();
                                     }}
@@ -882,23 +882,23 @@ class Upload extends Component {
                           </div>
                         </div>
                         <div
-                          class="tab-pane fade"
+                          className="tab-pane fade"
                           id="by-price-three"
                           role="tabpanel"
                           aria-labelledby="by-price-tab-three"
                         >
-                          <div class="price-filter">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-md-3 colgrids">
-                                <div class="form-group row align-items-center">
-                                  <label class="col-sm-4 col-form-label text-center">
+                          <div className="price-filter">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="form-group row align-items-center">
+                                  <label className="col-sm-4 col-form-label text-center">
                                     Price
                                   </label>
-                                  <div class="col-sm-8">
-                                    <div class="selectdd">
-                                      <span class="caret">
+                                  <div className="col-sm-8">
+                                    <div className="selectdd">
+                                      <span className="caret">
                                         <i
-                                          class="fa fa-angle-down"
+                                          className="fa fa-angle-down"
                                           aria-hidden="true"
                                         ></i>
                                       </span>
@@ -910,16 +910,16 @@ class Upload extends Component {
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="form-group row align-items-center">
-                                  <label class="col-sm-4 col-form-label text-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="form-group row align-items-center">
+                                  <label className="col-sm-4 col-form-label text-center">
                                     To
                                   </label>
-                                  <div class="col-sm-8">
-                                    <div class="selectdd">
-                                      <span class="caret">
+                                  <div className="col-sm-8">
+                                    <div className="selectdd">
+                                      <span className="caret">
                                         <i
-                                          class="fa fa-angle-down"
+                                          className="fa fa-angle-down"
                                           aria-hidden="true"
                                         ></i>
                                       </span>
@@ -931,8 +931,8 @@ class Upload extends Component {
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="inputtxt">
+                              <div className="col-md-3 colgrids">
+                                <div className="inputtxt">
                                   <input
                                     type="text"
                                     value=""
@@ -940,11 +940,11 @@ class Upload extends Component {
                                   />
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="btn-wrap">
+                              <div className="col-md-3 colgrids">
+                                <div className="btn-wrap">
                                   <button
                                     type="button"
-                                    class="btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     onClick={() => {
                                       this.handleSearch();
                                     }}
@@ -959,19 +959,19 @@ class Upload extends Component {
                       </div>
                     </div>
                     <div
-                      class="tab-pane fade"
+                      className="tab-pane fade"
                       id="equipments"
                       role="tabpanel"
                       aria-labelledby="equipments-tab"
                     >
                       <ul
-                        class="nav nav-pills"
+                        className="nav nav-pills"
                         id="pills-tab-four"
                         role="tablist"
                       >
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link active"
+                            className="nav-link active"
                             id="by-models-tab-four"
                             data-toggle="pill"
                             href="#by-models-four"
@@ -982,9 +982,9 @@ class Upload extends Component {
                             By Make / Models
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link"
+                            className="nav-link"
                             id="by-price-tab-four"
                             data-toggle="pill"
                             href="#by-price-four"
@@ -997,22 +997,22 @@ class Upload extends Component {
                         </li>
                       </ul>
                       <div
-                        class="tab-content pills-tabContent"
+                        className="tab-content pills-tabContent"
                         id="pills-tabContent-four"
                       >
                         <div
-                          class="tab-pane fade show active"
+                          className="tab-pane fade show active"
                           id="by-models-four"
                           role="tabpanel"
                           aria-labelledby="by-models-tab-four"
                         >
-                          <div class="model-filter">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                          <div className="model-filter">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -1022,11 +1022,11 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="selectdd">
-                                  <span class="caret">
+                              <div className="col-md-3 colgrids">
+                                <div className="selectdd">
+                                  <span className="caret">
                                     <i
-                                      class="fa fa-angle-down"
+                                      className="fa fa-angle-down"
                                       aria-hidden="true"
                                     ></i>
                                   </span>
@@ -1036,8 +1036,8 @@ class Upload extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="inputtxt">
+                              <div className="col-md-3 colgrids">
+                                <div className="inputtxt">
                                   <input
                                     type="text"
                                     value=""
@@ -1045,11 +1045,11 @@ class Upload extends Component {
                                   />
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="btn-wrap">
+                              <div className="col-md-3 colgrids">
+                                <div className="btn-wrap">
                                   <button
                                     type="button"
-                                    class="btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     onClick={() => {
                                       this.handleSearch();
                                     }}
@@ -1062,23 +1062,23 @@ class Upload extends Component {
                           </div>
                         </div>
                         <div
-                          class="tab-pane fade"
+                          className="tab-pane fade"
                           id="by-price-four"
                           role="tabpanel"
                           aria-labelledby="by-price-tab-four"
                         >
-                          <div class="price-filter">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-md-3 colgrids">
-                                <div class="form-group row align-items-center">
-                                  <label class="col-sm-4 col-form-label text-center">
+                          <div className="price-filter">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="form-group row align-items-center">
+                                  <label className="col-sm-4 col-form-label text-center">
                                     Price
                                   </label>
-                                  <div class="col-sm-8">
-                                    <div class="selectdd">
-                                      <span class="caret">
+                                  <div className="col-sm-8">
+                                    <div className="selectdd">
+                                      <span className="caret">
                                         <i
-                                          class="fa fa-angle-down"
+                                          className="fa fa-angle-down"
                                           aria-hidden="true"
                                         ></i>
                                       </span>
@@ -1090,16 +1090,16 @@ class Upload extends Component {
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="form-group row align-items-center">
-                                  <label class="col-sm-4 col-form-label text-center">
+                              <div className="col-md-3 colgrids">
+                                <div className="form-group row align-items-center">
+                                  <label className="col-sm-4 col-form-label text-center">
                                     To
                                   </label>
-                                  <div class="col-sm-8">
-                                    <div class="selectdd">
-                                      <span class="caret">
+                                  <div className="col-sm-8">
+                                    <div className="selectdd">
+                                      <span className="caret">
                                         <i
-                                          class="fa fa-angle-down"
+                                          className="fa fa-angle-down"
                                           aria-hidden="true"
                                         ></i>
                                       </span>
@@ -1111,8 +1111,8 @@ class Upload extends Component {
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="inputtxt">
+                              <div className="col-md-3 colgrids">
+                                <div className="inputtxt">
                                   <input
                                     type="text"
                                     value=""
@@ -1120,11 +1120,11 @@ class Upload extends Component {
                                   />
                                 </div>
                               </div>
-                              <div class="col-md-3 colgrids">
-                                <div class="btn-wrap">
+                              <div className="col-md-3 colgrids">
+                                <div className="btn-wrap">
                                   <button
                                     type="button"
-                                    class="btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     onClick={() => {
                                       this.handleSearch();
                                     }}
@@ -1144,23 +1144,23 @@ class Upload extends Component {
             </div>
           </section>
         </LoadingOverlay>
-        <section class="search-showcase spacerTop spacerBottom">
-          <div class="container">
-            <div class="row">
+        <section className="search-showcase spacerTop spacerBottom">
+          <div className="container">
+            <div className="row">
               {ourLastSearchList && ourLastSearchList.length === 0 ? (
-                <div class="col-md-4">
-                  <div class="ss-cards">
-                    <p class="head3 black">Your Last Search</p>
-                    <div class="ss-img-wrap">
+                <div className="col-md-4">
+                  <div className="ss-cards">
+                    <p className="head3 black">Your Last Search</p>
+                    <div className="ss-img-wrap">
                       <div
-                        class="ss-img"
+                        className="ss-img"
                         style={{
                           backgroundImage: `url(${Background1})`
                         }}
                       >
                         {" "}
                       </div>
-                      <div class="ss-title head3 white text-shadow">
+                      <div className="ss-title head3 white text-shadow">
                         2010 Ssangyong Actyon
                         <span>Sports Leather 5Seats 2WD AT</span>
                       </div>
@@ -1172,17 +1172,17 @@ class Upload extends Component {
               )}
 
               {savedRecentSearchList && savedRecentSearchList.length === 0 ? (
-                <div class="col-md-4">
-                  <div class="ss-cards">
-                    <p class="head3 black">Saved & Recent Searches</p>
-                    <div class="ss-img-wrap">
+                <div className="col-md-4">
+                  <div className="ss-cards">
+                    <p className="head3 black">Saved & Recent Searches</p>
+                    <div className="ss-img-wrap">
                       <div
-                        class="ss-img"
+                        className="ss-img"
                         style={{
                           backgroundImage: `url(${Background2})`
                         }}
                       ></div>
-                      <div class="ss-title head3 white text-shadow">
+                      <div className="ss-title head3 white text-shadow">
                         2001 Hyundai Terracan
                         <span>JX250 INTERCOOLER 4WD</span>
                       </div>
@@ -1194,17 +1194,17 @@ class Upload extends Component {
               )}
 
               {relatedSearchList && relatedSearchList.length === 0 ? (
-                <div class="col-md-4">
-                  <div class="ss-cards">
-                    <p class="head3 black">Related Searches</p>
-                    <div class="ss-img-wrap">
+                <div className="col-md-4">
+                  <div className="ss-cards">
+                    <p className="head3 black">Related Searches</p>
+                    <div className="ss-img-wrap">
                       <div
-                        class="ss-img"
+                        className="ss-img"
                         style={{
                           backgroundImage: `url(${Background3})`
                         }}
                       ></div>
-                      <div class="ss-title head3 white text-shadow">
+                      <div className="ss-title head3 white text-shadow">
                         2004 Kia Sorento NEW
                         <span> 4WD TLX SUNROOF A/T</span>
                       </div>
@@ -1218,24 +1218,24 @@ class Upload extends Component {
           </div>
         </section>
 
-        <section class="everything-know spacerTop spacerBottom hideForAni">
-          <div class="container">
-            <div class="head2 black medium text-center">
+        <section className="everything-know spacerTop spacerBottom hideForAni">
+          <div className="container">
+            <div className="head2 black medium text-center">
               Everything You Need To Know
             </div>
-            <div class="row ">
-              <div class="col-md-4">
-                <div class="ek-cards text-center">
-                  <div class="ek-img">
+            <div className="row ">
+              <div className="col-md-4">
+                <div className="ek-cards text-center">
+                  <div className="ek-img">
                     <img
                       src={require("../assets/img/everything/best-deals-mobile.png")}
-                      class="img-fluid"
+                      className="img-fluid"
                       alt=""
                     />
                   </div>
-                  <div class="cardBody">
-                    <h4 class="head3">Evaluation standard</h4>
-                    <p class="desc para1">
+                  <div className="cardBody">
+                    <h4 className="head3">Evaluation standard</h4>
+                    <p className="desc para1">
                       By comparing price, detailed vehicle data and dealer
                       reviews, we give each used car a deal rating from great to
                       overpriced, and sort the best deals first
@@ -1243,36 +1243,36 @@ class Upload extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="ek-cards text-center">
-                  <div class="ek-img">
+              <div className="col-md-4">
+                <div className="ek-cards text-center">
+                  <div className="ek-img">
                     <img
                       src={require("../assets/img/everything/valuable-insights-mobile.png")}
-                      class="img-fluid"
+                      className="img-fluid"
                       alt=""
                     />
                   </div>
-                  <div class="cardBody">
-                    <h4 class="head3">Global A/S System</h4>
-                    <p class="desc para1">
+                  <div className="cardBody">
+                    <h4 className="head3">Global A/S System</h4>
+                    <p className="desc para1">
                       We provide free access to key info like dealer reviews,
                       market value, price drops and days on lot—all on one page
                     </p>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="ek-cards text-center">
-                  <div class="ek-img">
+              <div className="col-md-4">
+                <div className="ek-cards text-center">
+                  <div className="ek-img">
                     <img
                       src={require("../assets/img/everything/search-mobile.jpg")}
-                      class="img-fluid"
+                      className="img-fluid"
                       alt=""
                     />
                   </div>
-                  <div class="cardBody">
-                    <h4 class="head3">Contact us</h4>
-                    <p class="desc para1">
+                  <div className="cardBody">
+                    <h4 className="head3">Contact us</h4>
+                    <p className="desc para1">
                       Our powerful search makes it easy to refine and
                       personalize your results so you only see the cars and
                       features you care about
@@ -1284,58 +1284,58 @@ class Upload extends Component {
           </div>
         </section>
 
-        <section class="no-one-trading spacerTop hideForAni">
-          <div class="container text-center">
-            <div class="head1 white bold">
+        <section className="no-one-trading spacerTop hideForAni">
+          <div className="container text-center">
+            <div className="head1 white bold">
               Harasow is The No.1 Trading Platform for Korean Used Cars
             </div>
-            <p class="head3 white mt-3">
+            <p className="head3 white mt-3">
               Harasow is the No.1 trading platform for cars, trucks, buses,
               equipment, spare parts and machinery in S.Korea. As a wholesale
               marketplace for professional autotraders, We offer the safest and
               the cheapest ways to buy items directly from South Korean Sellers.
             </p>
-            <div class="row mt-5">
-              <div class="col-md-4">
-                <div class="no1-cards">
+            <div className="row mt-5">
+              <div className="col-md-4">
+                <div className="no1-cards">
                   <img
                     src={require("../assets/img/no1/img_autowini01.jpg")}
-                    class="img-fluid"
+                    className="img-fluid"
                     alt=""
                   />
-                  <p class="head2 bold white mt-3">AUTO harasow Media</p>
-                  <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-primary">
+                  <p className="head2 bold white mt-3">AUTO harasow Media</p>
+                  <div className="btn-group">
+                    <a href="" className="btn btn-primary">
                       Learn More
                     </a>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="no1-cards">
+              <div className="col-md-4">
+                <div className="no1-cards">
                   <img
                     src={require("../assets/img/no1/img_autowini02.jpg")}
-                    class="img-fluid"
+                    className="img-fluid"
                     alt=""
                   />
-                  <p class="head2 bold white mt-3">Why AUTO harasow </p>
-                  <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-primary">
+                  <p className="head2 bold white mt-3">Why AUTO harasow </p>
+                  <div className="btn-group">
+                    <a href="" className="btn btn-primary">
                       Learn More
                     </a>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="no1-cards">
+              <div className="col-md-4">
+                <div className="no1-cards">
                   <img
                     src={require("../assets/img/no1/img_autowini03.jpg")}
-                    class="img-fluid"
+                    className="img-fluid"
                     alt=""
                   />
-                  <p class="head2 bold white mt-3">Harasow Transport</p>
-                  <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-primary">
+                  <p className="head2 bold white mt-3">Harasow Transport</p>
+                  <div className="btn-group">
+                    <a href="" className="btn btn-primary">
                       Learn More
                     </a>
                   </div>
@@ -1345,109 +1345,109 @@ class Upload extends Component {
           </div>
         </section>
 
-        <section class="testimonial spacerTop spacerBottom hideForAni">
-          <div class="container">
+        <section className="testimonial spacerTop spacerBottom hideForAni">
+          <div className="container">
             <div
               id="carouselExampleControls"
-              class="carousel slide carousel-fade"
+              className="carousel slide carousel-fade"
               data-ride="carousel"
             >
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <div class="row">
-                    <div class="col-md-7">
-                      <div class="video-holder">
-                        <a href="javascript:;" class="d-block">
+              <div className="carousel-inner">
+                <div className="carousel-item active">
+                  <div className="row">
+                    <div className="col-md-7">
+                      <div className="video-holder">
+                        <a href="" className="d-block">
                           <img
                             src={require("../assets/img/testimonials/video.png")}
-                            class="img-fluid"
+                            className="img-fluid"
                             alt=""
                           />
                         </a>
                       </div>
                     </div>
-                    <div class="col-md-5">
-                      <div class="users-holder">
-                        <div class="heading text-uppercase head3">
+                    <div className="col-md-5">
+                      <div className="users-holder">
+                        <div className="heading text-uppercase head3">
                           what our users say
                         </div>
-                        <blockquote class="blockquote">
+                        <blockquote className="blockquote">
                           <div>
-                            <i class="fa fa-quote-left" aria-hidden="true"></i>
+                            <i className="fa fa-quote-left" aria-hidden="true"></i>
                           </div>
-                          <p class="mb-0">
+                          <p className="mb-0">
                             {" "}
                             CarGurus exceeded my expectations because I met the
                             person that wanted to buy my vehicle at the highest
                             price in a very short period of time.
                           </p>
-                          <footer class="blockquote-footer">Matt C</footer>
+                          <footer className="blockquote-footer">Matt C</footer>
                         </blockquote>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-7">
-                      <div class="video-holder">
-                        <a href="javascript:;" class="d-block">
+                <div className="carousel-item">
+                  <div className="row">
+                    <div className="col-md-7">
+                      <div className="video-holder">
+                        <a href="" className="d-block">
                           <img
                             src={require("../assets/img/testimonials/video2.png")}
-                            class="img-fluid"
+                            className="img-fluid"
                             alt=""
                           />
                         </a>
                       </div>
                     </div>
-                    <div class="col-md-5">
-                      <div class="users-holder">
-                        <div class="heading text-uppercase head3">
+                    <div className="col-md-5">
+                      <div className="users-holder">
+                        <div className="heading text-uppercase head3">
                           what our users say
                         </div>
-                        <blockquote class="blockquote">
+                        <blockquote className="blockquote">
                           <div>
-                            <i class="fa fa-quote-left" aria-hidden="true"></i>
+                            <i className="fa fa-quote-left" aria-hidden="true"></i>
                           </div>
-                          <p class="mb-0">
+                          <p className="mb-0">
                             CarGurus put everything in front of me so I could
                             figure out what the right price was for the car that
                             I was looking for.
                           </p>
-                          <footer class="blockquote-footer">Alex M</footer>
+                          <footer className="blockquote-footer">Alex M</footer>
                         </blockquote>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-7">
-                      <div class="video-holder">
-                        <a href="javascript:;" class="d-block">
+                <div className="carousel-item">
+                  <div className="row">
+                    <div className="col-md-7">
+                      <div className="video-holder">
+                        <a href="" className="d-block">
                           <img
                             src={require("../assets/img/testimonials/video3.png")}
-                            class="img-fluid"
+                            className="img-fluid"
                             alt=""
                           />
                         </a>
                       </div>
                     </div>
-                    <div class="col-md-5">
-                      <div class="users-holder">
-                        <div class="heading text-uppercase head3">
+                    <div className="col-md-5">
+                      <div className="users-holder">
+                        <div className="heading text-uppercase head3">
                           what our users say
                         </div>
-                        <blockquote class="blockquote">
+                        <blockquote className="blockquote">
                           <div>
-                            <i class="fa fa-quote-left" aria-hidden="true"></i>
+                            <i className="fa fa-quote-left" aria-hidden="true"></i>
                           </div>
-                          <p class="mb-0">
+                          <p className="mb-0">
                             Using CarGurus made me feel empowered because I was
                             able to understand whether I had a good deal before
                             I walked into the dealership.
                           </p>
-                          <footer class="blockquote-footer">Dave M</footer>
+                          <footer className="blockquote-footer">Dave M</footer>
                         </blockquote>
                       </div>
                     </div>
@@ -1455,142 +1455,142 @@ class Upload extends Component {
                 </div>
               </div>
               <a
-                class="carousel-control-prev"
+                className="carousel-control-prev"
                 href="#carouselExampleControls"
                 role="button"
                 data-slide="prev"
               >
                 <span
-                  class="carousel-control-prev-icon"
+                  className="carousel-control-prev-icon"
                   aria-hidden="true"
                 ></span>
-                <span class="sr-only">Previous</span>
+                <span className="sr-only">Previous</span>
               </a>
               <a
-                class="carousel-control-next"
+                className="carousel-control-next"
                 href="#carouselExampleControls"
                 role="button"
                 data-slide="next"
               >
                 <span
-                  class="carousel-control-next-icon"
+                  className="carousel-control-next-icon"
                   aria-hidden="true"
                 ></span>
-                <span class="sr-only">Next</span>
+                <span className="sr-only">Next</span>
               </a>
             </div>
           </div>
         </section>
 
-        <section class="popularcars spacerTop">
-          <div class="container">
-            <div class="head2 black medium text-center">Popular New Cars</div>
-            <ul class="list-group popularcars-staggering mt-3">
+        <section className="popularcars spacerTop">
+          <div className="container">
+            <div className="head2 black medium text-center">Popular New Cars</div>
+            <ul className="list-group popularcars-staggering mt-3">
               {popularNewsList && popularNewsList.length ? (
                 popularNewsList.map(vehicle => {
                   return (
                     <li
-                      class="list-group-item" key={vehicle.vehicleId}
+                      className="list-group-item" key={vehicle.vehicleId}
                       style={{ opacity: 1 }}
                       onClick={() => {
                         this.searchDetails(vehicle.vehicleId);
                       }}
                     >
-                      <div class="head3">{vehicle.vehicleName}</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                      <div className="head3">{vehicle.vehicleName}</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </li>
                   );
                 })
               ) : (
-                <ul class="list-group popularcars-staggering mt-3">
-                  <li class="list-group-item" style={{ opacity: 1 }}>
+                <ul className="list-group popularcars-staggering mt-3">
+                  <li className="list-group-item" style={{ opacity: 1 }}>
                     <Link to={PATH.SEARCH_DETAIL}>
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </Link>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">New Buick Encore</div>
-                      <p class="para1">39,042 listings starting at $13,990</p>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">New Buick Encore</div>
+                      <p className="para1">39,042 listings starting at $13,990</p>
                     </a>
                   </li>
                 </ul>
@@ -1599,20 +1599,20 @@ class Upload extends Component {
           </div>
         </section>
 
-        <section class="popularcars spacerTop spacerBottom">
-          <div class="container">
-            <div class="head2 black medium text-center">Popular Sedans</div>
-            <ul class="list-group mt-3 popularcars-staggering">
+        <section className="popularcars spacerTop spacerBottom">
+          <div className="container">
+            <div className="head2 black medium text-center">Popular Sedans</div>
+            <ul className="list-group mt-3 popularcars-staggering">
               {popularSedansList && popularSedansList.length ? (
                 popularSedansList.map(vehicle => {
                   return (
                     <li
-                      class="list-group-item"
+                      className="list-group-item"
                       style={{ opacity: 1 }}
                       onClick={() => this.searchDetails(vehicle.vehicleId)}
                     >
-                      <div class="head3">{vehicle.vehicleName}</div>
-                      <p class="para1">
+                      <div className="head3">{vehicle.vehicleName}</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>
@@ -1620,78 +1620,78 @@ class Upload extends Component {
                   );
                 })
               ) : (
-                <ul class="list-group mt-3 popularcars-staggering">
+                <ul className="list-group mt-3 popularcars-staggering">
                   <li
-                    class="list-group-item"
+                    className="list-group-item"
                     style={{ opacity: 1 }}
                     style={{ opacity: 1 }}
                   >
                     <Link to={PATH.SEARCH_DETAIL}>
-                      <div class="head3">Used BMW 3 Series</div>
-                      <p class="para1">
+                      <div className="head3">Used BMW 3 Series</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>
                     </Link>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
+                  <li className="list-group-item" style={{ opacity: 1 }}>
                     <Link to={PATH.SEARCH_DETAIL}>
-                      <div class="head3">Used BMW 3 Series</div>
-                      <p class="para1">
+                      <div className="head3">Used BMW 3 Series</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>
                     </Link>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">Used BMW 3 Series</div>
-                      <p class="para1">
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">Used BMW 3 Series</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">Used BMW 3 Series</div>
-                      <p class="para1">
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">Used BMW 3 Series</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">Used BMW 3 Series</div>
-                      <p class="para1">
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">Used BMW 3 Series</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">Used BMW 3 Series</div>
-                      <p class="para1">
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">Used BMW 3 Series</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">Used BMW 3 Series</div>
-                      <p class="para1">
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">Used BMW 3 Series</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>
                     </a>
                   </li>
-                  <li class="list-group-item" style={{ opacity: 1 }}>
-                    <a href="javascript:;">
-                      <div class="head3">Used BMW 3 Series</div>
-                      <p class="para1">
+                  <li className="list-group-item" style={{ opacity: 1 }}>
+                    <a href="">
+                      <div className="head3">Used BMW 3 Series</div>
+                      <p className="para1">
                         716 Great Deals out of 18,117 listings starting at
                         $1,500
                       </p>

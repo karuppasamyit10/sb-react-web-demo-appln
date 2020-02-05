@@ -29,7 +29,7 @@ export const AppWrapper = (Content, ...propsMapping) => {
       console.log(this.props)
       return (
         <React.Fragment>
-          <div class="">
+          <div className="">
             <Header {...this.props}/>
               {/* <Sidebar prop={this.props}/> */}
               <Content {...this.props} />

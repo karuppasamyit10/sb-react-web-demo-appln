@@ -109,20 +109,20 @@ class login extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1 class="form-header">Sign In</h1>
-        <p class="lead">
+        <h1 className="form-header">Sign In</h1>
+        <p className="lead">
           Buy and Sell all types of vehicles on autoharasow.com, The smart
           Auto Trader's Network!
               </p>
-        <form class="row no-gutters form-rows">
-          <div class="col-lg-12">
-            <div class="form-group row no-gutters align-items-center">
-              <label class="col-md-3 bold form-left">ID</label>
-              <div class="col-md-9 form-right">
+        <form className="row no-gutters form-rows">
+          <div className="col-lg-12">
+            <div className="form-group row no-gutters align-items-center">
+              <label className="col-md-3 bold form-left">ID</label>
+              <div className="col-md-9 form-right">
                 <input
                   type="email"
                   ref={this.userNameRef}
-                  class="form-control"
+                  className="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   name="userName"
@@ -138,12 +138,12 @@ class login extends Component {
                 </p>
               </div>
             </div>
-            <div class="form-group row no-gutters align-items-center">
-              <label class="col-md-3 bold form-left">Password</label>
-              <div class="col-md-9 form-right">
+            <div className="form-group row no-gutters align-items-center">
+              <label className="col-md-3 bold form-left">Password</label>
+              <div className="col-md-9 form-right">
                 <input
                   type="password"
-                  class="form-control"
+                  className="form-control"
                   ref={this.passwordRef}
                   id="exampleInputPassword1"
                   name="password"
@@ -159,40 +159,40 @@ class login extends Component {
                 </p>
               </div>
             </div>
-            <div class="form-group row no-gutters align-items-center">
-              <div class="col-md-9 offset-md-3 form-right">
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-check">
+            <div className="form-group row no-gutters align-items-center">
+              <div className="col-md-9 offset-md-3 form-right">
+                <div className="row">
+                  <div className="col-6">
+                    <div className="form-check">
                       <input
                         type="checkbox"
-                        class="form-check-input"
+                        className="form-check-input"
                         id="remember_checkbox"
                       />
                       <label
-                        class="form-check-label"
-                        for="remember_checkbox"
+                        className="form-check-label"
+                        htmlFor="remember_checkbox"
                       >
                         Remember Password
                             </label>
                     </div>
                   </div>
-                  <div class="col-6">
-                    <button type="button" class="btn btn-link btn-sm">
+                  <div className="col-6">
+                    <button type="button" className="btn btn-link btn-sm">
                       Forgot ID?
                           </button>
-                    <button type="button" class="btn btn-link btn-sm">
+                    <button type="button" className="btn btn-link btn-sm">
                       Forgot Password
                           </button>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="form-group text-center mt-5 plain">
+            <div className="form-group text-center mt-5 plain">
               <button
                 type="button"
                 onClick={() => this.submit()}
-                class="btn btn-primary btn-lg mr-2"
+                className="btn btn-primary btn-lg mr-2"
                 disabled={this.state.isdisable ? "disabled" : null}
               >
                 <div
@@ -207,7 +207,7 @@ class login extends Component {
                       </div>
               </button>
               <Link to={PATH.REGISTRATION}>
-                <button type="button" class="btn btn-secondary btn-lg">
+                <button type="button" className="btn btn-secondary btn-lg">
                   Sign Up
                       </button>
               </Link>

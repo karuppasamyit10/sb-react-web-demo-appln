@@ -24,53 +24,53 @@ class Footer extends Component {
 
   render() {
     return (
-      <footer class="footer">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="footer-left">
-                <div class="flogo bold text-uppercase">harasow</div>
-                <p class="para white">&copy; Harasow. All Rights Reserved.</p>
+      <footer className="footer">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3">
+              <div className="footer-left">
+                <div className="flogo bold text-uppercase">harasow</div>
+                <p className="para white">&copy; Harasow. All Rights Reserved.</p>
               </div>
-              <div class="footer-left">
+              <div className="footer-left">
                 <i className="fa fa-facebook-square" style={{ color: 'white' }}></i>
                 <i className="	fa fa-twitter ml-2" style={{ color: 'white' }}></i>
                 <i className="fa fa-instagram ml-2" style={{ color: 'white' }}></i>
               </div>
             </div>
-            <div class="col-md-9">
-              <div class="row">
-                <div class="col-md-3">
-                  <ul class="flinks">
+            <div className="col-md-9">
+              <div className="row">
+                <div className="col-md-3">
+                  <ul className="flinks">
                     <li>Harasow</li>
                     <li>
-                      <a href="javascript:;">Buy</a>
+                      <a >Buy</a>
                     </li>
                     <li>
-                      <a href="javascript:;">Sell / Trade</a>
+                      <a >Sell / Trade</a>
                     </li>
                     <li>
-                      <a href="javascript:;">Finance</a>
+                      <a >Finance</a>
                     </li>
                   </ul>
                 </div>
-                <div class="col-md-3">
-                  <ul class="flinks">
+                <div className="col-md-3">
+                  <ul className="flinks">
                     <li>About</li>
                     <li>
                       <Link to={PATH.ABOUT_US}>About Us</Link>
                     </li>
                     <li>
-                      {/* <a href="javascript:;">Harasow Production</a> */}
+                      {/* <a >Harasow Production</a> */}
                       <Link to={PATH.MAGZINE}>Magazine </Link>
                     </li>
                     <li>
-                      <a href="javascript:;">FAQ</a>
+                      <a >FAQ</a>
                     </li>
                   </ul>
                 </div>
-                <div class="col-md-3">
-                  <ul class="flinks">
+                <div className="col-md-3">
+                  <ul className="flinks">
                     <li>Contact</li>
                       <li>
                         <Link to={PATH.CONTACT_US}>Contact Us</Link>
@@ -79,12 +79,12 @@ class Footer extends Component {
                         <Link to={PATH.MEDIA}>Media</Link>
                       </li>
                     <li>
-                      <a href="javascript:;">(XXX) XXX - XXXX</a>
+                      <a >(XXX) XXX - XXXX</a>
                     </li>
                   </ul>
                 </div>
-                <div class="col-md-3">
-                  <ul class="flinks">
+                <div className="col-md-3">
+                  <ul className="flinks">
                     <li>
                       <Link to={PATH.MEMBERSHIPFEE}>Sell</Link>
                     </li>

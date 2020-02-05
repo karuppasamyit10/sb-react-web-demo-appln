@@ -66,7 +66,11 @@ class Header extends Component {
   handleSignOut = () => {
     this.props.logout(response => {
       console.log(response);
-      this.props.prop.history.push("/");
+      this.setState({ token: undefined });
+      console.log(this.props);
+      if(this.props && this.props.prop && this.props.prop.history){
+        this.props.prop.history.push("/");
+      }
     });
   };
 
@@ -107,18 +111,18 @@ class Header extends Component {
   render() {
     const { t } = this.props;
     return (
-      <header class="header">
+      <header className="header">
         <nav
           id="navHeader"
-          class="navbar navbar-expand-md navbar-light bg-light fixed-top hideForAni"
+          className="navbar navbar-expand-md navbar-light bg-light fixed-top hideForAni"
         >
-          <div class="row parent-row no-gutters">
-            <div class="logo-wrap col-12">
-              <div class="container">
-                <a class="navbar-brand hideForAni">
+          <div className="row parent-row no-gutters">
+            <div className="logo-wrap col-12">
+              <div className="container">
+                <a className="navbar-brand hideForAni">
                   <img
                     src={logo}
-                    class="img-fluid"
+                    className="img-fluid"
                     style={{ cursor: "pointer" }}
                     alt=""
                     onClick={() => {
@@ -126,54 +130,58 @@ class Header extends Component {
                     }}
                   />
                 </a>
-                <div class="mobiletop d-block d-xl-none">
-                  <ul class="navbar-nav d-inline-flex">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
+                <div className="mobiletop d-block d-xl-none">
+                  <ul className="navbar-nav d-inline-flex">
+                    <li className="nav-item">
+                      <a className="nav-link" href="#">
                         <span>
-                          <i class="fa fa-bell" aria-hidden="true"></i>
+                          <i className="fa fa-bell" aria-hidden="true"></i>
                         </span>
                       </a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li className="nav-item dropdown">
                       <a
-                        class="nav-link dropdown-toggle"
+                        className="nav-link dropdown-toggle"
                         href="#"
                         id="dropdown01Mob"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <span class="mr-1">
-                          <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <span className="mr-1">
+                          <i className="fa fa-user-circle" aria-hidden="true"></i>
                         </span>
                       </a>
                       <div
-                        class="dropdown-menu"
+                        className="dropdown-menu"
                         aria-labelledby="dropdown01Mob"
                       >
-                        <a class="dropdown-item" href="register.html">
-                          Saved Searches
-                        </a>
-                        <a class="dropdown-item" href="register.html">
+                        <Link
+                            className="dropdown-menu" aria-labelledby="dropdown01Mob"
+                            style={{ cursor: "pointer" }}
+                            to={PATH.SAVED_SEARCH}
+                          >
+                            {t("Saved Searches.1")}
+                          </Link>
+                        <a className="dropdown-item" href="register.html">
                           Saved Listings
                         </a>
-                        <a class="dropdown-item" href="register.html">
+                        <a className="dropdown-item" href="register.html">
                           Financing
                         </a>
-                        <a class="dropdown-item" href="register.html">
+                        <a className="dropdown-item" href="register.html">
                           Inbox
                         </a>
-                        <a class="dropdown-item" href="sign-in.html">
+                        <a className="dropdown-item" href="sign-in.html">
                           Sign In
                         </a>
                       </div>
                     </li>
                   </ul>
-                  <div class="hamburger_wrap d-inline-flex">
+                  <div className="hamburger_wrap d-inline-flex">
                     <button
                       id="hamburg"
-                      class={`hamburger hamburger--collapse ${
+                      className={`hamburger hamburger--collapse ${
                         this.state.open ? "is-active" : ""
                       }`}
                       type="button"
@@ -181,30 +189,30 @@ class Header extends Component {
                         this.setState({ open: !this.state.open });
                       }}
                     >
-                      <span class="hamburger-box">
-                        <span class="hamburger-inner"></span>
+                      <span className="hamburger-box">
+                        <span className="hamburger-inner"></span>
                       </span>
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-            <div class={`menu-wrap col-12 ${this.state.open ? "active" : ""}`}>
-              <div class="menu-languages">
-                <div class="container">
-                  <span class="d-inline-block globe">
+            <div className={`menu-wrap col-12 ${this.state.open ? "active" : ""}`}>
+              <div className="menu-languages">
+                <div className="container">
+                  <span className="d-inline-block globe">
                     <a>
-                      <i class="fas fa-globe"></i>
+                      <i className="fas fa-globe"></i>
                     </a>
                   </span>
-                  <ul class="language-links d-inline-block">
+                  <ul className="language-links d-inline-block">
                     <li>
                       <a
                         onClick={() => {
                           this.handleChangeLanguage("en");
                         }}
-                        href="javascript:;"
-                        class="active"
+                        
+                        className="active"
                       >
                         English
                       </a>
@@ -214,7 +222,7 @@ class Header extends Component {
                         onClick={() => {
                           this.handleChangeLanguage("es");
                         }}
-                        href="javascript:;"
+                        
                       >
                         Español
                       </a>
@@ -224,7 +232,7 @@ class Header extends Component {
                         onClick={() => {
                           this.handleChangeLanguage("fr");
                         }}
-                        href="javascript:;"
+                        
                       >
                         Français
                       </a>
@@ -234,145 +242,147 @@ class Header extends Component {
                         onClick={() => {
                           this.handleChangeLanguage("ar");
                         }}
-                        href="javascript:;"
+                        
                       >
                         العربية
                       </a>
                     </li>
                     <li>
-                      <a href="javascript:;">ქართული</a>
+                      <a >ქართული</a>
                     </li>
                     <li>
-                      <a href="javascript:;">Kiswahili</a>
+                      <a >Kiswahili</a>
                     </li>
                     <li>
-                      <a href="javascript:;">русский</a>
+                      <a >русский</a>
                     </li>
                     <li>
-                      <a href="javascript:;">Português </a>
+                      <a >Português </a>
                     </li>
                     <li>
                       <a
                         onClick={() => {
                           this.handleLanguage("ES");
                         }}
-                        href="javascript:;"
+                        
                       >
                         日本語
                       </a>
                     </li>
                     <li>
-                      <a href="javascript:;">中文 </a>
+                      <a >中文 </a>
                     </li>
                     <li>
-                      <a href="javascript:;">한국어</a>
+                      <a >한국어</a>
                     </li>
                   </ul>
                 </div>
               </div>
-              <div class="menu-main">
-                <div class="container">
-                  <div class="row no-gutters">
-                    <ul class="navbar-nav nav-center mr-auto">
-                      <li class="nav-item active">
-                        <Link class="nav-link" to={PATH.ADVANCED_SEARCH}>
+              <div className="menu-main">
+                <div className="container">
+                  <div className="row no-gutters">
+                    <ul className="navbar-nav nav-center mr-auto">
+                      <li className="nav-item active">
+                        <Link className="nav-link" to={PATH.ADVANCED_SEARCH}>
                           {/* {this.setState.Menu1} */}
                           {t("Car Shop.1")}
                         </Link>
                       </li>
-                      <li class="nav-item">
-                        <Link class="nav-link" to={PATH.HOW_TO_ORDER}>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={PATH.HOW_TO_ORDER}>
                           {/* {this.setState.Menu2} */}
                           {t("How to Order.1")}
                         </Link>
                       </li>
-                      <li class="nav-item">
-                        <Link class="nav-link" to={PATH.transport}>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={PATH.transport}>
                           {/* {this.setState.Menu3} */}
                           {t("Transport.1")}
                         </Link>
                       </li>
-                      <li class="nav-item">
-                        <Link class="nav-link" to={PATH.PARTNER}>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={PATH.PARTNER}>
                           {/* {this.setState.Menu4} */}
                           {t("Partner.1")}
                         </Link>
                       </li>
-                      <li class="nav-item">
-                        <Link class="nav-link" to={PATH.SELLER}>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={PATH.SELLER}>
                           {/* {this.setState.Menu5} */}
                           {t("Seller.1")}
                         </Link>
                       </li>
-                      <li class="nav-item">
-                        <Link class="nav-link" to={PATH.COMMUNITY}>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={PATH.COMMUNITY}>
                           {/* {this.setState.Menu6} */}
                           {t("Community.1")}
                         </Link>
                       </li>
                     </ul>
-                    <ul class="navbar-nav nav-right">
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">
+                    <ul className="navbar-nav nav-right">
+                      <li className="nav-item">
+                        <a className="nav-link" href="#">
                           {t("Research.1")}
                         </a>
                       </li>
-                      <li class="nav-item">
-                        <Link class="nav-link" to={PATH.ADVERTISE}>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={PATH.ADVERTISE}>
                           {t("Advertise.1")}
                         </Link>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">
+                      <li className="nav-item">
+                        <a className="nav-link" href="#">
                           <span>
-                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            <i className="fa fa-bell" aria-hidden="true"></i>
                           </span>
                         </a>
                       </li>
-                      <li class="nav-item dropdown">
+                      <li className="nav-item dropdown">
                         <a
-                          class="nav-link dropdown-toggle"
+                          className="nav-link dropdown-toggle"
                           href="http://example.com"
                           id="dropdown01"
                           data-toggle="dropdown"
                           aria-haspopup="true"
                           aria-expanded="false"
                         >
-                          <span class="mr-1">
-                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                          <span className="mr-1">
+                            <i className="fa fa-user-circle" aria-hidden="true"></i>
                           </span>
-                          {t("My Account.1")}
+                          {/* {t("My Account.1")} */}
+                          { this.state.token && this.state.token.userInfo && this.state.token.userInfo.displayName ?this.state.token.userInfo.displayName : t("My Account.1")} 
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                          <a
-                            class="dropdown-item"
+                        <div className="dropdown-menu" aria-labelledby="dropdown01">
+                          <Link
+                            className="dropdown-item"
                             style={{ cursor: "pointer" }}
+                            to={PATH.SAVED_SEARCH}
                           >
                             {t("Saved Searches.1")}
-                          </a>
+                          </Link>
                           <a
-                            class="dropdown-item"
+                            className="dropdown-item"
                             style={{ cursor: "pointer" }}
                           >
                             {t("Saved Listings.1")}
                           </a>
                           <a
-                            class="dropdown-item"
+                            className="dropdown-item"
                             style={{ cursor: "pointer" }}
                           >
                             {t("Financing.1")}
                           </a>
                           <a
-                            class="dropdown-item"
+                            className="dropdown-item"
                             style={{ cursor: "pointer" }}
                           >
                             {t("Inbox.1")}
                           </a>
                           <a
-                            class="dropdown-item"
+                            className="dropdown-item"
                             style={{ cursor: "pointer" }}
                           >
-                            {this.state.token ? (
+                            {this.state.token && this.state.token.userInfo ? (
                               <span
                                 onClick={() => {
                                   this.handleSignOut();
