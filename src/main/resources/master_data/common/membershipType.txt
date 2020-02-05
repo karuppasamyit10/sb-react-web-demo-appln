@@ -1,4 +1,4 @@
 BASIC
-VIP
+SILVER
 GOLD
-Silver
+VIP
