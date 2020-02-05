@@ -5,7 +5,11 @@ import { connect } from "react-redux";
 import store from "store";
 import { AppWrapper } from "../public/AppWrapper";
 import { logInUser, userRegistration } from "../../actions/userAction";
-import { getVehicleMasterData } from "../../actions/searchAction";
+import {
+  getVehicleMasterData,
+  getVehicleModelList,
+  getVehicleDetailedModelList
+} from "../../actions/searchAction";
 import { showNotification } from "../../actions/NotificationAction";
 import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
@@ -17,15 +21,36 @@ class addItem extends Component {
     this.state = {
       isdisable: false,
       input_object: {
-        files: []
-      }
+        files: [],
+        vehicleTypeId: 1,
+      },
+      master: {}
     };
   }
 
   componentDidMount() {
     document.title = "Auto Harasow | Add New Item";
     // this.getVehicleMasterData();
+    this.getAllMasterByvehicleTypeId();
   }
+
+  getAllMasterByvehicleTypeId = () => {
+    this.props.getVehicleMasterData(
+      { vehicleTypeId: this.state.input_object.vehicleTypeId },
+      response => {
+        console.log(response);
+        if (response && response.response_code === 0) {
+          this.setState({ master: response.response }, () => {
+            this.setState({ fromYearList: this.state.master.yearList });
+            this.setState({ toYearList: this.state.master.yearList });
+            this.setState({ fromPriceList: this.state.master.priceList });
+            this.setState({ toPriceList: this.state.master.priceList });
+            this.setState({ toMileageList: this.state.master.mileageList });
+          });
+        }
+      }
+    );
+  };
 
   getVehicleMasterData = () => {
     this.props.getVehicleMasterData({}, response => {
@@ -52,7 +77,6 @@ class addItem extends Component {
         console.log(this.state);
       }
     );
-
 
     // reader.onloadend = () => {
     //   files.push(reader.result);
@@ -101,12 +125,139 @@ class addItem extends Component {
       console.log(key[0] + ", " + key[1]);
     }
 
-    this.props.productRegistration(formData,(response)=>{
+    this.props.productRegistration(formData, response => {
+      console.log(response.response.response_code);
+      if(response && response.response_code === 0){
+        this.props.showNotification(response.response_message,'success')
+      }else{
+        this.props.showNotification(response.response_message,'error')
+      }
+    });
+  };
+
+  handleChangeBrand = e => {
+    let { target } = e;
+    let { input_object } = this.state;
+    let { name, value } = target;
+    input_object[name] = value;
+
+    this.setState({ [e.target.name]: e.target.value, input_object });
+    let { brandList, modelList } = this.state.master;
+
+    let found = brandList.find(car => {
+      return car.brand === e.target.value;
+    });
+    if (found && modelList) {
+      this.getVehicleModelList(found.brandId);
+    }
+  };
+
+  getVehicleModelList = brandId => {
+    this.setState({ isLoading: true });
+    this.props.getVehicleModelList({ brandId: brandId }, response => {
+      this.setState({ isLoading: false });
+      if (response.response_code === 0) {
+        let master = this.state.master;
+        master.modelList = response.response.modelList;
+        this.setState({ master: master });
+      }
+    });
+  };
+
+  handleChange = e => {
+    let { target } = e;
+    let { input_object } = this.state;
+    let { name, value } = target;
+    if (name === "image") {
+      this.handleImageRead(e);
+    }
+    input_object[name] = value;
+
+    console.log(e.target.name, e.target.value);
+    this.setState({ [e.target.name]: e.target.value, input_object });
+    if (e.target.name === "model") {
+      let { modelList } = this.state.master;
+      let found = modelList.find(model => {
+        return model.model === e.target.value;
+      });
+      if (found) {
+        this.getVehicleDetailedModelList(found.modelId);
+      }
+    }
+    if (e.target.name === "category1") {
+      let { category1List } = this.state.master;
+      let found = category1List.find(category1 => {
+        return category1.category1 === e.target.value;
+      });
+      if (found) {
+        this.getCategory2(found.category1Id);
+      }
+    }
+  };
+
+  getVehicleDetailedModelList = modelId => {
+    this.setState({ isLoading: true });
+    this.props.getVehicleDetailedModelList({ modelId: modelId }, response => {
+      this.setState({ isLoading: false });
       console.log(response);
-    })
+      if (response.response_code === 0) {
+        let master = this.state.master;
+        master.modelDetailList = response.response.modelDetailList;
+        this.setState({ master: master });
+      }
+    });
+  };
+
+  onChangeDropDown = e => {
+    let { target } = e;
+    let { input_object } = this.state;
+    let { name, value } = target;
+    input_object[name] = value;
+    this.setState({ [e.target.name]: e.target.value, input_object });
+    if (e.target.name === "fromYear") {
+      let toYearList = this.state.master.yearList;
+      let filteredArray = toYearList.filter(
+        year => parseInt(year.year) > parseInt(e.target.value)
+      );
+      this.setState({ toYearList: filteredArray });
+    }
+    if (e.target.name === "fromPrice") {
+      let toPriceList = this.state.master.priceList;
+      let filteredArray = toPriceList.filter(
+        price => parseInt(price.price) > parseInt(e.target.value)
+      );
+      this.setState({ toPriceList: filteredArray });
+    }
+    if (e.target.name === "fromMileage") {
+      let toMileageList = this.state.master.mileageList;
+      let filteredArray = toMileageList.filter(
+        mileage => parseInt(mileage.mileage) > parseInt(e.target.value)
+      );
+      this.setState({ toMileageList: filteredArray });
+    }
   };
 
   render() {
+    let {
+      countryList,
+      brandList,
+      category2List,
+      category1List,
+      transmissionTypeList,
+      steeringTypeList,
+      fuelTypeList,
+      dealsTypeList,
+      memberShipTypeList,
+      mileageList,
+      priceList,
+      yearList,
+      modelList,
+      truckCategoryList,
+      loadingWeightTypeList,
+      engineTypeList,
+      modelDetailList,
+      conditionTypeList
+    } = this.state.master;
     return (
       <section class="">
         <div class="container">
@@ -127,6 +278,8 @@ class addItem extends Component {
                       <select
                         class="form-control"
                         name="type"
+                        disabled
+                        value={this.state.input_object.vehicleTypeId}
                         onChange={e => {
                           this.handleOnChange(e);
                         }}
@@ -139,76 +292,191 @@ class addItem extends Component {
                   </div>
                   <div class="form-group align-items-center">
                     <label class="bold form-left">Brand</label>
-                    <div class="form-right">
-                      <select
-                        class="form-control"
-                        name="brand"
-                        onChange={e => {
-                          this.handleOnChange(e);
-                        }}
-                      >
-                        <option value="1">Audi</option>
-                        <option value="2">BMW</option>
-                        <option value="3">Ford</option>
-                      </select>
-                    </div>
+                    {brandList ? (
+                      <div class="form-group">
+                        {/* <Select
+                            value={this.state.selectedBrandOptions}
+                            onChange={this.handleChangeBrand}
+                            options={carBrandOptions}
+                            name="carBrand"
+                            isMulti={true}
+                            isSearchable={true}
+                          /> */}
+                        <select
+                          className="form-control"
+                          name="brand"
+                          id="brand"
+                          disabled={
+                            brandList && brandList.length ? false : true
+                          }
+                          onChange={e => {
+                            this.handleChangeBrand(e);
+                          }}
+                          value={this.state.brands}
+                        >
+                          <option id="all" value="">
+                            All Brands
+                          </option>
+                          {brandList &&
+                            brandList.map((brand, i) => {
+                              return (
+                                <option
+                                  id={`${i}${brand.brandId}`}
+                                  value={brand.brand}
+                                >
+                                  {brand.brand}
+                                </option>
+                              );
+                            })}
+                        </select>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div class="form-group align-items-center">
                     <label class="bold form-left">Country</label>
-                    <div class="form-right">
-                      <select
-                        class="form-control"
-                        name="country"
-                        onChange={e => {
-                          this.handleOnChange(e);
-                        }}
-                      >
-                        <option value="1">Tamilnadu</option>
-                        <option value="2">Malasia</option>
-                        <option value="3">Australia</option>
-                      </select>
-                    </div>
+                    {countryList ? (
+                      <div class="form-group">
+                        <select
+                          name="country"
+                          id="country"
+                          disabled={
+                            countryList && countryList.length ? false : true
+                          }
+                          value={this.state.country}
+                          onChange={e => {
+                            this.onChangeDropDown(e);
+                          }}
+                          class="form-control"
+                        >
+                          <option value="" selected>
+                            Select Country
+                          </option>
+                          {countryList && countryList.length
+                            ? countryList.map(country => {
+                                return (
+                                  <option value={country.country}>
+                                    {country.country}
+                                  </option>
+                                );
+                              })
+                            : ""}
+                        </select>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div class="form-group align-items-center">
                     <label class="bold form-left">Transmission Type</label>
-                    <div class="form-right">
-                      <select
-                        class="form-control"
-                        name="transmission"
-                        onChange={e => {
-                          this.handleOnChange(e);
-                        }}
-                      >
-                        <option value="1">Automatic</option>
-                        <option value="2">Manual</option>
-                        <option value="3">CVT</option>
-                      </select>
-                    </div>
+                    {transmissionTypeList ? (
+                      <div class="form-group">
+                        <select
+                          className="form-control"
+                          name="transmission"
+                          onChange={e => {
+                            this.handleChange(e);
+                          }}
+                          disabled={
+                            transmissionTypeList && transmissionTypeList.length
+                              ? false
+                              : true
+                          }
+                          value={this.state.transmissionType}
+                        >
+                          <option>All Transmission</option>
+                          {transmissionTypeList &&
+                            transmissionTypeList.map(transmission => {
+                              return (
+                                <option
+                                  id={transmission.transmissionTypeId}
+                                  value={transmission.transmissionType}
+                                >
+                                  {transmission.transmissionType}
+                                </option>
+                              );
+                            })}
+                        </select>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
+
+                  <div class="form-group align-items-center">
+                    <label class="bold form-left">Deals</label>
+                    <select
+                      className="form-control"
+                      name="dealsType"
+                      onChange={e => {
+                        this.handleChange(e);
+                      }}
+                      disabled={
+                        dealsTypeList && dealsTypeList.length ? false : true
+                      }
+                      value={this.state.dealsType}
+                    >
+                      <option>All Deals</option>
+                      {dealsTypeList &&
+                        dealsTypeList.map(deal => {
+                          return (
+                            <option
+                              id={deal.dealsTypeId}
+                              value={deal.dealsType}
+                            >
+                              {deal.dealsType}
+                            </option>
+                          );
+                        })}
+                    </select>
+                  </div>
+
                   <div class="form-group align-items-center">
                     <label class="bold form-left">Condition Type</label>
-                    <div class="form-right">
-                      <select
-                        class="form-control"
-                        name="condition"
-                        onChange={e => {
-                          this.handleOnChange(e);
-                        }}
-                      >
-                        <option value="1">New</option>
-                        <option value="2">User</option>
-                      </select>
-                    </div>
+                    {conditionTypeList ? (
+                      <div class="form-right">
+                        <select
+                          className="form-control"
+                          name="conditionType"
+                          onChange={e => {
+                            this.handleChange(e);
+                          }}
+                          disabled={
+                            conditionTypeList && conditionTypeList.length
+                              ? false
+                              : true
+                          }
+                          value={this.state.conditionType}
+                        >
+                          <option>All Condition</option>
+                          {conditionTypeList &&
+                            conditionTypeList.map(conditionType => {
+                              return (
+                                <option
+                                  id={conditionType.conditionTypeId}
+                                  value={conditionType.conditionType}
+                                >
+                                  {conditionType.conditionType}
+                                </option>
+                              );
+                            })}
+                        </select>
+                      </div>
+                    ) : (
+                      " "
+                    )}
                   </div>
+
                   <div class="form-group align-items-center">
-                    <label class="bold form-left">Exterior Color</label>
+                    <label class="bold form-left">Location</label>
                     <div class="form-right">
                       <input
                         type="text"
                         class="form-control"
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
-                        name="ecolor"
+                        name="location"
                         onChange={e => {
                           this.handleOnChange(e);
                         }}
@@ -236,19 +504,38 @@ class addItem extends Component {
                 </div>
                 <div class="form-group align-items-center">
                   <label class="bold form-left">Model</label>
-                  <div class="form-right">
-                    <select
-                      class="form-control"
-                      name="model"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    >
-                      <option value="1">A1</option>
-                      <option value="2">A2</option>
-                      <option value="3">A3</option>
-                    </select>
-                  </div>
+                  {modelList ? (
+                    <div class="form-group">
+                      {/* <Select
+                          value={this.state.selectedModelOptions}
+                          onChange={this.handleChangeModel}
+                          options={carModelOptions}
+                          name="carModel"
+                          isMulti={true}
+                          isSearchable={true}
+                        /> */}
+                      <select
+                        className="form-control"
+                        name="model"
+                        id="model"
+                        disabled={modelList && modelList.length ? false : true}
+                        onChange={this.handleChange}
+                        value={this.state.models}
+                      >
+                        <option value="">All Models</option>
+                        {modelList &&
+                          modelList.map(model => {
+                            return (
+                              <option id={model.modelId} value={model.model}>
+                                {model.model}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div class="form-group align-items-center">
                   <label class="bold form-left">Price</label>
@@ -265,53 +552,159 @@ class addItem extends Component {
                     />
                   </div>
                 </div>
+                {fuelTypeList ? (
+                  <div class="form-group">
+                    <div class="row align-items-center">
+                      <div class="col-12">
+                        <label for="">Fuel Type</label>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          {/* <Select
+                                  value={this.state.selectedFuelTypeOptions}
+                                  onChange={this.handleChangeFuel}
+                                  options={fuelTypeOptions}
+                                  name="transmission"
+                                  isMulti={true}
+                                  isSearchable={true}
+                                /> */}
+                          <select
+                            className="form-control"
+                            name="fuelType"
+                            disabled={
+                              fuelTypeList && fuelTypeList.length ? false : true
+                            }
+                            onChange={e => {
+                              this.handleChange(e);
+                            }}
+                            value={this.state.fuelType}
+                          >
+                            <option>All Fuel Type</option>
+                            {fuelTypeList &&
+                              fuelTypeList.map(fuelType => {
+                                return (
+                                  <option
+                                    id={fuelType.fuelTypeId}
+                                    value={fuelType.fuelType}
+                                  >
+                                    {fuelType.fuelType}
+                                  </option>
+                                );
+                              })}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
                 <div class="form-group align-items-center">
-                  <label class="bold form-left">Fuel Type</label>
+                  <label class="bold form-left">Memberships</label>
+                  <select
+                    className="form-control"
+                    name="membershipType"
+                    onChange={e => {
+                      this.handleChange(e);
+                    }}
+                    disabled={
+                      memberShipTypeList && memberShipTypeList.length
+                        ? false
+                        : true
+                    }
+                    value={this.state.membershipType}
+                  >
+                    <option>All Memberships</option>
+                    {memberShipTypeList &&
+                      memberShipTypeList.map(memberShip => {
+                        return (
+                          <option
+                            id={memberShip.membershipTypeId}
+                            value={memberShip.membershipType}
+                          >
+                            {memberShip.membershipType}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </div>
+
+                <div class="form-group align-items-center">
+                  <label class="bold form-left">Interior color</label>
                   <div class="form-right">
-                    <select
+                    <input
+                      type="text"
                       class="form-control"
-                      name="fuel"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      name="interiorcolor"
                       onChange={e => {
                         this.handleOnChange(e);
                       }}
-                    >
-                      <option value="1">Petrol</option>
-                      <option value="2">Diesel</option>
-                      <option value="3">Electric</option>
-                    </select>
+                    />
                   </div>
                 </div>
 
                 <div class="form-group align-items-center">
-                  <label class="bold form-left">Location</label>
+                  <label class="bold form-left">Engine Type</label>
                   <div class="form-right">
                     <input
                       type="text"
                       class="form-control"
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
-                      name="location"
+                      name="engineType"
                       onChange={e => {
                         this.handleOnChange(e);
                       }}
                     />
                   </div>
                 </div>
-                <div class="form-group align-items-center">
-                  <label class="bold form-left">Engine</label>
-                  <div class="form-right">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      name="engine"
-                      onChange={e => {
-                        this.handleOnChange(e);
-                      }}
-                    />
+
+                {engineTypeList ? (
+                  <div class="form-group">
+                    <label for="">Engine Type</label>
+
+                    <div class="form-group">
+                      {/* <Select
+                          value={this.state.selectedSteeringOptions}
+                          onChange={this.handleChangeSteering}
+                          options={steeringOptions}
+                          name="steering"
+                          isMulti={true}
+                          isSearchable={true}
+                        /> */}
+
+                      <select
+                        className="form-control"
+                        name="engineType"
+                        onChange={e => {
+                          this.handleChange(e);
+                        }}
+                        disabled={
+                          engineTypeList && engineTypeList.length ? false : true
+                        }
+                        value={this.state.engineType}
+                      >
+                        <option>All Engine Type</option>
+                        {engineTypeList &&
+                          engineTypeList.map(engineType => {
+                            return (
+                              <option
+                                id={engineType.engineTypeId}
+                                value={engineType.engineType}
+                              >
+                                {engineType.engineType}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div class="col-md-3">
@@ -329,6 +722,33 @@ class addItem extends Component {
                       }}
                     />
                   </div>
+                </div>
+                <div class="form-group align-items-center">
+                  <label class="bold form-left">Model Details</label>
+                  <select
+                    className="form-control"
+                    name="modelDetail"
+                    onChange={e => {
+                      this.handleChange(e);
+                    }}
+                    disabled={
+                      modelDetailList && modelDetailList.length ? false : true
+                    }
+                    value={this.state.modelDetails}
+                  >
+                    <option>All Model Details</option>
+                    {modelDetailList &&
+                      modelDetailList.map(modelDetail => {
+                        return (
+                          <option
+                            id={modelDetail.modelId}
+                            value={modelDetail.model}
+                          >
+                            {modelDetail.model}
+                          </option>
+                        );
+                      })}
+                  </select>
                 </div>
                 <div class="form-group align-items-center">
                   <label class="bold form-left">Year</label>
@@ -365,26 +785,59 @@ class addItem extends Component {
                   <label class="bold form-left">Steering Type</label>
                   <div class="form-right">
                     <select
-                      class="form-control"
-                      name="steering"
+                      className="form-control"
+                      name="steeringType"
                       onChange={e => {
-                        this.handleOnChange(e);
+                        this.handleChange(e);
                       }}
+                      disabled={
+                        steeringTypeList && steeringTypeList.length
+                          ? false
+                          : true
+                      }
+                      value={this.state.steeringType}
                     >
-                      <option value="1">LHD</option>
-                      <option value="2">RHD</option>
+                      <option>All Steering</option>
+                      {steeringTypeList &&
+                        steeringTypeList.map(steer => {
+                          return (
+                            <option
+                              id={steer.steeringTypeId}
+                              value={steer.steeringType}
+                            >
+                              {steer.steeringType}
+                            </option>
+                          );
+                        })}
                     </select>
                   </div>
                 </div>
+
                 <div class="form-group align-items-center">
-                  <label class="bold form-left">Interior color</label>
+                  <label class="bold form-left">Exterior Color</label>
                   <div class="form-right">
                     <input
                       type="text"
                       class="form-control"
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
-                      name="icolor"
+                      name="exteriorcolor"
+                      onChange={e => {
+                        this.handleOnChange(e);
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group align-items-center">
+                  <label class="bold form-left">Seat Type</label>
+                  <div class="form-right">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      name="seatsType"
                       onChange={e => {
                         this.handleOnChange(e);
                       }}
@@ -448,7 +901,19 @@ const mapDispatchToProps = dispatch => {
   return {
     productRegistration: (params, callback) => {
       dispatch(productRegistration(params, callback));
-    }
+    },
+    getVehicleMasterData: (params, callback) => {
+      dispatch(getVehicleMasterData(params, callback));
+    },
+    getVehicleModelList: (params, callback) => {
+      dispatch(getVehicleModelList(params, callback));
+    },
+    getVehicleDetailedModelList: (params, callback) => {
+      dispatch(getVehicleDetailedModelList(params, callback));
+    },
+    showNotification: (message, type) => {
+      dispatch(showNotification(message, type));
+    },
   };
 };
 
