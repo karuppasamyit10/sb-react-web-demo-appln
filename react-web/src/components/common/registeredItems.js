@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import { AppWrapper } from "../public/AppWrapper";
 import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
+import store from "store";
 
 class registeredItems extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      userInfo :store.get("userSession"),
+    };
   }
 
   static propTypes = {
@@ -15,6 +18,10 @@ class registeredItems extends Component {
   };
 
   componentDidMount() {
+    console.log(this.state.userInfo);
+    if(!this.state.userInfo){
+      this.props.prop.history.push("/");
+    }
     document.title = "koreaautonet | Registered Items";
     window.scrollTo({
       top: 0,
@@ -89,7 +96,9 @@ class registeredItems extends Component {
                   <p class="para1">Please select the category of item.</p>
                   <div class="row no-gutters mt-4">
                     <div class="col-md">
-                    <Link to={PATH.MEMBERSHIPFEE} class="vehiclegrid d-block text-center">
+                    <Link to={this.state.userInfo && this.state.userInfo.memberShipId && 
+                      this.state.userInfo.memberShipId>0? this.state.PATH.MEMBERSHIPFEE :PATH.PRODUCT_REGISTRATION} 
+                      class="vehiclegrid d-block text-center">
                       <div class="row no-gutters align-items-center position-relative h-100">
                           <div class="col-12">
                             <div class="img">

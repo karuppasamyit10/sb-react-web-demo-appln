@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +16,7 @@ public interface VehiclePhotosRepository extends JpaRepository<VehiclePhotos, Lo
 //	Page<Object> getAllVehicles(@Param("brands") Set<String> brands, @Param("models") Set<String> models, Pageable pageable);
 //	
 //	VehicleDetail findByVehicleId(long vehicleId);
+	
+	List<VehiclePhotos> findByVehicleIdAndIsDeletedAndApproved(long vehicleId, int isDeleted, int isApproved);
 	
 }

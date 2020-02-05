@@ -22,7 +22,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: null,
+      userSession: store.get("userSession"),
       open: false,
       error: null,
       isLoaded: false,
@@ -37,9 +37,9 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    let token = store.get("userSession");
-    console.log(token);
-    this.setState({ token: token });
+    let userSession = store.get("userSession");
+    console.log(userSession);
+    this.setState({ userSession: userSession });
     let jsonFile = require("../../assets/Content.json");
     this.setState({ items: jsonFile });
     console.log(jsonFile);
@@ -66,7 +66,7 @@ class Header extends Component {
   handleSignOut = () => {
     this.props.logout(response => {
       console.log(response);
-      this.setState({ token: undefined });
+      this.setState({ userSession: undefined });
       console.log(this.props);
       if(this.props && this.props.prop && this.props.prop.history){
         this.props.prop.history.push("/");
@@ -152,27 +152,31 @@ class Header extends Component {
                           <i className="fa fa-user-circle" aria-hidden="true"></i>
                         </span>
                       </a>
-                      <div
-                        className="dropdown-menu"
-                        aria-labelledby="dropdown01Mob"
-                      >
-                        <Link
-                            className="dropdown-menu" aria-labelledby="dropdown01Mob"
+                      <div className="dropdown-menu" aria-labelledby="dropdown01Mob">
+                        <Link className="dropdown-menu" aria-labelledby="dropdown01Mob"
                             style={{ cursor: "pointer" }}
-                            to={PATH.SAVED_SEARCH}
-                          >
+                            to={PATH.SAVED_SEARCH}>
                             {t("Saved Searches.1")}
-                          </Link>
-                        <a className="dropdown-item" href="register.html">
+                        </Link>
+                        { this.state.userSession && this.state.userSession.userInfo && this.state.userSession.userInfo.userType == 'ADMIN' ?
+                          <Link
+                          className="dropdown-menu" aria-labelledby="dropdown01Mob"
+                          style={{ cursor: "pointer" }}
+                          to={PATH.SAVED_SEARCH}
+                          >
+                          {t("Saved Searches.1")}
+                        </Link>:''
+                        }
+                        <a className="dropdown-item">
                           Saved Listings
                         </a>
-                        <a className="dropdown-item" href="register.html">
+                        <a className="dropdown-item">
                           Financing
                         </a>
-                        <a className="dropdown-item" href="register.html">
+                        <a className="dropdown-item">
                           Inbox
                         </a>
-                        <a className="dropdown-item" href="sign-in.html">
+                        <a className="dropdown-item">
                           Sign In
                         </a>
                       </div>
@@ -350,39 +354,30 @@ class Header extends Component {
                             <i className="fa fa-user-circle" aria-hidden="true"></i>
                           </span>
                           {/* {t("My Account.1")} */}
-                          { this.state.token && this.state.token.userInfo && this.state.token.userInfo.displayName ?this.state.token.userInfo.displayName : t("My Account.1")} 
+                          { this.state.userSession && this.state.userSession.userInfo && this.state.userSession.userInfo.displayName ?this.state.userSession.userInfo.displayName : t("My Account.1")} 
                         </a>
-                        <div className="dropdown-menu" aria-labelledby="dropdown01">
+                        { 
+                          this.state.userSession && this.state.userSession.userInfo && this.state.userSession.userInfo.userType == 'ADMIN' ?
+                          <div className="dropdown-menu" aria-labelledby="dropdown01">
                           <Link
                             className="dropdown-item"
                             style={{ cursor: "pointer" }}
                             to={PATH.SAVED_SEARCH}
                           >
-                            {t("Saved Searches.1")}
+                            User List
+                          </Link>
+                          <Link
+                            className="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                            to={PATH.SAVED_SEARCH}
+                          >
+                            Approval List
                           </Link>
                           <a
                             className="dropdown-item"
                             style={{ cursor: "pointer" }}
                           >
-                            {t("Saved Listings.1")}
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            style={{ cursor: "pointer" }}
-                          >
-                            {t("Financing.1")}
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            style={{ cursor: "pointer" }}
-                          >
-                            {t("Inbox.1")}
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            style={{ cursor: "pointer" }}
-                          >
-                            {this.state.token && this.state.token.userInfo ? (
+                            {this.state.userSession && this.state.userSession.userInfo ? (
                               <span
                                 onClick={() => {
                                   this.handleSignOut();
@@ -401,6 +396,73 @@ class Header extends Component {
                             )}{" "}
                           </a>
                         </div>
+                        :
+
+                          <div className="dropdown-menu" aria-labelledby="dropdown01">
+                            { 
+                              this.state.userSession && this.state.userSession.userInfo && this.state.userSession.userInfo.memberShipId && 
+                              this.state.userSession.userInfo.memberShipId > 0?
+                              <Link
+                                className="dropdown-item"
+                                style={{ cursor: "pointer" }}
+                                to={PATH.SAVED_SEARCH}
+                              >
+                                {t("Product List.1")}
+                              </Link>
+                              : '' 
+                            }
+                            <Link
+                              className="dropdown-item"
+                              style={{ cursor: "pointer" }}
+                              to={PATH.SAVED_SEARCH}
+                            >
+                              {t("Saved Searches.1")}
+                            </Link>
+                            <Link
+                              className="dropdown-item"
+                              style={{ cursor: "pointer" }}
+                              to={PATH.SAVED_SEARCH}
+                            >
+                              {t("Saved Listings.1")}
+                            </Link>
+                            <Link
+                              className="dropdown-item"
+                              style={{ cursor: "pointer" }}
+                              to={PATH.SAVED_SEARCH}
+                            >
+                              {t("Financing.1")}
+                            </Link>
+                            <Link
+                              className="dropdown-item"
+                              style={{ cursor: "pointer" }}
+                              to={PATH.SAVED_SEARCH}
+                            >
+                              {t("Inbox.1")}
+                            </Link>
+                            <a
+                              className="dropdown-item"
+                              style={{ cursor: "pointer" }}
+                            >
+                              {this.state.userSession && this.state.userSession.userInfo ? (
+                                <span
+                                  onClick={() => {
+                                    this.handleSignOut();
+                                  }}
+                                >
+                                  {t("logout.1")}
+                                </span>
+                              ) : (
+                                <span
+                                  onClick={() => {
+                                    this.handleSignIn();
+                                  }}
+                                >
+                                  {t("signin.1")}
+                                </span>
+                              )}{" "}
+                            </a>
+                          </div>
+                        }
                       </li>
                     </ul>
                   </div>

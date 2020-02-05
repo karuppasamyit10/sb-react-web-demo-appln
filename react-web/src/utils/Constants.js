@@ -40,6 +40,7 @@ module.exports = {
     SPECIAL_SERVICES: "/about-us/how-we-work/special-services",
     SHIPPING: "/about-us/what-we-do/container-shipping",
     MEMBERSHIPFEE: "/membership-fee",
+    PRODUCT_REGISTRATION: "/product-registration",
     REGISTEREDITEMS: "/registered-items",
     FUEL_CONVERSION: "/about-us/what-we-do/fuel-conversion",
     CAR_ACCESSORIES: "/about-us/what-we-do/car-accessories",

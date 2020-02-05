@@ -15,10 +15,11 @@ import { PATH } from "../../utils/Constants";
 import { Link } from "react-router-dom";
 import { productRegistration } from "../../actions/userAction";
 
-class addItem extends Component {
+class ProductRegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userInfo :store.get("userSession"),
       isdisable: false,
       input_object: {
         files: [],
@@ -29,7 +30,11 @@ class addItem extends Component {
   }
 
   componentDidMount() {
-    document.title = "Auto Harasow | Add New Item";
+    console.log(this.state.userInfo);
+    if(!this.state.userInfo || !this.state.userInfo.memberShipId || this.state.userInfo.memberShipId==0){
+      this.props.history.push("/");
+    }
+    document.title = "Auto Harasow | Add New Car";
     // this.getVehicleMasterData();
     this.getAllMasterByvehicleTypeId();
   }
@@ -895,7 +900,7 @@ class addItem extends Component {
   }
 }
 
-addItem.propTypes = {};
+ProductRegistrationForm.propTypes = {};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -917,4 +922,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default AppWrapper(addItem, null, mapDispatchToProps);
+export default AppWrapper(ProductRegistrationForm, null, mapDispatchToProps);

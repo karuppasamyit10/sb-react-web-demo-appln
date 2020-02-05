@@ -37,7 +37,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         Map<String, Object> response = new LinkedHashMap<String, Object>();
 		response.put("userType", userObj.getUserType());
 		response.put("userName", userObj.getUserName() == null ? userObj.getEmail() : userObj.getUserName());
-		response.put("displayName", userObj.getUserName() == null ? userObj.getEmail() : userObj.getUserName());
+		response.put("displayName", userObj.getName() == null || userObj.getName().isEmpty() ? userObj.getUserName() == null ? userObj.getEmail() : userObj.getUserName() : userObj.getName());
 		response.put("userId", userObj.getUserId());
 		response.put("memberShipId", userObj.getMembershipId());
         additionalInfo.put("userInfo", response);

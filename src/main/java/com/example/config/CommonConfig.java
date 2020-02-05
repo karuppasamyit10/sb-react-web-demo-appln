@@ -24,6 +24,8 @@ public class CommonConfig
 	private String keyStoreFileName;
 	
 	private String keyStorePassword;
+	
+	private String staticLocations;
 
 	/**
 	 * @return the hostBaseUrl
@@ -107,5 +109,19 @@ public class CommonConfig
 	 */
 	public void setKeyStorePassword(String keyStorePassword) {
 		this.keyStorePassword = keyStorePassword;
+	}
+
+	/**
+	 * @return the staticLocations
+	 */
+	public String getStaticLocations() {
+		return staticLocations;
+	}
+
+	/**
+	 * @param staticLocations the staticLocations to set
+	 */
+	public void setStaticLocations(String staticLocations) {
+		this.staticLocations = staticLocations;
 	}
 }

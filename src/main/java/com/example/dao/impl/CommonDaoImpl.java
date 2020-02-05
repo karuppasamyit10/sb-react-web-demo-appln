@@ -52,6 +52,7 @@ import com.example.entity.SteeringType;
 import com.example.entity.TransmissionType;
 import com.example.entity.User;
 import com.example.entity.VehicleDetail;
+import com.example.entity.VehiclePhotos;
 import com.example.entity.Year;
 import com.example.repository.BodyStyleTypeRepository;
 import com.example.repository.BrandRepository;
@@ -965,6 +966,8 @@ public class CommonDaoImpl implements CommonDao {
 				params.put("driveTrain", vehicleDetail.getDriveTrain());
 				params.put("parentImageUrl", vehicleDetail.getParentPhotoFileName()==null || vehicleDetail.getParentPhotoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentPhotoFileName());
 				params.put("parentVideoUrl", vehicleDetail.getParentVideoFileName()==null || vehicleDetail.getParentVideoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentVideoFileName());
+				List<VehiclePhotos>  vehiclePhotosList = vehiclePhotosRepository.findByVehicleIdAndIsDeletedAndApproved(vehicleDetail.getVehicleId(), 0, 0);
+				params.put("vehiclePhotosList", vehiclePhotosList);
 			} else {
 				return CommonUtil.wrapResultResponse(methodName, 1, "Invalid item", null);
 			}

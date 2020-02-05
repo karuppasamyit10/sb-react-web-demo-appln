@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.bean.VehicleRegisterBean;
+import com.example.config.CommonConfig;
 import com.example.entity.VehicleDetail;
 import com.example.entity.VehiclePhotos;
 import com.example.repository.VehicleDetailRepository;
@@ -49,6 +50,9 @@ public class SellerController {
 	
 	@Autowired
 	VehiclePhotosRepository vehiclePhotosRepository;
+	
+	@Autowired
+	CommonConfig commonConfig;
 
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/seller/add/product", produces = "application/json")
@@ -90,7 +94,7 @@ public class SellerController {
 					long currentTime = System.currentTimeMillis();
 					fileName= fileNameWithOutExt +"_"+currentTime+"."+fileExt;
 					String fileBasePath= vehicleDetail.getVehicleId()+"/";
-					String dir = "imgs/"+fileBasePath;				
+					String dir = commonConfig.getStaticLocations()+fileBasePath;				
 		            File tempDir = new File(dir);
 		            if(!tempDir.exists()){
 		            	tempDir.mkdirs();
