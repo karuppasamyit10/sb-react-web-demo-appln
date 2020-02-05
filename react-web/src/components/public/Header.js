@@ -68,8 +68,8 @@ class Header extends Component {
       console.log(response);
       this.setState({ userSession: undefined });
       console.log(this.props);
-      if(this.props && this.props.prop && this.props.prop.history){
-        this.props.prop.history.push("/");
+      if(this.props && this.props.history){
+        this.props.history.push("/");
       }
     });
   };
@@ -369,7 +369,7 @@ class Header extends Component {
                           <Link
                             className="dropdown-item"
                             style={{ cursor: "pointer" }}
-                            to={PATH.SAVED_SEARCH}
+                            to={PATH.APPROVAL_LIST}
                           >
                             Approval List
                           </Link>
@@ -405,9 +405,9 @@ class Header extends Component {
                               <Link
                                 className="dropdown-item"
                                 style={{ cursor: "pointer" }}
-                                to={PATH.SAVED_SEARCH}
+                                to={PATH.PRODUCT_LIST}
                               >
-                                {t("Product List.1")}
+                                Product List
                               </Link>
                               : '' 
                             }

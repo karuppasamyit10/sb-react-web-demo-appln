@@ -19,10 +19,10 @@ class registeredItems extends Component {
 
   componentDidMount() {
     console.log(this.state.userSession);
-    if(!this.state.userSession){
-      this.props.prop.history.push("/");
-    }
-    document.title = "koreaautonet | Registered Items";
+    // if(!this.state.userSession){
+    //   this.props.history.push("/");
+    // }
+    // document.title = "koreaautonet | Registered Items";
     window.scrollTo({
       top: 0,
       behavior: 'smooth'

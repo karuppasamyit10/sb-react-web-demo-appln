@@ -3,7 +3,9 @@ package com.example.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -136,9 +138,10 @@ public class SellerController {
     	   HttpServletRequest httpServletRequest){
 		String methodName = "ADD IMAGES";
 		try{
-			Map<String, Object> params = new LinkedHashMap<String, Object>();
+			Map<String, Object> res = new LinkedHashMap<String, Object>();
 			Map<String, MultipartFile> fileMap = request.getFileMap();
 			String baseFilePath = null;
+			List<Object> mapObj =  new ArrayList<>();
 			for(MultipartFile mFile : fileMap.values()) 
 			{
 				System.out.println("getOriginalFilename"+FilenameUtils.getName(mFile.getOriginalFilename()));				
@@ -159,13 +162,16 @@ public class SellerController {
 	            stream.write(bytes);
 	            stream.close();
 	        	baseFilePath = fileBasePath+fileName;
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+	        	params.put("imagePath", commonConfig.getHostBaseUrl()+baseFilePath);
+	        	mapObj.add(params);
 			} 
-			params.put("imagePath", commonConfig.getHostBaseUrl()+baseFilePath);
-			return CommonUtil.wrapResultResponse(methodName, 0, "Success", params);
+			res.put("imagesList", mapObj);
+			return CommonUtil.wrapResultResponse(methodName, 0, "Success", res);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Controller==>Exception==>sellerAddProduct<==");
-			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller sellerAddProduct - "+e.getMessage(), null);
+			return  CommonUtil.wrapResultResponse(methodName, 99, "ADD IMAGES - "+e.getMessage(), null);
 	    }
     }
 	

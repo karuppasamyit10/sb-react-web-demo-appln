@@ -197,9 +197,9 @@ public class CommonDaoImpl implements CommonDao {
 			userObj.setCreatedDate(createdDate);
 			userObj.setUserType("USER");
 			userObj.setVerify(true);
+			userObj.setMembershipId(1);
 			userObj.setPassword(new BCryptPasswordEncoder().encode(userRegistrationBean.getPassword()));
 			userRepository.save(userObj);
-			
 			return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
 		} catch (Exception e) {
 			logger.error("::::Exception(daoImpl)==>updateLogoutUser::::");

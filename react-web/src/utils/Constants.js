@@ -50,6 +50,8 @@ module.exports = {
     transport: "/transport",
     transport_schedule: "/transport/schedule",
     SAVED_SEARCH: "/saved/search",
+    PRODUCT_LIST: "/product-list",
+    APPROVAL_LIST: "/product-approval-list",
     PARTNER: "/partner",
     PARTNER_CONTACT: "/partner/contact",
     PARTNER_COUNTRY: "/partner/country",

@@ -75,6 +75,8 @@ import membershipFee from "./components/common/membershipFee";
 import registeredItems from "./components/common/registeredItems";
 
 import productRegistrationForm from './components/common/ProductRegistrationForm';
+import ProductList from "./components/common/ProductList";
+import ApprovalList from "./components/common/ApprovalList";
 
 
 const CustomRoute = ({ component: Component, ...rest }) => (
@@ -99,6 +101,9 @@ ReactDOM.render(
           <CustomRoute exact path="/signin" component={login} />
           <CustomRoute exact path="/registration" component={registration} />
           <CustomRoute exact path="/product-registration" component={productRegistrationForm} />
+          <CustomRoute exact path="/product-list" component={ProductList} />
+          <CustomRoute exact path="/product-approval-list" component={ApprovalList} />
+          
           <CustomRoute exact path="/dashboard/search" component={search} />
           <CustomRoute
             exact
