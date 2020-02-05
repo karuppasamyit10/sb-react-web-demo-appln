@@ -32,9 +32,9 @@ class ProductRegistrationForm extends Component {
 
   componentDidMount() {
     console.log(this.state.userInfo);
-    if(!this.state.userInfo || !this.state.userInfo.memberShipId || this.state.userInfo.memberShipId==0){
-      this.props.history.push("/");
-    }
+    // if(!this.state.userInfo || !this.state.userInfo.memberShipId || this.state.userInfo.memberShipId==0){
+    //   this.props.history.push("/");
+    // }
     document.title = "Auto Harasow | Add New Car";
     // this.getVehicleMasterData();
     this.getAllMasterByvehicleTypeId();

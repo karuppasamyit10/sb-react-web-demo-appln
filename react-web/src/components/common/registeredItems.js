@@ -9,7 +9,7 @@ class registeredItems extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo :store.get("userSession"),
+      userSession :store.get("userSession"),
     };
   }
 
@@ -18,8 +18,8 @@ class registeredItems extends Component {
   };
 
   componentDidMount() {
-    console.log(this.state.userInfo);
-    if(!this.state.userInfo){
+    console.log(this.state.userSession);
+    if(!this.state.userSession){
       this.props.prop.history.push("/");
     }
     document.title = "koreaautonet | Registered Items";
@@ -96,8 +96,8 @@ class registeredItems extends Component {
                   <p class="para1">Please select the category of item.</p>
                   <div class="row no-gutters mt-4">
                     <div class="col-md">
-                    <Link to={this.state.userInfo && this.state.userInfo.memberShipId && 
-                      this.state.userInfo.memberShipId>0? this.state.PATH.MEMBERSHIPFEE :PATH.PRODUCT_REGISTRATION} 
+                    <Link to={this.state.userSession && this.state.userSession.userInfo && 
+                      this.state.userSession.userInfo.memberShipId && this.state.userSession.userInfo.memberShipId>0 ? PATH.PRODUCT_REGISTRATION:PATH.MEMBERSHIPFEE} 
                       class="vehiclegrid d-block text-center">
                       <div class="row no-gutters align-items-center position-relative h-100">
                           <div class="col-12">

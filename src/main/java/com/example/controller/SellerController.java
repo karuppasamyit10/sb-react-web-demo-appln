@@ -62,10 +62,14 @@ public class SellerController {
 		logger.info("Controller==>Enter==>sellerAddProduct<==");
 		VehicleDetail vehicleDetail = null;
 		try{
+			long userId = CommonUtil.getUserId();
+			if(userId==0){
+				return CommonUtil.wrapResultResponse(methodName, 1, "Access token required", null);
+			}
 			if(vehicleRegisterBean!=null){
 				vehicleDetail = new VehicleDetail();
 				vehicleDetail.setVehicleTypeId(vehicleRegisterBean.getVehicleTypeId());
-				vehicleDetail.setUserId(vehicleRegisterBean.getUserId());
+				vehicleDetail.setUserId(userId);
 				vehicleDetail.setBrand(vehicleRegisterBean.getBrand());
 				vehicleDetail.setModel(vehicleRegisterBean.getModel());
 				vehicleDetail.setModelDetail(vehicleRegisterBean.getModelDetail());
