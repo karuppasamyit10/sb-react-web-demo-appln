@@ -362,16 +362,9 @@ class Header extends Component {
                           <Link
                             className="dropdown-item"
                             style={{ cursor: "pointer" }}
-                            to={PATH.SAVED_SEARCH}
+                            to={PATH.ADMIN_MY_ACCOUNT}
                           >
-                            User List
-                          </Link>
-                          <Link
-                            className="dropdown-item"
-                            style={{ cursor: "pointer" }}
-                            to={PATH.APPROVAL_LIST}
-                          >
-                            Approval List
+                            My Account
                           </Link>
                           <a
                             className="dropdown-item"
