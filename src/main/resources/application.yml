@@ -136,6 +136,6 @@ common:
     from-mail: support@example.com
     https-socket-io: false
     socket-io-port: 7070
-    static-locations: home/ubuntu/sb-demo-app/imgs/
+    static-locations: imgs/
     key-store-file-name: 
     key-store-password:

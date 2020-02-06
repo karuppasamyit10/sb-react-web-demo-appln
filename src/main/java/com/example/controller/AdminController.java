@@ -3,6 +3,7 @@ package com.example.controller;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.bean.VehicleRegisterBean;
+import com.example.config.CommonConfig;
 import com.example.entity.BodyStyleType;
 import com.example.entity.Brand;
 import com.example.entity.Category1;
@@ -44,6 +48,7 @@ import com.example.entity.SeatsType;
 import com.example.entity.SteeringType;
 import com.example.entity.TransmissionType;
 import com.example.entity.User;
+import com.example.entity.VehicleDetail;
 import com.example.entity.VehicleType;
 import com.example.entity.Year;
 import com.example.repository.BodyStyleTypeRepository;
@@ -67,6 +72,7 @@ import com.example.repository.SeatsTypeRepository;
 import com.example.repository.SteeringTypeRepository;
 import com.example.repository.TransmissionTypeRepository;
 import com.example.repository.UserRepository;
+import com.example.repository.VehicleDetailRepository;
 import com.example.repository.VehicleTypeRepository;
 import com.example.repository.YearRepository;
 import com.example.util.CommonUtil;
@@ -77,7 +83,7 @@ import com.example.util.CommonUtil;
  * @created 23-Aug-2019
  */
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/admin/")
 public class AdminController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -152,8 +158,17 @@ public class AdminController {
 	VehicleTypeRepository vehicleTypeRepository;
 	
 	@Autowired
+	VehicleDetailRepository vehicleDetailRepository;
+	
+	@Autowired
 	LanguageRepository languageRepository;
-
+	
+	@Autowired
+	CommonUtil commonUtil;
+	
+	@Autowired
+	CommonConfig commonConfig;
+ 
 	@PostConstruct
 	public void addSuperAdminUserAccount() throws Exception {
 		//Check username 
@@ -171,7 +186,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/admin/dumb/master-data", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "/dumb/master-data", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> dumpMasterDatabyNotePad(String masterDataField) throws Exception {
 		logger.info("Controller==>Enter==>dumpMasterDatabyNotePad<==");
@@ -844,7 +859,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/admin/add/category2", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/add/category2", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> addCategory2ByCategory1Id(@RequestParam int category1Id, @RequestParam List<String> category2) throws Exception 
 	{
@@ -889,7 +904,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/admin/add/model", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/add/model", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> addModelByBrandId(@RequestParam long brandId, @RequestParam List<String> model) throws Exception 
 	{
@@ -934,7 +949,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/admin/add/modelDetails", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/add/modelDetails", produces = "application/json")
 	@ResponseBody
 	public Map<?, ?> addModelDetailsByModelId(@RequestParam long modelId, @RequestParam List<String> modelDetail) throws Exception 
 	{
@@ -976,6 +991,148 @@ public class AdminController {
 			e.printStackTrace();
 			 logger.info("Controller==>Exception==>addModelDetailByModelId<==");
 			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller addModelDetailByModelId", null);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/get/userlist", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getUsersList(@RequestParam(defaultValue = "", value="search") String search) throws Exception 
+	{
+		logger.info("Controller==>Enter==>getUsersList<==");
+		String methodName = "GET USERS LIST";
+		List<Object> userListObj = new LinkedList<>();
+		List<User> userList = null;
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		try 
+		{
+			userList = userRepository.getUserListBySearch(search==null || search.isEmpty() ?"":search.trim());
+			for(User user : userList)
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("userId", user.getUserId());
+				params.put("membershipId", user.getMembershipId());
+				params.put("username", user.getUserName());
+				params.put("name", user.getName());
+				params.put("mobile_number", user.getMobileNumber());
+				userListObj.add(params);
+			}
+			response.put("userList", userListObj);
+			logger.info("Controller==>Exit==>getUsersList<==");
+		    return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			 logger.info("Controller==>Exception==>getUsersList<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getUsersList", null);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/get/pending/approvallist", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> getPendingApprovalList(VehicleRegisterBean vehicleRegisterBean) throws Exception 
+	{
+		logger.info("Controller==>Enter==>getPendingApprovalList<==");
+		String methodName = "GET PENDING APPROVAL LIST";
+		List<Object> vehicleDetailListObj = new LinkedList<>();
+		Page<VehicleDetail> vehicleList = null;
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		try 
+		{
+			vehicleList = vehicleDetailRepository.findByApprovedStatusAndIsDeletedOrderByVehicleId(0,0, commonUtil.pageable(vehicleRegisterBean.getPageNo(), vehicleRegisterBean.getItemsPerPage()));
+			for(VehicleDetail vehicleDetail : vehicleList.getContent())
+			{
+				Map<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put("userId", vehicleDetail.getUserId());
+				params.put("vehicleId", vehicleDetail.getVehicleId());
+				params.put("vehicleName", vehicleDetail.getYear()+" "+vehicleDetail.getBrand()+" "+vehicleDetail.getModel()+ " "+vehicleDetail.getModelDetail());
+				params.put("vehicleTypeId", vehicleDetail.getVehicleTypeId());
+				params.put("bodyStyleType", vehicleDetail.getBodyStyleType());
+				params.put("brand", vehicleDetail.getBrand());
+				params.put("model", vehicleDetail.getModel());
+				params.put("modelDetail", vehicleDetail.getModelDetail());
+				params.put("category1", vehicleDetail.getCategory1());
+				params.put("category2", vehicleDetail.getCategory2());
+				params.put("partsType", vehicleDetail.getPartsType());
+				params.put("year", vehicleDetail.getYear());
+				params.put("price", vehicleDetail.getPrice());
+				params.put("discountedPrice", vehicleDetail.getDiscountedPrice());
+				params.put("transmissionType", vehicleDetail.getTransmissionType());
+				params.put("loadingWeight", vehicleDetail.getLoadingWeight());
+				params.put("seatsType", vehicleDetail.getSeatsType());
+				params.put("mileage", vehicleDetail.getMileage());
+				params.put("conditionType", vehicleDetail.getConditionType());
+				params.put("engineType", vehicleDetail.getEngineType());
+				params.put("steeringType", vehicleDetail.getSteeringType());
+				params.put("fuelType", vehicleDetail.getFuelType());
+				params.put("country", vehicleDetail.getCountry());
+				params.put("dealsType", vehicleDetail.getDealsType());
+				params.put("membershipType", vehicleDetail.getMembershipType());
+				params.put("dealerDetails", vehicleDetail.getDealerDetails());
+				params.put("driveTrain", vehicleDetail.getDriveTrain());
+				params.put("parentImageUrl", vehicleDetail.getParentPhotoFileName()==null || vehicleDetail.getParentPhotoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentPhotoFileName());
+				params.put("parentVideoUrl", vehicleDetail.getParentVideoFileName()==null || vehicleDetail.getParentVideoFileName().isEmpty()?"":commonConfig.getHostBaseUrl()+vehicleDetail.getParentVideoFileName());
+				vehicleDetailListObj.add(params);
+			}
+			response.put("totalRecords", vehicleList.getTotalElements());
+			response.put("total", vehicleList.getTotalPages());
+			response.put("vehicleDetailList", vehicleDetailListObj);
+			logger.info("Controller==>Exit==>getPendingApprovalList<==");
+		    return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			 logger.info("Controller==>Exception==>getPendingApprovalList<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller getPendingApprovalList", null);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/update/membership", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> changeMembershipByUserId(long userId, int membershipTypeId) throws Exception 
+	{
+		logger.info("Controller==>Enter==>changeMembershipByUserId<==");
+		String methodName = "CHANGE MEMBERSHIP BY USERID";
+		User user = null;
+		MemberShipType memberShipTypeObj = null;
+		try 
+		{
+			user = userRepository.findByUserId(userId);
+			if(user==null){
+				 return CommonUtil.wrapResultResponse(methodName, 1, "Invalid user", null);
+			}
+			memberShipTypeObj = memberShipTypeRepository.findByMembershipTypeIdAndIsDeleted(membershipTypeId, 0);
+			if(memberShipTypeObj==null){
+				 return CommonUtil.wrapResultResponse(methodName, 1, "Invalid membership type", null);
+			}
+			user.setMembershipId(memberShipTypeObj.getMembershipTypeId());
+			userRepository.save(user);
+			logger.info("Controller==>Exit==>changeMembershipByUserId<==");
+		    return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			 logger.info("Controller==>Exception==>getUsersList<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller changeMembershipByUserId", null);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/update/product_approval", produces = "application/json")
+	@ResponseBody
+	public Map<?, ?> updateProductApprovalStatus(VehicleRegisterBean vehicleRegisterBean) throws Exception 
+	{
+		logger.info("Controller==>Enter==>updateProductApprovalStatus<==");
+		String methodName = "UPDATE PRODUCT APPROVAL STATUS";
+		try 
+		{
+			VehicleDetail vehicleDetail = vehicleDetailRepository.findByVehicleIdAndApprovedStatusAndIsDeleted(vehicleRegisterBean.getVehicleId(), 0, 0);
+			if(vehicleDetail==null){
+				 return CommonUtil.wrapResultResponse(methodName, 1, "Invalid product details", null);
+			}
+			vehicleDetail.setApprovedStatus(vehicleRegisterBean.getApprovedStatus());
+			vehicleDetailRepository.save(vehicleDetail);
+			logger.info("Controller==>Exit==>updateProductApprovalStatus<==");
+		    return CommonUtil.wrapResultResponse(methodName, 0, "Success", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			 logger.info("Controller==>Exception==>getUsersList<==");
+			return  CommonUtil.wrapResultResponse(methodName, 99, "Error occured into controller updateProductApprovalStatus", null);
 		}
 	}
 	

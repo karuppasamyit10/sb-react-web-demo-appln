@@ -43,6 +43,7 @@ public class VehicleRegisterBean {
 	private int vehicleTypeId;
 	
 	private long vehicleId;
+	private int approvedStatus;
 	private long userId;
 	private long cookieUserId;
 	
@@ -537,5 +538,18 @@ public class VehicleRegisterBean {
 	public void setMileage(String mileage) {
 		this.mileage = mileage;
 	}
-	
+
+	/**
+	 * @return the approvedStatus
+	 */
+	public int getApprovedStatus() {
+		return approvedStatus;
+	}
+
+	/**
+	 * @param approvedStatus the approvedStatus to set
+	 */
+	public void setApprovedStatus(int approvedStatus) {
+		this.approvedStatus = approvedStatus;
+	}
 }

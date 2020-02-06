@@ -30,5 +30,8 @@ public interface VehicleDetailRepository extends JpaRepository<VehicleDetail, Lo
 	
 	List<VehicleDetail> findTopByVehicleTypeIdAndBodyStyleTypeEqualsIgnoreCaseAndIsDeletedOrderByVehicleTypeIdDesc(int vehicleTypeId, String bodyStyleTyped, int isDeleted);
 	
+	VehicleDetail findByVehicleIdAndApprovedStatusAndIsDeleted(long vehicleId, int approvedStatus, int isDeleted);
+	
+	Page<VehicleDetail> findByApprovedStatusAndIsDeletedOrderByVehicleId(int approvedStatus, int isDeleted, Pageable pageable);
 		
 }
