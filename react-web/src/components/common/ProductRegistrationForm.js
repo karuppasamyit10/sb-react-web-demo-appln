@@ -23,7 +23,7 @@ class ProductRegistrationForm extends Component {
       isdisable: false,
       input_object: {
         files: [],
-        vehicleTypeId: 1
+        vehicleTypeId: 1,
       },
       preview: [],
       master: {}
@@ -128,6 +128,8 @@ class ProductRegistrationForm extends Component {
   submit = e => {
     e.preventDefault();
     const item = this.state.input_object;
+    const user = store.get('userSession');
+    item.userId = user && user.userInfo && user.userInfo.userId ? user.userInfo.userId : null;
     let formData = this.getFormData(item);
     //When logging a formData object with just console.log(formData) it always returns empty,
     //as you can't log formData.
@@ -139,6 +141,7 @@ class ProductRegistrationForm extends Component {
       console.log(response.response.response_code);
       if (response && response.response_code === 0) {
         this.props.showNotification(response.response_message, "success");
+        this.props.history.push(PATH.MEMBERSHIPFEE);
       } else {
         this.props.showNotification(response.response_message, "error");
       }
