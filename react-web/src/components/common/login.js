@@ -71,6 +71,12 @@ class login extends Component {
     return true;
   };
 
+  _handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.submit();
+    }
+  }
+
   submit = () => {
     console.log(this.state.userName, this.state.password);
     let { userName, password } = this.state;
@@ -151,6 +157,7 @@ class login extends Component {
                   onChange={e => {
                     this.handleOnChange(e);
                   }}
+                  onKeyDown={(e)=>{this._handleKeyDown(e)}}
                 />
                 <p style={{ color: "red" }}>
                   {this.state.error["password"]

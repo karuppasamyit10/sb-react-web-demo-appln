@@ -1,7 +1,7 @@
 let BASE_URL = '';
 let isDevelopment = true
 if (window.location.hostname === 'localhost' && window.location.port === '3000') {
-  BASE_URL = 'http://localhost:8181/'
+  BASE_URL = 'http://35.160.123.119:8181/'
   isDevelopment = true
 } else if (window.location.hostname === 'localhost' && window.location.port === '4000') {
   BASE_URL = 'http://localhost:8181/'
@@ -42,5 +42,8 @@ module.exports = {
   GET_VEHICLE_DETAILS: 'api/public/vehicle/details',
   ADD_TO_SAVED_SEARCH: 'api/public/add/savedmysearches',
   DELETE_SAVED_SEARCH: '/api/public/delete/savedmysearches',
-  GET_SAVED_SEARCH: '/api/public/getAll/savedmysearches'
+  GET_SAVED_SEARCH: '/api/public/getAll/savedmysearches',
+  GET_ADMIN_USER_LIST: '/api/admin/get/userlist',
+  GET_APPROVAL_LIST: '/api/admin/get/pending/approvallist',
+  CHANGE_MEMBERSHIP: '/api/admin/update/membership'
 }; 

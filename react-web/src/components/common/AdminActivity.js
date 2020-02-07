@@ -8,6 +8,10 @@ import {
   getSavedSearchList,
   deleteSavedSearch
 } from "../../actions/searchAction";
+import UserList from "./userList";
+import MyAccount from "./myAccount";
+import ProductList from "./ProductList";
+import WaitingApprovalList from "./waitingApproval";
 
 class AdminActivity extends Component {
   constructor(props) {
@@ -20,7 +24,8 @@ class AdminActivity extends Component {
       isModelOpen: 0,
       pageNo: 1,
       itemsPerPage: 5,
-      total: 0
+      total: 0,
+      activeTab: 0
     };
   }
 
@@ -53,20 +58,19 @@ class AdminActivity extends Component {
     let data = {
       vehicleId: vehicleId,
       savedSearchId: savedSearchId
-    }
+    };
     this.props.deleteSavedSearch(data, response => {
       console.log(response);
-      if(response && response.response_code === 0){
-        this.props.showNotification("deleted successfully","success");
+      if (response && response.response_code === 0) {
+        this.props.showNotification("deleted successfully", "success");
         this.getSavedSearchList();
-      }
-      else{
-        this.props.showNotification(response.response_message,'error');
+      } else {
+        this.props.showNotification(response.response_message, "error");
       }
     });
   };
 
-  searchDetails = (vehicleId) => {
+  searchDetails = vehicleId => {
     this.props.history.push({
       pathname: PATH.SEARCH_DETAIL,
       state: {
@@ -75,8 +79,12 @@ class AdminActivity extends Component {
     });
   };
 
+  onChangeActiveTab = activeTab => {
+    this.setState({ activeTab });
+  };
+
   render() {
-    const { savedSearchList } = this.state;
+    const { savedSearchList, activeTab } = this.state;
     return (
       <React.Fragment>
         <section class="breadcrumb_wrap">
@@ -99,18 +107,35 @@ class AdminActivity extends Component {
             <div class="row">
               <div class="col-md-3">
                 <div class="sidelinks">
-                  <div class="slhead text-center medium head3">My Account</div>
+                  <div
+                    class="slhead text-center medium head3"
+                    onClick={() => {
+                      this.onChangeActiveTab(0);
+                    }}
+                  >
+                    My Account
+                  </div>
                   <ul class="sllinks medium">
-                    <li class="active">
-                      <a href="saved-search.html">
-                      User List{" "}
+                    <li class={activeTab === 1 ? "active" : ""}>
+                      <a
+                        href="#"
+                        onClick={() => {
+                          this.onChangeActiveTab(1);
+                        }}
+                      >
+                        User List{" "}
                         <span>
                           <i class="fas fa-chevron-right"></i>
                         </span>
                       </a>
                     </li>
-                    <li>
-                      <a href="saved-search.html">
+                    <li class={activeTab === 2 ? "active" : ""}>
+                      <a
+                        href="#"
+                        onClick={() => {
+                          this.onChangeActiveTab(2);
+                        }}
+                      >
                         Waiting For Approval{" "}
                         <span>
                           <i class="fas fa-chevron-right"></i>
@@ -120,76 +145,17 @@ class AdminActivity extends Component {
                   </ul>
                 </div>
               </div>
+              {}
               <div class="col-md-9 form-wrap">
-                <h1 class="form-header">Saved Searches</h1>
-                <p class="lead">List of saved searches.</p>
-                <div class="row no-gutters">
-                  <div class="col-12">
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Car Model</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {savedSearchList && savedSearchList.length
-                            ? savedSearchList.map((list, index) => {
-                                return (
-                                  <tr>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>
-                                      {list.vehicleName ? list.vehicleName : ""}
-                                    </td>
-                                    <td>
-                                      357 Great Deals out of 7,942 listings
-                                      starting at $1,100
-                                    </td>
-                                    <td>USD 970</td>
-                                    <td>
-                                      <div
-                                        class="btn-group"
-                                        role="group"
-                                        aria-label="Basic example"
-                                      >
-                                        <button
-                                          type="button"
-                                          class="btn btn-primary"
-                                          onClick={()=>{
-                                            this.searchDetails(list.vehicleId)
-                                          }}
-                                        >
-                                          View
-                                        </button>
-                                        <button
-                                          type="button"
-                                          class="btn btn-danger"
-                                          onClick={() => {
-                                            this.deleteSavedSearch(
-                                              list.vehicleId,
-                                              list.savedSearchId
-                                            );
-                                          }}
-                                        >
-                                          Delete
-                                        </button>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                );
-                              })
-                            : <tr className="text-center">
-                              <td colspan="12">No items found</td>
-                            </tr>}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+                {activeTab === 0 ? (
+                  <MyAccount />
+                ) : activeTab === 1 ? (
+                  <UserList />
+                ) : activeTab === 2 ? (
+                  <WaitingApprovalList />
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

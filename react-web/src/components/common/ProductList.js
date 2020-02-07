@@ -102,7 +102,7 @@ class ProductList extends Component {
                   <div class="slhead text-center medium head3">My Account</div>
                   <ul class="sllinks medium">
                     <li class="active">
-                      <a href="saved-search.html">
+                      <a href="#">
                         Saved Searches{" "}
                         <span>
                           <i class="fas fa-chevron-right"></i>
@@ -110,7 +110,7 @@ class ProductList extends Component {
                       </a>
                     </li>
                     <li>
-                      <a href="saved-search.html">
+                      <a href="#">
                         Saved Listings{" "}
                         <span>
                           <i class="fas fa-chevron-right"></i>
@@ -118,7 +118,7 @@ class ProductList extends Component {
                       </a>
                     </li>
                     <li>
-                      <a href="saved-search.html">
+                      <a href="#">
                         Financing
                         <span>
                           <i class="fas fa-chevron-right"></i>
@@ -126,7 +126,7 @@ class ProductList extends Component {
                       </a>
                     </li>
                     <li>
-                      <a href="saved-search.html">
+                      <a href="#">
                         Inbox
                         <span>
                           <i class="fas fa-chevron-right"></i>
